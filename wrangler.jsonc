@@ -1,7 +1,12 @@
 {
   "name": "labdiamondbluebook",
   "compatibility_date": "2024-09-01",
-  "workers_dev": true,
+  // 只用正式域名访问；關閉 workers.dev 臨時網址和預覽網址
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "labdiamondbluebook.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./out"
   }
