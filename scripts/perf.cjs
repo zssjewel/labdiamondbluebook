@@ -19,14 +19,15 @@ const variants = [
 ];
 
 function frameStats(events) {
-  let presented = 0, dropped = 0;
+  const sum = {};
   for (const e of events) {
-    if (e.name !== "PipelineReporter" || e.ph !== "b") continue;
-    const st = e.args && e.args.chrome_frame_reporter && e.args.chrome_frame_reporter.state;
-    if (st === "STATE_DROPPED") dropped++;
-    else if (st === "STATE_PRESENTED_ALL" || st === "STATE_PRESENTED_PARTIAL") presented++;
+    if (!["Paint", "RasterTask", "Layout", "UpdateLayoutTree", "Layerize", "DrawFrame", "DroppedFrame", "BeginFrame", "GPUTask"].includes(e.name)) continue;
+    const k = e.name;
+    sum[k] = sum[k] || { n: 0, ms: 0 };
+    sum[k].n++;
+    if (e.dur) sum[k].ms += e.dur / 1000;
   }
-  return { presented, dropped };
+  return sum;
 }
 
 (async () => {
@@ -41,7 +42,7 @@ function frameStats(events) {
         await page.goto(base + path, { waitUntil: "load" });
         if (css) await page.addStyleTag({ content: css });
         await page.waitForTimeout(2000);
-        await browser.startTracing(page, { categories: ["cc", "viz", "benchmark", "disabled-by-default-devtools.timeline.frame"] });
+        await browser.startTracing(page, { categories: ["devtools.timeline", "disabled-by-default-devtools.timeline", "disabled-by-default-devtools.timeline.frame", "cc", "gpu"] });
         const t0 = Date.now();
         // 好似用滑鼠轆咁滾，每 50ms 一下
         const max = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
@@ -53,10 +54,9 @@ function frameStats(events) {
         const buf = await browser.stopTracing();
         let events = [];
         try { events = JSON.parse(buf.toString()).traceEvents || []; } catch {}
-        const { presented, dropped } = frameStats(events);
-        const total = presented + dropped;
-        const pct = total ? Math.round((dropped / total) * 100) : 0;
-        console.log(`${sname} · ${pname} · ${vname}：${secs.toFixed(1)} 秒，出咗 ${presented} 格，掉咗 ${dropped} 格（${pct}%）`);
+        const st = frameStats(events);
+        const f = (k) => (st[k] ? `${st[k].n} 次/${Math.round(st[k].ms)}ms` : "0");
+        console.log(`${sname} · ${pname} · ${vname}：${secs.toFixed(1)} 秒 | 出畫 ${st.DrawFrame ? st.DrawFrame.n : 0} 格，掉格 ${st.DroppedFrame ? st.DroppedFrame.n : 0} | 重畫 Paint ${f("Paint")} | 光柵化 Raster ${f("RasterTask")} | GPU ${f("GPUTask")} | 排版 Layout ${f("Layout")} | 樣式 ${f("UpdateLayoutTree")}`);
         await ctx.close();
       }
     }
