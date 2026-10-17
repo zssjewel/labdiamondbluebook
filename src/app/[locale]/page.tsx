@@ -151,21 +151,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 標題 */}
       <section className="bb-hero" aria-labelledby="hero-title">
-        <div className="bb-hero__stand bb-after-title">
-          <p>鄒三山工坊編著。價錢點計、證書點睇、訂造點做，師傅將行內做法一次講清。</p>
-          <div className="bb-hero__actions">
-            <SmartLink href={waHref()} className="bb-btn bb-btn--accent">
-              WhatsApp 問師傅
-            </SmartLink>
-            <Link href="#routes" className="bb-link">
-              由邊度開始睇
-            </Link>
-          </div>
-          <Link href="#routes" className="bb-link bb-hero__toc-link">
-            由邊度開始睇？
-          </Link>
-          <ContinueReading />
-        </div>
         <h1 id="hero-title" className="bb-hero__title bb-display">
           <span className="bb-line">
             <span>培育鑽石</span>
@@ -174,6 +159,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <span>訂造攻略</span>
           </span>
         </h1>
+        <p className="bb-hero__stand bb-after-title">鄒三山工坊編著。價錢點計、證書點睇、訂造點做，師傅將行內做法一次講清。</p>
+        <div className="bb-hero__actions bb-after-title">
+          <SmartLink href={waHref()} className="bb-btn bb-btn--accent">
+            WhatsApp 問師傅
+          </SmartLink>
+          <Link href="#routes" className="bb-btn bb-btn--ghost">
+            由邊度開始睇
+          </Link>
+        </div>
+        <ContinueReading />
       </section>
 
       {/* 宣言 */}
@@ -205,28 +200,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 閱讀路線 */}
       <section className="bb-routes" id="routes" aria-labelledby="routes-title">
-        <h2 id="routes-title" className="bb-routes__head bb-display" data-reveal>
-          由邊度
-          <br />
-          開始睇？
+        <h2 id="routes-title" className="bb-sechead bb-display" data-reveal>
+          由邊度開始睇？
         </h2>
+        <p className="bb-secsub" data-reveal style={{ "--d": "60ms" } as React.CSSProperties}>
+          按你而家嘅情況揀一條路線，跟住次序睇就得。
+        </p>
         <ol className="bb-routes__list">
           {ROUTES.map((r, i) => (
             <li key={r.name} data-reveal style={{ "--d": `${i * 80}ms` } as React.CSSProperties}>
-              <h3>{r.name}</h3>
-              <p>{r.who}</p>
-              <p className="bb-routes__path">
-                {r.path.map((slug, j) => {
-                  const c = chapterOf(slug);
-                  if (!c) return null;
-                  return (
-                    <span key={slug}>
-                      {j > 0 && <span aria-hidden="true"> → </span>}
-                      <Link href={localizeHref(`/${slug}`, locale)}>{`${c.number} ${c.title}`}</Link>
-                    </span>
-                  );
-                })}
-              </p>
+              <div className="bb-routes__card">
+                <h3>{r.name}</h3>
+                <p>{r.who}</p>
+                <ol className="bb-routes__path">
+                  {r.path.map((slug, j) => {
+                    const c = chapterOf(slug);
+                    if (!c) return null;
+                    return (
+                      <li key={slug}>
+                        <span className="bb-routes__step">{j + 1}</span>
+                        <Link href={localizeHref(`/${slug}`, locale)}>{`${c.number} ${c.title}`}</Link>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
             </li>
           ))}
         </ol>
@@ -234,63 +232,54 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 目錄 */}
       <section className="bb-contents" id="contents" aria-labelledby="contents-title">
-        <h2 id="contents-title" className="bb-contents__head bb-display" data-reveal>
-          <span>九章，由入門</span>
-          <span>到戴上手</span>
+        <h2 id="contents-title" className="bb-sechead bb-display" data-reveal>
+          九章，由入門到戴上手
         </h2>
+        <p className="bb-secsub" data-reveal style={{ "--d": "60ms" } as React.CSSProperties}>
+          已出 {articles.length} 篇 · 撰寫中 {pendingCount} 篇
+        </p>
         <div className="bb-contents__body">
           <div className="bb-contents__fig" data-reveal>
             <img src={`${R}/princess-wg-white.webp`} alt="白金公主方形培育鑽石戒指（3D 示意）" width={1000} height={1000} loading="lazy" />
           </div>
-          <div className="bb-contents__name">
-            <p>目錄</p>
-            <p>
-              已出 {articles.length} 篇
-              <br />
-              撰寫中 {pendingCount} 篇
-            </p>
-          </div>
-          <ol className="bb-toc">
-            {CHAPTERS.map((c, i) => (
-              <li key={c.slug} className={i > 0 && i % 3 === 0 ? "group" : undefined} data-reveal style={{ "--d": `${(i % 3) * 70}ms` } as React.CSSProperties}>
-                <Link href={localizeHref(`/${c.slug}`, locale)}>
-                  <span className="bb-toc__num">{c.number}</span>
-                  <span className="bb-toc__title">{c.title}</span>
-                  <span className="bb-toc__ans">
-                    {c.answers}
-                    <span className="bb-toc__arrow" aria-hidden="true">
-                      →
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </div>
-        {latest.length > 0 && (
-          <div className="bb-latest" data-reveal>
-            <h3>最新文章</h3>
-            <ul>
-              {latest.map((a) => (
-                <li key={`${a.contentType}/${a.slug}`}>
-                  <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>{a.metadata.title}</Link>
-                  <span>
-                    {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
-                  </span>
+          <div>
+            <ol className="bb-toc bb-group" data-reveal aria-label="目錄">
+              {CHAPTERS.map((c) => (
+                <li key={c.slug}>
+                  <Link href={localizeHref(`/${c.slug}`, locale)}>
+                    <span className="bb-toc__num">{c.number}</span>
+                    <span className="bb-toc__title">{c.title}</span>
+                    <span className="bb-toc__ans">{c.answers}</span>
+                  </Link>
                 </li>
               ))}
-            </ul>
+            </ol>
+            {latest.length > 0 && (
+              <div className="bb-latest" data-reveal>
+                <h3>最新文章</h3>
+                <ul className="bb-group">
+                  {latest.map((a) => (
+                    <li key={`${a.contentType}/${a.slug}`}>
+                      <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>
+                        <span className="bb-latest__title">{a.metadata.title}</span>
+                        <span className="bb-latest__meta">
+                          {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </section>
 
       {/* 多變一 */}
       <section className="bb-how" aria-labelledby="how-title">
         <div className="bb-how__intro" data-reveal>
           <h2 id="how-title" className="bb-how__head bb-display">
-            資料好亂？
-            <br />
-            收窄成一隻戒指
+            資料好亂？收窄成一隻戒指
           </h2>
           <p>4C、證書、價錢、款式一次過湧埋嚟，好易亂。先睇書有個底，再同師傅傾到收窄，最後先落單。</p>
         </div>
@@ -318,19 +307,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 問答 */}
       <section className="bb-faq" aria-labelledby="faq-title">
-        <h2 id="faq-title" className="bb-display" data-reveal>
+        <h2 id="faq-title" className="bb-sechead bb-display" data-reveal>
           常見問題
         </h2>
-        <div className="bb-faq__text" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
-          {FAQ.map((f) => (
-            <p key={f.q}>
-              <strong>{f.q}</strong> {f.a}{" "}
-              <Link className="bb-faq__more" href={localizeHref(f.more, locale)}>
-                延伸閱讀
-              </Link>
-            </p>
+        <dl className="bb-faq__list">
+          {FAQ.map((f, i) => (
+            <div key={f.q} className="bb-faq__item" data-reveal style={{ "--d": `${(i % 2) * 60}ms` } as React.CSSProperties}>
+              <dt>{f.q}</dt>
+              <dd>
+                <p>{f.a}</p>
+                <Link className="bb-faq__more" href={localizeHref(f.more, locale)}>
+                  延伸閱讀
+                </Link>
+              </dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </section>
 
       {/* 結尾 */}

@@ -185,7 +185,7 @@ export function CaratTool({ locale }: { locale: string }) {
           <Controls ct={ct} finger={finger} setCt={setCt} setFinger={setFinger} idPrefix="tool" />
         </div>
         <div className="bb-tool__links" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
-          <Link href={localizeHref("/4c/carat-size-on-hand", locale)} className="bb-btn bb-btn--ink">
+          <Link href={localizeHref("/4c/carat-size-on-hand", locale)} className="bb-btn bb-btn--blue">
             睇完整比較
           </Link>
           <a href={ask} {...askProps} className="bb-link">
