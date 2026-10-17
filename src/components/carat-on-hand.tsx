@@ -133,6 +133,7 @@ function Controls({ ct, finger, setCt, setFinger, idPrefix }: { ct: number; fing
       <input
         id={`${idPrefix}-ct`}
         className="bb-hand__range"
+        style={{ "--p": `${((ct - 0.25) / 2.75) * 100}%` } as React.CSSProperties}
         type="range"
         min={0.25}
         max={3}
@@ -142,10 +143,11 @@ function Controls({ ct, finger, setCt, setFinger, idPrefix }: { ct: number; fing
         aria-valuetext={`${fmtCt(ct)} 卡`}
       />
       <div className="bb-hand__ticks" aria-hidden="true">
-        <span>0.25</span>
-        <span>1</span>
-        <span>2</span>
-        <span>3 卡</span>
+        {[0.25, 1, 2, 3].map((t) => (
+          <span key={t} style={{ left: `${((t - 0.25) / 2.75) * 100}%` }}>
+            {t === 3 ? "3 卡" : t}
+          </span>
+        ))}
       </div>
       <div className="bb-hand__fingers-pick" role="group" aria-label="手指粗幼">
         {FINGERS.map((f) => (

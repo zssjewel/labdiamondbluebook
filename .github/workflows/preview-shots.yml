@@ -71,7 +71,7 @@ jobs:
         continue-on-error: true
         run: |
           git clone -q --depth=1 https://github.com/Leonxlnx/taste-skill /tmp/taste
-          node /tmp/taste/skills/taste-skill/scripts/inspect.mjs http://localhost:8080/zh-hk.html > shots/inspect.txt 2>&1 || true
+          node /tmp/taste/skills/taste-skill/scripts/inspect.mjs http://localhost:8080/zh-hk.html --allow glass > shots/inspect.txt 2>&1 || true
           cp -r .taste-skill/inspect shots/inspect 2>/dev/null || true
           tail -60 shots/inspect.txt
 
