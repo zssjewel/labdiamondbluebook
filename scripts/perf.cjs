@@ -1,5 +1,4 @@
 // 滾動流暢度量度：一邊滾一邊錄 Chrome 追蹤，數有幾多格畫面冇準時出到（掉格）。
-// 同一頁會量兩次：原樣，同埋關咗毛玻璃 + 無限循環動畫，用嚟比較。
 // 用法：node scripts/perf.cjs http://localhost:8080 > perf.txt
 const { chromium, devices } = require("playwright");
 
@@ -13,10 +12,7 @@ const setups = [
   ["電腦 1440", { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 }, 1],
   ["手機 Pixel 7（CPU 慢 4 倍）", { ...devices["Pixel 7"] }, 4],
 ];
-const variants = [
-  ["原樣", ""],
-  ["冇毛玻璃、冇循環動畫", "*{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.bb-drift{animation:none!important}"],
-];
+const variants = [["", ""]];
 
 function frameStats(events) {
   const sum = {};
@@ -56,7 +52,7 @@ function frameStats(events) {
         try { events = JSON.parse(buf.toString()).traceEvents || []; } catch {}
         const st = frameStats(events);
         const f = (k) => (st[k] ? `${st[k].n} 次/${Math.round(st[k].ms)}ms` : "0");
-        console.log(`${sname} · ${pname} · ${vname}：${secs.toFixed(1)} 秒 | 出畫 ${st.DrawFrame ? st.DrawFrame.n : 0} 格，掉格 ${st.DroppedFrame ? st.DroppedFrame.n : 0} | 重畫 Paint ${f("Paint")} | 光柵化 Raster ${f("RasterTask")} | GPU ${f("GPUTask")} | 排版 Layout ${f("Layout")} | 樣式 ${f("UpdateLayoutTree")}`);
+        console.log(`${sname} · ${pname}：${secs.toFixed(1)} 秒 | 出畫 ${st.DrawFrame ? st.DrawFrame.n : 0} 格，掉格 ${st.DroppedFrame ? st.DroppedFrame.n : 0} | 重畫 Paint ${f("Paint")} | 光柵化 Raster ${f("RasterTask")} | GPU ${f("GPUTask")} | 排版 Layout ${f("Layout")} | 樣式 ${f("UpdateLayoutTree")}`);
         await ctx.close();
       }
     }

@@ -95,7 +95,7 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
       <aside className="bb-page__side">
         <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: chapter.number }]} />
         <figure className="bb-chapfig">
-          <img src={chapter.image} alt={chapter.imageAlt} width={1000} height={1000} />
+          <img decoding="async" src={chapter.image} alt={chapter.imageAlt} width={1000} height={1000} />
         </figure>
         <dl className="bb-meta">
           <dt>本章答你</dt>
@@ -229,7 +229,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
         {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
         {item.metadata.cover !== false && (
           <figure className="bb-artfig">
-            <img src={item.metadata.image ?? chapter.image} alt={item.metadata.image ? item.metadata.title : chapter.imageAlt} width={1000} height={1000} />
+            <img decoding="async" src={item.metadata.image ?? chapter.image} alt={item.metadata.image ? item.metadata.title : chapter.imageAlt} width={1000} height={1000} />
             <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
           </figure>
         )}

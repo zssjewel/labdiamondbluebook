@@ -39,8 +39,9 @@
 
     /* 字體 */
     /* Apple 式：標題同正文同一套無襯線字。蘋果機用 SF Pro + 蘋方，其他機用思源黑體 */
-    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "PingFang HK", "PingFang TC", "Noto Sans HK", "Microsoft JhengHei", sans-serif;
-    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "PingFang HK", "PingFang TC", "Noto Sans HK", "Microsoft JhengHei", sans-serif;
+    /* 全部用系統字：蘋果機 SF Pro + 蘋方，Android 思源黑體，Windows Segoe UI + 微軟正黑體。唔使下載字型 */
+    --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "PingFang HK", "PingFang TC", "Noto Sans CJK HK", "Noto Sans CJK TC", "Source Han Sans HK", "Noto Sans HK", "Segoe UI", "Microsoft JhengHei", sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "PingFang HK", "PingFang TC", "Noto Sans CJK HK", "Noto Sans CJK TC", "Source Han Sans HK", "Noto Sans HK", "Segoe UI", "Microsoft JhengHei", sans-serif;
 
     /* 字號：導覽 14 · 說明 16 · 正文 17–18 · 引言 19–24 · 段標題 30–56 · 大標題 40–80 */
     --step-caption: 0.875rem;
@@ -97,7 +98,6 @@
     line-height: 1.7;
     letter-spacing: 0.01em;
     font-feature-settings: "palt" 0;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -209,13 +209,8 @@
   align-items: stretch;
   min-height: 52px;
   padding-inline: var(--pad);
-  background: var(--glass);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  background: var(--paper);
   box-shadow: inset 0 -1px 0 var(--hairline); /* taste-skill-ignore: Apple 式毛玻璃頁頭的分隔線 */
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .bb-header { background: var(--paper); }
 }
 .bb-header__mark {
   display: flex;
@@ -311,13 +306,7 @@
 .t-rose { background: var(--rose); }
 .bb-mosaic .span2c { grid-column: span 2; }
 .bb-mosaic .span2r { grid-row: span 2; }
-.bb-drift {
-  animation: bb-drift 14s ease-in-out infinite alternate;
-}
-@keyframes bb-drift {
-  from { transform: scale(1) translateY(0); }
-  to { transform: scale(1.06) translateY(-2%); }
-}
+
 @media (max-width: 760px) {
   .bb-mosaic {
     grid-template-columns: repeat(3, 1fr);
@@ -594,14 +583,17 @@
 }
 
 /* ---------- 卡數戴喺手上（首頁工具、文章邊碌邊變） ---------- */
-.bb-hand { display: block; width: 100%; height: auto; }
+.bb-hand { position: relative; display: block; width: 100%; aspect-ratio: 380 / 440; }
+.bb-hand svg { display: block; width: 100%; height: 100%; }
 .bb-hand__fingers {
   transform-origin: 200px 0;
   transition: transform 500ms var(--ease-out);
 }
 .bb-hand__stone {
-  transform-origin: 200px 372px;
+  position: absolute;
+  max-width: none;
   transition: transform 500ms var(--ease-out);
+  will-change: transform;
 }
 .bb-hand__read {
   display: flex;
@@ -721,7 +713,7 @@
   .bb-tool__plate { order: 1; }
   .bb-tool__panel > :nth-child(2) { order: 2; }
   .bb-tool__panel > :nth-child(3) { order: 3; margin-top: 8px; }
-  .bb-tool__plate .bb-hand { height: 46vh; height: 46svh; width: auto; aspect-ratio: 380 / 440; }
+  .bb-tool__plate .bb-hand { width: min(100%, 46vh * 380 / 440); width: min(100%, 46svh * 380 / 440); }
   .bb-tool__desc { margin-top: 12px; }
 }
 
@@ -764,12 +756,10 @@
     top: 56px;
     z-index: 2;
     padding: 8px 0;
-    background: var(--glass);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+    background: var(--paper);
   }
   .bb-story__sticky { position: static; padding: 8px 12px 12px; gap: 4px; }
-  .bb-story__sticky .bb-hand { height: 36vh; height: 36svh; width: auto; aspect-ratio: 380 / 440; margin: 0 auto; }
+  .bb-story__sticky .bb-hand { width: min(100%, 36vh * 380 / 440); width: min(100%, 36svh * 380 / 440); margin: 0 auto; }
   .bb-story__steps li { min-height: 60vh; min-height: 60svh; justify-content: flex-end; padding-bottom: 12vh; }
   .bb-story__steps li:first-child { min-height: 40vh; padding-top: 24px; justify-content: flex-start; }
   .bb-hand__read strong { font-size: var(--step-lead); }
@@ -1037,7 +1027,7 @@ html.js [data-reveal].is-in {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .bb-line > span, .bb-after-title, .bb-drift { animation: none; }
+  .bb-line > span, .bb-after-title { animation: none; }
   html.js [data-reveal] { opacity: 1; transform: none; transition: none; animation: none; }
   .bb-btn, .bb-toc__arrow { transition: none; }
 }

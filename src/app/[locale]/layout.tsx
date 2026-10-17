@@ -33,8 +33,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const FONTS =
-  "https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;600;700&display=swap";
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -55,9 +53,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={SITE.htmlLang} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href={FONTS} />
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body>

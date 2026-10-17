@@ -95,21 +95,37 @@ export function HandFigure({ ct, finger, label }: { ct: number; finger: number; 
   const h = w * SPRITE.ratio;
   const sx = finger / MID_MM;
   const bandW = widthAt(RING_FINGER, RING_Y) + 6;
+  // 主石用 HTML 圖片疊喺 SVG 上面：放大縮小交俾 GPU 做，唔使每格重新排版
+  const VB = { x: 10, y: 40, w: 380, h: 440 };
   return (
-    <svg className="bb-hand" viewBox="10 40 380 440" role="img" aria-label={label ?? `${fmtCt(ct)} 卡圓形培育鑽石戴喺手指上，按實際比例（直徑約 ${mm} 毫米）`}>
-      <g className="bb-hand__fingers" style={{ transform: `scaleX(${sx})` }}>
-        {OTHERS.map((f) => (
-          <Finger key={f.cx} f={f} />
-        ))}
-        <Finger f={RING_FINGER} />
-        <rect x={200 - bandW / 2} y={RING_Y + 9} width={bandW} height={6} rx={3} fill="var(--skin-shade)" />
-        <rect x={200 - bandW / 2} y={RING_Y - 8} width={bandW} height={17} rx={5} fill="var(--metal)" />
-        <rect x={200 - bandW / 2 + 4} y={RING_Y - 6} width={bandW - 8} height={5} rx={2.5} fill="var(--metal-hi)" />
-      </g>
-      <g className="bb-hand__stone" style={{ transform: `scale(${mm / 6.4})` }}>
-        <image href={SPRITE.src} x={200 - w / 2} y={RING_Y - h / 2} width={w} height={h} />
-      </g>
-    </svg>
+    <div className="bb-hand" role="img" aria-label={label ?? `${fmtCt(ct)} 卡圓形培育鑽石戴喺手指上，按實際比例（直徑約 ${mm} 毫米）`}>
+      <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} aria-hidden="true">
+        <g className="bb-hand__fingers" style={{ transform: `scaleX(${sx})` }}>
+          {OTHERS.map((f) => (
+            <Finger key={f.cx} f={f} />
+          ))}
+          <Finger f={RING_FINGER} />
+          <rect x={200 - bandW / 2} y={RING_Y + 9} width={bandW} height={6} rx={3} fill="var(--skin-shade)" />
+          <rect x={200 - bandW / 2} y={RING_Y - 8} width={bandW} height={17} rx={5} fill="var(--metal)" />
+          <rect x={200 - bandW / 2 + 4} y={RING_Y - 6} width={bandW - 8} height={5} rx={2.5} fill="var(--metal-hi)" />
+        </g>
+      </svg>
+      <img
+        className="bb-hand__stone"
+        src={SPRITE.src}
+        alt=""
+        width={520}
+        height={503}
+        decoding="async"
+        style={{
+          left: `${((200 - VB.x) / VB.w) * 100}%`,
+          top: `${((RING_Y - VB.y) / VB.h) * 100}%`,
+          width: `${(w / VB.w) * 100}%`,
+          height: `${(h / VB.h) * 100}%`,
+          transform: `translate(-50%, -50%) scale(${mm / 6.4})`,
+        }}
+      />
+    </div>
   );
 }
 

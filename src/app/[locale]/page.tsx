@@ -126,26 +126,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 刊頭拼貼 */}
       <div className="bb-mosaic">
         <div className="t-pale">
-          <img style={{ objectPosition: "50% 18%" }} src={`${R}/ring-oval-pale.webp`} alt="鉑金四爪橢圓形培育鑽石戒指（3D 示意）" width={1000} height={1000} />
+          <img decoding="async" style={{ objectPosition: "50% 18%" }} src={`${R}/ring-oval-pale.webp`} alt="鉑金四爪橢圓形培育鑽石戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-blue span2r" />
         <div className="t-steel span2c">
-          <img src={`${R}/bracelet-steel.webp`} alt="培育鑽石網球手鏈（3D 示意）" width={1400} height={700} />
+          <img decoding="async" src={`${R}/bracelet-steel.webp`} alt="培育鑽石網球手鏈（3D 示意）" width={1400} height={700} />
         </div>
         <div className="t-white hide-sm">
-          <img style={{ objectPosition: "50% 30%" }} src={`${R}/pendant-yg-white.webp`} alt="黃金四爪培育鑽石吊墜（3D 示意）" width={1000} height={1000} />
+          <img decoding="async" style={{ objectPosition: "50% 30%" }} src={`${R}/pendant-yg-white.webp`} alt="黃金四爪培育鑽石吊墜（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-rose hide-sm" />
         <div className="t-steel">
-          <img src={`${R}/band-rg-steel.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={1000} height={1000} />
+          <img decoding="async" src={`${R}/band-rg-steel.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-pale">
-          <img className="bb-drift" style={{ objectPosition: "50% 15%" }} src={`${R}/halo-rg-pale.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={1000} height={1000} />
+          <img decoding="async" style={{ objectPosition: "50% 15%" }} src={`${R}/halo-rg-pale.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-rose hide-sm" />
         <div className="t-blue hide-sm" />
         <div className="t-ink hide-sm">
-          <img src={`${R}/macro-ink.webp`} alt="培育鑽石六爪鑲嵌特寫（3D 示意）" width={1000} height={1000} loading="lazy" />
+          <img decoding="async" src={`${R}/macro-ink.webp`} alt="培育鑽石六爪鑲嵌特寫（3D 示意）" width={1000} height={1000} loading="lazy" />
         </div>
       </div>
 
@@ -184,7 +184,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <p className="bb-display">九章</p>
         </div>
         <div className="bb-tiles__c" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
-          <img style={{ objectPosition: "50% 20%" }} src={`${R}/solitaire-yg-steel.webp`} alt="黃金四爪單粒培育鑽石戒指（3D 示意）" width={1000} height={800} loading="lazy" />
+          <img decoding="async" style={{ objectPosition: "50% 20%" }} src={`${R}/solitaire-yg-steel.webp`} alt="黃金四爪單粒培育鑽石戒指（3D 示意）" width={1000} height={800} loading="lazy" />
         </div>
         <div className="bb-tiles__d">
           <div data-reveal>
@@ -240,7 +240,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </p>
         <div className="bb-contents__body">
           <div className="bb-contents__fig" data-reveal>
-            <img src={`${R}/princess-wg-white.webp`} alt="白金公主方形培育鑽石戒指（3D 示意）" width={1000} height={1000} loading="lazy" />
+            <img decoding="async" src={`${R}/princess-wg-white.webp`} alt="白金公主方形培育鑽石戒指（3D 示意）" width={1000} height={1000} loading="lazy" />
           </div>
           <div>
             <ol className="bb-toc bb-group" data-reveal aria-label="目錄">
