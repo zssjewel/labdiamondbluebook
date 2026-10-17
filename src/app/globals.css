@@ -782,9 +782,9 @@
 .bb-chapnav { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 16px 32px; }
 @media (max-width: 960px) {
   .bb-page { grid-template-columns: 1fr; }
-  .bb-page__side { padding: 0; order: 2; margin-top: 48px; }
-  .bb-side-toc { position: static; }
-  .bb-page__main { order: 1; }
+  .bb-page__side { padding: 0 0 8px; margin-bottom: 32px; }
+  .bb-side-toc { position: static; padding: 16px 20px; background: var(--steel); }
+  .bb-prose table { min-width: 600px; }
 }
 
 /* 文章正文 */
@@ -800,7 +800,10 @@
 }
 .bb-prose h3 { margin: 1.8em 0 0.5em; font-size: var(--step-body); font-weight: 700; line-height: 1.5; scroll-margin-top: 24px; }
 .bb-prose p { margin: 0 0 1.1em; }
-.bb-prose ul, .bb-prose ol { margin: 0 0 1.2em; padding-left: 1.4em; }
+.bb-prose ul, .bb-prose ol { margin: 0 0 1.2em; padding-left: 1.6em; }
+.bb-prose ul { list-style: disc; }
+.bb-prose ol { list-style: decimal; }
+.bb-prose li::marker { color: var(--blue); font-weight: 700; }
 .bb-prose li { margin-bottom: 0.4em; }
 .bb-prose strong { font-weight: 700; }
 .bb-prose a { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
