@@ -120,6 +120,8 @@
 .bb-display, .bb-hero__stand, .bb-secsub, .bb-close__foot p, .bb-how__intro p {
   text-wrap: balance;
 }
+/* 標題斷行只喺意思完整嘅位置 */
+.bb-nobreak { display: inline-block; }
 .bb-display {
   font-family: var(--font-display);
   font-weight: 600;

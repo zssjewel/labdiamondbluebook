@@ -279,7 +279,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <section className="bb-how" aria-labelledby="how-title">
         <div className="bb-how__intro" data-reveal>
           <h2 id="how-title" className="bb-how__head bb-display">
-            資料好亂？收窄成一隻戒指
+            <span className="bb-nobreak">資料好亂？</span>
+            <span className="bb-nobreak">收窄成一隻戒指</span>
           </h2>
           <p>4C、證書、價錢、款式一次過湧埋嚟，好易亂。先睇書有個底，再同師傅傾到收窄，最後先落單。</p>
         </div>
