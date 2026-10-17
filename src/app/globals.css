@@ -894,8 +894,18 @@
   padding: clamp(40px, 6vw, 96px) var(--pad) var(--gap-section);
   column-gap: 0;
 }
+/* 側欄整欄黏住（文章目錄 + 全書目錄一齊），太長就喺側欄入面自己碌，唔會同正文或者彼此重疊 */
 .bb-page__side {
+  position: sticky;
+  top: 72px;
+  align-self: start;
+  max-height: calc(100vh - 88px);
+  max-height: calc(100dvh - 88px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
   padding-right: clamp(16px, 4vw, 64px);
+  padding-bottom: 24px;
   font-size: var(--step-small);
   color: var(--ink-soft);
 }
@@ -920,7 +930,7 @@
 .bb-meta { margin: 0 0 24px; }
 .bb-meta dt { font-weight: 600; color: var(--ink); }
 .bb-meta dd { margin: 0 0 12px; }
-.bb-side-toc { position: sticky; top: 80px; }
+.bb-side-toc { position: static; }
 .bb-side-toc p { margin: 0 0 8px; font-weight: 600; color: var(--ink); }
 .bb-side-toc ol { margin: 0; padding: 0; list-style: none; }
 .bb-side-toc li { margin-bottom: 8px; line-height: 1.5; }
@@ -965,7 +975,7 @@
 .bb-chapnav { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 16px 32px; }
 @media (max-width: 960px) {
   .bb-page { grid-template-columns: 1fr; }
-  .bb-page__side { padding: 0 0 8px; margin-bottom: 32px; }
+  .bb-page__side { position: static; max-height: none; overflow: visible; padding: 0 0 8px; margin-bottom: 32px; }
   .bb-side-toc { position: static; padding: 16px 20px; background: var(--steel); border-radius: var(--radius-panel); }
   .bb-prose table { min-width: 600px; }
 }
