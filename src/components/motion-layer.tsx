@@ -8,6 +8,7 @@ import { useEffect } from "react";
  */
 export function MotionLayer() {
   useEffect(() => {
+    document.documentElement.classList.add("motion-ready");
     const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       items.forEach((el) => el.classList.add("is-in"));

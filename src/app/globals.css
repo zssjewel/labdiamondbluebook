@@ -826,6 +826,9 @@ html.js [data-reveal] {
   transform: translateY(24px);
   transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
   transition-delay: var(--d, 0ms);
+}
+/* 腳本沒載入（沒有 motion-ready）時，3 秒後直接顯示，內容不會一直隱藏 */
+html.js:not(.motion-ready) [data-reveal] {
   animation: bb-failsafe 0s linear 3s forwards;
 }
 html.js [data-reveal].is-in {
