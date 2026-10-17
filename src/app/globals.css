@@ -219,7 +219,9 @@
 }
 .bb-header__menu {
   display: none;
+  white-space: nowrap;
 }
+.bb-header__mark, .bb-header__action { flex-shrink: 0; white-space: nowrap; }
 @media (max-width: 860px) {
   .bb-header__tab {
     display: none;
@@ -238,6 +240,8 @@
     padding: 0 14px;
     margin-right: 10px;
   }
+  .bb-header__mark { padding: 0 14px; }
+  .bb-header__menu { padding: 0 12px; }
 }
 
 /* ---------- 首頁：刊頭拼貼 ---------- */
@@ -618,9 +622,15 @@
 .bb-tool__desc { margin: 16px 0 0; max-width: 30em; }
 .bb-tool__links { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
 @media (max-width: 860px) {
-  .bb-tool { grid-template-columns: 1fr; padding-inline: var(--m); }
-  .bb-tool__title { order: -1; }
-  .bb-tool__panel { gap: 28px; }
+  /* 手機：標題 → 手 → 拉桿 → 連結，拉動時手同數字都喺畫面內 */
+  .bb-tool { grid-template-columns: 1fr; gap: 20px; padding-inline: var(--m); }
+  .bb-tool__panel { display: contents; }
+  .bb-tool__panel > :nth-child(1) { order: 0; }
+  .bb-tool__plate { order: 1; }
+  .bb-tool__panel > :nth-child(2) { order: 2; }
+  .bb-tool__panel > :nth-child(3) { order: 3; margin-top: 8px; }
+  .bb-tool__plate .bb-hand { height: 46vh; height: 46svh; width: auto; aspect-ratio: 380 / 440; }
+  .bb-tool__desc { margin-top: 12px; }
 }
 
 /* 文章：手固定喺一邊，文字逐段經過 */
