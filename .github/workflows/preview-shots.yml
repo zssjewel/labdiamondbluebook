@@ -28,18 +28,24 @@ jobs:
       - run: npm ci
 
       - name: Build static export
-        run: npm run build
+        id: build
+        run: |
+          mkdir -p shots
+          set -o pipefail
+          npm run build 2>&1 | tee shots/build.log
         env:
           NODE_OPTIONS: --max-old-space-size=4096
           NEXT_PUBLIC_SITE_URL: https://labdiamondbluebook.com
 
       - name: Serve
+        if: steps.build.outcome == 'success'
         run: |
           cp -f out/zh-hk.html out/index.html 2>/dev/null || cp -f out/zh-hk/index.html out/index.html
           (cd out && python3 -m http.server 8080 >/dev/null 2>&1 &)
           sleep 2
 
       - name: Screenshots
+        if: steps.build.outcome == 'success'
         run: |
           npx -y playwright@1.55.0 install --with-deps chromium >/dev/null
           mkdir -p shots
@@ -52,6 +58,7 @@ jobs:
           ls -la shots
 
       - name: Taste inspector
+        if: steps.build.outcome == 'success'
         continue-on-error: true
         run: |
           git clone -q --depth=1 https://github.com/Leonxlnx/taste-skill /tmp/taste
@@ -60,6 +67,7 @@ jobs:
           tail -60 shots/inspect.txt
 
       - name: Publish to shots branch
+        if: always()
         run: |
           cd shots
           git init -q
