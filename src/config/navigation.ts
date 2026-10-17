@@ -1,14 +1,12 @@
-import { BookOpen, Code2, Flame, Map, Swords, Trophy, Users, Zap } from "lucide-react";
+import { CHAPTER_SLUGS } from "@/config/chapters";
 
-export const NAVIGATION_CONFIG = [
-  { key: "races", path: "/races", icon: Users, isContentType: true },
-  { key: "bosses", path: "/bosses", icon: Swords, isContentType: true },
-  { key: "guides", path: "/guide", icon: BookOpen, isContentType: true },
-  { key: "codes", path: "/codes", icon: Code2, isContentType: true },
-  { key: "tierList", path: "/tier-list", icon: Trophy, isContentType: true },
-  { key: "maps", path: "/maps", icon: Map, isContentType: true },
-  { key: "skills", path: "/skills", icon: Flame, isContentType: true },
-  { key: "updates", path: "/updates", icon: Zap, isContentType: false },
+/** 頁頭的連結（目錄 + 三個最常用章節）。 */
+export const HEADER_LINKS = [
+  { label: "目錄", path: "/#contents" },
+  { label: "價錢", path: "/price" },
+  { label: "證書", path: "/certificate" },
+  { label: "訂造流程", path: "/custom" },
 ] as const;
 
-export const CONTENT_TYPES = NAVIGATION_CONFIG.filter((item) => item.isContentType).map((item) => item.path.replace(/^\//, ""));
+/** 有文章的欄目，與 content/zh-hk/ 下的資料夾同名。 */
+export const CONTENT_TYPES: string[] = [...CHAPTER_SLUGS];

@@ -1,96 +1,259 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Swords } from "lucide-react";
-import { getMessages } from "next-intl/server";
-import { Badge } from "@/components/ui/badge";
-import { getAllContent, getAllContentPaths, getContent, getDynamicNavigation, type ContentItem } from "@/lib/content";
-import { Breadcrumbs, JsonLd, localizeHref } from "@/components/site";
-import { AdBanner, DismissibleStickyBanner, NativeBannerAd } from "@/components/ads";
-import { MobileTOC } from "@/components/table-of-contents";
+import { setRequestLocale } from "next-intl/server";
+import { AskMaster, Breadcrumbs, JsonLd } from "@/components/site";
+import { CHAPTERS, getChapter } from "@/config/chapters";
 import { CONTENT_TYPES } from "@/config/navigation";
+import { SITE, localizeHref } from "@/config/site";
 import { routing, type Locale } from "@/i18n/routing";
-import en from "@/locales/en.json";
+import { getAllContent, getAllContentPaths, getContent } from "@/lib/content";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vvultimatum.sbs";
-type Messages = typeof en;
+type Params = { locale: Locale; slug: string[] };
 
-function languageAlternates(pathname: string) {
-  return Object.fromEntries(routing.locales.map((locale) => [locale, `/${locale}${pathname}`]));
+function alternates(pathname: string, locale: string) {
+  const url = localizeHref(pathname, locale);
+  return { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } };
 }
 
 export async function generateStaticParams() {
-  const paths = await getAllContentPaths("en");
+  const paths = await getAllContentPaths(routing.defaultLocale);
   const listingPages = CONTENT_TYPES.map((ct) => ({ slug: [ct] }));
   return [...listingPages, ...paths.map((item) => ({ slug: [item.contentType, ...item.slug] }))];
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const messages = (await getMessages({ locale })) as Messages;
-  if (slug.length === 1 && CONTENT_TYPES.includes(slug[0])) {
-    const ct = slug[0];
-    const ctTitle = ct.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-    const ctMessages = (messages as unknown as Record<string, Record<string, string>>)[ct];
-    const title = ctMessages?.overviewTitle || `${ctTitle} — VV Ultimatum Wiki`;
-    const description = ctMessages?.overviewDescription || `Browse all ${ctTitle.toLowerCase()} guides and resources for VV Ultimatum.`;
-    return { title, description, alternates: { canonical: `/${locale}/${ct}`, languages: languageAlternates(`/${ct}`) }, openGraph: { title, description, url: `${siteUrl}/${locale}/${ct}`, images: [`${siteUrl}/images/hero.webp`] } };
+  const chapter = getChapter(slug[0]);
+  if (!chapter) return { title: "找不到頁面" };
+  if (slug.length === 1) {
+    const title = `${chapter.number}：培育鑽石${chapter.title}｜${SITE.name}`;
+    return {
+      title,
+      description: chapter.intro,
+      alternates: alternates(`/${chapter.slug}`, locale),
+      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}` },
+    };
   }
-  const [contentType, ...articleSlug] = slug;
-  const item = await getContent(contentType, articleSlug, locale);
-  if (!item) return { title: "Not Found" };
-  const pathname = `/${contentType}/${articleSlug.join("/")}`;
-  const localizedPathname = `/${locale}${pathname}`;
-  const image = item.metadata.image?.startsWith("http") ? item.metadata.image : `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`;
-  return { title: `${item.metadata.title} — VV Ultimatum Wiki`, description: item.metadata.description, alternates: { canonical: localizedPathname, languages: languageAlternates(pathname) }, openGraph: { type: "article", title: item.metadata.title, description: item.metadata.description, url: `${siteUrl}${localizedPathname}`, images: [image] }, twitter: { card: "summary_large_image", images: [image] } };
+  const item = await getContent(slug[0], slug.slice(1), locale);
+  if (!item) return { title: "找不到頁面" };
+  const pathname = `/${slug.join("/")}`;
+  const title = `${item.metadata.title}｜${SITE.name}`;
+  return {
+    title,
+    description: item.metadata.description,
+    alternates: alternates(pathname, locale),
+    openGraph: { type: "article", title, description: item.metadata.description, url: `${SITE.url}${localizeHref(pathname, locale)}`, images: ["/og.png"] },
+  };
 }
 
-export default async function SlugPage({ params }: { params: Promise<{ locale: Locale; slug: string[] }> }) {
+export default async function SlugPage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
-  const navGroups = getDynamicNavigation(locale);
-  if (slug.length === 1) return <NavigationPage locale={locale} contentType={slug[0]} navGroups={navGroups} />;
-  return <DetailPage locale={locale} contentType={slug[0]} slug={slug.slice(1)} navGroups={navGroups} />;
+  setRequestLocale(locale);
+  if (!CONTENT_TYPES.includes(slug[0])) notFound();
+  if (slug.length === 1) return <ChapterPage locale={locale} slug={slug[0]} />;
+  return <ArticlePage locale={locale} contentType={slug[0]} rest={slug.slice(1)} />;
 }
 
-async function NavigationPage({ locale, contentType, navGroups }: { locale: Locale; contentType: string; navGroups: import("@/lib/content").NavGroup[] }) {
-  if (!CONTENT_TYPES.includes(contentType)) notFound();
-  const messages = (await getMessages({ locale })) as Messages;
-  const items = await getAllContent(contentType, locale);
-  const listData = { "@context": "https://schema.org", "@type": "ItemList", name: `${contentType} — VV Ultimatum Wiki`, itemListElement: items.map((item, index) => ({ "@type": "ListItem", position: index + 1, url: `${siteUrl}/${contentType}/${item.slug}`, name: item.metadata.title })) };
+async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
+  const chapter = getChapter(slug);
+  if (!chapter) notFound();
+  const items = await getAllContent(slug, locale);
+  const written = new Set(items.map((i) => i.metadata.title));
+  const pending = chapter.topics.filter((t) => !written.has(t));
+  const index = CHAPTERS.findIndex((c) => c.slug === slug);
+  const prev = CHAPTERS[index - 1];
+  const next = CHAPTERS[index + 1];
+  const pageUrl = `${SITE.url}${localizeHref(`/${slug}`, locale)}`;
 
-  // 读取分类标题（优先用 locale JSON 里的，没有就转 slug）
-  const sectionTitle = (messages as unknown as Record<string, Record<string, string>>)[contentType]?.overviewTitle
-    || contentType.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  const sectionDesc = (messages as unknown as Record<string, Record<string, string>>)[contentType]?.overviewDescription || "";
+  const listData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${chapter.number} ${chapter.title}`,
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE.url}${localizeHref(`/${slug}/${item.slug}`, locale)}`,
+      name: item.metadata.title,
+    })),
+  };
+  const crumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "首頁", item: `${SITE.url}${localizeHref("/", locale)}` },
+      { "@type": "ListItem", position: 2, name: `${chapter.number} ${chapter.title}`, item: pageUrl },
+    ],
+  };
 
-  return <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><JsonLd data={listData} /><div className="mx-auto max-w-4xl"><article><Breadcrumbs items={[{ label: messages.shared.home, href: localizeHref("/", locale) }, { label: sectionTitle }]} /><h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">{sectionTitle}</h1>{sectionDesc && <p className="mt-5 text-lg leading-8 text-muted-foreground">{sectionDesc}</p>}<AdBanner size="728x90" className="mt-8" />{items.length > 0 && <><div className="mt-10 grid gap-4 sm:grid-cols-2">{items.map((item) => <Link key={`/${contentType}/${item.slug}`} href={localizeHref(`/${contentType}/${item.slug}`, locale)} className="group rounded-2xl border border-border bg-card/70 p-5 transition hover:-translate-y-0.5 hover:border-[hsl(var(--nav-theme-light))]"><div className="mb-4 flex items-center justify-between gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-muted text-[hsl(var(--nav-theme))]"><Swords className="h-5 w-5" /></span>{item.metadata.badge && <Badge variant="secondary">{item.metadata.badge}</Badge>}</div><h3 className="text-lg font-bold text-foreground group-hover:text-[hsl(var(--nav-theme))]">{item.metadata.title}</h3><p className="mt-2 min-h-[3rem] text-sm leading-6 text-muted-foreground">{item.metadata.description}</p><span className="mt-4 inline-flex items-center text-sm font-semibold text-[hsl(var(--nav-theme))]">{messages.shared.readMore}<ChevronRight className="ml-1 h-4 w-4" /></span></Link>)}</div><AdBanner size="300x250" className="mt-8" /></>}{items.length === 0 && <p className="mt-8 text-muted-foreground">{messages.shared.noGuidesAvailable}</p>}<AdBanner size="728x90" /></article></div></main>;
+  return (
+    <main className="bb-page">
+      <JsonLd data={listData} />
+      <JsonLd data={crumbData} />
+      <aside className="bb-page__side">
+        <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: chapter.number }]} />
+        <dl className="bb-meta">
+          <dt>本章答你</dt>
+          <dd>{chapter.answers}</dd>
+          <dt>文章</dt>
+          <dd>{items.length > 0 ? `已出 ${items.length} 篇，撰寫中 ${pending.length} 篇` : `撰寫中 ${pending.length} 篇`}</dd>
+        </dl>
+      </aside>
+      <div className="bb-page__main">
+        <h1 className="bb-page__title bb-display">
+          {chapter.number}　{chapter.title}
+        </h1>
+        <p className="bb-page__lead">{chapter.intro}</p>
+
+        {items.length > 0 && (
+          <ul className="bb-list">
+            {items.map((item) => (
+              <li key={item.slug}>
+                <Link href={localizeHref(`/${slug}/${item.slug}`, locale)}>
+                  <strong>{item.metadata.title}</strong>
+                  <span>{item.metadata.description}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {pending.length > 0 && (
+          <>
+            <h2 className="bb-subhead">撰寫中</h2>
+            <ul className="bb-list">
+              {pending.map((t) => (
+                <li key={t} className="pending">
+                  <strong>{t}</strong>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
+        <AskMaster topic={`${chapter.number} ${chapter.title}`} />
+
+        <nav className="bb-chapnav" aria-label="上下章">
+          {prev && (
+            <Link className="bb-link" href={localizeHref(`/${prev.slug}`, locale)}>
+              ← {prev.number} {prev.title}
+            </Link>
+          )}
+          {next && (
+            <Link className="bb-link" href={localizeHref(`/${next.slug}`, locale)}>
+              {next.number} {next.title} →
+            </Link>
+          )}
+        </nav>
+      </div>
+    </main>
+  );
 }
 
-async function DetailPage({ locale, contentType, slug, navGroups }: { locale: Locale; contentType: string; slug: string[]; navGroups: import("@/lib/content").NavGroup[] }) {
-  if (!CONTENT_TYPES.includes(contentType)) notFound();
-  const messages = (await getMessages({ locale })) as Messages;
-  const item = await getContent(contentType, slug, locale);
-  if (!item) notFound();
-  const pathname = `/${contentType}/${slug.join("/")}`;
-  const tocLabel = messages.shared.tableOfContents || messages.shared.inThisSection || "Table of Contents";
-  const sectionLabel = contentType.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-  const articleData = { "@context": "https://schema.org", "@type": "Article", headline: item.metadata.title, description: item.metadata.description, image: `${siteUrl}${item.metadata.image ?? "/images/hero.webp"}`, datePublished: item.metadata.date, dateModified: item.metadata.lastModified ?? item.metadata.date, mainEntityOfPage: `${siteUrl}${pathname}`, author: { "@type": "Organization", name: "VV Ultimatum Wiki" }, publisher: { "@type": "Organization", name: "VV Ultimatum Wiki", logo: { "@type": "ImageObject", url: `${siteUrl}/android-chrome-512x512.png` } } };
-  const breadcrumbData = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: siteUrl }, { "@type": "ListItem", position: 2, name: sectionLabel, item: `${siteUrl}/${contentType}` }, { "@type": "ListItem", position: 3, name: item.metadata.title, item: `${siteUrl}${pathname}` }] };
+async function ArticlePage({ locale, contentType, rest }: { locale: Locale; contentType: string; rest: string[] }) {
+  const chapter = getChapter(contentType);
+  const item = await getContent(contentType, rest, locale);
+  if (!chapter || !item) notFound();
+  const pathname = `/${contentType}/${rest.join("/")}`;
+  const pageUrl = `${SITE.url}${localizeHref(pathname, locale)}`;
+  const author = item.metadata.author || SITE.publisher;
+  const siblings = (await getAllContent(contentType, locale)).filter((i) => i.slug !== item.slug).slice(0, 4);
 
-  const relatedLabel = messages.shared.relatedGuides || "Related Guides";
+  const articleData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: item.metadata.title,
+    description: item.metadata.description,
+    inLanguage: SITE.htmlLang,
+    datePublished: item.metadata.date,
+    dateModified: item.metadata.lastModified ?? item.metadata.date,
+    mainEntityOfPage: pageUrl,
+    author: item.metadata.author ? { "@type": "Person", name: item.metadata.author } : { "@type": "Organization", name: SITE.publisher },
+    publisher: { "@type": "Organization", name: SITE.publisher },
+    ...(item.metadata.image ? { image: `${SITE.url}${item.metadata.image}` } : {}),
+  };
+  const crumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "首頁", item: `${SITE.url}${localizeHref("/", locale)}` },
+      { "@type": "ListItem", position: 2, name: `${chapter.number} ${chapter.title}`, item: `${SITE.url}${localizeHref(`/${contentType}`, locale)}` },
+      { "@type": "ListItem", position: 3, name: item.metadata.title, item: pageUrl },
+    ],
+  };
 
-  return <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"><JsonLd data={articleData} /><JsonLd data={breadcrumbData} /><aside className="fixed top-20 z-10 hidden w-40 xl:block" style={{ left: "calc((100vw - 896px) / 2 - 180px)" }}><AdBanner size="160x600" /></aside><aside className="fixed top-20 z-10 hidden w-40 xl:block" style={{ right: "calc((100vw - 896px) / 2 - 180px)" }}><AdBanner size="160x300" /></aside><div className="mx-auto max-w-4xl"><article><Breadcrumbs items={[{ label: messages.shared.home, href: localizeHref("/", locale) }, { label: sectionLabel, href: localizeHref(`/${contentType}`, locale) }, { label: item.metadata.title }]} /><h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">{item.metadata.title}</h1><DismissibleStickyBanner /><p className="mt-5 text-lg leading-8 text-muted-foreground">{item.metadata.summary ?? item.metadata.description}</p><MobileTOC headings={item.headings} label={tocLabel} /><div className="prose-invert mt-10 max-w-none"><item.MDXContent /></div><NativeBannerAd className="mt-10" /><AdBanner size="300x250" /><ArticleCards locale={locale} contentType={contentType} currentSlug={slug.join("/")} relatedLabel={relatedLabel} /><AdBanner size="728x90" /><AdBanner size="468x60" /></article></div></main>;
+  return (
+    <main className="bb-page">
+      <JsonLd data={articleData} />
+      <JsonLd data={crumbData} />
+      <aside className="bb-page__side">
+        <Breadcrumbs
+          items={[
+            { label: "首頁", href: localizeHref("/", locale) },
+            { label: chapter.number, href: localizeHref(`/${contentType}`, locale) },
+            { label: "本文" },
+          ]}
+        />
+        <dl className="bb-meta">
+          <dt>編著</dt>
+          <dd>{author}</dd>
+          <dt>更新</dt>
+          <dd>{item.metadata.lastModified ?? item.metadata.date}</dd>
+        </dl>
+        {item.headings.length > 1 && (
+          <nav className="bb-side-toc" aria-label="本文目錄">
+            <p>本文目錄</p>
+            <ol>
+              {item.headings.map((h) => (
+                <li key={h.id} className={h.level === 3 ? "lvl3" : undefined}>
+                  <a href={`#${h.id}`}>{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+      </aside>
+      <article className="bb-page__main">
+        <h1 className="bb-page__title bb-display">{item.metadata.title}</h1>
+        {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
+        {item.metadata.draft && (
+          <p className="bb-draft">
+            <strong>初稿：</strong>本文由編輯整理，正等工坊師傅逐項核對，內容可能仍會修改。
+          </p>
+        )}
+        <div className="bb-prose">
+          <item.MDXContent />
+        </div>
+
+        <div className="bb-author">
+          <strong>關於編著</strong>
+          《{SITE.name}》由{SITE.publisher}編著。本書比較及推薦的內容包括工坊自己，詳見
+          <Link href={`${localizeHref("/about", locale)}#disclosure`}>編著聲明</Link>。
+        </div>
+
+        <AskMaster topic={item.metadata.title} />
+
+        {siblings.length > 0 && (
+          <>
+            <h2 className="bb-subhead">{`${chapter.number}其他文章`}</h2>
+            <ul className="bb-list">
+              {siblings.map((s) => (
+                <li key={s.slug}>
+                  <Link href={localizeHref(`/${contentType}/${s.slug}`, locale)}>
+                    <strong>{s.metadata.title}</strong>
+                    <span>{s.metadata.description}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        <nav className="bb-chapnav" aria-label="返回">
+          <Link className="bb-link" href={localizeHref(`/${contentType}`, locale)}>
+            ← 返回{chapter.number} {chapter.title}
+          </Link>
+        </nav>
+      </article>
+    </main>
+  );
 }
-
-async function ArticleCards({ locale, contentType, currentSlug, relatedLabel }: { locale: string; contentType: string; currentSlug: string; relatedLabel: string }) {
-  // 动态获取同分类其他文章（排除当前文章）
-  const allItems = await getAllContent(contentType, locale as Locale);
-  const related = allItems.filter((item) => item.slug !== currentSlug).slice(0, 4);
-
-  if (related.length === 0) return null;
-
-  return <div className="mt-12 space-y-8"><section><h3 className="text-xl font-bold text-foreground">{relatedLabel}</h3><div className="mt-4 grid gap-4 sm:grid-cols-2">{related.map((item) => <SmallCard key={item.slug} icon={<Swords className="h-5 w-5" />} title={item.metadata.title} description={item.metadata.description} href={localizeHref(`/${contentType}/${item.slug}`, locale)} />)}</div></section></div>;
-}
-
-function SmallCard({ title, description, href, icon }: { title: string; description: string; href: string; icon?: React.ReactNode }) { return <Link href={href} className="block rounded-2xl border border-border bg-card/70 p-5 transition hover:border-[hsl(var(--nav-theme-light))]">{icon && <div className="mb-3 text-[hsl(var(--nav-theme))]">{icon}</div>}<h4 className="font-bold text-foreground">{title}</h4><p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p></Link>; }

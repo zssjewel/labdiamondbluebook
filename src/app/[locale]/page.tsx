@@ -1,56 +1,261 @@
 import type { Metadata } from "next";
-import { getMessages } from "next-intl/server";
-import { JsonLd, WikiSidebar } from "@/components/site";
-import { getAllContent, getDynamicNavigation, type ContentItem, CONTENT_TYPES } from "@/lib/content";
-import { routing, type Locale } from "@/i18n/routing";
-import en from "@/locales/en.json";
-import HomePageClient from "./HomePageClient";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vvultimatum.sbs";
-
-type Messages = typeof en;
+import Link from "next/link";
+import { setRequestLocale } from "next-intl/server";
+import { CaratGauge } from "@/components/carat-gauge";
+import { HowDiagram } from "@/components/how-diagram";
+import { JsonLd, SmartLink } from "@/components/site";
+import { CHAPTERS } from "@/config/chapters";
+import { SITE, localizeHref, waHref } from "@/config/site";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
-  const messages = (await getMessages({ locale })) as Messages;
+  const url = localizeHref("/", locale);
   return {
-    title: messages.home.meta.title,
-    description: messages.home.meta.description,
-    alternates: { canonical: `/${locale}`, languages: Object.fromEntries(routing.locales.map((loc) => [loc, `/${loc}`])) },
-    openGraph: { title: messages.home.meta.title, description: messages.home.meta.description, url: `${siteUrl}/${locale}`, images: [`${siteUrl}/images/hero.webp`] },
+    title: SITE.homeTitle,
+    description: SITE.description,
+    alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
+    openGraph: { title: SITE.homeTitle, description: SITE.description, url: `${SITE.url}${url}`, images: ["/og.png"] },
   };
 }
 
-export default async function LocaleHomePage({ params }: { params: Promise<{ locale: string }> }) {
+const R = "/images/renders";
+
+const FAQ = [
+  {
+    q: "培育鑽石係咪真鑽石？",
+    a: "係。成分同天然鑽石一樣係碳結晶，硬度同樣係 10，折射同火彩都一樣；莫桑石同鋯石就唔係鑽石。",
+  },
+  {
+    q: "肉眼分唔分到培育同天然？",
+    a: "分唔到，連一般鑽石測試筆都分唔到，要靠化驗所儀器。正規證書嘅石，腰部會有激光刻字對返證書號碼。",
+  },
+  {
+    q: "培育鑽石保唔保值？",
+    a: "唔保值。轉手一般只值零售價一至三成，甚至更低。當首飾買嚟戴最實際，唔好當投資。",
+  },
+  {
+    q: "價錢仲會唔會跌？",
+    a: "大顆嘅仲喺度跌。業內批發價數據顯示，今年按年跌約一成三，2 卡跌約兩成，1 卡就大致企穩。",
+  },
+  {
+    q: "IGI 同 GIA 證書有咩分別？",
+    a: "GIA 由 2025 年 10 月起唔再為培育鑽石逐項評 4C，只分 Premium、Standard 兩級；IGI 仍然逐項評 4C。第三章會詳細講點揀。",
+  },
+  {
+    q: "培育鑽石會唔會變色？",
+    a: "正常唔會。有啲 CVD 石出爐後做過顏色處理，證書會註明；寫住 As Grown 即係冇做生長後處理。",
+  },
+  {
+    q: "CVD 同 HPHT 邊種好啲？",
+    a: "兩種都係真培育鑽石，好壞要睇返每粒石嘅 4C 同證書，唔係睇用邊種方法整。",
+  },
+  {
+    q: "訂造要幾耐？",
+    a: "由揀石、3D 設計、蠟版到鑲石，時間視乎款式同工序，第六章會逐步講；你個款要幾耐，可以直接問師傅。",
+  },
+  {
+    q: "喺香港訂定去深圳訂？",
+    a: "兩邊都有好有唔好，價錢、溝通、驗貨同售後方式都唔同。第七章會逐項比較，你睇完再揀。",
+  },
+  {
+    q: "你哋會唔會推薦自己？",
+    a: "會。本書由鄒三山工坊編著，推薦名單包括我哋自己；比較嘅章節只比渠道，唔點名評同行。",
+  },
+];
+
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const loc = locale as Locale;
-  const messages = (await getMessages({ locale })) as Messages;
-  const navGroups = getDynamicNavigation(loc);
-  const webSite = { "@context": "https://schema.org", "@type": "WebSite", name: "VV Ultimatum Wiki", url: siteUrl, description: messages.home.meta.description };
+  setRequestLocale(locale);
 
-  // 动态加载所有 content 目录下的文章
-  const allArticles: ContentItem[] = [];
-  for (const contentType of CONTENT_TYPES) {
-    const items = await getAllContent(contentType, loc);
-    allArticles.push(...items);
-  }
-
-  // 取最近更新的 8 篇文章（按 date 倒序）
-  const recentArticles = [...allArticles]
-    .sort((a, b) => {
-      const dateA = a.metadata.lastModified || a.metadata.date;
-      const dateB = b.metadata.lastModified || b.metadata.date;
-      return dateB.localeCompare(dateA);
-    })
-    .slice(0, 8);
+  const webSite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.name,
+    url: `${SITE.url}${localizeHref("/", locale)}`,
+    inLanguage: SITE.htmlLang,
+    description: SITE.description,
+    publisher: { "@type": "Organization", name: SITE.publisher },
+  };
+  const faqData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <main>
       <JsonLd data={webSite} />
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <HomePageClient home={messages.home} locale={locale} articles={allArticles} recentArticles={recentArticles} />
-        <WikiSidebar locale={locale} navGroups={navGroups} />
+      <JsonLd data={faqData} />
+
+      {/* 刊頭拼貼 */}
+      <div className="bb-mosaic" aria-hidden="false">
+        <div className="t-pale">
+          <img src={`${R}/s1.webp`} alt="白金單粒培育鑽石戒指（3D 示意）" width={640} height={480} />
+        </div>
+        <div className="t-blue span2r" />
+        <div className="t-steel span2c">
+          <img src={`${R}/w2.webp`} alt="橢圓形培育鑽石主石特寫（3D 示意）" width={600} height={600} />
+        </div>
+        <div className="t-white hide-sm">
+          <img src={`${R}/s3.webp`} alt="黃金培育鑽石吊墜（3D 示意）" width={640} height={480} loading="lazy" />
+        </div>
+        <div className="t-ink hide-sm" />
+        <div className="t-steel">
+          <img src={`${R}/s4.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={640} height={480} />
+        </div>
+        <div className="t-pale">
+          <img className="bb-drift" src={`${R}/s5.webp`} alt="培育鑽石網球手鏈（3D 示意）" width={640} height={480} />
+        </div>
+        <div className="t-white hide-sm" />
+        <div className="t-blue hide-sm" />
+        <div className="t-pale hide-sm">
+          <img src={`${R}/w4.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={600} height={600} loading="lazy" />
+        </div>
       </div>
+
+      {/* 標題 */}
+      <section className="bb-hero" aria-labelledby="hero-title">
+        <div className="bb-hero__stand bb-after-title">
+          <p>鄒三山工坊編著。價錢點計、證書點睇、訂造點做，師傅將行內做法一次講清。</p>
+          <div className="bb-hero__actions">
+            <SmartLink href={waHref()} className="bb-btn bb-btn--accent">
+              WhatsApp 問師傅
+            </SmartLink>
+            <Link href="#contents" className="bb-link">
+              睇目錄
+            </Link>
+          </div>
+          <Link href="#contents" className="bb-link bb-hero__toc-link">
+            由目錄開始睇
+          </Link>
+        </div>
+        <h1 id="hero-title" className="bb-hero__title bb-display">
+          <span className="bb-line">
+            <span>培育鑽石</span>
+          </span>
+          <span className="bb-line">
+            <span>訂造攻略</span>
+          </span>
+        </h1>
+      </section>
+
+      {/* 宣言 */}
+      <section className="bb-tiles" aria-label="關於本書">
+        <div className="bb-tiles__a" data-reveal>
+          <p className="bb-display">
+            做嘢嘅人
+            <br />
+            寫嘅書
+          </p>
+        </div>
+        <div className="bb-tiles__b" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+          <p className="bb-display">九章</p>
+        </div>
+        <div className="bb-tiles__c" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
+          <img src={`${R}/hero.webp`} alt="黃金單粒培育鑽石戒指（3D 示意）" width={1000} height={800} loading="lazy" />
+        </div>
+        <div className="bb-tiles__d">
+          <div data-reveal>
+            <p>
+              《培育鑽石藍皮書》由香港鄒三山工坊編著。客人問得最多嘅問題，就係呢本書嘅目錄：價錢點計、證書點睇、邊啲錢值得畀、邊啲錢唔使畀，同埋老實講，培育鑽石唔保值。
+            </p>
+            <p>
+              講揀商家嗰章會比較品牌店、工廠、網購同深圳水貝，當中包括我哋自己。呢點一開始就講明，你睇完自己判斷。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 目錄 */}
+      <section className="bb-contents" id="contents" aria-labelledby="contents-title">
+        <h2 id="contents-title" className="bb-contents__head bb-display" data-reveal>
+          <span>九章，由入門</span>
+          <span>到戴上手</span>
+        </h2>
+        <div className="bb-contents__body">
+          <div className="bb-contents__fig" data-reveal>
+            <img src={`${R}/w1.webp`} alt="白金單粒培育鑽石求婚戒指（3D 示意）" width={600} height={600} loading="lazy" />
+          </div>
+          <p className="bb-contents__name">目錄</p>
+          <ol className="bb-toc">
+            {CHAPTERS.map((c, i) => (
+              <li key={c.slug} className={i > 0 && i % 3 === 0 ? "group" : undefined} data-reveal style={{ "--d": `${(i % 3) * 70}ms` } as React.CSSProperties}>
+                <Link href={localizeHref(`/${c.slug}`, locale)}>
+                  <span className="bb-toc__num">{c.number}</span>
+                  <span className="bb-toc__title">{c.title}</span>
+                  <span className="bb-toc__ans">
+                    {c.answers}
+                    <span className="bb-toc__arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 多變一 */}
+      <section className="bb-how" aria-labelledby="how-title">
+        <div className="bb-how__intro" data-reveal>
+          <h2 id="how-title" className="bb-how__head bb-display">
+            資料好亂？
+            <br />
+            收窄成一隻戒指
+          </h2>
+          <p>4C、證書、價錢、款式一次過湧埋嚟，好易亂。先睇書有個底，再同師傅傾到收窄，最後先落單。</p>
+        </div>
+        <div className="bb-how__layout">
+          <HowDiagram />
+          <ol className="bb-how__steps">
+            <li data-reveal>
+              <strong>睇書</strong>
+              <p>4C、證書、價錢先有個底，知道邊度值得畀錢。</p>
+            </li>
+            <li data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+              <strong>問師傅</strong>
+              <p>預算、手寸、款式傳過嚟，傾到收窄做一兩個方案。</p>
+            </li>
+            <li data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
+              <strong>訂造</strong>
+              <p>揀石、3D 圖、蠟版、鑲石，做出你嗰一隻。</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* 卡數對比 */}
+      <CaratGauge locale={locale} />
+
+      {/* 問答 */}
+      <section className="bb-faq" aria-labelledby="faq-title">
+        <h2 id="faq-title" className="bb-display" data-reveal>
+          常見問題
+        </h2>
+        <div className="bb-faq__text" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+          {FAQ.map((f) => (
+            <p key={f.q}>
+              <strong>{f.q}</strong> {f.a}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* 結尾 */}
+      <section className="bb-close" aria-labelledby="close-title">
+        <h2 id="close-title" className="bb-display" data-reveal>
+          睇完未決定？
+          <br />
+          直接問師傅
+        </h2>
+        <div className="bb-close__foot" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+          <p>傳張款式圖、講個預算，師傅用 WhatsApp 直接答你，唔使先落訂。</p>
+          <SmartLink href={waHref("你好，我睇咗培育鑽石藍皮書，想問：")} className="bb-btn bb-btn--accent">
+            WhatsApp 問師傅
+          </SmartLink>
+        </div>
+      </section>
     </main>
   );
 }

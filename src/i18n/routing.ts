@@ -1,17 +1,13 @@
 import { defineRouting } from "next-intl/routing";
 
 /**
- * Single source of truth for supported locales.
- *
- * To add a new language you must update THREE places that have to stay in sync:
- *   1. The `locales` array below.
- *   2. The static imports + `messagesMap` in `src/i18n/request.ts`.
- *   3. The matching JSON file in `src/locales/<locale>.json`.
+ * 支援的語言。現在只有香港繁中；台灣版上線時加 "zh-tw"，
+ * 並在 src/i18n/request.ts 和 src/locales/ 加對應檔案。
  */
 export const routing = defineRouting({
-  locales: ["en", "ja"],
-  defaultLocale: "en",
-  // Static export requires an explicit locale segment in every URL.
+  locales: ["zh-hk"],
+  defaultLocale: "zh-hk",
+  // 靜態導出要求每個網址都帶語言前綴
   localePrefix: "always",
   localeDetection: false,
 });

@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
+import { SITE } from "@/config/site";
 
 export const dynamic = "force-static";
 
-// 上線前禁止收錄；正式上線時改回 allow: "/"
+// 正式上線前禁止收錄；上線時把 src/config/site.ts 的 launched 改為 true
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://labdiamondbluebook.com";
   return {
-    rules: [{ userAgent: "*", disallow: "/" }],
-    sitemap: `${siteUrl}/sitemap.xml`,
+    rules: [{ userAgent: "*", ...(SITE.launched ? { allow: "/" } : { disallow: "/" }) }],
+    sitemap: `${SITE.url}/sitemap.xml`,
   };
 }

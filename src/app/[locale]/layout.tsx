@@ -1,71 +1,87 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Inter } from "next/font/google";
-import { hasLocale } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import { ThemeProvider } from "next-themes";
+import { MotionLayer } from "@/components/motion-layer";
 import { JsonLd, SiteFooter, SiteHeader } from "@/components/site";
+import { SITE } from "@/config/site";
 import { routing } from "@/i18n/routing";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vvultimatum.sbs";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  const image = `${siteUrl}/images/hero.webp`;
-  const adsenseId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID;
+export const viewport: Viewport = {
+  themeColor: "#1c3d8c",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL(siteUrl),
-    title: { default: "VV: ULTIMATUM Wiki", template: "%s" },
-    description: "Complete VV: ULTIMATUM fan wiki with codes, bosses, builds, races, guides and progression walkthroughs.",
-    openGraph: { type: "website", locale, url: siteUrl, siteName: "VV Ultimatum Wiki", images: [{ url: image }] },
-    twitter: { card: "summary_large_image", images: [image] },
-    ...(adsenseId ? { other: { "google-adsense-account": adsenseId } } : {}),
+    metadataBase: new URL(SITE.url),
+    title: { default: SITE.homeTitle, template: "%s" },
+    description: SITE.description,
+    applicationName: SITE.name,
+    openGraph: { type: "website", locale: "zh_HK", siteName: SITE.name, images: [{ url: "/og.png", width: 1200, height: 630 }] },
+    twitter: { card: "summary_large_image", images: ["/og.png"] },
+    icons: { icon: [{ url: "/favicon.ico" }, { url: "/favicon-32x32.png", sizes: "32x32" }], apple: "/apple-touch-icon.png" },
+    manifest: "/manifest.json",
+    // 正式上線前不讓搜尋引擎收錄
+    robots: SITE.launched ? { index: true, follow: true } : { index: false, follow: false },
   };
 }
 
+const FONTS =
+  "https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;700&family=Noto+Serif+HK:wght@700;900&display=swap";
+
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  setRequestLocale(locale);
   if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
   const messages = await getMessages({ locale });
+  const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+  const clarityId = process.env.NEXT_PUBLIC_MICROSOFT_CLARITY_ID;
+
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "VV Ultimatum Wiki",
-    url: siteUrl,
-    logo: `${siteUrl}/android-chrome-512x512.png`,
-    image: `${siteUrl}/images/hero.webp`,
+    name: SITE.publisher,
+    url: SITE.url,
+    areaServed: "HK",
   };
 
-  const adsenseId = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID;
-
   return (
-    <html lang={locale} className={`${inter.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        {adsenseId && (
-          <Script
-            async
-            strategy="afterInteractive"
-            crossOrigin="anonymous"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`}
-          />
+    <html lang={SITE.htmlLang} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href={FONTS} />
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body>
+        {gaId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="ga" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            </Script>
+          </>
         )}
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <NextIntlClientProvider messages={messages}>
-            <JsonLd data={organization} />
-            <SiteHeader locale={locale} />
-            {children}
-            <SiteFooter locale={locale} />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+        {clarityId && (
+          <Script id="clarity" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");`}
+          </Script>
+        )}
+        <NextIntlClientProvider messages={messages}>
+          <div id="top" />
+          <JsonLd data={organization} />
+          <SiteHeader locale={locale} />
+          {children}
+          <SiteFooter locale={locale} />
+          <MotionLayer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

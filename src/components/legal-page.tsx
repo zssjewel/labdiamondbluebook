@@ -1,9 +1,16 @@
-export function LegalPage({ title, children }: { title: string; children: React.ReactNode }) {
+import { Breadcrumbs } from "@/components/site";
+import { localizeHref } from "@/config/site";
+
+export function LegalPage({ title, side, children }: { title: string; side?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-      <article className="rounded-3xl border border-border bg-card/70 p-6 sm:p-8">
-        <h1 className="text-4xl font-extrabold tracking-tight text-foreground">{title}</h1>
-        <div className="mt-8 space-y-5 leading-8 text-muted-foreground">{children}</div>
+    <main className="bb-page">
+      <aside className="bb-page__side">
+        <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/") }, { label: title }]} />
+        {side}
+      </aside>
+      <article className="bb-page__main">
+        <h1 className="bb-page__title bb-display">{title}</h1>
+        <div className="bb-prose">{children}</div>
       </article>
     </main>
   );
