@@ -53,7 +53,7 @@ jobs:
           for p in $pages; do
             name="${p%%:*}"; path="${p#*:}"
             npx -y playwright@1.55.0 screenshot --full-page --wait-for-timeout 2500 --viewport-size "1440,900" "http://localhost:8080/$path" "shots/${name}-1440.png" || true
-            npx -y playwright@1.55.0 screenshot --full-page --wait-for-timeout 2500 --device "iPhone 13" "http://localhost:8080/$path" "shots/${name}-390.png" || true
+            npx -y playwright@1.55.0 screenshot --full-page --wait-for-timeout 2500 --device "Pixel 7" "http://localhost:8080/$path" "shots/${name}-390.png" || true
           done
           ls -la shots
 
