@@ -770,7 +770,7 @@
 
 /* ---------- 首頁：問答 ---------- */
 .bb-faq {
-  padding: 0 var(--pad) var(--gap-section);
+  padding: calc(var(--gap-section) * 0.5) var(--pad) var(--gap-section);
 }
 .bb-faq__list {
   display: grid;
