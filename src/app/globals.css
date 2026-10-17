@@ -545,6 +545,7 @@
   .bb-toc__ans { grid-column: 2; text-align: left; }
   .bb-latest .bb-group a > span { grid-column: 1; }
   .bb-latest .bb-group a { grid-template-columns: minmax(0, 1fr) 1em; }
+  .bb-latest .bb-group a::after { grid-column: 2; }
 }
 
 /* ---------- 首頁：多變一流程 ---------- */
