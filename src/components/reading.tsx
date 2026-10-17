@@ -34,7 +34,7 @@ export function ContinueReading() {
     <p className="bb-continue">
       <span>上次讀到 {last.chapter}：</span>
       <Link href={last.path} className="bb-link">
-        {last.title} →
+        {last.title}
       </Link>
     </p>
   );

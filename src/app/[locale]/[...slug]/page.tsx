@@ -163,13 +163,13 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
 
         <nav className="bb-chapnav" aria-label="上下章">
           {prev && (
-            <Link className="bb-link" href={localizeHref(`/${prev.slug}`, locale)}>
-              ← {prev.number} {prev.title}
+            <Link className="bb-link bb-link--prev" href={localizeHref(`/${prev.slug}`, locale)}>
+              {prev.number} {prev.title}
             </Link>
           )}
           {next && (
             <Link className="bb-link" href={localizeHref(`/${next.slug}`, locale)}>
-              {next.number} {next.title} →
+              {next.number} {next.title}
             </Link>
           )}
         </nav>
@@ -309,8 +309,8 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
           </>
         )}
         <nav className="bb-chapnav" aria-label="返回">
-          <Link className="bb-link" href={localizeHref(`/${contentType}`, locale)}>
-            ← 返回{chapter.number} {chapter.title}
+          <Link className="bb-link bb-link--prev" href={localizeHref(`/${contentType}`, locale)}>
+            返回{chapter.number} {chapter.title}
           </Link>
         </nav>
         <BookNav book={book} locale={locale} currentChapter={contentType} currentSlug={item.slug} className="bb-only-narrow" />

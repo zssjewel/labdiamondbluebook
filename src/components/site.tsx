@@ -65,7 +65,7 @@ export function AskMaster({ topic }: { topic?: string }) {
   const message = topic ? `你好，我睇咗《${topic}》，想問：` : "你好，我想問培育鑽石訂造：";
   if (!hasContact) {
     return (
-      <section className="bb-ask" aria-label="問師傅">
+      <section className="bb-ask bb-ask--quiet" aria-label="問師傅">
         <h2 className="bb-display">睇完仲有問題？</h2>
         <p>問師傅嘅聯絡方式籌備中，開通之後會喺呢度同「關於本書」公佈。開通前可以先睇其他章節。</p>
       </section>
