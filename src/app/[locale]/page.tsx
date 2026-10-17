@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { setRequestLocale } from "next-intl/server";
-import { CaratGauge } from "@/components/carat-gauge";
+import { CaratTool } from "@/components/carat-on-hand";
 import { HowDiagram } from "@/components/how-diagram";
 import { JsonLd, SmartLink } from "@/components/site";
 import { ContinueReading } from "@/components/reading";
@@ -135,14 +135,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="t-white hide-sm">
           <img style={{ objectPosition: "50% 30%" }} src={`${R}/pendant-yg-white.webp`} alt="黃金四爪培育鑽石吊墜（3D 示意）" width={1000} height={1000} />
         </div>
-        <div className="t-ink hide-sm" />
+        <div className="t-rose hide-sm" />
         <div className="t-steel">
           <img src={`${R}/band-rg-steel.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-pale">
           <img className="bb-drift" style={{ objectPosition: "50% 15%" }} src={`${R}/halo-rg-pale.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={1000} height={1000} />
         </div>
-        <div className="t-white hide-sm" />
+        <div className="t-rose hide-sm" />
         <div className="t-blue hide-sm" />
         <div className="t-ink hide-sm">
           <img src={`${R}/macro-ink.webp`} alt="培育鑽石六爪鑲嵌特寫（3D 示意）" width={1000} height={1000} loading="lazy" />
@@ -313,8 +313,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* 卡數對比 */}
-      <CaratGauge locale={locale} />
+      {/* 卡數戴喺手上有幾大（互動） */}
+      <CaratTool locale={locale} />
 
       {/* 問答 */}
       <section className="bb-faq" aria-labelledby="faq-title">

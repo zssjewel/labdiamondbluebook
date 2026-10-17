@@ -227,10 +227,12 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
         <ReadingTracker path={localizeHref(pathname, locale)} title={item.metadata.title} chapter={chapter.number} />
         <h1 className="bb-page__title bb-display">{item.metadata.title}</h1>
         {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
-        <figure className="bb-artfig">
-          <img src={item.metadata.image ?? chapter.image} alt={item.metadata.image ? item.metadata.title : chapter.imageAlt} width={1000} height={1000} />
-          <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
-        </figure>
+        {item.metadata.cover !== false && (
+          <figure className="bb-artfig">
+            <img src={item.metadata.image ?? chapter.image} alt={item.metadata.image ? item.metadata.title : chapter.imageAlt} width={1000} height={1000} />
+            <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
+          </figure>
+        )}
         {item.metadata.draft && (
           <p className="bb-draft">
             <strong>初稿：</strong>本文由編輯整理，正等工坊師傅逐項核對，內容可能仍會修改。

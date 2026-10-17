@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { MDXComponents } from "mdx/types";
 import { headingId } from "@/lib/heading";
+import { CaratStory } from "@/components/carat-on-hand";
 
 /** 從 React children 抽出純文字，用來生成標題錨點 */
 function textOf(node: React.ReactNode): string {
@@ -38,6 +39,7 @@ const components: MDXComponents = {
     </div>
   ),
   MasterNote,
+  CaratStory,
 };
 
 export function useMDXComponents(overrides: MDXComponents): MDXComponents {

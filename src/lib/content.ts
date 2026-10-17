@@ -45,6 +45,8 @@ export interface ContentMetadata {
   summary?: string;
   /** 初稿：頁面顯示「待師傅核對」提示 */
   draft?: boolean;
+  /** false：唔顯示文章題圖（例如正文開頭已經有互動圖） */
+  cover?: boolean;
   /** 作者署名，未填時用編著者（鄒三山工坊） */
   author?: string;
   /** 師傅核對人和日期；未填即「待核對」 */

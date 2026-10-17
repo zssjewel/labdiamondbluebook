@@ -32,7 +32,7 @@ function buildSquares(): Sq[] {
 }
 
 const SQUARES = buildSquares();
-const FILL = { a: "#8fa6d8", b: "#b9c8e9", c: "#e8b53c" } as const;
+const FILL = { a: "#cfb3a6", b: "#e6d0c5", c: "#34508f" } as const;
 
 export function HowDiagram() {
   return (
