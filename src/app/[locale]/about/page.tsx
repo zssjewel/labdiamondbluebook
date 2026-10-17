@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 import { SmartLink } from "@/components/site";
-import { SITE, localizeHref, waHref } from "@/config/site";
+import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
+import { robotsFor } from "@/lib/indexing";
 
 export const metadata: Metadata = {
   title: `關於本書及編著聲明｜${SITE.name}`,
   description: "《培育鑽石藍皮書》由香港鄒三山工坊編著。本頁說明本書由誰撰寫、內容怎樣核對，以及比較和推薦內容包括工坊自己。",
   alternates: { canonical: localizeHref("/about") },
+  robots: robotsFor(true),
 };
 
 export default function AboutPage() {
@@ -27,9 +29,13 @@ export default function AboutPage() {
         想問款式、預算、手寸，或者發現書中有錯，歡迎直接聯絡師傅。
       </p>
       <p>
-        <SmartLink href={waHref("你好，我想問培育鑽石訂造：")} className="bb-btn bb-btn--accent">
-          WhatsApp 問師傅
-        </SmartLink>
+        {hasContact ? (
+          <SmartLink href={waHref("你好，我想問培育鑽石訂造：")} className="bb-btn bb-btn--accent">
+            WhatsApp 問師傅
+          </SmartLink>
+        ) : (
+          <strong>聯絡方式籌備中，開通後會喺呢度公佈。</strong>
+        )}
       </p>
       {!SITE.whatsapp && <p>（WhatsApp 號碼即將公佈。）</p>}
     </LegalPage>

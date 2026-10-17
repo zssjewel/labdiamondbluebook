@@ -7,7 +7,9 @@ import { CHAPTERS, getChapter } from "@/config/chapters";
 import { CONTENT_TYPES } from "@/config/navigation";
 import { SITE, localizeHref } from "@/config/site";
 import { routing, type Locale } from "@/i18n/routing";
-import { getAllContent, getAllContentPaths, getBookOrder, getContent } from "@/lib/content";
+import { getAllArticles, getAllContent, getAllContentPaths, getBookOrder, getContent } from "@/lib/content";
+import { imgProps } from "@/lib/images";
+import { articleReady, robotsFor } from "@/lib/indexing";
 import { BookNav, PrevNext } from "@/components/book-nav";
 import { ReadingTracker } from "@/components/reading";
 
@@ -30,10 +32,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!chapter) return { title: "找不到頁面" };
   if (slug.length === 1) {
     const title = `${chapter.number}：培育鑽石${chapter.title}｜${SITE.name}`;
+    const items = await getAllContent(chapter.slug, locale);
     return {
       title,
       description: chapter.intro,
       alternates: alternates(`/${chapter.slug}`, locale),
+      // 冇一篇核對完成嘅文章，章節頁唔收錄
+      robots: robotsFor(items.some((i) => articleReady(i.metadata))),
       openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}`, images: [chapter.image] },
     };
   }
@@ -45,6 +50,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title,
     description: item.metadata.description,
     alternates: alternates(pathname, locale),
+    // 初稿、未經師傅核對嘅文章唔收錄
+    robots: robotsFor(articleReady(item.metadata)),
     openGraph: { type: "article", title, description: item.metadata.description, url: `${SITE.url}${localizeHref(pathname, locale)}`, images: [item.metadata.image ?? chapter.image] },
   };
 }
@@ -88,28 +95,28 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
     ],
   };
 
+  const others = items.length === 0 ? (await getAllArticles(locale)).slice(0, 4) : [];
+
   return (
     <main className="bb-page">
-      <JsonLd data={listData} />
+      {items.length > 0 && <JsonLd data={listData} />}
       <JsonLd data={crumbData} />
-      <aside className="bb-page__side">
-        <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: chapter.number }]} />
+      <aside className="bb-page__side bb-only-wide" aria-label="章節導覽">
         <figure className="bb-chapfig">
-          <img decoding="async" src={chapter.image} alt={chapter.imageAlt} width={1000} height={1000} />
+          <img decoding="async" {...imgProps(chapter.image, "240px")} alt={chapter.imageAlt} width={1000} height={1000} />
         </figure>
-        <dl className="bb-meta">
-          <dt>本章答你</dt>
-          <dd>{chapter.answers}</dd>
-          <dt>文章</dt>
-          <dd>{items.length > 0 ? `已出 ${items.length} 篇，撰寫中 ${pending.length} 篇` : `撰寫中 ${pending.length} 篇`}</dd>
-        </dl>
-        <BookNav book={await getBookOrder(locale)} locale={locale} currentChapter={slug} className="bb-only-wide" />
+        <BookNav book={await getBookOrder(locale)} locale={locale} currentChapter={slug} />
       </aside>
       <div className="bb-page__main">
+        <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: chapter.number }]} />
         <h1 className="bb-page__title bb-display">
           {chapter.number}　{chapter.title}
         </h1>
         <p className="bb-page__lead">{chapter.intro}</p>
+        <p className="bb-metaline">
+          <span>本章答你：{chapter.answers}</span>
+          <span>{items.length > 0 ? `已出 ${items.length} 篇，撰寫中 ${pending.length} 篇` : `全章撰寫中，共 ${pending.length} 篇`}</span>
+        </p>
 
         {items.length > 0 && (
           <ul className="bb-list">
@@ -122,6 +129,21 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
               </li>
             ))}
           </ul>
+        )}
+
+        {items.length === 0 && others.length > 0 && (
+          <div className="bb-note bb-note--plain">
+            <p>呢章文章仲寫緊，下面係已經寫好、可以先睇嘅內容：</p>
+            <ul className="bb-list bb-list--compact">
+              {others.map((a) => (
+                <li key={`${a.contentType}/${a.slug}`}>
+                  <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>
+                    <strong>{a.metadata.title}</strong>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {pending.length > 0 && (
@@ -151,6 +173,7 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
             </Link>
           )}
         </nav>
+        <BookNav book={await getBookOrder(locale)} locale={locale} currentChapter={slug} className="bb-only-narrow" />
       </div>
     </main>
   );
@@ -193,22 +216,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
     <main className="bb-page">
       <JsonLd data={articleData} />
       <JsonLd data={crumbData} />
-      <aside className="bb-page__side">
-        <Breadcrumbs
-          items={[
-            { label: "首頁", href: localizeHref("/", locale) },
-            { label: chapter.number, href: localizeHref(`/${contentType}`, locale) },
-            { label: "本文" },
-          ]}
-        />
-        <dl className="bb-meta">
-          <dt>編著</dt>
-          <dd>{author}</dd>
-          <dt>更新</dt>
-          <dd>{item.metadata.lastModified ?? item.metadata.date}</dd>
-          <dt>師傅核對</dt>
-          <dd>{item.metadata.verifiedDate ? `${item.metadata.verifiedBy ?? "工坊師傅"}，${item.metadata.verifiedDate}` : "待核對"}</dd>
-        </dl>
+      <aside className="bb-page__side bb-only-wide" aria-label="文章導覽">
         {item.headings.length > 1 && (
           <nav className="bb-side-toc" aria-label="本文目錄">
             <p>本文目錄</p>
@@ -221,22 +229,55 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             </ol>
           </nav>
         )}
-        <BookNav book={book} locale={locale} currentChapter={contentType} currentSlug={item.slug} className="bb-only-wide" />
+        <BookNav book={book} locale={locale} currentChapter={contentType} currentSlug={item.slug} />
       </aside>
       <article className="bb-page__main">
         <ReadingTracker path={localizeHref(pathname, locale)} title={item.metadata.title} chapter={chapter.number} />
+        <Breadcrumbs
+          items={[
+            { label: "首頁", href: localizeHref("/", locale) },
+            { label: `${chapter.number} ${chapter.title}`, href: localizeHref(`/${contentType}`, locale) },
+            { label: "本文" },
+          ]}
+        />
         <h1 className="bb-page__title bb-display">{item.metadata.title}</h1>
         {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
-        {item.metadata.cover !== false && (
-          <figure className="bb-artfig">
-            <img decoding="async" src={item.metadata.image ?? chapter.image} alt={item.metadata.image ? item.metadata.title : chapter.imageAlt} width={1000} height={1000} />
-            <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
-          </figure>
-        )}
+        <p className="bb-metaline">
+          <span>{author}編著</span>
+          <span>更新 {item.metadata.lastModified ?? item.metadata.date}</span>
+          <span>
+            師傅核對：
+            {item.metadata.verifiedDate ? `${item.metadata.verifiedBy ?? "工坊師傅"}，${item.metadata.verifiedDate}` : <strong>待核對</strong>}
+          </span>
+        </p>
         {item.metadata.draft && (
           <p className="bb-draft">
             <strong>初稿：</strong>本文由編輯整理，正等工坊師傅逐項核對，內容可能仍會修改。
           </p>
+        )}
+        {item.headings.length > 1 && (
+          <details className="bb-tocfold">
+            <summary>本文目錄（{item.headings.filter((h) => h.level === 2).length} 節）</summary>
+            <ol>
+              {item.headings.map((h) => (
+                <li key={h.id} className={h.level === 3 ? "lvl3" : undefined}>
+                  <a href={`#${h.id}`}>{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </details>
+        )}
+        {item.metadata.cover !== false && (
+          <figure className="bb-artfig">
+            <img
+              decoding="async"
+              {...imgProps(item.metadata.image ?? chapter.image, "(max-width: 960px) 100vw, 760px")}
+              alt={item.metadata.image ? item.metadata.title : chapter.imageAlt}
+              width={1000}
+              height={1000}
+            />
+            <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
+          </figure>
         )}
         <div className="bb-prose">
           <item.MDXContent />

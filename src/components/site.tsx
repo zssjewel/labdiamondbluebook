@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CHAPTERS } from "@/config/chapters";
 import { HEADER_LINKS } from "@/config/navigation";
-import { SITE, isExternal, localizeHref, waHref } from "@/config/site";
+import { SITE, hasContact, isExternal, localizeHref, waHref } from "@/config/site";
 
 export { localizeHref };
 
@@ -38,9 +38,11 @@ export function SiteHeader({ locale }: { locale: string }) {
         目錄
       </Link>
       <span className="bb-header__spacer" />
-      <SmartLink href={waHref()} className="bb-btn bb-btn--accent bb-header__action">
-        WhatsApp 問師傅
-      </SmartLink>
+      {hasContact && (
+        <SmartLink href={waHref()} className="bb-btn bb-btn--accent bb-header__action">
+          WhatsApp 問師傅
+        </SmartLink>
+      )}
     </header>
   );
 }
@@ -61,6 +63,14 @@ export function Breadcrumbs({ items }: { items: { label: string; href?: string }
 
 export function AskMaster({ topic }: { topic?: string }) {
   const message = topic ? `你好，我睇咗《${topic}》，想問：` : "你好，我想問培育鑽石訂造：";
+  if (!hasContact) {
+    return (
+      <section className="bb-ask" aria-label="問師傅">
+        <h2 className="bb-display">睇完仲有問題？</h2>
+        <p>問師傅嘅聯絡方式籌備中，開通之後會喺呢度同「關於本書」公佈。開通前可以先睇其他章節。</p>
+      </section>
+    );
+  }
   return (
     <section className="bb-ask" aria-label="問師傅">
       <h2 className="bb-display">睇完仲有問題？直接問師傅</h2>
@@ -80,9 +90,7 @@ export function SiteFooter({ locale }: { locale: string }) {
       <p className="bb-footer__mark bb-display">{SITE.name}</p>
       <div className="bb-footer__row">
         <ul className="bb-footer__places">
-          <li>
-            <SmartLink href={waHref()}>WhatsApp 問師傅</SmartLink>
-          </li>
+          <li>{hasContact ? <SmartLink href={waHref()}>WhatsApp 問師傅</SmartLink> : "聯絡方式籌備中"}</li>
           <li>鄒三山工坊 · 香港</li>
         </ul>
         <div className="bb-footer__cols">
@@ -105,6 +113,9 @@ export function SiteFooter({ locale }: { locale: string }) {
               <Link href={localizeHref("/about", locale)}>關於本書</Link>
             </li>
             <li>
+              <Link href={localizeHref("/cases", locale)}>作品案例</Link>
+            </li>
+            <li>
               <Link href={`${localizeHref("/about", locale)}#disclosure`}>編著聲明</Link>
             </li>
             <li>
@@ -118,7 +129,7 @@ export function SiteFooter({ locale }: { locale: string }) {
       </div>
       <div className="bb-footer__legal">
         <p>
-          © {new Date().getFullYear()} {SITE.publisher}。本書由鄒三山工坊編著，比較及推薦內容包括工坊自己。網站上的首飾圖片為 3D 示意圖。
+          © {new Date().getFullYear()} {SITE.publisher}。本書由鄒三山工坊編著，比較及推薦內容包括工坊自己。網站上的首飾圖片均為示意圖（AI 生成或 3D 渲染），並非工坊實物或庫存相片。
         </p>
         <a href="#top">返回頂部</a>
       </div>

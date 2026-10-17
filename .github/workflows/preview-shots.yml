@@ -36,6 +36,8 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
           NEXT_PUBLIC_SITE_URL: https://labdiamondbluebook.com
+          # 預覽分支用版面示例睇作品案例排版；正式部署唔會設定呢個
+          NEXT_PUBLIC_CASES_DEMO: ${{ github.ref_name == 'warm-preview' && '1' || '' }}
 
       - name: Serve
         if: steps.build.outcome == 'success'
@@ -49,7 +51,7 @@ jobs:
         run: |
           npx -y playwright@1.55.0 install --with-deps chromium firefox webkit >/dev/null
           mkdir -p shots
-          pages="home:zh-hk.html chapter:zh-hk/basics.html article:zh-hk/basics/vs-natural-moissanite.html about:zh-hk/about.html hand:zh-hk/4c/carat-size-on-hand.html"
+          pages="home:zh-hk.html chapter:zh-hk/basics.html article:zh-hk/basics/vs-natural-moissanite.html about:zh-hk/about.html hand:zh-hk/4c/carat-size-on-hand.html price:zh-hk/price.html cases:zh-hk/cases.html"
           for p in $pages; do
             name="${p%%:*}"; path="${p#*:}"
             npx -y playwright@1.55.0 screenshot --full-page --wait-for-timeout 1500 --viewport-size "1440,900" "http://localhost:8080/$path" "shots/${name}-1440.png" || true
@@ -58,7 +60,7 @@ jobs:
           # 大屏幕和不同瀏覽器內核
           for p in home:zh-hk.html article:zh-hk/basics/vs-natural-moissanite.html; do
             name="${p%%:*}"; path="${p#*:}"
-            for w in 1280 1920 2560; do
+            for w in 320 768 1280 1920 2560; do
               npx -y playwright@1.55.0 screenshot --wait-for-timeout 1500 --viewport-size "$w,1000" "http://localhost:8080/$path" "shots/${name}-chromium-${w}.png" || true
             done
             npx -y playwright@1.55.0 screenshot -b firefox --wait-for-timeout 2000 --viewport-size "1440,1000" "http://localhost:8080/$path" "shots/${name}-firefox-1440.png" || true
@@ -72,6 +74,13 @@ jobs:
         run: |
           npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
           NODE_PATH=/tmp/pw/node_modules node scripts/perf.cjs http://localhost:8080 | tee shots/perf.txt
+
+      - name: Pre-release checks
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          [ -d /tmp/pw/node_modules/playwright ] || npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
+          NODE_PATH=/tmp/pw/node_modules node scripts/check.cjs http://localhost:8080 | tee shots/check.txt
 
       - name: Taste inspector
         if: steps.build.outcome == 'success'

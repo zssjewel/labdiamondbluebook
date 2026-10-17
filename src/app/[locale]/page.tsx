@@ -8,7 +8,11 @@ import { ContinueReading } from "@/components/reading";
 import { CHAPTERS } from "@/config/chapters";
 import { getAllArticles } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
-import { SITE, localizeHref, waHref } from "@/config/site";
+import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
+import { CASES } from "@/config/cases";
+import { CaseCard } from "@/components/cases";
+import { imgProps } from "@/lib/images";
+import { robotsFor } from "@/lib/indexing";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -17,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: SITE.homeTitle,
     description: SITE.description,
     alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
+    robots: robotsFor(true),
     openGraph: { title: SITE.homeTitle, description: SITE.description, url: `${SITE.url}${url}`, images: ["/og.png"] },
   };
 }
@@ -95,6 +100,28 @@ const ROUTES = [
   },
 ];
 
+/** 首屏三條快答：只連去已經寫好嘅文章；章節未寫好就如實標「撰寫中」 */
+const ANSWERS = [
+  {
+    q: "培育鑽石係咪真鑽石？",
+    a: "係。同天然鑽石一樣係碳結晶，硬度 10；莫桑石同鋯石就唔係鑽石。",
+    href: "/basics/vs-natural-moissanite",
+    label: "睇四種石點分",
+  },
+  {
+    q: "1 卡戴喺手上有幾大？",
+    a: "直徑約 6.4 毫米，大概佔手指闊度四成；2 卡約 8.1 毫米，唔係大一倍。",
+    href: "/4c/carat-size-on-hand",
+    label: "拉一拉睇大細",
+  },
+  {
+    q: "IGI 定 GIA 證書？",
+    a: "GIA 由 2025 年 10 月起只分 Premium、Standard 兩級；IGI 仍然逐項評 4C。",
+    href: "/certificate",
+    label: "第三章（撰寫中）",
+  },
+];
+
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -102,6 +129,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const latest = articles.slice(0, 5);
   const pendingCount = CHAPTERS.reduce((n, c) => n + c.topics.filter((t) => !articles.some((a) => a.metadata.title === t)).length, 0);
   const chapterOf = (slug: string) => CHAPTERS.find((c) => c.slug === slug);
+  const countOf = (slug: string) => articles.filter((a) => a.contentType === slug).length;
 
   const webSite = {
     "@context": "https://schema.org",
@@ -123,33 +151,37 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <JsonLd data={webSite} />
       <JsonLd data={faqData} />
 
-      {/* 刊頭拼貼 */}
+      {/* 刊頭拼貼：8 張 AI 示意圖 + 兩格品牌色 */}
       <div className="bb-mosaic">
-        <div className="t-pale">
-          <img decoding="async" style={{ objectPosition: "50% 18%" }} src={`${R}/ring-oval-pale.webp`} alt="鉑金四爪橢圓形培育鑽石戒指（3D 示意）" width={1000} height={1000} />
+        <div className="t-white">
+          <img decoding="async" {...imgProps(`${R}/ring-oval-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪橢圓主石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-blue span2r" />
-        <div className="t-steel span2c">
-          <img decoding="async" src={`${R}/bracelet-steel.webp`} alt="培育鑽石網球手鏈（3D 示意）" width={1400} height={700} />
+        <div className="t-white span2c">
+          <img decoding="async" fetchPriority="high" {...imgProps(`${R}/bracelet-steel.webp`, "(max-width: 760px) 34vw, 34vw")} alt="銀白色圓鑽網球手鏈，橢圓形平放展示（AI 示意圖）" width={1400} height={700} />
         </div>
         <div className="t-white hide-sm">
-          <img decoding="async" style={{ objectPosition: "50% 30%" }} src={`${R}/pendant-yg-white.webp`} alt="黃金四爪培育鑽石吊墜（3D 示意）" width={1000} height={1000} />
+          <img decoding="async" style={{ objectPosition: "50% 70%" }} {...imgProps(`${R}/pendant-yg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單鑽吊墜與細鏈（AI 示意圖）" width={1000} height={1000} />
+        </div>
+        <div className="t-white hide-sm">
+          <img decoding="async" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
+        </div>
+        <div className="t-white">
+          <img decoding="async" {...imgProps(`${R}/halo-rg-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色光環主石戒指（AI 示意圖）" width={1000} height={1000} />
+        </div>
+        <div className="t-white hide-sm">
+          <img decoding="async" {...imgProps(`${R}/band-rg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色排鑽戒指，側前方展示（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-rose hide-sm" />
-        <div className="t-steel">
-          <img decoding="async" src={`${R}/band-rg-steel.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={1000} height={1000} />
+        <div className="t-white hide-sm">
+          <img decoding="async" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} />
         </div>
-        <div className="t-pale">
-          <img decoding="async" style={{ objectPosition: "50% 15%" }} src={`${R}/halo-rg-pale.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={1000} height={1000} />
-        </div>
-        <div className="t-rose hide-sm" />
-        <div className="t-blue hide-sm" />
-        <div className="t-ink hide-sm">
-          <img decoding="async" src={`${R}/macro-ink.webp`} alt="培育鑽石六爪鑲嵌特寫（3D 示意）" width={1000} height={1000} loading="lazy" />
+        <div className="t-ink">
+          <img decoding="async" {...imgProps(`${R}/macro-ink.webp`, "(max-width: 760px) 34vw, 17vw")} alt="深藍背景下的六爪鑽石鑲嵌特寫（AI 示意圖）" width={1000} height={1000} />
         </div>
       </div>
 
-      {/* 標題 */}
+      {/* 標題 + 三條快答 */}
       <section className="bb-hero" aria-labelledby="hero-title">
         <h1 id="hero-title" className="bb-hero__title bb-display">
           <span className="bb-line">
@@ -161,41 +193,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </h1>
         <p className="bb-hero__stand bb-after-title">鄒三山工坊編著。價錢點計、證書點睇、訂造點做，師傅將行內做法一次講清。</p>
         <div className="bb-hero__actions bb-after-title">
-          <SmartLink href={waHref()} className="bb-btn bb-btn--accent">
-            WhatsApp 問師傅
-          </SmartLink>
-          <Link href="#routes" className="bb-btn bb-btn--ghost">
-            由邊度開始睇
+          {hasContact ? (
+            <SmartLink href={waHref()} className="bb-btn bb-btn--accent">
+              WhatsApp 問師傅
+            </SmartLink>
+          ) : (
+            <Link href="#routes" className="bb-btn bb-btn--accent">
+              由邊度開始睇
+            </Link>
+          )}
+          <Link href={hasContact ? "#routes" : "#contents"} className="bb-btn bb-btn--ghost">
+            {hasContact ? "由邊度開始睇" : "睇九章目錄"}
           </Link>
         </div>
         <ContinueReading />
-      </section>
-
-      {/* 宣言 */}
-      <section className="bb-tiles" aria-label="關於本書">
-        <div className="bb-tiles__a" data-reveal>
-          <p className="bb-display">
-            做嘢嘅人
-            <br />
-            寫嘅書
-          </p>
-        </div>
-        <div className="bb-tiles__b" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
-          <p className="bb-display">九章</p>
-        </div>
-        <div className="bb-tiles__c" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
-          <img decoding="async" style={{ objectPosition: "50% 20%" }} src={`${R}/solitaire-yg-steel.webp`} alt="黃金四爪單粒培育鑽石戒指（3D 示意）" width={1000} height={800} loading="lazy" />
-        </div>
-        <div className="bb-tiles__d">
-          <div data-reveal>
-            <p>
-              《培育鑽石藍皮書》由香港鄒三山工坊編著。客人問得最多嘅問題，就係呢本書嘅目錄：價錢點計、證書點睇、邊啲錢值得畀、邊啲錢唔使畀，同埋老實講，培育鑽石唔保值。
-            </p>
-            <p>
-              講揀商家嗰章會比較品牌店、工廠、網購同深圳水貝，當中包括我哋自己。呢點一開始就講明，你睇完自己判斷。
-            </p>
-          </div>
-        </div>
+        <ul className="bb-answers bb-after-title" aria-label="快答">
+          {ANSWERS.map((x) => (
+            <li key={x.q}>
+              <Link href={localizeHref(x.href, locale)}>
+                <strong>{x.q}</strong>
+                <span>{x.a}</span>
+                <em>{x.label}</em>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* 閱讀路線 */}
@@ -220,6 +242,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                       <li key={slug}>
                         <span className="bb-routes__step">{j + 1}</span>
                         <Link href={localizeHref(`/${slug}`, locale)}>{`${c.number} ${c.title}`}</Link>
+                        {countOf(slug) === 0 && <span className="bb-tag">撰寫中</span>}
                       </li>
                     );
                   })}
@@ -229,6 +252,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           ))}
         </ol>
       </section>
+
+      {/* 卡數戴喺手上有幾大（互動） */}
+      <CaratTool locale={locale} />
+
+      {/* 作品案例：有真實作品先出現 */}
+      {CASES.length > 0 && (
+        <section className="bb-casesec" aria-labelledby="cases-title">
+          <h2 id="cases-title" className="bb-sechead bb-display" data-reveal>
+            工坊做過嘅作品
+          </h2>
+          <p className="bb-secsub" data-reveal>
+            真實作品，寫明主石、金屬同工期，經客人同意公開。
+          </p>
+          <div className="bb-cases">
+            {CASES.slice(0, 3).map((c) => (
+              <CaseCard key={c.slug} item={c} sizes="(max-width: 760px) 100vw, 33vw" />
+            ))}
+          </div>
+          <p className="bb-casesec__more">
+            <Link className="bb-link" href={localizeHref("/cases", locale)}>
+              睇全部作品
+            </Link>
+          </p>
+        </section>
+      )}
 
       {/* 目錄 */}
       <section className="bb-contents" id="contents" aria-labelledby="contents-title">
@@ -240,7 +288,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </p>
         <div className="bb-contents__body">
           <div className="bb-contents__fig" data-reveal>
-            <img decoding="async" src={`${R}/princess-wg-white.webp`} alt="白金公主方形培育鑽石戒指（3D 示意）" width={1000} height={1000} loading="lazy" />
+            <img decoding="async" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 960px) 62vw, 40vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} loading="lazy" />
           </div>
           <div>
             <ol className="bb-toc bb-group" data-reveal aria-label="目錄">
@@ -248,7 +296,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <li key={c.slug}>
                   <Link href={localizeHref(`/${c.slug}`, locale)}>
                     <span className="bb-toc__num">{c.number}</span>
-                    <span className="bb-toc__title">{c.title}</span>
+                    <span className="bb-toc__title">
+                      {c.title}
+                      <span className="bb-tag">{countOf(c.slug) > 0 ? `${countOf(c.slug)} 篇` : "撰寫中"}</span>
+                    </span>
                     <span className="bb-toc__ans">{c.answers}</span>
                   </Link>
                 </li>
@@ -271,6 +322,33 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </ul>
               </div>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* 宣言 */}
+      <section className="bb-tiles" aria-label="關於本書">
+        <div className="bb-tiles__a" data-reveal>
+          <p className="bb-display">
+            做嘢嘅人
+            <br />
+            寫嘅書
+          </p>
+        </div>
+        <div className="bb-tiles__b" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+          <p className="bb-display">九章</p>
+        </div>
+        <div className="bb-tiles__c" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
+          <img decoding="async" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 50vw, 34vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} loading="lazy" />
+        </div>
+        <div className="bb-tiles__d">
+          <div data-reveal>
+            <p>
+              《培育鑽石藍皮書》由香港鄒三山工坊編著。客人問得最多嘅問題，就係呢本書嘅目錄：價錢點計、證書點睇、邊啲錢值得畀、邊啲錢唔使畀，同埋老實講，培育鑽石唔保值。
+            </p>
+            <p>
+              講揀商家嗰章會比較品牌店、工廠、網購同深圳水貝，當中包括我哋自己。呢點一開始就講明，你睇完自己判斷。
+            </p>
           </div>
         </div>
       </section>
@@ -303,9 +381,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* 卡數戴喺手上有幾大（互動） */}
-      <CaratTool locale={locale} />
-
       {/* 問答 */}
       <section className="bb-faq" aria-labelledby="faq-title">
         <h2 id="faq-title" className="bb-sechead bb-display" data-reveal>
@@ -330,14 +405,29 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <section className="bb-close" aria-labelledby="close-title">
         <h2 id="close-title" className="bb-display" data-reveal>
           睇完未決定？
-          <br />
-          直接問師傅
+          {hasContact && (
+            <>
+              <br />
+              直接問師傅
+            </>
+          )}
         </h2>
         <div className="bb-close__foot" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
-          <p>傳張款式圖、講個預算，師傅用 WhatsApp 直接答你，唔使先落訂。</p>
-          <SmartLink href={waHref("你好，我睇咗培育鑽石藍皮書，想問：")} className="bb-btn bb-btn--accent">
-            WhatsApp 問師傅
-          </SmartLink>
+          {hasContact ? (
+            <>
+              <p>傳張款式圖、講個預算，師傅用 WhatsApp 直接答你。</p>
+              <SmartLink href={waHref("你好，我睇咗培育鑽石藍皮書，想問：")} className="bb-btn bb-btn--accent">
+                WhatsApp 問師傅
+              </SmartLink>
+            </>
+          ) : (
+            <>
+              <p>問師傅嘅聯絡方式籌備中，開通後會喺呢度公佈。可以先由第一章睇起。</p>
+              <Link href={localizeHref("/basics", locale)} className="bb-btn bb-btn--accent">
+                由第一章開始睇
+              </Link>
+            </>
+          )}
         </div>
       </section>
     </main>

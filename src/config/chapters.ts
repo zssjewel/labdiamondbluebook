@@ -18,7 +18,7 @@ export const CHAPTERS: Chapter[] = [
   {
     slug: "basics",
     image: "/images/renders/macro-ink.webp",
-    imageAlt: "培育鑽石六爪鑲嵌特寫，可見刻面和火彩（3D 示意）",
+    imageAlt: "深藍背景下的六爪鑽石鑲嵌特寫（AI 示意圖）",
     number: "第一章",
     title: "入門",
     answers: "係咪真鑽石、點樣分辨",
@@ -34,7 +34,7 @@ export const CHAPTERS: Chapter[] = [
   {
     slug: "price",
     image: "/images/renders/princess-wg-white.webp",
-    imageAlt: "2 卡公主方形培育鑽石白金戒指（3D 示意）",
+    imageAlt: "銀白色四爪公主方形主石戒指（AI 示意圖）",
     number: "第二章",
     title: "價錢",
     answers: "1 卡幾錢、會唔會跌、保唔保值",
@@ -77,7 +77,7 @@ export const CHAPTERS: Chapter[] = [
   {
     slug: "styles",
     image: "/images/renders/halo-rg-pale.webp",
-    imageAlt: "玫瑰金光環培育鑽石戒指（3D 示意）",
+    imageAlt: "玫瑰金色光環主石戒指（AI 示意圖）",
     number: "第五章",
     title: "形狀款式",
     answers: "形狀、求婚戒、對戒、手鏈",

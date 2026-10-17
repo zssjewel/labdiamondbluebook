@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { isExternal, localizeHref, waHref } from "@/config/site";
+import { hasContact, isExternal, localizeHref, waHref } from "@/config/site";
 
 /**
  * 卡數戴喺手上有幾大。
@@ -204,9 +204,11 @@ export function CaratTool({ locale }: { locale: string }) {
           <Link href={localizeHref("/4c/carat-size-on-hand", locale)} className="bb-btn bb-btn--blue">
             睇完整比較
           </Link>
-          <a href={ask} {...askProps} className="bb-link">
-            問 {fmtCt(ct)} 卡價錢
-          </a>
+          {hasContact && (
+            <a href={ask} {...askProps} className="bb-link">
+              問 {fmtCt(ct)} 卡價錢
+            </a>
+          )}
         </div>
       </div>
     </section>

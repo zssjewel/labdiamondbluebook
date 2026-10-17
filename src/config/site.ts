@@ -23,6 +23,9 @@ export function localizeHref(href: string, locale: string = SITE.locale) {
   return `/${locale}${href}`;
 }
 
+/** 已經有真實聯絡號碼先顯示「WhatsApp 問師傅」；未有就如實寫「聯絡方式籌備中」，唔放假按鈕。 */
+export const hasContact = Boolean(SITE.whatsapp);
+
 /** WhatsApp 詢價連結，可預填一句話。 */
 export function waHref(message?: string) {
   if (!SITE.whatsapp) return `${localizeHref("/about")}#contact`;
