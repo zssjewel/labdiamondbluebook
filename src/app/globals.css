@@ -116,6 +116,9 @@
 }
 
 /* ---------- 共用 ---------- */
+.bb-display, .bb-hero__stand, .bb-secsub, .bb-close__foot p, .bb-how__intro p {
+  text-wrap: balance;
+}
 .bb-display {
   font-family: var(--font-display);
   font-weight: 600;
@@ -537,9 +540,10 @@
 @media (max-width: 960px) {
   .bb-contents__body { grid-template-columns: 1fr; }
   .bb-contents__fig { position: relative; top: auto; width: 62%; max-width: 360px; justify-self: center; }
-  .bb-group a { grid-template-columns: minmax(0, 1fr) 1em; padding: 14px 18px; }
-  .bb-group a::after { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
-  .bb-toc__ans { text-align: left; }
+  .bb-group a { grid-template-columns: 3.6em minmax(0, 1fr) 1em; gap: 2px 8px; padding: 12px 18px; }
+  .bb-group a::after { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+  .bb-toc__ans { grid-column: 2; text-align: left; }
+  .bb-latest .bb-group a > span { grid-column: 1; }
   .bb-latest .bb-group a { grid-template-columns: minmax(0, 1fr) 1em; }
 }
 
@@ -576,14 +580,16 @@
   padding: 0;
   list-style: none;
 }
-.bb-how__steps strong { display: block; font-size: var(--step-lead); margin-bottom: 6px; }
-.bb-how__steps p { margin: 0; font-size: var(--step-small); line-height: 1.7; max-width: 22em; }
+.bb-how__steps li { text-align: center; }
+.bb-how__steps strong { display: block; font-size: var(--step-lead); font-weight: 600; margin-bottom: 6px; }
+.bb-how__steps p { margin: 0 auto; font-size: var(--step-small); line-height: 1.7; max-width: 20em; }
 @media (max-width: 760px) {
   .bb-how__layout { display: grid; grid-template-columns: 1fr 38vw; gap: 16px; margin-top: 40px; }
   .bb-how__svg--h { display: none; }
   .bb-how__svg--v { display: block; margin: 0; }
   .bb-how__steps { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); margin: 0; gap: 0; }
-  .bb-how__steps li { align-self: center; }
+  .bb-how__steps li { align-self: center; text-align: left; }
+  .bb-how__steps p { margin: 0; }
 }
 
 /* ---------- 卡數戴喺手上（首頁工具、文章邊碌邊變） ---------- */
