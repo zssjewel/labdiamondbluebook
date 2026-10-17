@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { localizeHref } from "@/config/site";
+
+export const metadata: Metadata = {
+  title: "找不到這一頁｜培育鑽石藍皮書",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFoundPage() {
   return (

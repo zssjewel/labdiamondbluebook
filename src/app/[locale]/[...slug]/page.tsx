@@ -7,7 +7,9 @@ import { CHAPTERS, getChapter } from "@/config/chapters";
 import { CONTENT_TYPES } from "@/config/navigation";
 import { SITE, localizeHref } from "@/config/site";
 import { routing, type Locale } from "@/i18n/routing";
-import { getAllContent, getAllContentPaths, getContent } from "@/lib/content";
+import { getAllContent, getAllContentPaths, getBookOrder, getContent } from "@/lib/content";
+import { BookNav, PrevNext } from "@/components/book-nav";
+import { ReadingTracker } from "@/components/reading";
 
 type Params = { locale: Locale; slug: string[] };
 
@@ -98,6 +100,7 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
           <dt>文章</dt>
           <dd>{items.length > 0 ? `已出 ${items.length} 篇，撰寫中 ${pending.length} 篇` : `撰寫中 ${pending.length} 篇`}</dd>
         </dl>
+        <BookNav book={await getBookOrder(locale)} locale={locale} currentChapter={slug} className="bb-only-wide" />
       </aside>
       <div className="bb-page__main">
         <h1 className="bb-page__title bb-display">
@@ -158,6 +161,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
   const pageUrl = `${SITE.url}${localizeHref(pathname, locale)}`;
   const author = item.metadata.author || SITE.publisher;
   const siblings = (await getAllContent(contentType, locale)).filter((i) => i.slug !== item.slug).slice(0, 4);
+  const book = await getBookOrder(locale);
 
   const articleData = {
     "@context": "https://schema.org",
@@ -199,6 +203,8 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
           <dd>{author}</dd>
           <dt>更新</dt>
           <dd>{item.metadata.lastModified ?? item.metadata.date}</dd>
+          <dt>師傅核對</dt>
+          <dd>{item.metadata.verifiedDate ? `${item.metadata.verifiedBy ?? "工坊師傅"}，${item.metadata.verifiedDate}` : "待核對"}</dd>
         </dl>
         {item.headings.length > 1 && (
           <nav className="bb-side-toc" aria-label="本文目錄">
@@ -212,8 +218,10 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             </ol>
           </nav>
         )}
+        <BookNav book={book} locale={locale} currentChapter={contentType} currentSlug={item.slug} className="bb-only-wide" />
       </aside>
       <article className="bb-page__main">
+        <ReadingTracker path={localizeHref(pathname, locale)} title={item.metadata.title} chapter={chapter.number} />
         <h1 className="bb-page__title bb-display">{item.metadata.title}</h1>
         {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
         {item.metadata.draft && (
@@ -230,6 +238,8 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
           《{SITE.name}》由{SITE.publisher}編著。本書比較及推薦的內容包括工坊自己，詳見
           <Link href={`${localizeHref("/about", locale)}#disclosure`}>編著聲明</Link>。
         </div>
+
+        <PrevNext book={book} locale={locale} contentType={contentType} slug={item.slug} />
 
         <AskMaster topic={item.metadata.title} />
 
@@ -253,6 +263,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             ← 返回{chapter.number} {chapter.title}
           </Link>
         </nav>
+        <BookNav book={book} locale={locale} currentChapter={contentType} currentSlug={item.slug} className="bb-only-narrow" />
       </article>
     </main>
   );

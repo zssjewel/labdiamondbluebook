@@ -4,7 +4,10 @@ import { setRequestLocale } from "next-intl/server";
 import { CaratGauge } from "@/components/carat-gauge";
 import { HowDiagram } from "@/components/how-diagram";
 import { JsonLd, SmartLink } from "@/components/site";
+import { ContinueReading } from "@/components/reading";
 import { CHAPTERS } from "@/config/chapters";
+import { getAllArticles } from "@/lib/content";
+import type { Locale } from "@/i18n/routing";
 import { SITE, localizeHref, waHref } from "@/config/site";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -23,49 +26,82 @@ const R = "/images/renders";
 const FAQ = [
   {
     q: "培育鑽石係咪真鑽石？",
+    more: "/basics",
     a: "係。成分同天然鑽石一樣係碳結晶，硬度同樣係 10，折射同火彩都一樣；莫桑石同鋯石就唔係鑽石。",
   },
   {
     q: "肉眼分唔分到培育同天然？",
+    more: "/basics",
     a: "分唔到，連一般鑽石測試筆都分唔到，要靠化驗所儀器。正規證書嘅石，腰部會有激光刻字對返證書號碼。",
   },
   {
     q: "培育鑽石保唔保值？",
+    more: "/price",
     a: "唔保值。轉手一般只值零售價一至三成，甚至更低。當首飾買嚟戴最實際，唔好當投資。",
   },
   {
     q: "價錢仲會唔會跌？",
+    more: "/price",
     a: "大顆嘅仲喺度跌。業內批發價數據顯示，今年按年跌約一成三，2 卡跌約兩成，1 卡就大致企穩。",
   },
   {
     q: "IGI 同 GIA 證書有咩分別？",
+    more: "/certificate",
     a: "GIA 由 2025 年 10 月起唔再為培育鑽石逐項評 4C，只分 Premium、Standard 兩級；IGI 仍然逐項評 4C。第三章會詳細講點揀。",
   },
   {
     q: "培育鑽石會唔會變色？",
+    more: "/4c",
     a: "正常唔會。有啲 CVD 石出爐後做過顏色處理，證書會註明；寫住 As Grown 即係冇做生長後處理。",
   },
   {
     q: "CVD 同 HPHT 邊種好啲？",
+    more: "/basics",
     a: "兩種都係真培育鑽石，好壞要睇返每粒石嘅 4C 同證書，唔係睇用邊種方法整。",
   },
   {
     q: "訂造要幾耐？",
+    more: "/custom",
     a: "由揀石、3D 設計、蠟版到鑲石，時間視乎款式同工序，第六章會逐步講；你個款要幾耐，可以直接問師傅。",
   },
   {
     q: "喺香港訂定去深圳訂？",
+    more: "/choose",
     a: "兩邊都有好有唔好，價錢、溝通、驗貨同售後方式都唔同。第七章會逐項比較，你睇完再揀。",
   },
   {
     q: "你哋會唔會推薦自己？",
+    more: "/about#disclosure",
     a: "會。本書由鄒三山工坊編著，推薦名單包括我哋自己；比較嘅章節只比渠道，唔點名評同行。",
+  },
+];
+
+/** 按讀者情況的閱讀路線（借鑑同類藍皮書的「按目標進入」） */
+const ROUTES = [
+  {
+    name: "準備求婚，第一次買",
+    who: "未買過鑽石首飾，想由頭了解，唔想中伏。",
+    path: ["basics", "4c", "styles", "custom"],
+  },
+  {
+    name: "已經有心水款，想問價",
+    who: "知道想要咩款，想知合理價錢同點揀商家。",
+    path: ["price", "certificate", "choose"],
+  },
+  {
+    name: "未決定買唔買培育鑽石",
+    who: "想知同天然鑽石有咩分別、值唔值得。",
+    path: ["basics", "price"],
   },
 ];
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const articles = await getAllArticles(locale as Locale);
+  const latest = articles.slice(0, 5);
+  const pendingCount = CHAPTERS.reduce((n, c) => n + c.topics.filter((t) => !articles.some((a) => a.metadata.title === t)).length, 0);
+  const chapterOf = (slug: string) => CHAPTERS.find((c) => c.slug === slug);
 
   const webSite = {
     "@context": "https://schema.org",
@@ -121,13 +157,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <SmartLink href={waHref()} className="bb-btn bb-btn--accent">
               WhatsApp 問師傅
             </SmartLink>
-            <Link href="#contents" className="bb-link">
-              睇目錄
+            <Link href="#routes" className="bb-link">
+              由邊度開始睇
             </Link>
           </div>
-          <Link href="#contents" className="bb-link bb-hero__toc-link">
-            由目錄開始睇
+          <Link href="#routes" className="bb-link bb-hero__toc-link">
+            由邊度開始睇？
           </Link>
+          <ContinueReading />
         </div>
         <h1 id="hero-title" className="bb-hero__title bb-display">
           <span className="bb-line">
@@ -166,6 +203,35 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
+      {/* 閱讀路線 */}
+      <section className="bb-routes" id="routes" aria-labelledby="routes-title">
+        <h2 id="routes-title" className="bb-routes__head bb-display" data-reveal>
+          由邊度
+          <br />
+          開始睇？
+        </h2>
+        <ol className="bb-routes__list">
+          {ROUTES.map((r, i) => (
+            <li key={r.name} data-reveal style={{ "--d": `${i * 80}ms` } as React.CSSProperties}>
+              <h3>{r.name}</h3>
+              <p>{r.who}</p>
+              <p className="bb-routes__path">
+                {r.path.map((slug, j) => {
+                  const c = chapterOf(slug);
+                  if (!c) return null;
+                  return (
+                    <span key={slug}>
+                      {j > 0 && <span aria-hidden="true"> → </span>}
+                      <Link href={localizeHref(`/${slug}`, locale)}>{`${c.number} ${c.title}`}</Link>
+                    </span>
+                  );
+                })}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       {/* 目錄 */}
       <section className="bb-contents" id="contents" aria-labelledby="contents-title">
         <h2 id="contents-title" className="bb-contents__head bb-display" data-reveal>
@@ -176,7 +242,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <div className="bb-contents__fig" data-reveal>
             <img src={`${R}/w1.webp`} alt="白金單粒培育鑽石求婚戒指（3D 示意）" width={600} height={600} loading="lazy" />
           </div>
-          <p className="bb-contents__name">目錄</p>
+          <div className="bb-contents__name">
+            <p>目錄</p>
+            <p>
+              已出 {articles.length} 篇
+              <br />
+              撰寫中 {pendingCount} 篇
+            </p>
+          </div>
           <ol className="bb-toc">
             {CHAPTERS.map((c, i) => (
               <li key={c.slug} className={i > 0 && i % 3 === 0 ? "group" : undefined} data-reveal style={{ "--d": `${(i % 3) * 70}ms` } as React.CSSProperties}>
@@ -194,6 +267,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             ))}
           </ol>
         </div>
+        {latest.length > 0 && (
+          <div className="bb-latest" data-reveal>
+            <h3>最新文章</h3>
+            <ul>
+              {latest.map((a) => (
+                <li key={`${a.contentType}/${a.slug}`}>
+                  <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>{a.metadata.title}</Link>
+                  <span>
+                    {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       {/* 多變一 */}
@@ -236,7 +324,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="bb-faq__text" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
           {FAQ.map((f) => (
             <p key={f.q}>
-              <strong>{f.q}</strong> {f.a}
+              <strong>{f.q}</strong> {f.a}{" "}
+              <Link className="bb-faq__more" href={localizeHref(f.more, locale)}>
+                延伸閱讀
+              </Link>
             </p>
           ))}
         </div>

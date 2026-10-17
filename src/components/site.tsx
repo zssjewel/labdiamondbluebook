@@ -64,7 +64,7 @@ export function AskMaster({ topic }: { topic?: string }) {
   return (
     <section className="bb-ask" aria-label="問師傅">
       <h2 className="bb-display">睇完仲有問題？直接問師傅</h2>
-      <p>傳張款式圖、講個預算或者手寸，師傅會用 WhatsApp 直接答你。</p>
+      <p>傳張款式圖、講個預算或者手寸，師傅會用 WhatsApp 直接答你。好多人問嘅問題，我哋會整理成新文章，唔會公開你嘅資料。</p>
       <SmartLink href={waHref(message)} className="bb-btn bb-btn--accent">
         WhatsApp 問師傅
       </SmartLink>

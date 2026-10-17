@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { CHAPTERS } from "@/config/chapters";
 import { CONTENT_TYPES as CONFIG_CONTENT_TYPES } from "@/config/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
@@ -46,6 +47,9 @@ export interface ContentMetadata {
   draft?: boolean;
   /** 作者署名，未填時用編著者（鄒三山工坊） */
   author?: string;
+  /** 師傅核對人和日期；未填即「待核對」 */
+  verifiedBy?: string;
+  verifiedDate?: string;
 }
 
 export interface Heading {
@@ -153,4 +157,21 @@ export async function getAllContentPaths(language: Locale = routing.defaultLocal
     .flatMap((entry) =>
       getSlugsFromDirectory(path.join(localeDir, entry.name)).map((slug) => ({ contentType: entry.name, slug })),
     );
+}
+
+/**
+ * 全書順序：按九章的次序，章內按 chapters.ts 的 topics 次序，未列入 topics 的排在該章最後。
+ * 用於上一篇／下一篇、全書目錄。
+ */
+export async function getBookOrder(language: Locale): Promise<ContentItem[]> {
+  const ordered: ContentItem[] = [];
+  for (const chapter of CHAPTERS) {
+    const items = await getAllContent(chapter.slug, language);
+    const rank = (title: string) => {
+      const i = chapter.topics.indexOf(title);
+      return i === -1 ? 999 : i;
+    };
+    ordered.push(...[...items].sort((a, b) => rank(a.metadata.title) - rank(b.metadata.title)));
+  }
+  return ordered;
 }
