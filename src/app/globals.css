@@ -57,7 +57,8 @@
     /* 內容最大寬度：大屏幕左右留邊，色塊背景照樣鋪滿 */
     --max: 1360px;
     --pad: max(var(--m), calc((100% - var(--max)) / 2));
-    --gap-section: clamp(96px, 12vw, 200px);
+    /* 段與段之間：同一底色嘅段只留一份空位；有色段內上下各一份 */
+    --gap-section: clamp(64px, 7vw, 112px);
     --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 
     /* shadcn 元件沿用的變數（對應到上面的角色） */
@@ -448,7 +449,7 @@
 
 /* ---------- 首頁：目錄 ---------- */
 .bb-contents {
-  padding: var(--gap-section) var(--pad) 0;
+  padding: var(--gap-section) var(--pad);
 }
 .bb-sechead {
   margin: 0 auto;
@@ -539,8 +540,7 @@
 
 /* ---------- 首頁：多變一流程 ---------- */
 .bb-how {
-  margin-top: var(--gap-section);
-  padding: clamp(72px, 9vw, 140px) var(--pad);
+  padding: var(--gap-section) var(--pad);
   background: var(--steel);
   color: var(--ink);
 }
@@ -770,7 +770,7 @@
 
 /* ---------- 首頁：問答 ---------- */
 .bb-faq {
-  padding: var(--gap-section) var(--pad);
+  padding: 0 var(--pad) var(--gap-section);
 }
 .bb-faq__list {
   display: grid;
@@ -802,9 +802,7 @@
   align-items: center;
   justify-content: center;
   gap: 28px;
-  min-height: 72vh;
-  min-height: 72svh;
-  padding: clamp(80px, 9vw, 140px) var(--pad);
+  padding: calc(var(--gap-section) * 1.4) var(--pad);
   background: var(--ink);
   color: var(--paper);
   text-align: center;
@@ -821,14 +819,14 @@
 }
 .bb-close__foot p { margin: 0; max-width: 24em; font-size: var(--step-lead); line-height: 1.5; color: rgba(251, 247, 246, 0.82); }
 @media (max-width: 760px) {
-  .bb-close { min-height: 64vh; min-height: 64svh; }
+
 }
 
 /* ---------- 頁腳 ---------- */
 .bb-footer {
   background: var(--blue);
   color: var(--blue-ink);
-  padding: clamp(140px, 13vw, 200px) var(--pad) 32px;
+  padding: clamp(80px, 8vw, 128px) var(--pad) 32px;
 }
 .bb-footer__mark {
   margin: 0;
@@ -1035,13 +1033,13 @@ html.js [data-reveal].is-in {
 @media (max-width: 760px) {
   .bb-hero__toc-link { display: none; }
   :root {
-    --gap-section: 88px;
+    --gap-section: 56px;
   }
 }
 
 /* ---------- 首頁：閱讀路線 ---------- */
 .bb-routes {
-  padding: clamp(72px, 9vw, 128px) var(--pad);
+  padding: var(--gap-section) var(--pad);
   background: var(--pale);
 }
 .bb-routes__list {
