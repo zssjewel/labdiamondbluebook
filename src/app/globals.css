@@ -650,7 +650,7 @@
   background: var(--blue);
   color: var(--blue-ink);
 }
-.bb-story__steps { margin: 0; padding: 0; list-style: none; }
+.bb-story__steps, .bb-prose .bb-story__steps { margin: 0; padding: 0; list-style: none; }
 .bb-story__steps li {
   display: flex;
   flex-direction: column;
