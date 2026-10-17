@@ -96,7 +96,7 @@ export function HandFigure({ ct, finger, label }: { ct: number; finger: number; 
   const sx = finger / MID_MM;
   const bandW = widthAt(RING_FINGER, RING_Y) + 6;
   return (
-    <svg className="bb-hand" viewBox="20 140 360 340" role="img" aria-label={label ?? `${fmtCt(ct)} 卡圓形培育鑽石戴喺手指上，按實際比例（直徑約 ${mm} 毫米）`}>
+    <svg className="bb-hand" viewBox="10 40 380 440" role="img" aria-label={label ?? `${fmtCt(ct)} 卡圓形培育鑽石戴喺手指上，按實際比例（直徑約 ${mm} 毫米）`}>
       <g className="bb-hand__fingers" style={{ transform: `scaleX(${sx})` }}>
         {OTHERS.map((f) => (
           <Finger key={f.cx} f={f} />
@@ -209,7 +209,7 @@ const STORY: Step[] = [
 
 /** 文章：邊碌邊變（手固定喺一邊，文字逐段經過） */
 export function CaratStory() {
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const [ct, setCt] = useState(1);
   const [finger, setFinger] = useState(MID_MM);
   const steps = useRef<(HTMLLIElement | null)[]>([]);

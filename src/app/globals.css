@@ -5,21 +5,21 @@
 /*
  * 培育鑽石藍皮書 · 設計系統
  * 方向：印刷報告（Taste「The printed annual」）—— 一條 42% 的欄線、整頁實色。
- * 暖色版：顏色取自首飾本身——瓷白、香檳金、玫瑰金的裸粉；藍色只留給「藍皮書」的封面（頁頭名牌、頁腳、問師傅）。
+ * 暖色版：顏色取自首飾本身——帶粉的瓷白、珍珠灰、玫瑰金的裸粉；藍色只留給「藍皮書」的封面（頁頭名牌、頁腳、問師傅）。
  * 玫瑰金只用在行動按鈕。圖片和面板一律 12px 圓角，按鈕一律全圓。
  */
 @layer base {
   :root {
     /* 角色 */
-    --paper: #fbf7f2;
+    --paper: #fbf7f6;
     --ink: #2a2326;
     --ink-soft: #66595d;
     --blue: #34508f;
     --blue-ink: #ffffff;
     --pale: #f4e4de;
-    --steel: #f1e8db;
+    --steel: #f0e9e7;
     --rose: #ead3c9;
-    --white: #fbf7f2;
+    --white: #fbf7f6;
     --gold: #dfae97;
     --gold-hover: #e9c1ae;
     --gold-ink: #2a2326;
@@ -54,7 +54,7 @@
     --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
 
     /* shadcn 元件沿用的變數（對應到上面的角色） */
-    --background: 33 54% 97%;
+    --background: 12 50% 98%;
     --foreground: 337 9% 15%;
     --card: 0 0% 100%;
     --card-foreground: 226 42% 9%;
@@ -659,7 +659,7 @@
   .bb-story { display: block; }
   .bb-story__fig { position: sticky; top: 0; z-index: 2; padding-top: 8px; background: var(--paper); }
   .bb-story__sticky { position: static; padding: 8px 12px 12px; gap: 4px; }
-  .bb-story__sticky .bb-hand { height: 36vh; height: 36svh; width: auto; aspect-ratio: 360 / 340; margin: 0 auto; }
+  .bb-story__sticky .bb-hand { height: 36vh; height: 36svh; width: auto; aspect-ratio: 380 / 440; margin: 0 auto; }
   .bb-story__steps li { min-height: 60vh; min-height: 60svh; justify-content: flex-end; padding-bottom: 12vh; }
   .bb-story__steps li:first-child { min-height: 40vh; padding-top: 24px; justify-content: flex-start; }
   .bb-hand__read strong { font-size: var(--step-lead); }
