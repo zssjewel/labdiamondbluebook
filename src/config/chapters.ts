@@ -9,11 +9,16 @@ export type Chapter = {
   answers: string;
   intro: string;
   topics: string[];
+  /** 章節封面（3D 示意圖） */
+  image: string;
+  imageAlt: string;
 };
 
 export const CHAPTERS: Chapter[] = [
   {
     slug: "basics",
+    image: "/images/renders/macro-ink.webp",
+    imageAlt: "培育鑽石六爪鑲嵌特寫，可見刻面和火彩（3D 示意）",
     number: "第一章",
     title: "入門",
     answers: "係咪真鑽石、點樣分辨",
@@ -28,6 +33,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "price",
+    image: "/images/renders/princess-wg-white.webp",
+    imageAlt: "2 卡公主方形培育鑽石白金戒指（3D 示意）",
     number: "第二章",
     title: "價錢",
     answers: "1 卡幾錢、會唔會跌、保唔保值",
@@ -43,6 +50,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "certificate",
+    image: "/images/renders/side-girdle-steel.webp",
+    imageAlt: "從側面看培育鑽石的腰部和爪鑲（3D 示意）",
     number: "第三章",
     title: "證書",
     answers: "IGI 定 GIA、證書點睇",
@@ -57,6 +66,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "4c",
+    image: "/images/renders/princess-macro-white.webp",
+    imageAlt: "公主方形培育鑽石刻面特寫（3D 示意）",
     number: "第四章",
     title: "4C 選石",
     answers: "切工、顏色、淨度、卡數",
@@ -65,6 +76,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "styles",
+    image: "/images/renders/halo-rg-pale.webp",
+    imageAlt: "玫瑰金光環培育鑽石戒指（3D 示意）",
     number: "第五章",
     title: "形狀款式",
     answers: "形狀、求婚戒、對戒、手鏈",
@@ -84,6 +97,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "custom",
+    image: "/images/renders/wax-steel.webp",
+    imageAlt: "訂造用的戒指蠟版模型（3D 示意）",
     number: "第六章",
     title: "訂造流程",
     answers: "由問價到交貨、手寸、刻字",
@@ -101,6 +116,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "choose",
+    image: "/images/renders/stud-wg-blue.webp",
+    imageAlt: "白金六爪培育鑽石耳釘（3D 示意）",
     number: "第七章",
     title: "揀商家",
     answers: "品牌店、工廠、網購、深圳",
@@ -115,6 +132,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "occasions",
+    image: "/images/renders/oval-pt-ink.webp",
+    imageAlt: "橢圓形培育鑽石鉑金求婚戒指（3D 示意）",
     number: "第八章",
     title: "場景",
     answers: "求婚、第一次買、周年",
@@ -123,6 +142,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "care",
+    image: "/images/renders/bracelet-close-pale.webp",
+    imageAlt: "培育鑽石網球手鏈（3D 示意）",
     number: "第九章",
     title: "保養",
     answers: "清潔、超聲波、日常佩戴",

@@ -124,28 +124,28 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <JsonLd data={faqData} />
 
       {/* 刊頭拼貼 */}
-      <div className="bb-mosaic" aria-hidden="false">
+      <div className="bb-mosaic">
         <div className="t-pale">
-          <img src={`${R}/s1.webp`} alt="白金單粒培育鑽石戒指（3D 示意）" width={640} height={480} />
+          <img src={`${R}/ring-oval-pale.webp`} alt="鉑金四爪橢圓形培育鑽石戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-blue span2r" />
         <div className="t-steel span2c">
-          <img src={`${R}/w2.webp`} alt="橢圓形培育鑽石主石特寫（3D 示意）" width={600} height={600} />
+          <img src={`${R}/bracelet-steel.webp`} alt="培育鑽石網球手鏈（3D 示意）" width={1400} height={700} />
         </div>
         <div className="t-white hide-sm">
-          <img src={`${R}/s3.webp`} alt="黃金培育鑽石吊墜（3D 示意）" width={640} height={480} loading="lazy" />
+          <img src={`${R}/pendant-yg-white.webp`} alt="黃金四爪培育鑽石吊墜（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-ink hide-sm" />
         <div className="t-steel">
-          <img src={`${R}/s4.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={640} height={480} />
+          <img src={`${R}/band-rg-steel.webp`} alt="玫瑰金排鑽結婚戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-pale">
-          <img className="bb-drift" src={`${R}/s5.webp`} alt="培育鑽石網球手鏈（3D 示意）" width={640} height={480} />
+          <img className="bb-drift" src={`${R}/halo-rg-pale.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={1000} height={1000} />
         </div>
         <div className="t-white hide-sm" />
         <div className="t-blue hide-sm" />
-        <div className="t-pale hide-sm">
-          <img src={`${R}/w4.webp`} alt="玫瑰金光環培育鑽石戒指（3D 示意）" width={600} height={600} loading="lazy" />
+        <div className="t-ink hide-sm">
+          <img src={`${R}/macro-ink.webp`} alt="培育鑽石六爪鑲嵌特寫（3D 示意）" width={1000} height={1000} loading="lazy" />
         </div>
       </div>
 
@@ -189,7 +189,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <p className="bb-display">九章</p>
         </div>
         <div className="bb-tiles__c" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
-          <img src={`${R}/hero.webp`} alt="黃金單粒培育鑽石戒指（3D 示意）" width={1000} height={800} loading="lazy" />
+          <img src={`${R}/solitaire-yg-steel.webp`} alt="黃金四爪單粒培育鑽石戒指（3D 示意）" width={1000} height={800} loading="lazy" />
         </div>
         <div className="bb-tiles__d">
           <div data-reveal>
@@ -240,7 +240,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </h2>
         <div className="bb-contents__body">
           <div className="bb-contents__fig" data-reveal>
-            <img src={`${R}/w1.webp`} alt="白金單粒培育鑽石求婚戒指（3D 示意）" width={600} height={600} loading="lazy" />
+            <img src={`${R}/princess-wg-white.webp`} alt="白金公主方形培育鑽石戒指（3D 示意）" width={1000} height={1000} loading="lazy" />
           </div>
           <div className="bb-contents__name">
             <p>目錄</p>

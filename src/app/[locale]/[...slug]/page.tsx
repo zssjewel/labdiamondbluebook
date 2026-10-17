@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       title,
       description: chapter.intro,
       alternates: alternates(`/${chapter.slug}`, locale),
-      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}` },
+      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}`, images: [chapter.image] },
     };
   }
   const item = await getContent(slug[0], slug.slice(1), locale);
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title,
     description: item.metadata.description,
     alternates: alternates(pathname, locale),
-    openGraph: { type: "article", title, description: item.metadata.description, url: `${SITE.url}${localizeHref(pathname, locale)}`, images: ["/og.png"] },
+    openGraph: { type: "article", title, description: item.metadata.description, url: `${SITE.url}${localizeHref(pathname, locale)}`, images: [item.metadata.image ?? chapter.image] },
   };
 }
 
@@ -94,6 +94,9 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
       <JsonLd data={crumbData} />
       <aside className="bb-page__side">
         <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: chapter.number }]} />
+        <figure className="bb-chapfig">
+          <img src={chapter.image} alt={chapter.imageAlt} width={1000} height={1000} />
+        </figure>
         <dl className="bb-meta">
           <dt>本章答你</dt>
           <dd>{chapter.answers}</dd>
@@ -174,7 +177,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
     mainEntityOfPage: pageUrl,
     author: item.metadata.author ? { "@type": "Person", name: item.metadata.author } : { "@type": "Organization", name: SITE.publisher },
     publisher: { "@type": "Organization", name: SITE.publisher },
-    ...(item.metadata.image ? { image: `${SITE.url}${item.metadata.image}` } : {}),
+    image: `${SITE.url}${item.metadata.image ?? chapter.image}`,
   };
   const crumbData = {
     "@context": "https://schema.org",
@@ -224,6 +227,10 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
         <ReadingTracker path={localizeHref(pathname, locale)} title={item.metadata.title} chapter={chapter.number} />
         <h1 className="bb-page__title bb-display">{item.metadata.title}</h1>
         {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
+        <figure className="bb-artfig">
+          <img src={item.metadata.image ?? chapter.image} alt={item.metadata.image ? item.metadata.title : chapter.imageAlt} width={1000} height={1000} />
+          <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
+        </figure>
         {item.metadata.draft && (
           <p className="bb-draft">
             <strong>初稿：</strong>本文由編輯整理，正等工坊師傅逐項核對，內容可能仍會修改。
