@@ -36,13 +36,12 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=4096
           NEXT_PUBLIC_SITE_URL: https://labdiamondbluebook.com
-          # 預覽分支用版面示例睇作品案例排版；正式部署唔會設定呢個
-          NEXT_PUBLIC_CASES_DEMO: ${{ github.ref_name == 'warm-preview' && '1' || '' }}
 
       - name: Serve
         if: steps.build.outcome == 'success'
         run: |
           cp -f out/zh-hk.html out/index.html 2>/dev/null || cp -f out/zh-hk/index.html out/index.html
+          head -c 4000 out/zh-hk/4c/carat-size-on-hand.html > shots/head.html || true
           (cd out && python3 -m http.server 8080 >/dev/null 2>&1 &)
           sleep 2
 
