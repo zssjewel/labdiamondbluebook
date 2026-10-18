@@ -52,6 +52,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <html lang={SITE.htmlLang} suppressHydrationWarning>
+      <head>
+        {/* 價錢、證書號碼唔好俾手機自動變成電話連結 */}
+        <meta name="format-detection" content="telephone=no" />
+      </head>
       <body>
         {gaId && (
           <>
