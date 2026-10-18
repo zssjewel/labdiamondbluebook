@@ -12,6 +12,8 @@ const setups = [
   const browser = await chromium.launch();
   for (const [name, ctxOpts, net, cpu] of setups) {
     for (const p of pages) {
+     const runs = [];
+     for (let k = 0; k < 3; k++) {
       const ctx = await browser.newContext(ctxOpts);
       const page = await ctx.newPage();
       const cdp = await ctx.newCDPSession(page);
@@ -19,7 +21,9 @@ const setups = [
       await cdp.send("Network.emulateNetworkConditions", { offline: false, ...net });
       await cdp.send("Emulation.setCPUThrottlingRate", { rate: cpu });
       let reqs = 0, bytes = 0;
-      cdp.on("Network.loadingFinished", (e) => { reqs++; bytes += e.encodedDataLength || 0; });
+      const urls = {}, sizes = [];
+      cdp.on("Network.requestWillBeSent", (e) => { urls[e.requestId] = e.request.url; });
+      cdp.on("Network.loadingFinished", (e) => { reqs++; bytes += e.encodedDataLength || 0; sizes.push([e.encodedDataLength || 0, (urls[e.requestId] || "").replace(base, "")]); });
       await page.addInitScript(() => {
         window.__m = { lcp: 0, cls: 0 };
         new PerformanceObserver((l) => l.getEntries().forEach((e) => (window.__m.lcp = e.startTime))).observe({ type: "largest-contentful-paint", buffered: true });
@@ -34,8 +38,13 @@ const setups = [
         const nav = performance.getEntriesByType("navigation")[0];
         return { fcp: fcp ? fcp.startTime : 0, lcp: window.__m.lcp, cls: window.__m.cls, html: nav ? nav.encodedBodySize : 0 };
       });
-      console.log(`${name} · ${p.replace(/\.html$/, "")}：FCP ${(m.fcp / 1000).toFixed(2)}s，LCP ${(m.lcp / 1000).toFixed(2)}s，CLS ${m.cls.toFixed(3)}，載完 ${(loadMs / 1000).toFixed(1)}s，請求 ${reqs} 個，共 ${Math.round(bytes / 1024)}KB（HTML ${Math.round(m.html / 1024)}KB）`);
+      runs.push({ ...m, loadMs, reqs, bytes, sizes });
       await ctx.close();
+     }
+      const med = (k) => runs.map((r) => r[k]).sort((a, b) => a - b)[1];
+      const r0 = runs[0];
+      console.log(`${name} · ${p.replace(/\.html$/, "")}（3 次中位數）：FCP ${(med("fcp") / 1000).toFixed(2)}s，LCP ${(med("lcp") / 1000).toFixed(2)}s，CLS ${med("cls").toFixed(3)}，載完 ${(med("loadMs") / 1000).toFixed(1)}s，請求 ${r0.reqs} 個，共 ${Math.round(r0.bytes / 1024)}KB（HTML ${Math.round(r0.html / 1024)}KB，未壓縮）`);
+      if (p === pages[0]) console.log("   最大嘅檔案：" + r0.sizes.sort((a, b) => b[0] - a[0]).slice(0, 6).map(([b, u]) => `${u.split("?")[0]} ${Math.round(b / 1024)}KB`).join("，"));
     }
   }
   await browser.close();
