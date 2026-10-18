@@ -1,0 +1,59 @@
+name: A/B load speed
+
+# 喺同一部機、同一個時間，比較兩個版本嘅開頁速度（避免唔同機器造成誤差）
+on:
+  workflow_dispatch:
+    inputs:
+      a:
+        description: "版本 A（分支或 commit）"
+        default: main
+      b:
+        description: "版本 B（分支或 commit）"
+        default: warm-preview
+
+permissions:
+  contents: write
+
+jobs:
+  ab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build A and B
+        run: |
+          for v in a b; do
+            ref=$([ $v = a ] && echo "${{ inputs.a }}" || echo "${{ inputs.b }}")
+            git checkout -q "origin/$ref" 2>/dev/null || git checkout -q "$ref"
+            rm -rf .next out
+            NEXT_PUBLIC_SITE_URL=https://labdiamondbluebook.com npm run build >/dev/null 2>&1
+            mv out /tmp/out-$v
+          done
+          git checkout -q "${{ github.sha }}"
+      - name: Measure
+        run: |
+          (cd /tmp/out-a && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          (cd /tmp/out-b && python3 -m http.server 8081 >/dev/null 2>&1 &)
+          sleep 2
+          npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
+          npx -y playwright@1.55.0 install chromium >/dev/null
+          mkdir -p ab
+          for round in 1 2; do
+            echo "== 第 $round 輪 A (${{ inputs.a }}) ==" | tee -a ab/ab.txt
+            NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8080 | grep -v 最大 | tee -a ab/ab.txt
+            echo "== 第 $round 輪 B (${{ inputs.b }}) ==" | tee -a ab/ab.txt
+            NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8081 | grep -v 最大 | tee -a ab/ab.txt
+          done
+      - name: Publish
+        if: always()
+        run: |
+          cd ab
+          git init -q && git config user.name gha && git config user.email gha@users.noreply.github.com
+          git add -A && git commit -qm "A/B ${{ github.run_id }}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:ab-results
