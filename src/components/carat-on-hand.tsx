@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "@/components/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { hasContact, isExternal, localizeHref, waHref } from "@/config/site";
 
 /**
@@ -57,32 +57,103 @@ const OTHERS: FingerShape[] = [
 ];
 const RING_Y = 372;
 
-function fingerPath(f: FingerShape, dx = 0, shrink = 0) {
-  const t = (f.top - shrink) / 2;
-  const b = (f.base - shrink) / 2;
-  const cx = f.cx + dx;
-  const y = f.tip + t + shrink / 2;
-  return `M${cx - t},${y} A${t},${t} 0 0 1 ${cx + t},${y} L${cx + b},${BOTTOM} L${cx - b},${BOTTOM} Z`;
-}
 function widthAt(f: FingerShape, y: number) {
   const y0 = f.tip + f.top / 2;
   return f.top + ((y - y0) / (BOTTOM - y0)) * (f.base - f.top);
 }
 
-function Finger({ f }: { f: FingerShape }) {
-  const nailW = f.top * 0.6;
-  const crease = (y: number) => {
-    const w = widthAt(f, y) * 0.22;
-    return `M${f.cx - w},${y} Q${f.cx},${y + 7} ${f.cx + w},${y}`;
+/**
+ * 手指輪廓：指尖係略扁嘅圓弧，第一節關節（DIP）微微收窄，第二節（PIP）略闊，再順住落到指根。
+ * 闊度仍然跟 widthAt()（戒指位置嘅闊度唔變，比例基準唔變）。
+ */
+function fingerPath(f: FingerShape) {
+  const { cx, tip, top } = f;
+  const h = (y: number) => widthAt(f, y) / 2;
+  const yTip = tip + top * 0.55;
+  const yDip = tip + top * 1.25;
+  const yPip = tip + top * 2.3;
+  const ht = top / 2;
+  const hd = h(yDip) * 0.97;
+  const hp = h(yPip) * 1.02;
+  const hb = h(BOTTOM);
+  const r = (x: number) => x.toFixed(1);
+  return [
+    `M${r(cx - ht)},${r(yTip)}`,
+    // 指尖
+    `C${r(cx - ht)},${r(tip + top * 0.02)} ${r(cx + ht)},${r(tip + top * 0.02)} ${r(cx + ht)},${r(yTip)}`,
+    // 右邊：指尖 → DIP → PIP → 指根
+    `C${r(cx + ht)},${r((yTip + yDip) / 2)} ${r(cx + hd)},${r(yDip - top * 0.2)} ${r(cx + hd)},${r(yDip)}`,
+    `C${r(cx + hd)},${r(yDip + top * 0.35)} ${r(cx + hp)},${r(yPip - top * 0.35)} ${r(cx + hp)},${r(yPip)}`,
+    `C${r(cx + hp)},${r(yPip + 60)} ${r(cx + hb)},${r(BOTTOM - 80)} ${r(cx + hb)},${BOTTOM}`,
+    `L${r(cx - hb)},${BOTTOM}`,
+    // 左邊：返上去
+    `C${r(cx - hb)},${r(BOTTOM - 80)} ${r(cx - hp)},${r(yPip + 60)} ${r(cx - hp)},${r(yPip)}`,
+    `C${r(cx - hp)},${r(yPip - top * 0.35)} ${r(cx - hd)},${r(yDip + top * 0.35)} ${r(cx - hd)},${r(yDip)}`,
+    `C${r(cx - hd)},${r(yDip - top * 0.2)} ${r(cx - ht)},${r((yTip + yDip) / 2)} ${r(cx - ht)},${r(yTip)}`,
+    "Z",
+  ].join(" ");
+}
+
+/** 指甲：圓頭、甲根微彎，比之前細少少 */
+function nailPath(f: FingerShape) {
+  const w = f.top * 0.27;
+  const top = f.tip + f.top * 0.14;
+  const bottom = f.tip + f.top * 0.78;
+  const cx = f.cx;
+  const r = (x: number) => x.toFixed(1);
+  return [
+    `M${r(cx - w)},${r(bottom - w * 0.35)}`,
+    `L${r(cx - w)},${r(top + w)}`,
+    `C${r(cx - w)},${r(top - w * 0.15)} ${r(cx + w)},${r(top - w * 0.15)} ${r(cx + w)},${r(top + w)}`,
+    `L${r(cx + w)},${r(bottom - w * 0.35)}`,
+    `Q${r(cx)},${r(bottom + w * 0.25)} ${r(cx - w)},${r(bottom - w * 0.35)}`,
+    "Z",
+  ].join(" ");
+}
+
+function Finger({ f, ids, ring }: { f: FingerShape; ids: Record<string, string>; ring?: boolean }) {
+  const crease = (y: number, k: number) => {
+    const w = widthAt(f, y) * k;
+    return `M${(f.cx - w).toFixed(1)},${y.toFixed(1)} Q${f.cx},${(y + 3).toFixed(1)} ${(f.cx + w).toFixed(1)},${y.toFixed(1)}`;
   };
+  const d = fingerPath(f);
+  const nail = nailPath(f);
+  const dip = f.tip + f.top * 1.25;
+  const pip = f.tip + f.top * 2.3;
+  return (
+    <g data-ring-finger={ring ? "" : undefined}>
+      {/* 手指之間嘅柔和陰影 */}
+      <path d={d} fill="rgba(92, 60, 44, 0.22)" filter={`url(#${ids.soft})`} transform="translate(2 3)" />
+      <path d={d} fill={`url(#${ids.skin})`} />
+      <path d={d} fill={`url(#${ids.skinV})`} />
+      <path d={d} fill="none" stroke="rgba(120, 82, 64, 0.22)" strokeWidth={0.9} />
+      <path d={nail} fill={`url(#${ids.nail})`} />
+      <path d={nail} fill="none" stroke="rgba(170, 120, 105, 0.35)" strokeWidth={0.8} />
+      <ellipse cx={f.cx - f.top * 0.1} cy={f.tip + f.top * 0.36} rx={f.top * 0.045} ry={f.top * 0.11} fill="#ffffff" opacity={0.45} />
+      <path d={crease(dip, 0.14)} fill="none" stroke="rgba(150, 105, 85, 0.32)" strokeWidth={1.1} strokeLinecap="round" />
+      <path d={crease(pip - 4, 0.17)} fill="none" stroke="rgba(150, 105, 85, 0.28)" strokeWidth={1} strokeLinecap="round" />
+      <path d={crease(pip + 3, 0.12)} fill="none" stroke="rgba(150, 105, 85, 0.22)" strokeWidth={0.9} strokeLinecap="round" />
+    </g>
+  );
+}
+
+/** 戒圈：同之前一樣嘅位置同闊度，改用銀白金屬漸變、窄高光同貼手指嘅陰影 */
+function Band({ ids }: { ids: Record<string, string> }) {
+  const w = widthAt(RING_FINGER, RING_Y) + 6;
+  const x0 = 200 - w / 2;
+  const x1 = 200 + w / 2;
+  const top = RING_Y - 7;
+  const bottom = RING_Y + 8;
+  // 兩頭微微向下彎，好似圍住手指
+  const d = `M${x0},${top + 2} Q200,${top - 2} ${x1},${top + 2} L${x1},${bottom - 1} Q200,${bottom + 3} ${x0},${bottom - 1} Z`;
   return (
     <g>
-      <path d={fingerPath(f, 4)} fill="var(--skin-shade)" />
-      <path d={fingerPath(f, -2, 6)} fill="var(--skin)" />
-      <rect x={f.cx - nailW / 2 - 1} y={f.tip + 12} width={nailW} height={f.top * 0.74} rx={nailW / 2} fill="var(--nail)" />
-      <rect x={f.cx - nailW / 2 + 7} y={f.tip + 22} width={nailW * 0.22} height={f.top * 0.36} rx={nailW * 0.11} fill="var(--nail-hi)" />
-      <path d={crease(f.tip + f.top * 1.25)} fill="none" stroke="var(--skin-shade)" strokeWidth={3} strokeLinecap="round" />
-      <path d={crease(f.tip + f.top * 2.3)} fill="none" stroke="var(--skin-shade)" strokeWidth={3} strokeLinecap="round" />
+      <ellipse cx={200} cy={bottom + 2} rx={w / 2} ry={4} fill="rgba(92, 60, 44, 0.35)" filter={`url(#${ids.soft})`} />
+      <ellipse cx={200} cy={top - 1} rx={w / 2 - 4} ry={2.5} fill="rgba(92, 60, 44, 0.18)" filter={`url(#${ids.soft})`} />
+      <path d={d} fill={`url(#${ids.metal})`} />
+      <path d={d} fill={`url(#${ids.metalWrap})`} />
+      <path d={`M${x0 + 6},${top + 3.2} Q200,${top + 0.4} ${x1 - 6},${top + 3.2}`} fill="none" stroke="rgba(255, 255, 255, 0.85)" strokeWidth={1.4} strokeLinecap="round" />
+      <path d={d} fill="none" stroke="rgba(110, 112, 118, 0.35)" strokeWidth={0.6} />
     </g>
   );
 }
@@ -94,20 +165,67 @@ export function HandFigure({ ct, finger, label }: { ct: number; finger: number; 
   const w = base / SPRITE.girdle;
   const h = w * SPRITE.ratio;
   const sx = finger / MID_MM;
-  const bandW = widthAt(RING_FINGER, RING_Y) + 6;
+  // 每個組件實例用自己嘅漸變／濾鏡 id，同一頁有幾個都唔會撞
+  const uid = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  const ids = {
+    skin: `${uid}-skin`,
+    skinV: `${uid}-skinv`,
+    nail: `${uid}-nail`,
+    metal: `${uid}-metal`,
+    metalWrap: `${uid}-wrap`,
+    soft: `${uid}-soft`,
+  };
   // 主石用 HTML 圖片疊喺 SVG 上面：放大縮小交俾 GPU 做，唔使每格重新排版
   const VB = { x: 10, y: 40, w: 380, h: 440 };
   return (
     <div className="bb-hand" role="img" aria-label={label ?? `${fmtCt(ct)} 卡圓形培育鑽石戴喺手指上，按實際比例（直徑約 ${mm} 毫米）`}>
       <svg viewBox={`${VB.x} ${VB.y} ${VB.w} ${VB.h}`} aria-hidden="true">
+        <defs>
+          {/* 橫向：手指兩邊暗、中間亮，做出圓柱感 */}
+          <linearGradient id={ids.skin} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#d4ab95" />
+            <stop offset="0.18" stopColor="#e3c1ad" />
+            <stop offset="0.48" stopColor="#ecd2c1" />
+            <stop offset="0.62" stopColor="#ebd0bf" />
+            <stop offset="0.86" stopColor="#ddb8a3" />
+            <stop offset="1" stopColor="#cfa48e" />
+          </linearGradient>
+          {/* 直向：指尖略淡，指根略深 */}
+          <linearGradient id={ids.skinV} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#fff7f2" stopOpacity="0.18" />
+            <stop offset="0.6" stopColor="#ffffff" stopOpacity="0" />
+            <stop offset="1" stopColor="#8a5b45" stopOpacity="0.1" />
+          </linearGradient>
+          <linearGradient id={ids.nail} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#f6e2dc" />
+            <stop offset="0.7" stopColor="#efcfc6" />
+            <stop offset="1" stopColor="#e6bdb2" />
+          </linearGradient>
+          {/* 戒圈：上下方向嘅金屬弧面，高光收窄喺上緣 */}
+          <linearGradient id={ids.metal} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#b9bcc2" />
+            <stop offset="0.22" stopColor="#f4f5f7" />
+            <stop offset="0.36" stopColor="#dfe1e5" />
+            <stop offset="0.7" stopColor="#c3c6cc" />
+            <stop offset="1" stopColor="#9da1a8" />
+          </linearGradient>
+          {/* 戒圈兩頭轉入手指側面，暗少少 */}
+          <linearGradient id={ids.metalWrap} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#5a5d64" stopOpacity="0.45" />
+            <stop offset="0.14" stopColor="#5a5d64" stopOpacity="0" />
+            <stop offset="0.86" stopColor="#5a5d64" stopOpacity="0" />
+            <stop offset="1" stopColor="#5a5d64" stopOpacity="0.45" />
+          </linearGradient>
+          <filter id={ids.soft} x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" />
+          </filter>
+        </defs>
         <g className="bb-hand__fingers" style={{ transform: `scaleX(${sx})` }}>
           {OTHERS.map((f) => (
-            <Finger key={f.cx} f={f} />
+            <Finger key={f.cx} f={f} ids={ids} />
           ))}
-          <Finger f={RING_FINGER} />
-          <rect x={200 - bandW / 2} y={RING_Y + 9} width={bandW} height={6} rx={3} fill="var(--skin-shade)" />
-          <rect x={200 - bandW / 2} y={RING_Y - 8} width={bandW} height={17} rx={5} fill="var(--metal)" />
-          <rect x={200 - bandW / 2 + 4} y={RING_Y - 6} width={bandW - 8} height={5} rx={2.5} fill="var(--metal-hi)" />
+          <Finger f={RING_FINGER} ids={ids} ring />
+          <Band ids={ids} />
         </g>
       </svg>
       <img
