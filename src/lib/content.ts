@@ -47,6 +47,8 @@ export interface ContentMetadata {
   draft?: boolean;
   /** false：唔顯示文章題圖（例如正文開頭已經有互動圖） */
   cover?: boolean;
+  /** 示例大綱：只有結構、未有正文 */
+  placeholder?: boolean;
   /** 作者署名，未填時用編著者（鄒三山工坊） */
   author?: string;
   /** 師傅核對人和日期；未填即「待核對」 */

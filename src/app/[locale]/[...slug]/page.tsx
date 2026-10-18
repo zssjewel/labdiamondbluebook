@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/link";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { AskMaster, Breadcrumbs, JsonLd } from "@/components/site";
 import { CHAPTERS, getChapter } from "@/config/chapters";
 import { CONTENT_TYPES } from "@/config/navigation";
-import { SITE, localizeHref } from "@/config/site";
+import { SITE, localizeHref, orDemo } from "@/config/site";
+import { Demo } from "@/components/demo";
 import { routing, type Locale } from "@/i18n/routing";
 import { getAllArticles, getAllContent, getAllContentPaths, getBookOrder, getContent } from "@/lib/content";
 import { imgProps } from "@/lib/images";
@@ -250,10 +251,16 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             {item.metadata.verifiedDate ? `${item.metadata.verifiedBy ?? "工坊師傅"}，${item.metadata.verifiedDate}` : <strong>待核對</strong>}
           </span>
         </p>
-        {item.metadata.draft && (
+        {item.metadata.placeholder ? (
           <p className="bb-draft">
-            <strong>初稿：</strong>本文由編輯整理，正等工坊師傅逐項核對，內容可能仍會修改。
+            <strong>示例大綱：</strong>呢篇暫時只有大綱，用嚟睇全站結構；正文待補，寫好並經師傅核對後會取代。
           </p>
+        ) : (
+          item.metadata.draft && (
+            <p className="bb-draft">
+              <strong>初稿：</strong>本文由編輯整理，正等工坊師傅逐項核對，內容可能仍會修改。
+            </p>
+          )
         )}
         {item.headings.length > 1 && (
           <details className="bb-tocfold">
@@ -285,8 +292,16 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
 
         <div className="bb-author">
           <strong>關於編著</strong>
-          《{SITE.name}》由{SITE.publisher}編著。本書比較及推薦的內容包括工坊自己，詳見
-          <Link href={`${localizeHref("/about", locale)}#disclosure`}>編著聲明</Link>。
+          《{SITE.name}》由{SITE.publisher}編著
+          {(SITE.master.name || SITE.demo) && (
+            <>
+              ，{orDemo(SITE.master.name, "（師傅姓名）")}師傅負責核對工藝同報價內容
+              <Demo show={!SITE.master.name} />
+            </>
+          )}
+          。本書比較及推薦的內容包括工坊自己，詳見
+          <Link href={`${localizeHref("/about", locale)}#disclosure`}>編著聲明</Link>，師傅資料見
+          <Link href={`${localizeHref("/about", locale)}#master`}>師傅介紹</Link>。
         </div>
 
         <PrevNext book={book} locale={locale} contentType={contentType} slug={item.slug} />

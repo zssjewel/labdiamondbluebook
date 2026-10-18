@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { CHAPTER_SLUGS } from "@/config/chapters";
 import { SITE, localizeHref } from "@/config/site";
 import { routing } from "@/i18n/routing";
-import { CASES } from "@/config/cases";
+import { CASES, isDemoCases } from "@/config/cases";
 import { getAllContent } from "@/lib/content";
 import { articleReady } from "@/lib/indexing";
 
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       add(`/${slug}`, ready[0].metadata.lastModified ?? ready[0].metadata.date, 0.8);
       for (const item of ready) add(`/${slug}/${item.slug}`, item.metadata.lastModified ?? item.metadata.date, 0.7);
     }
-    if (CASES.length > 0) add("/cases", undefined, 0.6);
+    if (CASES.length > 0 && !isDemoCases) add("/cases", undefined, 0.6);
     add("/about", undefined, 0.4);
     add("/privacy-policy", undefined, 0.2);
     add("/terms-of-service", undefined, 0.2);

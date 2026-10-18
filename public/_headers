@@ -1,0 +1,9 @@
+# Cloudflare 靜態資源快取：程式同字型檔名帶版本號，可以長期快取；圖片快取一個星期
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.ico
+  Cache-Control: public, max-age=604800

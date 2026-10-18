@@ -1,7 +1,8 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { CHAPTERS } from "@/config/chapters";
 import { HEADER_LINKS } from "@/config/navigation";
-import { SITE, hasContact, isExternal, localizeHref, waHref } from "@/config/site";
+import { SITE, hasContact, isExternal, localizeHref, orDemo, waHref } from "@/config/site";
+import { Demo } from "@/components/demo";
 
 export { localizeHref };
 
@@ -92,6 +93,26 @@ export function SiteFooter({ locale }: { locale: string }) {
         <ul className="bb-footer__places">
           <li>{hasContact ? <SmartLink href={waHref()}>WhatsApp 問師傅</SmartLink> : "聯絡方式籌備中"}</li>
           <li>鄒三山工坊 · 香港</li>
+          {(SITE.demo || SITE.social.instagram || SITE.social.facebook || SITE.social.xiaohongshu) && (
+            <li className="bb-footer__social">
+              {[
+                ["Instagram", SITE.social.instagram],
+                ["Facebook", SITE.social.facebook],
+                ["小紅書", SITE.social.xiaohongshu],
+              ]
+                .filter(([, url]) => url || SITE.demo)
+                .map(([label, url]) =>
+                  url ? (
+                    <a key={label} href={url} target="_blank" rel="noopener noreferrer">
+                      {label}
+                    </a>
+                  ) : (
+                    <span key={label}>{label}</span>
+                  ),
+                )}
+              <Demo show={!SITE.social.instagram && !SITE.social.facebook && !SITE.social.xiaohongshu} />
+            </li>
+          )}
         </ul>
         <div className="bb-footer__cols">
           <ul aria-label="第一至五章">

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/link";
 import { setRequestLocale } from "next-intl/server";
 import { CaseCard } from "@/components/cases";
 import { Breadcrumbs } from "@/components/site";
-import { CASES } from "@/config/cases";
+import { CASES, isDemoCases } from "@/config/cases";
 import { SITE, localizeHref } from "@/config/site";
 import { robotsFor } from "@/lib/indexing";
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description,
     alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
     // 未有真實作品之前唔俾收錄
-    robots: robotsFor(CASES.length > 0),
+    robots: robotsFor(CASES.length > 0 && !isDemoCases),
     openGraph: { title, description, url: `${SITE.url}${url}` },
   };
 }
@@ -32,6 +32,7 @@ export default async function CasesPage({ params }: { params: Promise<{ locale: 
       {CASES.length > 0 ? (
         <>
           <p className="bb-page__lead">工坊真實做過嘅作品，每件都寫明主石、金屬同工期，相片同資料經客人同意公開。</p>
+          {isDemoCases && <p className="bb-draft">而家顯示嘅係<strong>示例</strong>：相片係 AI 示意圖，規格全部待填，換上真實作品後會自動消失。</p>}
           <div className="bb-cases">
             {CASES.map((c) => (
               <CaseCard key={c.slug} item={c} sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 420px" />

@@ -3,17 +3,15 @@
 import { useEffect } from "react";
 
 /**
- * 進場動畫：帶 data-reveal 的元素進入畫面時加上 is-in。
- * 沒有 JS 或使用者要求減少動態時，CSS 會直接顯示內容。
+ * 進場動畫：只俾「開頁時喺畫面以下」嘅 data-reveal 元素做淡入。
+ * 畫面內嘅內容一開始就顯示，唔使等 JS，開頁更快；冇 JS 時全部照常顯示。
  */
 export function MotionLayer() {
   useEffect(() => {
-    document.documentElement.classList.add("motion-ready");
-    const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      items.forEach((el) => el.classList.add("is-in"));
-      return;
-    }
+    if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const vh = window.innerHeight;
+    const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter((el) => el.getBoundingClientRect().top > vh);
+    items.forEach((el) => el.classList.add("is-pending"));
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

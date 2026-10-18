@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 
 /**
  * 根目錄 /。部署時會用 /zh-hk 首頁覆蓋這個文件（見 .github/workflows/deploy-workers.yml），

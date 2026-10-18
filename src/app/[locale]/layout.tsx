@@ -52,9 +52,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <html lang={SITE.htmlLang} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-      </head>
       <body>
         {gaId && (
           <>

@@ -357,20 +357,8 @@
 }
 .bb-line > span {
   display: block;
-  animation: bb-rise 900ms var(--ease-out) both;
 }
-.bb-line:nth-child(2) > span { animation-delay: 110ms; }
-.bb-after-title {
-  animation: bb-fade 700ms var(--ease-out) 450ms both;
-}
-@keyframes bb-rise {
-  from { transform: translateY(105%); }
-  to { transform: translateY(0); }
-}
-@keyframes bb-fade {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
-}
+
 
 /* ---------- 首頁：宣言拼貼 ---------- */
 .bb-tiles {
@@ -741,11 +729,11 @@
   justify-content: center;
   min-height: 70vh;
   min-height: 70svh;
-  opacity: 0.4;
   transition: opacity 400ms var(--ease-out);
 }
+.bb-story.is-live .bb-story__steps li { opacity: 0.4; }
 .bb-story__steps li:first-child { min-height: 50vh; justify-content: flex-start; padding-top: 24px; }
-.bb-story__steps li.is-active, html:not(.motion-ready) .bb-story__steps li { opacity: 1; }
+.bb-story.is-live .bb-story__steps li.is-active { opacity: 1; }
 .bb-story__steps h3 { margin: 0 0 0.4em; font-family: var(--font-display); font-weight: 600; font-size: var(--step-lead); line-height: 1.3; }
 .bb-story__steps p { margin: 0 0 1em; }
 .bb-story__tool { min-height: 0; padding-bottom: 24px; }
@@ -1004,30 +992,22 @@
 .bb-note > p:last-child { margin-bottom: 0; }
 .bb-note__label { font-weight: 600; color: var(--blue); }
 
-/* ---------- 進場動畫（沒有 JS 時內容照常顯示） ---------- */
-html.js [data-reveal] {
+/* ---------- 進場動畫：只限開頁時喺畫面以下嘅內容 ---------- */
+[data-reveal].is-pending {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
   transition-delay: var(--d, 0ms);
 }
-/* 腳本沒載入（沒有 motion-ready）時，3 秒後直接顯示，內容不會一直隱藏 */
-html.js:not(.motion-ready) [data-reveal] {
-  animation: bb-failsafe 0s linear 3s forwards;
-}
-html.js [data-reveal].is-in {
+[data-reveal].is-pending.is-in {
   opacity: 1;
   transform: none;
-  animation: none;
-}
-@keyframes bb-failsafe {
-  to { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .bb-line > span, .bb-after-title { animation: none; }
-  html.js [data-reveal] { opacity: 1; transform: none; transition: none; animation: none; }
+  [data-reveal].is-pending { opacity: 1; transform: none; transition: none; }
   .bb-btn, .bb-toc__arrow { transition: none; }
 }
 

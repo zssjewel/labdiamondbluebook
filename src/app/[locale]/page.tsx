@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/link";
 import { setRequestLocale } from "next-intl/server";
 import { CaratTool } from "@/components/carat-on-hand";
 import { HowDiagram } from "@/components/how-diagram";
@@ -118,14 +118,16 @@ const ANSWERS = [
     q: "IGI 定 GIA 證書？",
     a: "GIA 由 2025 年 10 月起只分 Premium、Standard 兩級；IGI 仍然逐項評 4C。",
     href: "/certificate",
-    label: "第三章（撰寫中）",
+    label: "睇第三章 證書",
   },
 ];
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const articles = await getAllArticles(locale as Locale);
+  const all = await getAllArticles(locale as Locale);
+  // 示例大綱唔計入「已出」同最新文章
+  const articles = all.filter((a) => !a.metadata.placeholder);
   const latest = articles.slice(0, 5);
   const pendingCount = CHAPTERS.reduce((n, c) => n + c.topics.filter((t) => !articles.some((a) => a.metadata.title === t)).length, 0);
   const chapterOf = (slug: string) => CHAPTERS.find((c) => c.slug === slug);
@@ -161,20 +163,20 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <img decoding="async" fetchPriority="high" {...imgProps(`${R}/bracelet-steel.webp`, "(max-width: 760px) 34vw, 34vw")} alt="銀白色圓鑽網球手鏈，橢圓形平放展示（AI 示意圖）" width={1400} height={700} />
         </div>
         <div className="t-white hide-sm">
-          <img decoding="async" style={{ objectPosition: "50% 70%" }} {...imgProps(`${R}/pendant-yg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單鑽吊墜與細鏈（AI 示意圖）" width={1000} height={1000} />
+          <img decoding="async" loading="lazy" style={{ objectPosition: "50% 70%" }} {...imgProps(`${R}/pendant-yg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單鑽吊墜與細鏈（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-white hide-sm">
-          <img decoding="async" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
+          <img decoding="async" loading="lazy" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-white">
           <img decoding="async" {...imgProps(`${R}/halo-rg-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色光環主石戒指（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-white hide-sm">
-          <img decoding="async" {...imgProps(`${R}/band-rg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色排鑽戒指，側前方展示（AI 示意圖）" width={1000} height={1000} />
+          <img decoding="async" loading="lazy" {...imgProps(`${R}/band-rg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色排鑽戒指，側前方展示（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-rose hide-sm" />
         <div className="t-white hide-sm">
-          <img decoding="async" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} />
+          <img decoding="async" loading="lazy" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-ink">
           <img decoding="async" {...imgProps(`${R}/macro-ink.webp`, "(max-width: 760px) 34vw, 17vw")} alt="深藍背景下的六爪鑽石鑲嵌特寫（AI 示意圖）" width={1000} height={1000} />

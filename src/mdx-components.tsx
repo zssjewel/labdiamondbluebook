@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import type { MDXComponents } from "mdx/types";
 import { headingId } from "@/lib/heading";
 import { CaratStory } from "@/components/carat-on-hand";
