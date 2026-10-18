@@ -1260,3 +1260,60 @@
   content-visibility: auto;
   contain-intrinsic-size: auto 240px;
 }
+
+/* ---------- 示例內容標籤（SITE.demo） ---------- */
+.bb-demo {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--gold-ink);
+  font-size: var(--step-caption);
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  vertical-align: 0.15em;
+  white-space: nowrap;
+}
+.bb-footer__social { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; font-weight: 400; }
+.bb-footer__social a, .bb-footer__social span:not(.bb-demo) { color: var(--blue-ink); font-size: var(--step-body); }
+
+/* 關於本書：師傅介紹、工坊資料 */
+.bb-master {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin: 8px 0 8px;
+}
+.bb-master img, .bb-master__ph {
+  width: 160px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-panel);
+  object-fit: cover;
+}
+.bb-master__ph {
+  display: grid;
+  place-items: center;
+  background: var(--steel);
+  color: var(--ink-soft);
+  font-size: var(--step-small);
+  text-align: center;
+  line-height: 1.6;
+}
+.bb-master p { margin: 0 0 8px; }
+.bb-master__name { font-size: var(--step-lead); font-weight: 600; }
+.bb-master__title { color: var(--ink-soft); }
+.bb-studio { display: grid; gap: 10px; margin: 8px 0 0; }
+.bb-studio div { display: grid; grid-template-columns: 7em minmax(0, 1fr); gap: 12px; }
+.bb-studio dt { color: var(--ink-soft); }
+.bb-studio dd { margin: 0; }
+@media (max-width: 560px) {
+  .bb-master { grid-template-columns: 1fr; }
+  .bb-studio div { grid-template-columns: 1fr; gap: 0; }
+}
+.bb-casesec .bb-cases { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 860px) {
+  .bb-casesec .bb-cases { grid-template-columns: 1fr; }
+}
