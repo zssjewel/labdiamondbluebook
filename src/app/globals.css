@@ -1249,3 +1249,14 @@
   .bb-header__menu { padding: 0 8px; }
   .bb-header__action { padding: 0 12px; margin-right: 8px; }
 }
+
+/* ---------- 開頁速度：畫面以外嘅大段落，等碌到附近先排版同繪製 ---------- */
+.bb-routes, .bb-tool, .bb-casesec, .bb-contents, .bb-tiles, .bb-how, .bb-faq, .bb-close, .bb-footer,
+.bb-author, .bb-prevnext, .bb-ask, .bb-only-narrow, .bb-subhead, .bb-list {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+.bb-prose > :nth-child(n + 6):not(.bb-story) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 240px;
+}
