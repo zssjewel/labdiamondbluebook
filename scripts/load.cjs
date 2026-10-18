@@ -36,7 +36,10 @@ const setups = [
       const m = await page.evaluate(() => {
         const fcp = performance.getEntriesByName("first-contentful-paint")[0];
         const nav = performance.getEntriesByType("navigation")[0];
-        return { fcp: fcp ? fcp.startTime : 0, lcp: window.__m.lcp, cls: window.__m.cls, html: nav ? nav.encodedBodySize : 0 };
+        const css = performance.getEntriesByType("resource").filter((r) => r.initiatorType === "link" && r.name.endsWith(".css"));
+        const t = (x) => Math.round(x);
+        const diag = `HTML 首字節 ${t(nav.responseStart)}ms／收完 ${t(nav.responseEnd)}ms，CSS ${css.map((c) => `${t(c.startTime)}→${t(c.responseEnd)}ms`).join("、")}，DOM 可互動 ${t(nav.domInteractive)}ms`;
+        return { fcp: fcp ? fcp.startTime : 0, lcp: window.__m.lcp, cls: window.__m.cls, html: nav ? nav.encodedBodySize : 0, diag };
       });
       runs.push({ ...m, loadMs, reqs, bytes, sizes });
       await ctx.close();
@@ -44,6 +47,7 @@ const setups = [
       const med = (k) => runs.map((r) => r[k]).sort((a, b) => a - b)[1];
       const r0 = runs[0];
       console.log(`${name} · ${p.replace(/\.html$/, "")}（3 次中位數）：FCP ${(med("fcp") / 1000).toFixed(2)}s，LCP ${(med("lcp") / 1000).toFixed(2)}s，CLS ${med("cls").toFixed(3)}，載完 ${(med("loadMs") / 1000).toFixed(1)}s，請求 ${r0.reqs} 個，共 ${Math.round(r0.bytes / 1024)}KB（HTML ${Math.round(r0.html / 1024)}KB，未壓縮）`);
+      console.log("   " + runs[1].diag);
       if (p === pages[0]) console.log("   最大嘅檔案：" + r0.sizes.sort((a, b) => b[0] - a[0]).slice(0, 6).map(([b, u]) => `${u.split("?")[0]} ${Math.round(b / 1024)}KB`).join("，"));
     }
   }
