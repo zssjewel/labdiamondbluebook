@@ -50,8 +50,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "certificate",
-    image: "/images/renders/side-girdle-steel.webp",
-    imageAlt: "從側面看培育鑽石的腰部和爪鑲（3D 示意）",
+    image: "/images/renders/certificate-verification-ivory.webp",
+    imageAlt: "圓形鑽石、珠寶放大鏡與無品牌報告紙，示意證書核驗（AI 示意圖）",
     number: "第三章",
     title: "證書",
     answers: "IGI 定 GIA、證書點睇",
@@ -97,8 +97,8 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "custom",
-    image: "/images/renders/wax-steel.webp",
-    imageAlt: "訂造用的戒指蠟版模型（3D 示意）",
+    image: "/images/renders/custom-ring-wax-ivory.webp",
+    imageAlt: "綠色單石戒指蠟模與戒指設計草圖，示意訂造設計階段（AI 示意圖）",
     number: "第六章",
     title: "訂造流程",
     answers: "由問價到交貨、手寸、刻字",

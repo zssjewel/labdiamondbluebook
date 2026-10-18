@@ -40,7 +40,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       alternates: alternates(`/${chapter.slug}`, locale),
       // 冇一篇核對完成嘅文章，章節頁唔收錄
       robots: robotsFor(items.some((i) => articleReady(i.metadata))),
-      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}`, images: [chapter.image] },
+      // 章節圖係 1000×1000 正方形，分享圖標明尺寸，唔好當橫圖
+      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}`, images: [{ url: chapter.image, width: 1000, height: 1000, alt: chapter.imageAlt }] },
     };
   }
   const item = await getContent(slug[0], slug.slice(1), locale);

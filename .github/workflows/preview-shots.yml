@@ -50,7 +50,7 @@ jobs:
         run: |
           npx -y playwright@1.55.0 install --with-deps chromium firefox webkit >/dev/null
           mkdir -p shots
-          pages="home:zh-hk.html chapter:zh-hk/basics.html article:zh-hk/basics/vs-natural-moissanite.html about:zh-hk/about.html hand:zh-hk/4c/carat-size-on-hand.html price:zh-hk/price.html cases:zh-hk/cases.html"
+          pages="home:zh-hk.html chapter:zh-hk/basics.html article:zh-hk/basics/vs-natural-moissanite.html about:zh-hk/about.html hand:zh-hk/4c/carat-size-on-hand.html price:zh-hk/price.html cases:zh-hk/cases.html certificate:zh-hk/certificate.html custom:zh-hk/custom.html igi:zh-hk/certificate/igi-or-gia.html process:zh-hk/custom/process.html"
           for p in $pages; do
             name="${p%%:*}"; path="${p#*:}"
             npx -y playwright@1.55.0 screenshot --full-page --wait-for-timeout 1500 --viewport-size "1440,900" "http://localhost:8080/$path" "shots/${name}-1440.png" || true

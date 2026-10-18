@@ -117,6 +117,39 @@ const widths = [320, 390, 768, 1440];
     }
   }
 
+  console.log("\n== 第三章、第六章章節圖 ==");
+  for (const [path, want] of [["/zh-hk/certificate", "certificate-verification-ivory"], ["/zh-hk/custom", "custom-ring-wax-ivory"]]) {
+    const html = await (await fetch(base + path + ".html")).text();
+    const og = [...html.matchAll(/<meta property="og:image(?::(width|height|alt))?" content="([^"]+)"/g)].map((m) => `${m[1] || "url"}=${m[2].replace(/^https?:\/\/[^/]+/, "")}`);
+    console.log(`${path} 分享圖：${og.join("，")}`);
+    const ctx3 = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
+    const pg3 = await ctx3.newPage();
+    await pg3.goto(base + path + ".html", { waitUntil: "load" });
+    await pg3.waitForTimeout(500);
+    const info = await pg3.evaluate(() => {
+      const img = document.querySelector(".bb-chapfig img");
+      if (!img) return null;
+      const r = img.getBoundingClientRect();
+      const fig = img.parentElement.getBoundingClientRect();
+      return { src: img.getAttribute("src"), current: img.currentSrc.replace(location.origin, ""), alt: img.alt, nat: `${img.naturalWidth}×${img.naturalHeight}`, box: `${Math.round(r.width)}×${Math.round(r.height)}`, fig: `${Math.round(fig.width)}×${Math.round(fig.height)}`, fit: getComputedStyle(img).objectFit, srcset: img.getAttribute("srcset"), sizes: img.getAttribute("sizes"), wh: `${img.getAttribute("width")}×${img.getAttribute("height")}`, loading: img.getAttribute("loading") || "eager" };
+    });
+    console.log(`  側欄圖：${info ? `${info.src}（用緊 ${info.current}，原圖 ${info.nat}，顯示 ${info.box}，框 ${info.fig}，object-fit ${info.fit}，width/height ${info.wh}，載入 ${info.loading}，sizes ${info.sizes}）` : "冇"}`);
+    console.log(`  alt：${info && info.alt}`);
+    if (info && info.srcset) {
+      for (const part of info.srcset.split(",")) {
+        const u = part.trim().split(" ")[0];
+        const r = await fetch(base + u);
+        console.log(`  srcset ${u}：HTTP ${r.status} ${r.headers.get("content-type")}`);
+      }
+    }
+    console.log(`  係咪用新圖：${info && info.src.includes(want) ? "係" : "唔係"}`);
+    await ctx3.close();
+  }
+  for (const old of ["side-girdle-steel.webp", "wax-steel.webp"]) {
+    const r = await fetch(base + "/images/renders/" + old);
+    console.log(`舊圖 ${old} 仍然保留：HTTP ${r.status}`);
+  }
+
   console.log("\n== 返回目錄、尺寸工具 ==");
   {
     const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 } });
