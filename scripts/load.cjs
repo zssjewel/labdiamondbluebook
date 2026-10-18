@@ -38,7 +38,8 @@ const setups = [
         const nav = performance.getEntriesByType("navigation")[0];
         const css = performance.getEntriesByType("resource").filter((r) => r.initiatorType === "link" && r.name.endsWith(".css"));
         const t = (x) => Math.round(x);
-        const diag = `HTML 首字節 ${t(nav.responseStart)}ms／收完 ${t(nav.responseEnd)}ms，CSS ${css.map((c) => `${t(c.startTime)}→${t(c.responseEnd)}ms`).join("、")}，DOM 可互動 ${t(nav.domInteractive)}ms`;
+        const tl = performance.getEntriesByType("resource").filter((r) => r.startTime < 1500).map((r) => `${r.name.replace(location.origin, "").split("?")[0].slice(-40)} ${t(r.startTime)}→${t(r.responseEnd)} ${Math.round(r.encodedBodySize / 1024)}KB`).join("\n     ");
+        const diag = `時間線：\n     ${tl}\n   HTML 首字節 ${t(nav.responseStart)}ms／收完 ${t(nav.responseEnd)}ms，CSS ${css.map((c) => `${t(c.startTime)}→${t(c.responseEnd)}ms`).join("、")}，DOM 可互動 ${t(nav.domInteractive)}ms`;
         return { fcp: fcp ? fcp.startTime : 0, lcp: window.__m.lcp, cls: window.__m.cls, html: nav ? nav.encodedBodySize : 0, diag };
       });
       runs.push({ ...m, loadMs, reqs, bytes, sizes });

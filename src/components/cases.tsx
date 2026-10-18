@@ -1,4 +1,7 @@
 import type { Case } from "@/config/cases";
+import { isDemoCases } from "@/config/cases";
+import { Demo } from "@/components/demo";
+import { imgProps } from "@/lib/images";
 
 /** 作品卡：相片、標題、規格。首頁同 /cases 共用 */
 export function CaseCard({ item, sizes }: { item: Case; sizes: string }) {
@@ -7,11 +10,14 @@ export function CaseCard({ item, sizes }: { item: Case; sizes: string }) {
     <article className="bb-case">
       {cover && (
         <figure className="bb-case__fig">
-          <img src={cover.src} alt={cover.alt} width={1200} height={1200} loading="lazy" decoding="async" sizes={sizes} />
+          <img {...imgProps(cover.src, sizes)} alt={cover.alt} width={1000} height={1000} loading="lazy" decoding="async" />
         </figure>
       )}
       <div className="bb-case__body">
-        <p className="bb-case__type">{item.type}</p>
+        <p className="bb-case__type">
+          {item.type}
+          <Demo show={isDemoCases} />
+        </p>
         <h3>{item.title}</h3>
         <dl>
           <div>

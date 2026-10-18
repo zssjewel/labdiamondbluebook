@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { CHAPTERS } from "@/config/chapters";
 import { localizeHref } from "@/config/site";
 import type { ContentItem } from "@/lib/content";

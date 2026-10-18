@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { useEffect, useRef, useState } from "react";
 import { hasContact, isExternal, localizeHref, waHref } from "@/config/site";
 
@@ -236,8 +236,10 @@ export function CaratStory() {
   const isTool = active === STORY.length;
   const shown = isTool ? { ct, finger } : STORY[active];
 
+  const [live, setLive] = useState(false);
   useEffect(() => {
     if (!("IntersectionObserver" in window)) return;
+    setLive(true);
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -251,7 +253,7 @@ export function CaratStory() {
   }, []);
 
   return (
-    <div className="bb-story">
+    <div className={live ? "bb-story is-live" : "bb-story"}>
       <div className="bb-story__fig">
         <div className="bb-story__sticky">
           <HandFigure ct={shown.ct} finger={shown.finger} />
