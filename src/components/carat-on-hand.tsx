@@ -73,8 +73,8 @@ function fingerPath(f: FingerShape) {
   const yDip = tip + top * 1.25;
   const yPip = tip + top * 2.3;
   const ht = top / 2;
-  const hd = h(yDip) * 0.97;
-  const hp = h(yPip) * 1.02;
+  const hd = h(yDip) * 0.985;
+  const hp = h(yPip) * 1.012;
   const hb = h(BOTTOM);
   const r = (x: number) => x.toFixed(1);
   return [
@@ -94,19 +94,20 @@ function fingerPath(f: FingerShape) {
   ].join(" ");
 }
 
-/** 指甲：圓頭、甲根微彎，比之前細少少 */
+/** 指甲：圓頭、兩邊微微收窄、甲根圓弧，比之前細少少 */
 function nailPath(f: FingerShape) {
-  const w = f.top * 0.27;
-  const top = f.tip + f.top * 0.14;
-  const bottom = f.tip + f.top * 0.78;
+  const w = f.top * 0.25;
+  const wb = w * 0.9;
+  const top = f.tip + f.top * 0.13;
+  const bottom = f.tip + f.top * 0.74;
   const cx = f.cx;
   const r = (x: number) => x.toFixed(1);
   return [
-    `M${r(cx - w)},${r(bottom - w * 0.35)}`,
-    `L${r(cx - w)},${r(top + w)}`,
-    `C${r(cx - w)},${r(top - w * 0.15)} ${r(cx + w)},${r(top - w * 0.15)} ${r(cx + w)},${r(top + w)}`,
-    `L${r(cx + w)},${r(bottom - w * 0.35)}`,
-    `Q${r(cx)},${r(bottom + w * 0.25)} ${r(cx - w)},${r(bottom - w * 0.35)}`,
+    `M${r(cx - wb)},${r(bottom - wb * 0.55)}`,
+    `C${r(cx - w * 1.02)},${r((top + bottom) / 2)} ${r(cx - w)},${r(top + w * 0.6)} ${r(cx - w)},${r(top + w * 0.8)}`,
+    `C${r(cx - w)},${r(top - w * 0.2)} ${r(cx + w)},${r(top - w * 0.2)} ${r(cx + w)},${r(top + w * 0.8)}`,
+    `C${r(cx + w)},${r(top + w * 0.6)} ${r(cx + w * 1.02)},${r((top + bottom) / 2)} ${r(cx + wb)},${r(bottom - wb * 0.55)}`,
+    `C${r(cx + wb)},${r(bottom + wb * 0.15)} ${r(cx - wb)},${r(bottom + wb * 0.15)} ${r(cx - wb)},${r(bottom - wb * 0.55)}`,
     "Z",
   ].join(" ");
 }
@@ -126,7 +127,7 @@ function Finger({ f, ids, ring }: { f: FingerShape; ids: Record<string, string>;
       <path d={d} fill="rgba(92, 60, 44, 0.22)" filter={`url(#${ids.soft})`} transform="translate(2 3)" />
       <path d={d} fill={`url(#${ids.skin})`} />
       <path d={d} fill={`url(#${ids.skinV})`} />
-      <path d={d} fill="none" stroke="rgba(120, 82, 64, 0.22)" strokeWidth={0.9} />
+      <path d={d} fill="none" stroke="rgba(120, 82, 64, 0.28)" strokeWidth={0.9} />
       <path d={nail} fill={`url(#${ids.nail})`} />
       <path d={nail} fill="none" stroke="rgba(170, 120, 105, 0.35)" strokeWidth={0.8} />
       <ellipse cx={f.cx - f.top * 0.1} cy={f.tip + f.top * 0.36} rx={f.top * 0.045} ry={f.top * 0.11} fill="#ffffff" opacity={0.45} />
@@ -183,12 +184,12 @@ export function HandFigure({ ct, finger, label }: { ct: number; finger: number; 
         <defs>
           {/* 橫向：手指兩邊暗、中間亮，做出圓柱感 */}
           <linearGradient id={ids.skin} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#d4ab95" />
-            <stop offset="0.18" stopColor="#e3c1ad" />
-            <stop offset="0.48" stopColor="#ecd2c1" />
-            <stop offset="0.62" stopColor="#ebd0bf" />
-            <stop offset="0.86" stopColor="#ddb8a3" />
-            <stop offset="1" stopColor="#cfa48e" />
+            <stop offset="0" stopColor="#c99c85" />
+            <stop offset="0.16" stopColor="#ddb8a2" />
+            <stop offset="0.46" stopColor="#ebcfbd" />
+            <stop offset="0.6" stopColor="#e9ccb9" />
+            <stop offset="0.86" stopColor="#d8b09a" />
+            <stop offset="1" stopColor="#c69882" />
           </linearGradient>
           {/* 直向：指尖略淡，指根略深 */}
           <linearGradient id={ids.skinV} x1="0" y1="0" x2="0" y2="1">
