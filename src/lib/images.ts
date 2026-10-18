@@ -11,10 +11,11 @@ const RESPONSIVE = new Set([
   "macro-ink",
   "solitaire-yg-steel",
   "princess-wg-white",
+  "carat-size-round-cover",
 ]);
 
-/** 原圖闊度：手鏈 1400，其他 1000 */
-const FULL_WIDTH: Record<string, number> = { "bracelet-steel": 1400 };
+/** 原圖闊度：手鏈 1400，分享封面 1200，其他 1000 */
+const FULL_WIDTH: Record<string, number> = { "bracelet-steel": 1400, "carat-size-round-cover": 1200 };
 
 export function srcSetFor(src: string) {
   const m = src.match(/^(.*\/)([^/]+)\.webp$/);

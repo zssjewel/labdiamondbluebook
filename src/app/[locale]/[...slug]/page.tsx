@@ -47,13 +47,21 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!item) return { title: "找不到頁面" };
   const pathname = `/${slug.join("/")}`;
   const title = `${item.metadata.title}｜${SITE.name}`;
+  const shareImage = {
+    url: item.metadata.image ?? chapter.image,
+    width: item.metadata.imageWidth ?? 1000,
+    height: item.metadata.imageHeight ?? 1000,
+    alt: item.metadata.imageAlt ?? (item.metadata.image ? item.metadata.title : chapter.imageAlt),
+  };
   return {
     title,
     description: item.metadata.description,
     alternates: alternates(pathname, locale),
     // 初稿、未經師傅核對嘅文章唔收錄
     robots: robotsFor(articleReady(item.metadata)),
-    openGraph: { type: "article", title, description: item.metadata.description, url: `${SITE.url}${localizeHref(pathname, locale)}`, images: [item.metadata.image ?? chapter.image] },
+    openGraph: { type: "article", title, description: item.metadata.description, url: `${SITE.url}${localizeHref(pathname, locale)}`, images: [shareImage] },
+    // 分享卡同 og:image 用同一張圖（唔再沿用全站 og.png）
+    twitter: { card: "summary_large_image", images: [shareImage] },
   };
 }
 
@@ -279,9 +287,9 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             <img
               decoding="async"
               {...imgProps(item.metadata.image ?? chapter.image, "(max-width: 960px) 100vw, 760px")}
-              alt={item.metadata.image ? item.metadata.title : chapter.imageAlt}
-              width={1000}
-              height={1000}
+              alt={item.metadata.imageAlt ?? (item.metadata.image ? item.metadata.title : chapter.imageAlt)}
+              width={item.metadata.imageWidth ?? 1000}
+              height={item.metadata.imageHeight ?? 1000}
             />
             <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
           </figure>

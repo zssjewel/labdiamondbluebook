@@ -87,5 +87,77 @@ const widths = [320, 390, 768, 1440];
   console.log(`目錄撳開：${open ? "成功" : "失敗"}；撳第一條（${firstLink}）後標題距頂 ${jumped}px（要大過黏頂頁頭）`);
   await page.keyboard.press("Tab");
   await ctx.close();
+
+  console.log("\n== 圓鑽文章分享圖 ==");
+  {
+    const html = await (await fetch(base + "/zh-hk/4c/carat-size-on-hand.html")).text();
+    const metas = (re) => [...html.matchAll(re)].map((m) => m[1]);
+    const og = metas(/<meta property="og:image" content="([^"]+)"/g);
+    const ogw = metas(/<meta property="og:image:width" content="([^"]+)"/g);
+    const ogh = metas(/<meta property="og:image:height" content="([^"]+)"/g);
+    const oga = metas(/<meta property="og:image:alt" content="([^"]+)"/g);
+    const tw = metas(/<meta name="twitter:image" content="([^"]+)"/g);
+    const ld = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((m) => { try { return JSON.parse(m[1]); } catch { return "解析失敗"; } });
+    const art = ld.find((x) => x && x["@type"] === "Article");
+    console.log(`og:image ×${og.length}：${og.join("、")}（${ogw.join()}×${ogh.join()}，alt「${oga.join()}」）`);
+    console.log(`twitter:image ×${tw.length}：${tw.join("、")}`);
+    console.log(`Article.image：${art ? art.image : "冇"}；JSON-LD 解析失敗 ${ld.filter((x) => x === "解析失敗").length} 個`);
+    console.log(`仲有冇用方鑽圖做封面：${/princess-macro-white/.test(html) ? "有（要查）" : "冇"}`);
+    const ch = await (await fetch(base + "/zh-hk/4c.html")).text();
+    console.log(`第四章頁 og:image：${(ch.match(/<meta property="og:image" content="([^"]+)"/) || [])[1]}（應該仍然係方鑽圖）`);
+    for (const f of ["carat-size-round-cover.webp", "carat-size-round-cover-800.webp", "carat-size-round-cover-480.webp"]) {
+      const r = await fetch(base + "/images/renders/" + f);
+      const buf = Buffer.from(await r.arrayBuffer());
+      // WebP VP8/VP8L/VP8X 讀闊高
+      let w = 0, h = 0; const t = buf.toString("ascii", 12, 16);
+      if (t === "VP8X") { w = 1 + buf.readUIntLE(24, 3); h = 1 + buf.readUIntLE(27, 3); }
+      else if (t === "VP8 ") { w = buf.readUInt16LE(26) & 0x3fff; h = buf.readUInt16LE(28) & 0x3fff; }
+      else if (t === "VP8L") { const b = buf.readUInt32LE(21); w = (b & 0x3fff) + 1; h = ((b >> 14) & 0x3fff) + 1; }
+      console.log(`/images/renders/${f}：HTTP ${r.status}，${r.headers.get("content-type")}，${w}×${h}，${Math.round(buf.length / 1024)}KB`);
+    }
+  }
+
+  console.log("\n== 返回目錄、尺寸工具 ==");
+  {
+    const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const pg = await ctx2.newPage();
+    for (const [label, sel] of [["價錢", 'header a[href$="/zh-hk/price"]'], ["訂造流程", 'header a[href$="/zh-hk/custom"]']]) {
+      await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+      await pg.waitForTimeout(500);
+      await pg.click(sel);
+      await pg.waitForLoadState("load");
+      await pg.waitForTimeout(600);
+      const at = new URL(pg.url()).pathname;
+      await pg.goBack();
+      await pg.waitForTimeout(800);
+      await pg.evaluate(() => document.getElementById("contents")?.scrollIntoView());
+      await pg.waitForTimeout(1200);
+      const vis = await pg.evaluate(() => {
+        const h = document.getElementById("contents-title");
+        const list = document.querySelector(".bb-toc");
+        const op = (e) => (e ? getComputedStyle(e).opacity : "冇");
+        return { h: op(h), list: op(list), pending: document.querySelectorAll(".is-pending:not(.is-in)").length };
+      });
+      console.log(`首頁 → ${label}（${at}）→ 返回：目錄標題透明度 ${vis.h}，目錄透明度 ${vis.list}`);
+    }
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    const read = () => pg.evaluate(() => document.querySelector(".bb-tool .bb-hand__read")?.textContent?.replace(/\s+/g, " "));
+    const setRange = (v) => pg.evaluate((v) => {
+      const el = document.querySelector("#tool-ct");
+      const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+      setter.call(el, String(v));
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }, v);
+    await pg.locator("#tool-ct").scrollIntoViewIfNeeded();
+    await setRange(0.25); await pg.waitForTimeout(300); console.log(`拉桿最細：${await read()}`);
+    await setRange(3); await pg.waitForTimeout(300); console.log(`拉桿最大：${await read()}`);
+    for (const f of ["手指幼", "中等", "手指粗"]) {
+      await pg.click(`.bb-tool button:has-text("${f}")`);
+      await pg.waitForTimeout(300);
+      const pressed = await pg.evaluate((f) => [...document.querySelectorAll(".bb-tool .bb-hand__fingers-pick button")].find((b) => b.textContent === f)?.getAttribute("aria-pressed"), f);
+      console.log(`揀「${f}」（已選 ${pressed}）：${await read()}`);
+    }
+    await ctx2.close();
+  }
   await browser.close();
 })();

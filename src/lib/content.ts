@@ -47,6 +47,10 @@ export interface ContentMetadata {
   draft?: boolean;
   /** false：唔顯示文章題圖（例如正文開頭已經有互動圖） */
   cover?: boolean;
+  /** 封面／分享圖嘅替代文字同尺寸（冇填就用 1000×1000） */
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   /** 示例大綱：只有結構、未有正文 */
   placeholder?: boolean;
   /** 作者署名，未填時用編著者（鄒三山工坊） */
