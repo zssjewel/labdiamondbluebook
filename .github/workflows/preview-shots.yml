@@ -41,6 +41,7 @@ jobs:
         if: steps.build.outcome == 'success'
         run: |
           cp -f out/zh-hk.html out/index.html 2>/dev/null || cp -f out/zh-hk/index.html out/index.html
+          head -c 4000 out/zh-hk/4c/carat-size-on-hand.html > shots/head.html || true
           (cd out && python3 -m http.server 8080 >/dev/null 2>&1 &)
           sleep 2
 
