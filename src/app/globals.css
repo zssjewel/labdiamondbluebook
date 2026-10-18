@@ -1241,3 +1241,11 @@
 @media (max-width: 960px) {
   .bb-draft { padding: 12px 16px; margin-bottom: 20px; }
 }
+
+/* 好窄嘅手機（≤380px）：頁頭按鈕縮短，唔會撐闊頁面 */
+@media (max-width: 380px) {
+  .bb-hide-xs { display: none; }
+  .bb-header__mark { padding: 0 10px; font-size: 1rem; }
+  .bb-header__menu { padding: 0 8px; }
+  .bb-header__action { padding: 0 12px; margin-right: 8px; }
+}

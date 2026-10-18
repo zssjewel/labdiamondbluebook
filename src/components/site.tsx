@@ -41,7 +41,7 @@ export function SiteHeader({ locale }: { locale: string }) {
       <span className="bb-header__spacer" />
       {hasContact && (
         <SmartLink href={waHref()} className="bb-btn bb-btn--accent bb-header__action">
-          WhatsApp 問師傅
+          <span className="bb-hide-xs">WhatsApp </span>問師傅
         </SmartLink>
       )}
     </header>
