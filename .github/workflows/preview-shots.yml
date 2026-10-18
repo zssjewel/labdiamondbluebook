@@ -81,6 +81,7 @@ jobs:
         run: |
           [ -d /tmp/pw/node_modules/playwright ] || npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
           NODE_PATH=/tmp/pw/node_modules node scripts/check.cjs http://localhost:8080 | tee shots/check.txt
+          NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8080 | tee shots/load.txt
 
       - name: Taste inspector
         if: steps.build.outcome == 'success'
