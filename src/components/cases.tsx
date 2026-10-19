@@ -4,7 +4,7 @@ import { Demo } from "@/components/demo";
 import { CASE_CATEGORIES, CASES, type Case, caseHref, categoryOf, isDemoCases, visibleCategories } from "@/config/cases";
 import { localizeHref } from "@/config/site";
 import { imgProps } from "@/lib/images";
-import { SegIndicator } from "@/components/seg-indicator";
+import { CategoryTabs } from "@/components/category-tabs";
 
 export const catNames: Record<string, string> = Object.fromEntries(CASE_CATEGORIES.map((c) => [c.slug, c.name]));
 
@@ -82,20 +82,8 @@ export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
   );
 }
 
-/** 分類列（連結版）：列表頁同分類頁用，可以左右滑 */
+/** 分類列：列表頁同分類頁用，效果同首頁一樣（膠囊滑過去先換頁） */
 export function CategoryNav({ locale, current }: { locale: string; current?: string }) {
-  const cats = visibleCategories();
-  return (
-    <nav className="bb-shelf__tabs bb-shelf__tabs--links bb-seg" aria-label="作品分類">
-      <SegIndicator active={current ?? "all"} />
-      <Link href={localizeHref("/cases", locale)} aria-current={current ? undefined : "page"}>
-        所有產品
-      </Link>
-      {cats.map((c) => (
-        <Link key={c.slug} href={localizeHref(`/cases/${c.slug}`, locale)} aria-current={current === c.slug ? "page" : undefined}>
-          {c.name}
-        </Link>
-      ))}
-    </nav>
-  );
+  const items = [{ key: "all", href: localizeHref("/cases", locale), label: "所有產品" }, ...visibleCategories().map((c) => ({ key: c.slug, href: localizeHref(`/cases/${c.slug}`, locale), label: c.name }))];
+  return <CategoryTabs items={items} current={current ?? "all"} />;
 }

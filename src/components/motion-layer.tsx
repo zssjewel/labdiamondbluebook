@@ -19,14 +19,26 @@ const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffe
 export default function MotionLayer() {
   const pathname = usePathname();
   const first = useRef(true);
+  const prev = useRef(pathname);
 
   // 換頁淡入：喺新頁畫出嚟之前開始，唔會閃一下
   useBeforePaint(() => {
     if (first.current) {
       first.current = false;
+      prev.current = pathname;
       return;
     }
+    const from = prev.current;
+    prev.current = pathname;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // 作品列表之間換分類：分類列唔郁，淨係卡片由右邊逐張滑入（同首頁換分類一樣）
+    const isList = (p: string) => /\/cases(\/[^/]+)?\/?$/.test(p);
+    if (isList(from) && isList(pathname)) {
+      document.querySelectorAll<HTMLElement>(".bb-casegrid > li").forEach((li, i) => {
+        li.animate([{ opacity: 0, transform: "translate3d(32px, 0, 0)" }, { opacity: 1, transform: "none" }], { duration: 620, delay: Math.min(i, 6) * 45, easing: EASE, fill: "backwards" });
+      });
+      return;
+    }
     const main = document.querySelector("main");
     if (!main || typeof main.animate !== "function") return;
     main.animate(

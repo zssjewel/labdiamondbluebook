@@ -418,5 +418,26 @@ const widths = [320, 390, 768, 1440];
     console.log(`跳至正文：第一下 Tab 聚焦「${skip.t}」（頂 ${skip.top}px），撳 Enter 後焦點喺 ${after}；main 數量 ${await pg.evaluate(() => document.querySelectorAll("main").length)}`);
     await pg.close();
   }
+
+  console.log("\n== 作品列表頁分類（同首頁一樣嘅分段選擇器）==");
+  {
+    const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await pg.goto(base + "/zh-hk/cases.html", { waitUntil: "load" });
+    await pg.waitForTimeout(1200);
+    await pg.evaluate(() => window.scrollTo(0, 300));
+    const ind = () => pg.evaluate(() => {
+      const nav = document.querySelector(".bb-casegrid") && document.querySelector("nav.bb-seg");
+      const on = nav.querySelector('[aria-current="page"]');
+      const i = nav.querySelector(".bb-seg__ind");
+      return { on: on && on.textContent, x: Math.round(new DOMMatrix(getComputedStyle(i).transform).m41), want: on ? on.offsetLeft : -1, live: nav.classList.contains("is-live"), url: location.pathname, y: Math.round(scrollY), n: document.querySelectorAll(".bb-casegrid > li").length };
+    });
+    console.log("開頁：", JSON.stringify(await ind()));
+    await pg.click('nav.bb-seg a:has-text("耳環")');
+    await pg.waitForTimeout(150);
+    console.log("撳「耳環」0.15 秒（膠囊滑緊、未換頁）：", JSON.stringify(await ind()));
+    await pg.waitForTimeout(1800);
+    console.log("1.9 秒後（已換頁）：", JSON.stringify(await ind()));
+    await pg.close();
+  }
   await browser.close();
 })();
