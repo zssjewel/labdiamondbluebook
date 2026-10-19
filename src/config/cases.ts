@@ -152,10 +152,9 @@ const DEMO_CASES: Case[] = [
   demo("round-solitaire-rg", "engagement-rings", "圓形單石求婚戒指・玫瑰金", `${D}/solitaire-rg.webp`, `玫瑰金色圓形單石戒指${AI}`, "圓形主石（卡數、顏色、淨度、證書待填）", "玫瑰金（成色待填）", STORY.ring),
   demo("round-halo-wg", "engagement-rings", "圓形光環求婚戒指・白色金屬", `${D}/halo-wg.webp`, `白色金屬光環戒指${AI}`, "圓形主石連光環碎鑽（待填）", "白色金屬（成色待填）", STORY.ring),
   // 耳環
-  demo("round-stud-yg", "earrings", "圓形單鑽耳釘・黃金", `${D}/stud-round-yg-pale.webp`, `黃金色四爪圓形耳釘${CG}`, "一對圓形主石（每粒卡數、顏色待填）", "黃金（成色待填）", STORY.ear),
-  demo("oval-stud", "earrings", "橢圓單鑽耳釘", `${D}/stud-oval-pt-steel.webp`, `白色金屬橢圓耳釘${CG}`, "一對橢圓主石（每粒卡數、顏色待填）", "白色金屬（成色待填）", STORY.ear),
-  demo("round-stud-six", "earrings", "圓形六爪耳釘", `${D}/stud-wg-blue.webp`, `白色金屬六爪圓形耳釘${CG}`, "一對圓形主石（每粒卡數、顏色待填）", "白色金屬（成色待填）", STORY.ear),
-  demo("cushion-halo-stud", "earrings", "枕形光環耳釘", `${D}/stud-cushion-wg-halo.webp`, `白色金屬枕形光環耳釘${CG}`, "一對枕形主石連光環碎鑽（待填）", "白色金屬（成色待填）", STORY.ear),
+  demo("round-studs-yg", "earrings", "圓形單鑽耳釘・黃金", `${D}/studs-yg.webp`, `黃金色四爪圓形耳釘一對${AI}`, "一對圓形主石（每粒卡數、顏色待填）", "黃金（成色待填）", STORY.ear),
+  demo("round-studs-wg", "earrings", "圓形單鑽耳釘・白色金屬", `${D}/studs-wg.webp`, `白色金屬四爪圓形耳釘一對${AI}`, "一對圓形主石（每粒卡數、顏色待填）", "白色金屬（成色待填）", STORY.ear),
+  demo("round-studs-rg", "earrings", "圓形單鑽耳釘・玫瑰金", `${D}/studs-rg.webp`, `玫瑰金色四爪圓形耳釘一對${AI}`, "一對圓形主石（每粒卡數、顏色待填）", "玫瑰金（成色待填）", STORY.ear),
   // 排鑽戒
   demo("half-eternity-rg", "eternity-rings", "半圈排鑽戒・玫瑰金", `${R}/band-rg-steel.webp`, `玫瑰金色半圈排鑽戒指${AI}`, "排鑽數量及總卡數（待填）", "玫瑰金（成色待填）", STORY.band),
   demo("half-eternity-yg", "eternity-rings", "半圈排鑽戒・黃金", `${D}/band-yg.webp`, `黃金色半圈排鑽戒指${AI}`, "排鑽數量及總卡數（待填）", "黃金（成色待填）", STORY.band),

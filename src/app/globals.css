@@ -1213,8 +1213,11 @@
 }
 
 /* 好窄嘅手機（≤380px）：頁頭按鈕縮短，唔會撐闊頁面 */
-@media (max-width: 380px) {
+/* 手機頁頭：作品、目錄、問師傅三樣都要放得落，按鈕淨係寫「問師傅」 */
+@media (max-width: 460px) {
   .bb-hide-xs { display: none; }
+}
+@media (max-width: 380px) {
   .bb-header__mark { padding: 0 10px; font-size: 1rem; }
   .bb-header__menu { padding: 0 8px; }
   .bb-header__action { padding: 0 12px; margin-right: 8px; }
