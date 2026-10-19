@@ -58,7 +58,7 @@ async function glide(page, pxPerSec, stops = []) {
       else await page.locator(".bb-works .bb-shelf__paddle--next").click();
       await page.waitForTimeout(1100);
     }
-    await glide(page, speed, [".bb-tool__plate", tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h", ".bb-tiles__a"]);
+    await glide(page, speed, [".bb-tool__plate", tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h", ".bb-why__a"]);
     await page.waitForTimeout(600);
     // 撳入文章，睇換頁
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
@@ -124,7 +124,7 @@ async function glide(page, pxPerSec, stops = []) {
     for (const f of [0.08, 0.2, 0.42]) {
       for (let k = 0; k < 3; k++) {
       await page.evaluate((f) => {
-          const r = document.querySelector(".bb-tiles").getBoundingClientRect();
+          const r = document.querySelector(".bb-why").getBoundingClientRect();
           window.scrollTo(0, scrollY + r.top - innerHeight + (innerHeight + r.height) * f);
         }, f);
         await page.waitForTimeout(200);
