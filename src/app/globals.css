@@ -1314,30 +1314,6 @@
 @keyframes bb-raise { from { transform: scaleY(0); } }
 @keyframes bb-fadeup { from { opacity: 0; transform: translate3d(0, 28px, 0); } }
 
-@media (prefers-reduced-motion: no-preference) {
-  /* 1. 刊頭：開頁時每格圖由近拉遠「落位」，藍、粉色塊由下升起；第一張圖照常即刻顯示，唔影響首屏速度 */
-  .bb-mosaic img { animation: bb-settle 1800ms var(--ease-apple) both; }
-  .bb-mosaic .t-blue, .bb-mosaic .t-rose { transform-origin: 50% 100%; animation: bb-raise 1200ms var(--ease-apple) both; }
-  .bb-mosaic > :nth-child(2) { animation-delay: 60ms; }
-  .bb-mosaic > :nth-child(3) img { animation-delay: 90ms; }
-  .bb-mosaic > :nth-child(4) img { animation-delay: 140ms; }
-  .bb-mosaic > :nth-child(5) img { animation-delay: 190ms; }
-  .bb-mosaic > :nth-child(6) img { animation-delay: 120ms; }
-  .bb-mosaic > :nth-child(7) img { animation-delay: 230ms; }
-  .bb-mosaic > :nth-child(8) { animation-delay: 260ms; }
-  .bb-mosaic > :nth-child(9) img { animation-delay: 280ms; }
-  .bb-mosaic > :nth-child(10) img { animation-delay: 170ms; }
-
-  /* 2. 首屏：標題同引言即刻顯示（首屏速度）；按鈕、快答隨後升起 */
-  .bb-hero__actions { animation: bb-fadeup 1000ms var(--ease-apple) 180ms both; }
-  .bb-hero .bb-continue { animation: bb-fadeup 1000ms var(--ease-apple) 260ms both; }
-  .bb-answers > li { animation: bb-fadeup 1000ms var(--ease-apple) both; }
-  .bb-answers > li:nth-child(1) { animation-delay: 300ms; }
-  .bb-answers > li:nth-child(2) { animation-delay: 380ms; }
-  .bb-answers > li:nth-child(3) { animation-delay: 460ms; }
-
-}
-
 /* 8. 頁頭毛玻璃：底下內容碌過時透出朦朧色彩 */
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .bb-header {
