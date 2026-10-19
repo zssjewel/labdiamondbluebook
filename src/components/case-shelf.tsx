@@ -120,10 +120,9 @@ export function CaseShelf({
       {tabs && tabs.length > 1 && (
         <div className="bb-shelf__tabs bb-seg" role="group" aria-label="作品分類">
           <SegIndicator active={cat} />
-          {[{ slug: "all", name: "全部", count: items.length }, ...tabs].map((t) => (
+          {[{ slug: "all", name: "所有產品" }, ...tabs].map((t) => (
             <button key={t.slug} type="button" aria-pressed={cat === t.slug} onClick={() => pick(t.slug)}>
               {t.name}
-              <span>{t.count}</span>
             </button>
           ))}
         </div>

@@ -96,12 +96,11 @@ export function CategoryNav({ locale, current }: { locale: string; current?: str
     <nav className="bb-shelf__tabs bb-shelf__tabs--links bb-seg" aria-label="作品分類">
       <SegIndicator active={current ?? "all"} />
       <Link href={localizeHref("/cases", locale)} aria-current={current ? undefined : "page"}>
-        全部<span>{CASES.length}</span>
+        所有產品
       </Link>
       {cats.map((c) => (
         <Link key={c.slug} href={localizeHref(`/cases/${c.slug}`, locale)} aria-current={current === c.slug ? "page" : undefined}>
           {c.name}
-          <span>{c.count}</span>
         </Link>
       ))}
     </nav>

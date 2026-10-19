@@ -290,7 +290,7 @@ const widths = [320, 390, 768, 1440];
     const first = await pg.evaluate(() => document.querySelector(".bb-works .bb-shelf__track li a").getAttribute("href"));
     console.log(`  第一張連去 ${first}`);
     if (!opts.isMobile) {
-      await pg.locator(".bb-works .bb-shelf__tabs button", { hasText: "全部" }).click();
+      await pg.locator(".bb-works .bb-shelf__tabs button", { hasText: "所有產品" }).click();
       await pg.waitForTimeout(500);
       await pg.locator(".bb-works .bb-shelf__paddle--next").click();
       await pg.waitForTimeout(1200);
