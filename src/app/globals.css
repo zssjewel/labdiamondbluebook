@@ -1336,8 +1336,9 @@
   background: var(--steel);
 }
 .bb-works__head { padding-inline: var(--pad); margin-bottom: clamp(24px, 3vw, 40px); }
-.bb-shelf { --card-w: clamp(232px, 66vw, 320px); position: relative; }
-.bb-shelf--inset { --card-w: clamp(196px, 52vw, 236px); }
+.bb-shelf { --card-w: clamp(264px, 78vw, 400px); position: relative; }
+.bb-shelf--inset { --card-w: clamp(220px, 62vw, 260px); }
+.bb-shelf__stage { position: relative; }
 
 .bb-shelf__tabs {
   display: flex;
@@ -1410,13 +1411,14 @@
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
-.bb-shelf__img { display: block; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
+/* 蘋果式卡：字喺上面，相片貼住卡底 */
+.bb-shelf__img { display: block; margin-top: auto; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
 .bb-shelf__img img { width: 100%; height: 100%; object-fit: cover; }
-.bb-shelf__body { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: 14px 18px 18px; }
+.bb-shelf__body { display: flex; flex-direction: column; gap: 6px; padding: 24px 24px 18px; }
 .bb-shelf__cat { display: flex; align-items: center; color: var(--ink-soft); font-size: var(--step-caption); }
 .bb-shelf__cat .bb-demo { margin-left: 6px; }
-.bb-shelf__body strong { font-size: var(--step-body); font-weight: 600; line-height: 1.4; }
-.bb-shelf__more { margin-top: auto; padding-top: 6px; color: var(--blue); font-size: var(--step-small); }
+.bb-shelf__body strong { font-family: var(--font-display); font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.5rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.bb-shelf__more { color: var(--blue); font-size: var(--step-small); }
 .bb-shelf__more::after { content: " ›"; }
 .bb-shelf__card--all {
   align-items: center;
@@ -1465,7 +1467,42 @@
 @media (max-width: 760px) {
   .bb-shelf__tabs { margin-bottom: 18px; }
   .bb-shelf__track { gap: 12px; }
-  .bb-shelf__body { padding: 12px 14px 16px; }
+  .bb-shelf__body { padding: 18px 18px 14px; }
+}
+.bb-shelf--inset .bb-shelf__body { padding: 18px 18px 14px; }
+.bb-shelf--inset .bb-shelf__body strong { font-size: var(--step-body); }
+
+/* 左右箭咀：圓形毛玻璃，浮喺卡片兩邊；滑鼠移入貨架先出現，去到盡頭就收埋。手機用手指滑，唔顯示 */
+.bb-shelf__paddle {
+  position: absolute;
+  top: calc(50% - 14px);
+  z-index: 2;
+  display: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(214, 208, 206, 0.66);
+  color: rgba(42, 35, 38, 0.86);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 280ms var(--ease-apple), background-color 240ms var(--ease-apple);
+}
+.bb-shelf__paddle--prev { left: 16px; }
+.bb-shelf__paddle--next { right: 16px; }
+.bb-shelf--inset .bb-shelf__paddle--prev { left: 8px; }
+.bb-shelf--inset .bb-shelf__paddle--next { right: 8px; }
+.bb-shelf__paddle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.bb-shelf__paddle:disabled { opacity: 0 !important; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .bb-shelf__paddle { display: grid; }
+  .bb-shelf__stage:hover .bb-shelf__paddle, .bb-shelf__paddle:focus-visible { opacity: 1; }
+  .bb-shelf__paddle:hover { background: rgba(214, 208, 206, 0.86); }
 }
 
 /* 章節、文章、作品頁入面嘅「相關作品」 */
@@ -1489,7 +1526,7 @@
 }
 @media (max-width: 760px) {
   .bb-casegrid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .bb-casegrid .bb-shelf__body { padding: 10px 12px 14px; }
+  .bb-casegrid .bb-shelf__body { padding: 12px 12px 10px; gap: 2px; }
   .bb-casegrid .bb-shelf__body strong { font-size: var(--step-small); }
   .bb-casegrid .bb-shelf__more { display: none; }
   .bb-shelf__tabs--links { margin-inline: calc(-1 * var(--m)); padding-inline: var(--m); scroll-padding-inline: var(--m); max-width: none; }

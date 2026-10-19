@@ -55,7 +55,7 @@ async function glide(page, pxPerSec, stops = []) {
     }
     for (let k = 0; k < 2; k++) {
       if (tag === "phone") await page.evaluate(() => document.querySelector(".bb-works .bb-shelf__track").scrollBy({ left: 260, behavior: "smooth" }));
-      else await page.locator(".bb-works .bb-shelf__paddles button[aria-label='下一組']").click();
+      else await page.locator(".bb-works .bb-shelf__paddle--next").click();
       await page.waitForTimeout(1100);
     }
     await glide(page, speed, [".bb-tool__plate", tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h", ".bb-tiles__a"]);
@@ -90,6 +90,19 @@ async function glide(page, pxPerSec, stops = []) {
     for (const ms of [400, 900, 2000]) {
       await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
       await page.screenshot({ path: `${out}/${tag}-hero-${ms}.png` });
+    }
+    // 作品貨架：滑鼠移入，箭咀出現；撳一下右箭咀
+    await page.evaluate(() => document.querySelector(".bb-works").scrollIntoView({ block: "start", behavior: "instant" }));
+    await page.waitForTimeout(1800);
+    if (tag === "desktop") {
+      await page.hover(".bb-works .bb-shelf__stage");
+      await page.waitForTimeout(500);
+      await page.screenshot({ path: `${out}/${tag}-shelf-hover.png` });
+      await page.click(".bb-works .bb-shelf__paddle--next");
+      await page.waitForTimeout(1200);
+      await page.screenshot({ path: `${out}/${tag}-shelf-next.png` });
+    } else {
+      await page.screenshot({ path: `${out}/${tag}-shelf.png` });
     }
     // 流程圖排隊過程
     const sel = tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h";

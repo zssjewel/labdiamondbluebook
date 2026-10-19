@@ -126,42 +126,43 @@ export function CaseShelf({
           ))}
         </div>
       )}
-      <ul className="bb-shelf__track" ref={track} aria-label={label} data-picked={picked || undefined}>
-        {shown.map((item, i) => (
-          <li key={`${cat}:${item.h}`} style={{ "--n": Math.min(i, 6) } as React.CSSProperties}>
-            <Link href={item.h} className="bb-shelf__card">
-              <span className="bb-shelf__img">
-                {ready && (
-                  <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 240px" : "(max-width: 760px) 70vw, 340px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
-                )}
-              </span>
-              <span className="bb-shelf__body">
-                <span className="bb-shelf__cat">
-                  {catNames[item.c]}
-                  {demo && <span className="bb-demo">示例</span>}
+      {/* 蘋果式：卡片排成一行左右滑，左右兩邊有浮喺卡片上面嘅圓形箭咀 */}
+      <div className="bb-shelf__stage">
+        <ul className="bb-shelf__track" ref={track} aria-label={label} data-picked={picked || undefined}>
+          {shown.map((item, i) => (
+            <li key={`${cat}:${item.h}`} style={{ "--n": Math.min(i, 6) } as React.CSSProperties}>
+              <Link href={item.h} className="bb-shelf__card">
+                <span className="bb-shelf__body">
+                  <span className="bb-shelf__cat">
+                    {catNames[item.c]}
+                    {demo && <span className="bb-demo">示例</span>}
+                  </span>
+                  <strong>{item.t}</strong>
+                  <span className="bb-shelf__more">睇主石、金屬同工期</span>
                 </span>
-                <strong>{item.t}</strong>
-                <span className="bb-shelf__more">睇主石、金屬同工期</span>
-              </span>
+                <span className="bb-shelf__img">
+                  {ready && (
+                    <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 260px" : "(max-width: 760px) 78vw, 400px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
+                  )}
+                </span>
+              </Link>
+            </li>
+          ))}
+          <li key={`${cat}:end`} className="bb-shelf__end" style={{ "--n": Math.min(shown.length, 6) } as React.CSSProperties}>
+            <Link href={moreHref} className="bb-shelf__card bb-shelf__card--all">
+              <strong>{cat !== "all" ? `睇全部${catNames[cat]}` : (moreLabel ?? `睇全部 ${moreCount} 件作品`)}</strong>
+              <span aria-hidden="true">›</span>
             </Link>
           </li>
-        ))}
-        <li key={`${cat}:end`} className="bb-shelf__end" style={{ "--n": Math.min(shown.length, 6) } as React.CSSProperties}>
-          <Link href={moreHref} className="bb-shelf__card bb-shelf__card--all">
-            <strong>{cat !== "all" ? `睇全部${catNames[cat]}` : (moreLabel ?? `睇全部 ${moreCount} 件作品`)}</strong>
-            <span aria-hidden="true">›</span>
-          </Link>
-        </li>
-      </ul>
-      <div className="bb-shelf__paddles">
-        <button type="button" onClick={() => page(-1)} disabled={!edge.prev} aria-label="上一組">
+        </ul>
+        <button type="button" className="bb-shelf__paddle bb-shelf__paddle--prev" onClick={() => page(-1)} disabled={!edge.prev} aria-label="上一組">
           <svg viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M10 3 5 8l5 5" />
+            <path d="M10 2.5 4.5 8l5.5 5.5" />
           </svg>
         </button>
-        <button type="button" onClick={() => page(1)} disabled={!edge.next} aria-label="下一組">
+        <button type="button" className="bb-shelf__paddle bb-shelf__paddle--next" onClick={() => page(1)} disabled={!edge.next} aria-label="下一組">
           <svg viewBox="0 0 16 16" aria-hidden="true">
-            <path d="m6 3 5 5-5 5" />
+            <path d="m6 2.5 5.5 5.5L6 13.5" />
           </svg>
         </button>
       </div>

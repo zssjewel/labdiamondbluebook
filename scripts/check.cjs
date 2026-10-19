@@ -292,7 +292,7 @@ const widths = [320, 390, 768, 1440];
     if (!opts.isMobile) {
       await pg.locator(".bb-works .bb-shelf__tabs button", { hasText: "全部" }).click();
       await pg.waitForTimeout(500);
-      await pg.locator(".bb-works .bb-shelf__paddles button[aria-label='下一組']").click();
+      await pg.locator(".bb-works .bb-shelf__paddle--next").click();
       await pg.waitForTimeout(1200);
       const sl = await pg.evaluate(() => document.querySelector(".bb-works .bb-shelf__track").scrollLeft);
       console.log(`  撳右箭咀：滑咗 ${Math.round(sl)}px`);

@@ -34,6 +34,7 @@
   .bb-shelf__tabs > button:active, .bb-shelf__tabs > a:active { transform: scale(0.96); }
   .bb-shelf__paddles button { transition: background-color 240ms var(--ease-apple), opacity 240ms var(--ease-apple), transform 420ms var(--ease-out); }
   .bb-shelf__paddles button:active:not(:disabled) { transform: scale(0.92); transition-duration: 90ms; }
+  .bb-shelf__paddle:active:not(:disabled) { transform: translateY(-50%) scale(0.92); transition: transform 90ms var(--ease-out); }
   /* 換分類：卡片由右邊逐張滑入 */
   .bb-shelf__track[data-picked] > li { animation: bb-shelfin 620ms var(--ease-apple) both; animation-delay: calc(var(--n, 0) * 45ms); }
   @media (hover: hover) {
