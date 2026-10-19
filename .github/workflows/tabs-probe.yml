@@ -1,0 +1,50 @@
+name: Tabs probe
+
+# 手機首頁作品分類：撳分類時逐格量度（WebKit iPhone + Chromium Android），結果放 tabs-probe 分支。
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          NEXT_PUBLIC_SITE_URL: https://labdiamondbluebook.com
+      - name: Serve
+        run: |
+          cp -f out/zh-hk.html out/index.html 2>/dev/null || cp -f out/zh-hk/index.html out/index.html
+          (cd out && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          sleep 2
+      - name: Probe
+        continue-on-error: true
+        run: |
+          npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
+          npx -y playwright@1.55.0 install --with-deps chromium webkit >/dev/null
+          mkdir -p probe
+          NODE_PATH=/tmp/pw/node_modules node scripts/tabs-probe.cjs http://localhost:8080 probe | tee probe/probe.txt
+          command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null)
+          for v in probe/*.webm; do ffmpeg -loglevel error -y -i "$v" -vf "fps=30,scale=trunc(iw/2)*2:trunc(ih/2)*2" -c:v libx264 -pix_fmt yuv420p -crf 24 "${v%.webm}.mp4" && rm -f "$v"; done
+          ls -la probe
+      - name: Publish
+        if: always()
+        run: |
+          mkdir -p probe && cd probe
+          git init -q
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          echo "${GITHUB_SHA}" > COMMIT
+          git add -A
+          git commit -qm "Tabs probe for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:tabs-probe
