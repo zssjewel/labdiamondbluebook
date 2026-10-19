@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "@/components/link";
+import { SegIndicator } from "@/components/seg-indicator";
 import { useEffect, useId, useRef, useState } from "react";
 import { hasContact, isExternal, localizeHref, waHref } from "@/config/site";
 
@@ -286,7 +287,8 @@ function Controls({ ct, finger, setCt, setFinger, idPrefix }: { ct: number; fing
           </span>
         ))}
       </div>
-      <div className="bb-hand__fingers-pick" role="group" aria-label="手指粗幼">
+      <div className="bb-hand__fingers-pick bb-seg" role="group" aria-label="手指粗幼">
+        <SegIndicator active={String(finger)} />
         {FINGERS.map((f) => (
           <button key={f.id} type="button" aria-pressed={finger === f.mm} onClick={() => setFinger(f.mm)}>
             {f.label}

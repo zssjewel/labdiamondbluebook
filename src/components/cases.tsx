@@ -4,6 +4,7 @@ import { Demo } from "@/components/demo";
 import { CASE_CATEGORIES, CASES, type Case, caseHref, categoryOf, isDemoCases, visibleCategories } from "@/config/cases";
 import { localizeHref } from "@/config/site";
 import { imgProps } from "@/lib/images";
+import { SegIndicator } from "@/components/seg-indicator";
 
 export const catNames: Record<string, string> = Object.fromEntries(CASE_CATEGORIES.map((c) => [c.slug, c.name]));
 
@@ -92,7 +93,8 @@ export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
 export function CategoryNav({ locale, current }: { locale: string; current?: string }) {
   const cats = visibleCategories();
   return (
-    <nav className="bb-shelf__tabs bb-shelf__tabs--links" aria-label="作品分類">
+    <nav className="bb-shelf__tabs bb-shelf__tabs--links bb-seg" aria-label="作品分類">
+      <SegIndicator active={current ?? "all"} />
       <Link href={localizeHref("/cases", locale)} aria-current={current ? undefined : "page"}>
         全部<span>{CASES.length}</span>
       </Link>

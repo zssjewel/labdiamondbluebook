@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "@/components/link";
 import { imgProps } from "@/lib/images";
+import { SegIndicator } from "@/components/seg-indicator";
 
 export type ShelfItem = {
   /** 作品頁網址 */
@@ -117,7 +118,8 @@ export function CaseShelf({
   return (
     <div className={`bb-shelf${inset ? " bb-shelf--inset" : ""}`}>
       {tabs && tabs.length > 1 && (
-        <div className="bb-shelf__tabs" role="group" aria-label="作品分類">
+        <div className="bb-shelf__tabs bb-seg" role="group" aria-label="作品分類">
+          <SegIndicator active={cat} />
           {[{ slug: "all", name: "全部", count: items.length }, ...tabs].map((t) => (
             <button key={t.slug} type="button" aria-pressed={cat === t.slug} onClick={() => pick(t.slug)}>
               {t.name}

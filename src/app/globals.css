@@ -651,23 +651,7 @@
 .bb-hand__ticks span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
 .bb-hand__ticks span:first-child { transform: translateX(-30%); }
 .bb-hand__ticks span:last-child { transform: translateX(-70%); }
-.bb-hand__fingers-pick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-.bb-hand__fingers-pick button {
-  min-height: 44px;
-  padding: 0 20px;
-  border: 0;
-  border-radius: 999px;
-  background: #ffffff;
-  box-shadow: inset 0 0 0 1px var(--hairline); /* taste-skill-ignore: 選項膠囊的細圈 */
-  color: var(--ink);
-  font: 400 var(--step-small)/1 var(--font-text);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: box-shadow 200ms, transform 200ms var(--ease-out);
-}
-.bb-hand__fingers-pick button:hover { box-shadow: inset 0 0 0 1px rgba(42, 35, 38, 0.3); } /* taste-skill-ignore */
-.bb-hand__fingers-pick button:active { transform: var(--press); }
-.bb-hand__fingers-pick button[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--blue); font-weight: 600; } /* taste-skill-ignore */
+.bb-hand__fingers-pick { margin-top: 8px; }
 
 /* 首頁 */
 .bb-tool {
@@ -756,7 +740,7 @@
   .bb-hand__read strong { font-size: var(--step-lead); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bb-hand__fingers, .bb-hand__stone, .bb-story__steps li, .bb-hand__fingers-pick button { transition: none; }
+  .bb-hand__fingers, .bb-hand__stone, .bb-story__steps li, .bb-seg > button, .bb-seg > a, .bb-seg__ind { transition: none !important; }
 }
 
 /* ---------- 首頁：問答 ---------- */
@@ -1340,48 +1324,9 @@
 .bb-shelf--inset { --card-w: clamp(220px, 62vw, 260px); }
 .bb-shelf__stage { position: relative; }
 
-.bb-shelf__tabs {
-  display: flex;
-  gap: 8px;
-  width: max-content;
-  max-width: 100%;
-  margin: 0 auto 24px;
-  padding: 2px var(--pad);
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--pad);
-  scrollbar-width: none;
-}
-.bb-shelf__tabs::-webkit-scrollbar { display: none; }
-.bb-shelf__tabs > button, .bb-shelf__tabs > a {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 0;
-  border-radius: 999px;
-  background: #ffffff;
-  color: var(--ink);
-  font: inherit;
-  font-size: var(--step-small);
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  scroll-snap-align: start;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: inset 0 0 0 1px var(--hairline); /* taste-skill-ignore: 分類膠囊細邊 */
-}
-.bb-shelf__tabs span { color: var(--ink-soft); font-size: var(--step-caption); }
-.bb-shelf__tabs > [aria-pressed="true"], .bb-shelf__tabs > [aria-current="page"] {
-  background: var(--blue);
-  color: var(--blue-ink);
-  box-shadow: none;
-}
-.bb-shelf__tabs > [aria-pressed="true"] span, .bb-shelf__tabs > [aria-current="page"] span { color: rgba(255, 255, 255, 0.72); }
-.bb-shelf__tabs--links { width: auto; margin: 8px 0 24px; padding-inline: 0; scroll-padding-inline: 0; }
+/* 作品分類：蘋果式分段選擇器（樣式見下面 .bb-seg） */
+.bb-shelf__tabs { margin: 0 auto 28px; max-width: calc(100% - 2 * var(--m)); }
+.bb-shelf__tabs--links { margin: 8px 0 28px; max-width: 100%; }
 
 .bb-shelf__track {
   display: flex;
@@ -1445,7 +1390,7 @@
 
 
 @media (max-width: 760px) {
-  .bb-shelf__tabs { margin-bottom: 18px; }
+  .bb-shelf__tabs { margin-bottom: 20px; }
   .bb-shelf__track { gap: 12px; }
   .bb-shelf__body { padding: 18px 18px 14px; }
 }
@@ -1509,7 +1454,6 @@
   .bb-casegrid .bb-shelf__body { padding: 12px 12px 10px; gap: 2px; }
   .bb-casegrid .bb-shelf__body strong { font-size: var(--step-small); }
   .bb-casegrid .bb-shelf__more { display: none; }
-  .bb-shelf__tabs--links { margin-inline: calc(-1 * var(--m)); padding-inline: var(--m); scroll-padding-inline: var(--m); max-width: none; }
 }
 .bb-guides { margin-top: 56px; padding: 24px; border-radius: var(--radius-panel); background: var(--steel); }
 .bb-guides h2 { margin: 0 0 10px; font-size: var(--step-body); font-weight: 600; }
@@ -1579,3 +1523,63 @@
 }
 .bb-skip:focus { top: 8px; }
 main:focus { outline: none; }
+
+/* =====================================================================
+   蘋果式分段選擇器：淺灰長膠囊底，揀中嗰格係深色膠囊，換選項時膠囊滑過去
+   用喺：首頁作品分類、作品列表分類、尺寸工具手指粗幼
+   ===================================================================== */
+.bb-seg {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  width: max-content;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(42, 35, 38, 0.07);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.bb-seg::-webkit-scrollbar { display: none; }
+.bb-seg > button, .bb-seg > a {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font: 400 var(--step-small)/1 var(--font-text);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bb-seg > button span, .bb-seg > a span { color: var(--ink-soft); font-size: var(--step-caption); }
+/* 已選：冇 JS 時自己有底色；有 JS 時由滑動膠囊負責 */
+.bb-seg > [aria-pressed="true"], .bb-seg > [aria-current="page"] { background: var(--blue); color: var(--blue-ink); }
+.bb-seg.is-live > [aria-pressed="true"], .bb-seg.is-live > [aria-current="page"] { background: transparent; }
+.bb-seg > [aria-pressed="true"] span, .bb-seg > [aria-current="page"] span { color: rgba(255, 255, 255, 0.72); }
+.bb-seg__ind {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: var(--blue);
+  opacity: 0;
+}
+.bb-seg.is-live .bb-seg__ind { opacity: 1; }
+@media (hover: hover) {
+  .bb-seg > button:hover:not([aria-pressed="true"]), .bb-seg > a:hover:not([aria-current="page"]) { background: rgba(255, 255, 255, 0.6); }
+}
+@media (max-width: 760px) {
+  .bb-seg > button, .bb-seg > a { padding: 0 15px; }
+}
