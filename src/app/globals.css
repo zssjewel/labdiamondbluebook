@@ -1560,7 +1560,6 @@
   .bb-case-page__grid { grid-template-columns: minmax(0, 1fr); }
   .bb-case-page__media { position: static; margin-inline: calc(-1 * var(--m)); }
   .bb-case-page__media .bb-gallery__track { border-radius: 0; }
-  .bb-case-page__media .bb-gallery__bar { padding-inline: var(--m); }
 }
 
 /* 作品相：左右滑 */
@@ -1578,12 +1577,12 @@
 .bb-gallery__slide img { width: 100%; height: 100%; object-fit: cover; }
 .bb-gallery__slide--ph { display: grid; place-items: center; color: var(--ink-soft); font-size: var(--step-small); }
 .bb-gallery__slide--ph > span { display: flex; align-items: center; }
-.bb-gallery__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; min-height: 44px; }
-.bb-gallery__dots { display: flex; gap: 2px; }
+/* 作品相嘅箭咀：置中喺相嘅高度 */
+.bb-gallery__stage .bb-shelf__paddle { top: 50%; }
+.bb-gallery__dots { display: flex; justify-content: center; gap: 2px; margin-top: 8px; }
 .bb-gallery__dots button { display: grid; place-items: center; width: 24px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .bb-gallery__dots button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 35, 38, 0.22); transition: background-color 240ms; }
 .bb-gallery__dots button[aria-current="true"]::before { background: var(--ink); }
-.bb-gallery__paddles { padding: 0; }
 
 /* 跳至主要內容：平時收埋，鍵盤聚焦先出現 */
 .bb-skip {

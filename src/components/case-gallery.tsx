@@ -33,40 +33,43 @@ export function CaseGallery({ images, placeholders = [] }: { images: { src: stri
 
   return (
     <div className="bb-gallery">
-      <div className="bb-gallery__track" ref={track} tabIndex={0} aria-label={`作品相，共 ${total} 張，可以左右滑`}>
-        {images.map((im, i) => (
-          <figure key={im.src + i} className="bb-gallery__slide">
-            <img {...imgProps(im.src, "(max-width: 960px) 100vw, 560px")} alt={im.alt} width={1000} height={1000} loading={i === 0 ? undefined : "lazy"} decoding="async" />
-          </figure>
-        ))}
-        {placeholders.map((p) => (
-          <figure key={p} className="bb-gallery__slide bb-gallery__slide--ph">
-            <span>
-              {p}
-              <span className="bb-demo">示例</span>
-            </span>
-          </figure>
-        ))}
+      {/* 同首頁作品貨架一樣：左右滑，兩邊有浮喺相上面嘅圓形箭咀（滑鼠移入先出現），下面有頁碼點 */}
+      <div className="bb-shelf__stage bb-gallery__stage">
+        <div className="bb-gallery__track" ref={track} tabIndex={0} aria-label={`作品相，共 ${total} 張，可以左右滑`}>
+          {images.map((im, i) => (
+            <figure key={im.src + i} className="bb-gallery__slide">
+              <img {...imgProps(im.src, "(max-width: 960px) 100vw, 560px")} alt={im.alt} width={1000} height={1000} loading={i === 0 ? undefined : "lazy"} decoding="async" />
+            </figure>
+          ))}
+          {placeholders.map((p) => (
+            <figure key={p} className="bb-gallery__slide bb-gallery__slide--ph">
+              <span>
+                {p}
+                <span className="bb-demo">示例</span>
+              </span>
+            </figure>
+          ))}
+        </div>
+        {total > 1 && (
+          <>
+            <button type="button" className="bb-shelf__paddle bb-shelf__paddle--prev" onClick={() => go(at - 1)} disabled={at === 0} aria-label="上一張">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M10 2.5 4.5 8l5.5 5.5" />
+              </svg>
+            </button>
+            <button type="button" className="bb-shelf__paddle bb-shelf__paddle--next" onClick={() => go(at + 1)} disabled={at >= total - 1} aria-label="下一張">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="m6 2.5 5.5 5.5L6 13.5" />
+              </svg>
+            </button>
+          </>
+        )}
       </div>
       {total > 1 && (
-        <div className="bb-gallery__bar">
-          <div className="bb-gallery__dots">
-            {Array.from({ length: total }, (_, i) => (
-              <button key={i} type="button" aria-label={`第 ${i + 1} 張`} aria-current={at === i ? "true" : undefined} onClick={() => go(i)} />
-            ))}
-          </div>
-          <div className="bb-shelf__paddles bb-gallery__paddles">
-            <button type="button" onClick={() => go(at - 1)} disabled={at === 0} aria-label="上一張">
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M10 3 5 8l5 5" />
-              </svg>
-            </button>
-            <button type="button" onClick={() => go(at + 1)} disabled={at >= total - 1} aria-label="下一張">
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <path d="m6 3 5 5-5 5" />
-              </svg>
-            </button>
-          </div>
+        <div className="bb-gallery__dots">
+          {Array.from({ length: total }, (_, i) => (
+            <button key={i} type="button" aria-label={`第 ${i + 1} 張`} aria-current={at === i ? "true" : undefined} onClick={() => go(i)} />
+          ))}
         </div>
       )}
     </div>

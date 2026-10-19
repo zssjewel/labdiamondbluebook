@@ -101,6 +101,9 @@ async function glide(page, pxPerSec, stops = []) {
       await page.click(".bb-works .bb-shelf__paddle--next");
       await page.waitForTimeout(1200);
       await page.screenshot({ path: `${out}/${tag}-shelf-next.png` });
+      await page.hover(".bb-works .bb-shelf__stage");
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: `${out}/${tag}-shelf-next.png` });
     } else {
       await page.screenshot({ path: `${out}/${tag}-shelf.png` });
     }

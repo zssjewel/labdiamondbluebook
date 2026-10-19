@@ -309,6 +309,20 @@ const widths = [320, 390, 768, 1440];
       related: [...document.querySelectorAll(".bb-related h2")].map((x) => x.textContent).join("、"),
       robots: document.querySelector('meta[name="robots"]')?.content,
     }));
+    {
+      const dp = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+      await dp.goto(base + "/zh-hk/cases/engagement-rings/oval-solitaire.html", { waitUntil: "load" });
+      await dp.waitForTimeout(800);
+      await dp.hover(".bb-gallery__stage");
+      await dp.waitForTimeout(400);
+      const vis = await dp.evaluate(() => [...document.querySelectorAll(".bb-gallery__stage .bb-shelf__paddle")].map((b) => `${b.getAttribute("aria-label")} 透明度 ${getComputedStyle(b).opacity}${b.disabled ? "（停用）" : ""}`).join("、"));
+      await dp.click(".bb-gallery__stage .bb-shelf__paddle--next");
+      await dp.waitForTimeout(1000);
+      const g = await dp.evaluate(() => { const t = document.querySelector(".bb-gallery__track"); return { at: Math.round(t.scrollLeft / t.clientWidth) + 1, dot: [...document.querySelectorAll(".bb-gallery__dots button")].findIndex((b) => b.getAttribute("aria-current") === "true") + 1 }; });
+      console.log(`作品相（電腦）：滑鼠移入 → ${vis}；撳右箭咀後去到第 ${g.at} 張，頁碼點第 ${g.dot} 粒`);
+      await dp.screenshot({ path: "shots/gallery-hover-1440.png", clip: { x: 0, y: 0, width: 1440, height: 900 } });
+      await dp.close();
+    }
     console.log(`作品頁：${d.h1}｜相 ${d.slides} 格｜${d.specs}｜相關：${d.related}｜robots ${d.robots}`);
     for (const p of ["/zh-hk/price.html", "/zh-hk/4c/carat-size-on-hand.html"]) {
       await pg.goto(base + p, { waitUntil: "load" });
