@@ -3,16 +3,18 @@
 const { chromium, devices } = require("playwright");
 
 const base = process.argv[2] || "http://localhost:8080";
-const pages = [
+const allPages = [
   ["首頁", "/zh-hk.html"],
   ["互動文章", "/zh-hk/4c/carat-size-on-hand.html"],
   ["普通文章", "/zh-hk/basics/vs-natural-moissanite.html"],
 ];
+const pages = process.env.PERF_PAGES ? allPages.filter(([n]) => process.env.PERF_PAGES.split(",").includes(n)) : allPages;
 const setups = [
   ["電腦 1440", { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 }, 1],
   ["手機 Pixel 7（CPU 慢 4 倍）", { ...devices["Pixel 7"] }, 4],
 ];
-const variants = [["", ""]];
+// 對照測試：PERF_VARIANTS='[["名","注入CSS"],...]'，PERF_PAGES=首頁 只測某幾頁
+const variants = process.env.PERF_VARIANTS ? JSON.parse(process.env.PERF_VARIANTS) : [["", ""]];
 
 function frameStats(events) {
   const sum = {};
@@ -52,7 +54,7 @@ function frameStats(events) {
         try { events = JSON.parse(buf.toString()).traceEvents || []; } catch {}
         const st = frameStats(events);
         const f = (k) => (st[k] ? `${st[k].n} 次/${Math.round(st[k].ms)}ms` : "0");
-        console.log(`${sname} · ${pname}：${secs.toFixed(1)} 秒 | 出畫 ${st.DrawFrame ? st.DrawFrame.n : 0} 格，掉格 ${st.DroppedFrame ? st.DroppedFrame.n : 0} | 重畫 Paint ${f("Paint")} | 光柵化 Raster ${f("RasterTask")} | GPU ${f("GPUTask")} | 排版 Layout ${f("Layout")} | 樣式 ${f("UpdateLayoutTree")}`);
+        console.log(`${sname} · ${pname}${vname ? `（${vname}）` : ""}：${secs.toFixed(1)} 秒 | 出畫 ${st.DrawFrame ? st.DrawFrame.n : 0} 格，掉格 ${st.DroppedFrame ? st.DroppedFrame.n : 0} | 重畫 Paint ${f("Paint")} | 光柵化 Raster ${f("RasterTask")} | GPU ${f("GPUTask")} | 排版 Layout ${f("Layout")} | 樣式 ${f("UpdateLayoutTree")}`);
         await ctx.close();
       }
     }

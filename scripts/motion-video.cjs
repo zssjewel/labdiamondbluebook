@@ -78,19 +78,25 @@ async function glide(page, pxPerSec, stops = []) {
     // 流程圖排隊過程
     const sel = tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h";
     for (const f of [0.12, 0.25, 0.38, 0.5]) {
+      for (let k = 0; k < 3; k++) {
       await page.evaluate(([sel, f]) => {
-        const r = document.querySelector(sel).getBoundingClientRect();
-        window.scrollTo(0, scrollY + r.top - innerHeight + (innerHeight + r.height) * f);
-      }, [sel, f]);
+          const r = document.querySelector(sel).getBoundingClientRect();
+          window.scrollTo(0, scrollY + r.top - innerHeight + (innerHeight + r.height) * f);
+        }, [sel, f]);
+        await page.waitForTimeout(200);
+      }
       await page.waitForTimeout(300);
       await page.screenshot({ path: `${out}/${tag}-how-${Math.round(f * 100)}.png` });
     }
     // 宣言色塊放大
     for (const f of [0.08, 0.2, 0.42]) {
+      for (let k = 0; k < 3; k++) {
       await page.evaluate((f) => {
-        const r = document.querySelector(".bb-tiles").getBoundingClientRect();
-        window.scrollTo(0, scrollY + r.top - innerHeight + (innerHeight + r.height) * f);
-      }, f);
+          const r = document.querySelector(".bb-tiles").getBoundingClientRect();
+          window.scrollTo(0, scrollY + r.top - innerHeight + (innerHeight + r.height) * f);
+        }, f);
+        await page.waitForTimeout(200);
+      }
       await page.waitForTimeout(300);
       await page.screenshot({ path: `${out}/${tag}-tiles-${Math.round(f * 100)}.png` });
     }

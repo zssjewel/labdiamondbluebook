@@ -213,16 +213,26 @@ const widths = [320, 390, 768, 1440];
     // 流程圖：剛入畫面時方塊未排好；去到畫面中間要全部排好
     const svgSel = opts.isMobile ? ".bb-how__svg--v" : ".bb-how__svg--h";
     const sortAt = async (frac) => {
-      await pg.evaluate(([sel, frac]) => {
-        const el = document.querySelector(sel); const r = el.getBoundingClientRect();
-        // frac = cover 進度（0 = 頂邊啱啱入到畫面底，1 = 底邊啱啱離開畫面頂）
-        const total = innerHeight + r.height;
-        window.scrollTo(0, window.scrollY + r.top - innerHeight + total * frac);
-      }, [svgSel, frac]);
-      await pg.waitForTimeout(350);
+      // 上面嘅段落碌近先排版，高度會變，所以對準兩次
+      for (let k = 0; k < 3; k++) {
+        await pg.evaluate(([sel, frac]) => {
+          const el = document.querySelector(sel); const r = el.getBoundingClientRect();
+          // frac = cover 進度（0 = 頂邊啱啱入到畫面底，1 = 底邊啱啱離開畫面頂）
+          const total = innerHeight + r.height;
+          window.scrollTo(0, window.scrollY + r.top - innerHeight + total * frac);
+        }, [svgSel, frac]);
+        await pg.waitForTimeout(250);
+      }
       return pg.evaluate((sel) => {
         const ms = [...document.querySelectorAll(sel + " .m")];
-        return { all: ms.length, moving: ms.filter((m) => getComputedStyle(m).transform !== "none").length };
+        const off = (m) => {
+          const t = getComputedStyle(m).transform;
+          if (!t || t === "none") return 0;
+          const n = (t.match(/-?[\d.]+(e-?\d+)?/g) || []).map(Number);
+          const [tx, ty] = t.startsWith("matrix(") ? [n[4], n[5]] : [n[0] || 0, n[1] || 0];
+          return Math.hypot(tx, ty);
+        };
+        return { all: ms.length, moving: ms.filter((m) => off(m) > 0.5).length };
       }, svgSel);
     };
     for (const f of [0.1, 0.3, 0.5]) {
@@ -240,7 +250,8 @@ const widths = [320, 390, 768, 1440];
         const e = document.querySelectorAll("[data-reveal]")[i]; const cs = getComputedStyle(e);
         return { o: Number(cs.opacity), t: cs.transform, label: (e.className || e.tagName) + " " + (e.textContent || "").trim().slice(0, 12) };
       }, i);
-      if (st.o < 0.99 || (st.t !== "none" && st.t !== "matrix(1, 0, 0, 1, 0, 0)")) stuck.push(`${st.label}（透明度 ${st.o.toFixed(2)}，${st.t}）`);
+      const nums = (st.t.match(/-?[\d.]+(e-?\\d+)?/g) || []).map(Number); const moved = st.t !== "none" && (Math.abs(nums[4] || 0) > 0.5 || Math.abs(nums[5] || 0) > 0.5 || Math.abs((nums[0] ?? 1) - 1) > 0.005);
+      if (st.o < 0.99 || moved) stuck.push(`${st.label}（透明度 ${st.o.toFixed(2)}，${st.t}）`);
     }
     console.log(`  ${n} 個進場元素碌到畫面中間後未完全顯示：${stuck.length ? stuck.join("；") : "冇"}`);
     // 碌到最底：結尾段要完全顯示
