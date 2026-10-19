@@ -34,8 +34,8 @@ export default async function CasesPage({ params }: { params: Promise<{ locale: 
           <p className="bb-page__lead">工坊真實做過嘅作品，每件都寫明主石、金屬同工期，相片同資料經客人同意公開。</p>
           {isDemoCases && <p className="bb-draft">而家顯示嘅係<strong>示例</strong>：相片係 AI 示意圖，規格全部待填，換上真實作品後會自動消失。</p>}
           <div className="bb-cases">
-            {CASES.map((c) => (
-              <CaseCard key={c.slug} item={c} sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 420px" />
+            {CASES.map((c, i) => (
+              <CaseCard key={c.slug} item={c} i={i} sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 420px" />
             ))}
           </div>
         </>

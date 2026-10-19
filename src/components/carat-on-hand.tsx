@@ -303,7 +303,7 @@ export function CaratTool({ locale }: { locale: string }) {
   const askProps = isExternal(ask) ? { target: "_blank", rel: "noopener noreferrer" } : {};
   return (
     <section className="bb-tool" aria-labelledby="tool-title">
-      <div className="bb-tool__plate" data-reveal>
+      <div className="bb-tool__plate" data-reveal="panel">
         <HandFigure ct={ct} finger={finger} />
       </div>
       <div className="bb-tool__panel">
@@ -316,10 +316,10 @@ export function CaratTool({ locale }: { locale: string }) {
           <Readout ct={ct} finger={finger} />
           <p className="bb-tool__desc">按實際比例畫。重量加倍，直徑只係大約多四分一；同一粒石，手指幼啲會顯得大啲。</p>
         </div>
-        <div data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+        <div data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           <Controls ct={ct} finger={finger} setCt={setCt} setFinger={setFinger} idPrefix="tool" />
         </div>
-        <div className="bb-tool__links" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
+        <div className="bb-tool__links" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
           <Link href={localizeHref("/4c/carat-size-on-hand", locale)} className="bb-btn bb-btn--blue">
             睇完整比較
           </Link>

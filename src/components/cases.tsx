@@ -4,10 +4,10 @@ import { Demo } from "@/components/demo";
 import { imgProps } from "@/lib/images";
 
 /** 作品卡：相片、標題、規格。首頁同 /cases 共用 */
-export function CaseCard({ item, sizes }: { item: Case; sizes: string }) {
+export function CaseCard({ item, sizes, i = 0 }: { item: Case; sizes: string; i?: number }) {
   const cover = item.images[0];
   return (
-    <article className="bb-case">
+    <article className="bb-case" data-reveal style={{ "--i": i % 3 } as React.CSSProperties}>
       {cover && (
         <figure className="bb-case__fig">
           <img {...imgProps(cover.src, sizes)} alt={cover.alt} width={1000} height={1000} loading="lazy" decoding="async" />

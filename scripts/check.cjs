@@ -192,5 +192,74 @@ const widths = [320, 390, 768, 1440];
     }
     await ctx2.close();
   }
+
+  console.log("\n== 動效 ==");
+  for (const [tag, opts] of [["電腦 1440", { viewport: { width: 1440, height: 900 } }], ["手機 390", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 }]]) {
+    const ctx = await browser.newContext(opts);
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    const sup = await pg.evaluate(() => ({
+      view: CSS.supports("animation-timeline: view()"),
+      tl: [...document.querySelectorAll("*")].filter((e) => /view|scroll|--bb/.test(getComputedStyle(e).animationTimeline || "")).length,
+      range: getComputedStyle(document.querySelector("[data-reveal]")).animationRange || getComputedStyle(document.querySelector("[data-reveal]")).animationRangeStart,
+    }));
+    console.log(`${tag}：支援碌動動畫 ${sup.view ? "係" : "唔係"}，有 ${sup.tl} 個元素跟碌動，進場範圍「${sup.range}」`);
+    // 開頁 2.5 秒後：首屏元素應該全部到位
+    await pg.waitForTimeout(2500);
+    const hero = await pg.evaluate(() => [...document.querySelectorAll(".bb-hero__actions, .bb-answers > li, .bb-mosaic img, .bb-mosaic > div")].filter((e) => {
+      const cs = getComputedStyle(e); return Number(cs.opacity) < 0.99 || (cs.transform !== "none" && cs.transform !== "matrix(1, 0, 0, 1, 0, 0)");
+    }).length);
+    console.log(`  開頁 2.5 秒後首屏未到位：${hero} 個`);
+    // 流程圖：剛入畫面時方塊未排好；去到畫面中間要全部排好
+    const svgSel = opts.isMobile ? ".bb-how__svg--v" : ".bb-how__svg--h";
+    const sortAt = async (frac) => {
+      await pg.evaluate(([sel, frac]) => {
+        const el = document.querySelector(sel); const r = el.getBoundingClientRect();
+        // frac = cover 進度（0 = 頂邊啱啱入到畫面底，1 = 底邊啱啱離開畫面頂）
+        const total = innerHeight + r.height;
+        window.scrollTo(0, window.scrollY + r.top - innerHeight + total * frac);
+      }, [svgSel, frac]);
+      await pg.waitForTimeout(350);
+      return pg.evaluate((sel) => {
+        const ms = [...document.querySelectorAll(sel + " .m")];
+        return { all: ms.length, moving: ms.filter((m) => getComputedStyle(m).transform !== "none").length };
+      }, svgSel);
+    };
+    for (const f of [0.1, 0.3, 0.5]) {
+      const r = await sortAt(f);
+      console.log(`  流程圖碌到 ${Math.round(f * 100)}%：${r.all} 粒方塊之中 ${r.moving} 粒仲喺路上`);
+    }
+    await pg.screenshot({ path: `shots/motion-how-${opts.isMobile ? "390" : "1440"}.png` }).catch(() => {});
+    // 逐個 data-reveal 碌到畫面中間，應該完全顯示
+    const stuck = [];
+    const n = await pg.evaluate(() => document.querySelectorAll("[data-reveal]").length);
+    for (let i = 0; i < n; i++) {
+      await pg.evaluate((i) => document.querySelectorAll("[data-reveal]")[i].scrollIntoView({ block: "center", behavior: "instant" }), i);
+      await pg.waitForTimeout(120);
+      const st = await pg.evaluate((i) => {
+        const e = document.querySelectorAll("[data-reveal]")[i]; const cs = getComputedStyle(e);
+        return { o: Number(cs.opacity), t: cs.transform, label: (e.className || e.tagName) + " " + (e.textContent || "").trim().slice(0, 12) };
+      }, i);
+      if (st.o < 0.99 || (st.t !== "none" && st.t !== "matrix(1, 0, 0, 1, 0, 0)")) stuck.push(`${st.label}（透明度 ${st.o.toFixed(2)}，${st.t}）`);
+    }
+    console.log(`  ${n} 個進場元素碌到畫面中間後未完全顯示：${stuck.length ? stuck.join("；") : "冇"}`);
+    // 碌到最底：結尾段要完全顯示
+    await pg.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await pg.waitForTimeout(300);
+    const bottom = await pg.evaluate(() => [...document.querySelectorAll(".bb-close [data-reveal]")].map((e) => Number(getComputedStyle(e).opacity).toFixed(2)).join("、"));
+    console.log(`  碌到最底，結尾段透明度：${bottom}`);
+    await ctx.close();
+  }
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    const r = await pg.evaluate(() => {
+      const all = [...document.querySelectorAll("[data-reveal], .bb-answers > li, .bb-mosaic img, .bb-how__svg .m")];
+      return { n: all.length, hidden: all.filter((e) => { const cs = getComputedStyle(e); return Number(cs.opacity) < 0.99 || cs.animationName !== "none"; }).length };
+    });
+    console.log(`減少動畫模式：${r.n} 個元素之中 ${r.hidden} 個仲有動畫或者未顯示`);
+    await ctx.close();
+  }
   await browser.close();
 })();

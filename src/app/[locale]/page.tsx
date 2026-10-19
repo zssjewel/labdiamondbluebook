@@ -227,12 +227,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <h2 id="routes-title" className="bb-sechead bb-display" data-reveal>
           由邊度開始睇？
         </h2>
-        <p className="bb-secsub" data-reveal style={{ "--d": "60ms" } as React.CSSProperties}>
+        <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           按你而家嘅情況揀一條路線，跟住次序睇就得。
         </p>
         <ol className="bb-routes__list">
           {ROUTES.map((r, i) => (
-            <li key={r.name} data-reveal style={{ "--d": `${i * 80}ms` } as React.CSSProperties}>
+            <li key={r.name} data-reveal style={{ "--i": i } as React.CSSProperties}>
               <div className="bb-routes__card">
                 <h3>{r.name}</h3>
                 <p>{r.who}</p>
@@ -268,8 +268,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             真實作品，寫明主石、金屬同工期，經客人同意公開。
           </p>
           <div className="bb-cases">
-            {CASES.slice(0, 3).map((c) => (
-              <CaseCard key={c.slug} item={c} sizes="(max-width: 760px) 100vw, 33vw" />
+            {CASES.slice(0, 3).map((c, i) => (
+              <CaseCard key={c.slug} item={c} i={i} sizes="(max-width: 760px) 100vw, 33vw" />
             ))}
           </div>
           <p className="bb-casesec__more">
@@ -285,11 +285,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <h2 id="contents-title" className="bb-sechead bb-display" data-reveal>
           九章，由入門到戴上手
         </h2>
-        <p className="bb-secsub" data-reveal style={{ "--d": "60ms" } as React.CSSProperties}>
+        <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           已出 {articles.length} 篇 · 撰寫中 {pendingCount} 篇
         </p>
         <div className="bb-contents__body">
-          <div className="bb-contents__fig" data-reveal>
+          <div className="bb-contents__fig" data-reveal="panel">
             <img decoding="async" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 960px) 62vw, 40vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} loading="lazy" />
           </div>
           <div>
@@ -330,17 +330,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 宣言 */}
       <section className="bb-tiles" aria-label="關於本書">
-        <div className="bb-tiles__a" data-reveal>
+        <div className="bb-tiles__a" data-reveal="panel">
           <p className="bb-display">
             做嘢嘅人
             <br />
             寫嘅書
           </p>
         </div>
-        <div className="bb-tiles__b" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+        <div className="bb-tiles__b" data-reveal="panel" style={{ "--i": 1 } as React.CSSProperties}>
           <p className="bb-display">九章</p>
         </div>
-        <div className="bb-tiles__c" data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
+        <div className="bb-tiles__c" data-reveal="panel" style={{ "--i": 2 } as React.CSSProperties}>
           <img decoding="async" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 50vw, 34vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} loading="lazy" />
         </div>
         <div className="bb-tiles__d">
@@ -371,11 +371,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <strong>睇書</strong>
               <p>4C、證書、價錢先有個底，知道邊度值得畀錢。</p>
             </li>
-            <li data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+            <li data-reveal style={{ "--i": 1 } as React.CSSProperties}>
               <strong>問師傅</strong>
               <p>預算、手寸、款式傳過嚟，傾到收窄做一兩個方案。</p>
             </li>
-            <li data-reveal style={{ "--d": "160ms" } as React.CSSProperties}>
+            <li data-reveal style={{ "--i": 2 } as React.CSSProperties}>
               <strong>訂造</strong>
               <p>揀石、3D 圖、蠟版、鑲石，做出你嗰一隻。</p>
             </li>
@@ -390,7 +390,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </h2>
         <dl className="bb-faq__list">
           {FAQ.map((f, i) => (
-            <div key={f.q} className="bb-faq__item" data-reveal style={{ "--d": `${(i % 2) * 60}ms` } as React.CSSProperties}>
+            <div key={f.q} className="bb-faq__item" data-reveal style={{ "--i": i % 2 } as React.CSSProperties}>
               <dt>{f.q}</dt>
               <dd>
                 <p>{f.a}</p>
@@ -405,7 +405,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 結尾 */}
       <section className="bb-close" aria-labelledby="close-title">
-        <h2 id="close-title" className="bb-display" data-reveal>
+        <h2 id="close-title" className="bb-display" data-reveal="light">
           睇完未決定？
           {hasContact && (
             <>
@@ -414,7 +414,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </>
           )}
         </h2>
-        <div className="bb-close__foot" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+        <div className="bb-close__foot" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           {hasContact ? (
             <>
               <p>傳張款式圖、講個預算，師傅用 WhatsApp 直接答你。</p>
