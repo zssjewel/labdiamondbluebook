@@ -994,22 +994,6 @@
 .bb-note > p:last-child { margin-bottom: 0; }
 .bb-note__label { font-weight: 600; color: var(--blue); }
 
-/* ---------- 進場動畫：碌到先升起淡入（蘋果官網做法：一次性、按時間播，唔會碌動時逐格計） ----------
-   只限開頁時喺畫面以下嘅內容，由 JS 加 is-pending；冇 JS 時全部照常顯示 */
-[data-reveal].is-pending {
-  opacity: 0;
-  transform: translate3d(0, 48px, 0);
-  transition: opacity 1000ms var(--ease-apple), transform 1000ms var(--ease-apple), filter 1000ms var(--ease-apple);
-  transition-delay: calc(var(--i, 0) * 110ms);
-}
-[data-reveal="panel"].is-pending { transform: scale(0.92); }
-[data-reveal="light"].is-pending { opacity: 0.08; transform: translate3d(0, 32px, 0); filter: blur(10px); }
-[data-reveal].is-pending.is-in {
-  opacity: 1;
-  transform: none;
-  filter: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [data-reveal].is-pending { opacity: 1; transform: none; transition: none; }
@@ -1324,21 +1308,11 @@
 }
 
 /* =====================================================================
-   Apple 式動效
-   原則：內容預設係顯示嘅；動畫只用 transform / opacity / scale（GPU 處理，唔拖慢碌動）。
-   隨碌動嘅效果用 CSS animation-timeline（Chrome、Edge、Safari 26 起），唔支援就靜止顯示最終樣。
-   揀咗「減少動畫」嘅用戶：全部移動效果取消，只保留顏色變化。
+   Apple 式動效（首屏部分；其餘喺 src/components/motion.css，開頁後先載，唔拖慢首屏）
    ===================================================================== */
-
-@keyframes bb-zoom { from { scale: 1.16; } to { scale: 1; } }
 @keyframes bb-settle { from { transform: scale(1.22); } }
 @keyframes bb-raise { from { transform: scaleY(0); } }
-@keyframes bb-drift { to { scale: 1.12; } }
 @keyframes bb-fadeup { from { opacity: 0; transform: translate3d(0, 28px, 0); } }
-@keyframes bb-sort {
-  from { transform: translate(var(--fx), var(--fy)); fill: var(--f0); }
-  60% { fill: var(--f0); }
-}
 
 @media (prefers-reduced-motion: no-preference) {
   /* 1. 刊頭：開頁時每格圖由近拉遠「落位」，藍、粉色塊由下升起；第一張圖照常即刻顯示，唔影響首屏速度 */
@@ -1362,69 +1336,6 @@
   .bb-answers > li:nth-child(2) { animation-delay: 380ms; }
   .bb-answers > li:nth-child(3) { animation-delay: 460ms; }
 
-  /* 3. 按鈕：按落即刻縮（90ms），放手慢慢彈返；顏色變化柔和 */
-  .bb-btn {
-    transition: transform 420ms var(--ease-out), background-color 240ms var(--ease-apple), color 240ms var(--ease-apple), box-shadow 240ms var(--ease-apple);
-  }
-  .bb-btn:active { transform: var(--press); transition-duration: 90ms; }
-
-  /* 4. 卡片：滑鼠移上去輕輕浮起、影子變深（只限有滑鼠嘅裝置）；手機按落輕縮 */
-  .bb-answers a, .bb-routes__card, .bb-case, .bb-prevnext a {
-    transition: transform 480ms var(--ease-out), box-shadow 480ms var(--ease-out), background-color 240ms var(--ease-apple);
-  }
-  .bb-case__fig { overflow: hidden; }
-  .bb-case__fig img { transition: transform 900ms var(--ease-out); }
-  @media (hover: hover) {
-    .bb-answers a:hover, .bb-routes__card:hover, .bb-case:hover, .bb-prevnext a:hover {
-      transform: translate3d(0, -4px, 0);
-      box-shadow: 0 22px 44px -24px rgba(42, 35, 38, 0.3);
-    }
-    .bb-case:hover .bb-case__fig img { transform: scale(1.05); }
-  }
-  .bb-answers a:active, .bb-routes__card:active, .bb-prevnext a:active { transform: scale(0.98); transition-duration: 120ms; }
-
-  /* 5. 清單行、文字連結：底色同箭咀過渡順滑啲 */
-  .bb-group a { transition: background-color 240ms var(--ease-apple); }
-  .bb-group a::after, .bb-link::after, .bb-routes__path a::after, .bb-faq__more::after, .bb-link--prev::before {
-    transition: transform 360ms var(--ease-out), color 240ms var(--ease-apple);
-  }
-
-  /* 6. 文章逐段：而家讀緊嗰段光啲，過渡慢啲 */
-  .bb-story__steps li { transition: opacity 700ms var(--ease-apple); }
-}
-
-/* 7. 隨碌動嘅效果 */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    /* 相片：碌過時慢慢由近拉遠 */
-    .bb-tiles__c img, .bb-contents__fig img, .bb-case__fig img {
-      animation: bb-zoom linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
-    /* 刊頭：碌走時圖片輕輕推近 */
-    .bb-mosaic img {
-      animation: bb-settle 1800ms var(--ease-apple) both, bb-drift linear both;
-      animation-timeline: auto, scroll(root);
-      animation-range: normal, 0px 70vh;
-    }
-    .bb-mosaic > :nth-child(3) img { animation-delay: 90ms, 0s; }
-    .bb-mosaic > :nth-child(4) img { animation-delay: 140ms, 0s; }
-    .bb-mosaic > :nth-child(5) img { animation-delay: 190ms, 0s; }
-    .bb-mosaic > :nth-child(6) img { animation-delay: 120ms, 0s; }
-    .bb-mosaic > :nth-child(7) img { animation-delay: 230ms, 0s; }
-    .bb-mosaic > :nth-child(9) img { animation-delay: 280ms, 0s; }
-    .bb-mosaic > :nth-child(10) img { animation-delay: 170ms, 0s; }
-
-    /* 「資料好亂？收窄成一隻戒指」：碌到時方塊由左邊亂堆逐粒排隊、排成方陣 */
-    .bb-how__svg { view-timeline: --bb-how block; }
-    .bb-how__svg .m {
-      animation: bb-sort both cubic-bezier(0.55, 0, 0.25, 1);
-      animation-timeline: --bb-how;
-      animation-range: cover var(--a) cover var(--b);
-    }
-
-  }
 }
 
 /* 8. 頁頭毛玻璃：底下內容碌過時透出朦朧色彩 */
@@ -1436,15 +1347,3 @@
   }
 }
 
-/* 9. 手機文章目錄：展開收起有高度過渡（新瀏覽器） */
-@supports selector(::details-content) {
-  @media (prefers-reduced-motion: no-preference) {
-    .bb-tocfold { interpolate-size: allow-keywords; }
-    .bb-tocfold::details-content {
-      block-size: 0;
-      overflow-y: clip;
-      transition: block-size 460ms var(--ease-apple), content-visibility 460ms allow-discrete;
-    }
-    .bb-tocfold[open]::details-content { block-size: auto; }
-  }
-}

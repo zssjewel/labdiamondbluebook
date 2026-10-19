@@ -3,7 +3,7 @@ import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { MotionLayer } from "@/components/motion-layer";
+import { MotionLazy } from "@/components/motion-lazy";
 import { JsonLd, SiteFooter, SiteHeader } from "@/components/site";
 import { SITE } from "@/config/site";
 import { routing } from "@/i18n/routing";
@@ -81,7 +81,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <SiteHeader locale={locale} />
           {children}
           <SiteFooter locale={locale} />
-          <MotionLayer />
+          <MotionLazy />
         </NextIntlClientProvider>
       </body>
     </html>

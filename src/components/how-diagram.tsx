@@ -3,9 +3,8 @@
  * 方塊位置用固定種子計算，每次構建都一樣。
  */
 import { FILL, SQUARES } from "./how-data";
-import { HowSort } from "./how-sort";
 
-/** 方塊先畫喺最終位置；排隊動畫由 HowSort 喺瀏覽器加上（唔會令 HTML 變大） */
+/** 方塊先畫喺最終位置；排隊動畫由 motion-layer 喺瀏覽器加上（唔會令 HTML 變大） */
 export function HowDiagram() {
   return (
     <>
@@ -19,7 +18,6 @@ export function HowDiagram() {
           <rect key={i} x={s.y} y={s.x} width={11} height={11} fill={FILL[s.tone]} />
         ))}
       </svg>
-      <HowSort />
     </>
   );
 }
