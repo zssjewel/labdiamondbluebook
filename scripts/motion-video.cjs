@@ -12,21 +12,22 @@ async function glide(page, pxPerSec, stops = []) {
   await page.evaluate(
     async ([speed, stops]) => {
       const max = document.documentElement.scrollHeight - innerHeight;
-      // stops 可以係 "選擇器" 或者 ["選擇器", 停幾耐 ms]
-      const stopAt = stops.map((st) => {
-        const [sel, ms] = Array.isArray(st) ? st : [st, 900];
-        const el = [...document.querySelectorAll(sel)].find((e) => e.getClientRects().length);
+      // stops 可以係 "選擇器" 或者 ["選擇器", 停幾耐 ms]；位置每格重新量（上面段落延遲排版，高度會變）
+      const stops2 = stops.map((st) => (Array.isArray(st) ? { sel: st[0], ms: st[1] } : { sel: st, ms: 900 }));
+      const target = (st) => {
+        const el = [...document.querySelectorAll(st.sel)].find((e) => e.getClientRects().length);
         if (!el) return null;
         const r = el.getBoundingClientRect();
-        return { y: Math.min(max, Math.max(0, r.top + scrollY - (innerHeight - Math.min(r.height, innerHeight * 0.8)) / 2)), ms };
-      }).filter((v) => v !== null).sort((a, b) => a.y - b.y);
+        return Math.min(max, Math.max(0, r.top + scrollY - (innerHeight - Math.min(r.height, innerHeight * 0.8)) / 2));
+      };
       let y = scrollY;
       let last = performance.now();
       while (y < max - 1) {
         await new Promise((r) => requestAnimationFrame(r));
         const now = performance.now();
         const next = Math.min(max, y + ((now - last) / 1000) * speed);
-        const hit = stopAt.find((s) => s.y > y && s.y <= next);
+        const hit = stops2.find((st) => !st.done && (st.y = target(st)) !== null && st.y > y - 2 && st.y <= next);
+        if (hit) hit.done = true;
         y = hit ? hit.y : next;
         last = now;
         window.scrollTo(0, y);
@@ -110,10 +111,17 @@ async function glide(page, pxPerSec, stops = []) {
       await page.screenshot({ path: `${out}/${tag}-shelf.png` });
     }
     // 流程圖：碌到畫面中間之後按時間截圖（粒子排隊 → 三張圖逐張出 → 播完停留）
-    await page.evaluate(() => {
-      const r = document.querySelector(".bb-how__stage").getBoundingClientRect();
-      window.scrollTo(0, scrollY + r.top - (innerHeight - Math.min(r.height, innerHeight * 0.8)) / 2);
-    });
+    // 上面段落延遲排版，高度會變：反覆對位直到穩定
+    for (let k = 0; k < 8; k++) {
+      const moved = await page.evaluate(() => {
+        const r = document.querySelector(".bb-how__stage").getBoundingClientRect();
+        const d = r.top - (innerHeight - Math.min(r.height, innerHeight * 0.8)) / 2;
+        window.scrollTo(0, scrollY + d);
+        return Math.abs(d);
+      });
+      if (moved < 2) break;
+      await page.waitForTimeout(120);
+    }
     {
       const t0 = Date.now();
       for (const ms of [150, 700, 1300, 1900, 2500, 4000]) {

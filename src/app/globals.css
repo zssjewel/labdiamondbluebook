@@ -543,7 +543,7 @@
 .bb-how__intro p { margin: 0; font-size: var(--step-body); }
 /* 方塊（SVG 裝飾層）同三張寫實示意圖共用 .bb-how__stage 定位；三張圖中心對正方塊三個區。
    靜態（冇 JS／減少動畫／播完）只見三張圖，方塊層收埋；排隊動畫見 motion.css */
-.bb-how__layout { max-width: 1080px; margin: clamp(40px, 5vw, 72px) auto 0; }
+.bb-how__layout { max-width: 1080px; margin: clamp(24px, 3vw, 48px) auto 0; }
 .bb-how__stage {
   position: relative;
   display: grid;

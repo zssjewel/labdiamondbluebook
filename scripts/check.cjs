@@ -228,7 +228,19 @@ const widths = [320, 390, 768, 1440];
     }, svgSel);
     const before = await sortInfo();
     console.log(`  流程圖未碌到：${before.all} 粒要郁嘅方塊，${before.away} 粒擺咗喺左邊亂堆等緊`);
-    await pg.evaluate((sel) => document.querySelector(sel).scrollIntoView({ block: "center", behavior: "instant" }), svgSel);
+    const cls0 = await pg.evaluate(() => document.querySelector(".bb-how__stage").className);
+    // 上面段落延遲排版，高度會變：反覆對位直到穩定
+    for (let k = 0; k < 8; k++) {
+      const moved = await pg.evaluate(() => {
+        const r = document.querySelector(".bb-how__stage").getBoundingClientRect();
+        const d = r.top + r.height / 2 - innerHeight / 2;
+        window.scrollTo(0, scrollY + d);
+        return Math.abs(d);
+      });
+      if (moved < 2) break;
+      await pg.waitForTimeout(100);
+    }
+    console.log(`  碌到之前舞台狀態：${cls0}`);
     await pg.waitForTimeout(600);
     const mid = await sortInfo();
     const pics = () => pg.evaluate(() => [...document.querySelectorAll(".bb-how__pic img")].map((i) => `${Number(getComputedStyle(i).opacity).toFixed(2)}${i.complete && i.naturalWidth ? "" : "(未載)"}`).join("/"));
