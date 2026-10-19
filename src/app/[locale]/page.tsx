@@ -359,12 +359,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </p>
         <div className="bb-why__grid">
           <div className="bb-why__a" data-reveal="panel">
-            <p className="bb-why__kicker">25 年</p>
-            <h3 className="bb-display">{PROMISES[0].title}</h3>
-            <p>{PROMISES[0].body}</p>
+            <h3 className="bb-display">
+              <span className="bb-nobreak">25 年東莞老廠，</span>
+              <span className="bb-nobreak">港工老師傅</span>
+            </h3>
+            <div className="bb-why__foot">
+              <p>{PROMISES[0].body}</p>
             <Link className="bb-link bb-link--on-dark" href={localizeHref("/about", locale) + "#story"}>
               工坊故事
             </Link>
+            </div>
           </div>
           <figure className="bb-why__img" data-reveal="panel" style={{ "--i": 1 } as React.CSSProperties}>
             <img decoding="async" loading="lazy" {...imgProps(`${R}/custom-ring-wax-ivory.webp`, "(max-width: 760px) 100vw, 42vw")} alt="工坊示意圖：戒指蠟版同設計草圖（AI 示意圖，待換工廠實拍）" width={1000} height={1000} />

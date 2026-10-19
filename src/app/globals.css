@@ -1561,7 +1561,9 @@ main:focus { outline: none; }
 .bb-seg > button span, .bb-seg > a span { color: var(--ink-soft); font-size: var(--step-caption); }
 /* 已選：冇 JS 時自己有底色；有 JS 時由滑動膠囊負責 */
 .bb-seg > [aria-pressed="true"], .bb-seg > [aria-current="page"] { background: var(--blue); color: var(--blue-ink); }
-.bb-seg.is-live > [aria-pressed="true"], .bb-seg.is-live > [aria-current="page"] { background: transparent; }
+/* 有 JS 時：新選項嘅底色等滑動膠囊到埗先出現（480ms），舊選項即刻冇底色；靜止時已選項目本身有底色，對比清楚 */
+.bb-seg.is-ready > button, .bb-seg.is-ready > a { transition: color 360ms var(--ease-apple), background-color 0s; }
+.bb-seg.is-ready > [aria-pressed="true"], .bb-seg.is-ready > [aria-current="page"] { transition: color 360ms var(--ease-apple), background-color 0s linear 480ms; }
 .bb-seg > [aria-pressed="true"] span, .bb-seg > [aria-current="page"] span { color: rgba(255, 255, 255, 0.72); }
 .bb-seg__ind {
   position: absolute;
@@ -1620,16 +1622,16 @@ main:focus { outline: none; }
   grid-column: 1 / 8;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 32px;
   min-height: clamp(360px, 40vw, 520px);
   padding: clamp(28px, 4vw, 48px);
   border-radius: var(--radius-panel);
   background: var(--blue);
   color: var(--blue-ink);
 }
-.bb-why__kicker { margin: 0 0 auto; font-family: var(--font-display); font-size: clamp(4rem, 2.5rem + 6vw, 8rem); font-weight: 600; line-height: 1; letter-spacing: -0.03em; color: var(--rose); }
-.bb-why__a h3 { margin: 0; font-size: var(--step-head); line-height: 1.15; }
+.bb-why__foot { display: flex; flex-direction: column; gap: 14px; }
+.bb-why__a h3 { margin: 0; font-size: var(--step-display); line-height: 1.1; }
 .bb-why__a p { margin: 0; max-width: 34em; font-size: var(--step-body); line-height: 1.75; color: rgba(255, 255, 255, 0.86); }
 .bb-link--on-dark { color: var(--blue-ink); }
 .bb-why__img { position: relative; grid-column: 8 / 13; margin: 0; overflow: hidden; border-radius: var(--radius-panel); background: var(--steel); }
@@ -1668,8 +1670,8 @@ main:focus { outline: none; }
   .bb-why__grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .bb-why__a, .bb-why__img, .bb-why__card { grid-column: 1; }
   .bb-why__a { min-height: 0; }
-  .bb-why__kicker { margin-bottom: 8px; }
-  .bb-why__img { aspect-ratio: 16 / 10; }
+  .bb-why__a h3 { font-size: var(--step-head); }
+  .bb-why__img { aspect-ratio: 2 / 1; }
   .bb-why__cert { height: 120px; }
 }
 
