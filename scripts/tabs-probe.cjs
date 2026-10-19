@@ -10,10 +10,8 @@ fs.mkdirSync(out, { recursive: true });
 
 const VARIANTS = {
   現狀: "",
-  冇卡片進場: ".bb-shelf__track[data-picked] > li { animation: none !important; }",
-  冇膠囊滑動: ".bb-seg__ind, .bb-seg > button { transition: none !important; }",
-  冇按下縮細: ".bb-seg > button:active { transform: none !important; }",
-  進場時唔對齊: ".bb-shelf__track[data-picked] { scroll-snap-type: none !important; }",
+  舊做法郁li: ".bb-shelf__track[data-picked] > li { animation: bb-shelfin 620ms var(--ease-apple) both; animation-delay: calc(var(--n, 0) * 45ms); }",
+  冇卡片進場: ".bb-shelf__track[data-picked] > li, .bb-shelf__track[data-picked] > li > .bb-shelf__card { animation: none !important; }",
 };
 const TAPS = ["耳環", "求婚戒指", "手鏈", "舊金改造", "所有產品"];
 
@@ -26,7 +24,7 @@ async function sample(page, ms) {
     const rows = [];
     const t0 = performance.now();
     const tick = () => {
-      const li = track.querySelector("li");
+      const li = track.querySelector("li .bb-shelf__card");
       const lr = li ? li.getBoundingClientRect() : { top: 0, left: 0 };
       const sr = seg.getBoundingClientRect();
       rows.push({

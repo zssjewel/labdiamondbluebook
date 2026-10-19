@@ -174,7 +174,8 @@ export function CardText({ cat, title, demo }: { cat?: string; title: string; de
         {demo && <span className="bb-demo">示例</span>}
       </span>
       <strong>{name}</strong>
-      {variant && <span className="bb-shelf__variant">{variant}</span>}
+      {/* 冇金屬變化嘅款（例如手鏈）都留返一行位，換分類時卡片高度唔變，下面內容唔會跳 */}
+      {variant ? <span className="bb-shelf__variant">{variant}</span> : <span className="bb-shelf__variant" aria-hidden="true">{"\u00a0"}</span>}
     </span>
   );
 }
