@@ -40,6 +40,9 @@ jobs:
         run: |
           (cd /tmp/out-a && python3 -m http.server 8080 >/dev/null 2>&1 &)
           (cd /tmp/out-b && python3 -m http.server 8081 >/dev/null 2>&1 &)
+          # 有壓縮嘅伺服器：接近正式網站（Cloudflare 會壓縮 HTML、CSS、JS）
+          (node scripts/serve-gz.cjs /tmp/out-a 8090 >/dev/null 2>&1 &)
+          (node scripts/serve-gz.cjs /tmp/out-b 8091 >/dev/null 2>&1 &)
           sleep 2
           npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
           npx -y playwright@1.55.0 install chromium >/dev/null
@@ -49,6 +52,12 @@ jobs:
             NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8080 | grep -v 最大 | tee -a ab/ab.txt
             echo "== 第 $round 輪 B (${{ inputs.b }}) ==" | tee -a ab/ab.txt
             NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8081 | grep -v 最大 | tee -a ab/ab.txt
+          done
+          for round in 1 2; do
+            echo "== 有壓縮 第 $round 輪 A (${{ inputs.a }}) ==" | tee -a ab/ab.txt
+            NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8090 | grep -v 最大 | tee -a ab/ab.txt
+            echo "== 有壓縮 第 $round 輪 B (${{ inputs.b }}) ==" | tee -a ab/ab.txt
+            NODE_PATH=/tmp/pw/node_modules node scripts/load.cjs http://localhost:8091 | grep -v 最大 | tee -a ab/ab.txt
           done
       - name: Publish
         if: always()
