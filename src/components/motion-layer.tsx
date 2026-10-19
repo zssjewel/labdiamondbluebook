@@ -12,7 +12,7 @@ const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffe
 /**
  * 動效補位：
  * 1. 進場：只俾「開頁時喺畫面以下」嘅 data-reveal 元素，碌到時一次過升起淡入（按時間播，碌動時唔使逐格計，手機唔會卡）。
- * 2. 首頁流程圖排隊（見 sortDiagram）。
+ * 2. 首頁流程圖：去到畫面時方塊排隊（見 sortDiagram）。
  * 3. 站內換頁：新頁面輕輕淡入升起，唔再一下跳過去。第一次開頁唔做，唔影響首屏速度。
  * 冇 JS 或者揀咗減少動畫時，全部內容照常即刻顯示。
  */
@@ -40,7 +40,7 @@ export default function MotionLayer() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    sortDiagram();
+    const stopSort = sortDiagram();
     if (!("IntersectionObserver" in window)) return;
     const vh = window.innerHeight;
     const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter((el) => el.getBoundingClientRect().top > vh);
@@ -49,24 +49,36 @@ export default function MotionLayer() {
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
-            io.unobserve(entry.target);
+            const el = entry.target as HTMLElement;
+            el.classList.add("is-in");
+            io.unobserve(el);
+            // 播完之後拎走進場 class，滑鼠移上去等回饋即刻恢復正常速度
+            const i = Number(getComputedStyle(el).getPropertyValue("--i")) || 0;
+            window.setTimeout(() => el.classList.remove("is-pending", "is-in"), 1900 + i * 110);
           }
         }
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
     );
     items.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      stopSort?.();
+    };
   }, [pathname]);
 
   return null;
 }
 
-/** 「資料好亂？」流程圖：幫要郁嘅方塊加上出發點同時間（CSS 碌動動畫負責播），唔支援就保持靜止最終樣 */
-function sortDiagram() {
-  if (typeof CSS === "undefined" || !CSS.supports("animation-timeline: view()")) return;
-  document.querySelectorAll<SVGSVGElement>(".bb-how__svg").forEach((svg) => {
+/**
+ * 「資料好亂？」流程圖：仲未碌到嘅話，先將要郁嘅方塊擺返去左邊亂堆（is-ready），
+ * 去到畫面時加 is-sorting，逐粒按次序排入隊、排成方陣。已經喺畫面入面就唔郁。
+ */
+function sortDiagram(): (() => void) | undefined {
+  if (!("IntersectionObserver" in window)) return;
+  const svgs = Array.from(document.querySelectorAll<SVGSVGElement>(".bb-how__svg")).filter((svg) => svg.getBoundingClientRect().top > window.innerHeight);
+  if (!svgs.length) return;
+  svgs.forEach((svg) => {
     const vertical = svg.classList.contains("bb-how__svg--v");
     const rects = svg.querySelectorAll("rect");
     SQUARES.forEach((s, i) => {
@@ -75,10 +87,23 @@ function sortDiagram() {
       const m = s.move;
       r.style.setProperty("--fx", `${vertical ? m.fy : m.fx}px`);
       r.style.setProperty("--fy", `${vertical ? m.fx : m.fy}px`);
-      r.style.setProperty("--a", `${m.a}%`);
-      r.style.setProperty("--b", `${m.b}%`);
+      r.style.setProperty("--d", `${Math.round((m.a - 5) * 34)}ms`);
       r.style.setProperty("--f0", FILL[s.from ?? s.tone]);
       r.classList.add("m");
     });
+    svg.classList.add("is-ready");
   });
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add("is-sorting");
+          io.unobserve(e.target);
+        }
+      }
+    },
+    { threshold: 0.45 },
+  );
+  svgs.forEach((svg) => io.observe(svg));
+  return () => io.disconnect();
 }

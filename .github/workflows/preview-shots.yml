@@ -84,7 +84,7 @@ jobs:
           npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
           NODE_PATH=/tmp/pw/node_modules node scripts/perf.cjs http://localhost:8080 | tee shots/perf.txt
           # 對照：逐樣效果關咗再量，搵出邊樣最食力（只測首頁）
-          PERF_REPEAT=2 PERF_PAGES=首頁 PERF_VARIANTS='[["現版",""],["冇刊頭推近",".bb-mosaic img{animation:none!important}"],["冇相片推近",".bb-tiles__c img,.bb-contents__fig img,.bb-case__fig img{animation:none!important}"],["冇流程圖排隊",".bb-how__svg .m{animation:none!important}"],["全部動畫關閉","*{animation:none!important}"]]' NODE_PATH=/tmp/pw/node_modules node scripts/perf.cjs http://localhost:8080 | tee -a shots/perf.txt
+          PERF_REPEAT=2 PERF_PAGES=首頁 PERF_VARIANTS='[["現版",""],["全部動效關閉","*{animation:none!important;transition:none!important}"]]' NODE_PATH=/tmp/pw/node_modules node scripts/perf.cjs http://localhost:8080 | tee -a shots/perf.txt
 
       - name: Pre-release checks
         if: steps.build.outcome == 'success'

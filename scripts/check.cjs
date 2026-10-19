@@ -212,33 +212,26 @@ const widths = [320, 390, 768, 1440];
     console.log(`  開頁 2.5 秒後首屏未到位：${hero} 個`);
     // 流程圖：剛入畫面時方塊未排好；去到畫面中間要全部排好
     const svgSel = opts.isMobile ? ".bb-how__svg--v" : ".bb-how__svg--h";
-    const sortAt = async (frac) => {
-      // 上面嘅段落碌近先排版，高度會變，所以對準兩次
-      for (let k = 0; k < 3; k++) {
-        await pg.evaluate(([sel, frac]) => {
-          const el = document.querySelector(sel); const r = el.getBoundingClientRect();
-          // frac = cover 進度（0 = 頂邊啱啱入到畫面底，1 = 底邊啱啱離開畫面頂）
-          const total = innerHeight + r.height;
-          window.scrollTo(0, window.scrollY + r.top - innerHeight + total * frac);
-        }, [svgSel, frac]);
-        await pg.waitForTimeout(250);
-      }
-      return pg.evaluate((sel) => {
-        const ms = [...document.querySelectorAll(sel + " .m")];
-        const off = (m) => {
-          const t = getComputedStyle(m).transform;
-          if (!t || t === "none") return 0;
-          const n = (t.match(/-?[\d.]+(e-?\d+)?/g) || []).map(Number);
-          const [tx, ty] = t.startsWith("matrix(") ? [n[4], n[5]] : [n[0] || 0, n[1] || 0];
-          return Math.hypot(tx, ty);
-        };
-        return { all: ms.length, moving: ms.filter((m) => off(m) > 0.5).length };
-      }, svgSel);
-    };
-    for (const f of [0.1, 0.3, 0.5]) {
-      const r = await sortAt(f);
-      console.log(`  流程圖碌到 ${Math.round(f * 100)}%：${r.all} 粒方塊之中 ${r.moving} 粒仲喺路上`);
-    }
+    await pg.waitForTimeout(1500); // 等動效層載入
+    const sortInfo = () => pg.evaluate((sel) => {
+      const ms = [...document.querySelectorAll(sel + " .m")];
+      const off = (m) => {
+        const t = getComputedStyle(m).transform;
+        if (!t || t === "none") return 0;
+        const n = (t.match(/-?[\d.]+(e-?\d+)?/g) || []).map(Number);
+        const [tx, ty] = t.startsWith("matrix(") ? [n[4], n[5]] : [n[0] || 0, n[1] || 0];
+        return Math.hypot(tx, ty);
+      };
+      return { all: ms.length, away: ms.filter((m) => off(m) > 0.5).length };
+    }, svgSel);
+    const before = await sortInfo();
+    console.log(`  流程圖未碌到：${before.all} 粒要郁嘅方塊，${before.away} 粒擺咗喺左邊亂堆等緊`);
+    await pg.evaluate((sel) => document.querySelector(sel).scrollIntoView({ block: "center", behavior: "instant" }), svgSel);
+    await pg.waitForTimeout(600);
+    const mid = await sortInfo();
+    await pg.waitForTimeout(2600);
+    const after = await sortInfo();
+    console.log(`  碌到之後 0.6 秒：${mid.away} 粒仲喺路上；3.2 秒：${after.away} 粒仲喺路上`);
     await pg.screenshot({ path: `shots/motion-how-${opts.isMobile ? "390" : "1440"}.png` }).catch(() => {});
     // 逐個 data-reveal 碌過，之後等動畫播完，應該全部完全顯示
     const n = await pg.evaluate(() => document.querySelectorAll("[data-reveal]").length);

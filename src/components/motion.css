@@ -1,4 +1,4 @@
-/* Apple 式動效（開頁後先載入）：進場、按鈕卡片回饋、隨碌動嘅相片同流程圖、目錄展開。
+/* Apple 式動效（開頁後先載入）：進場、按鈕卡片回饋、相片落位、流程圖排隊、目錄展開。
    原則：內容預設係顯示嘅；動畫只用 transform / opacity / scale；揀咗「減少動畫」就取消移動。 */
 
 /* ---------- 進場動畫：碌到先升起淡入（蘋果官網做法：一次性、按時間播，唔會碌動時逐格計） ----------
@@ -17,12 +17,6 @@
   filter: none;
 }
 
-@keyframes bb-zoom { from { scale: 1.16; } to { scale: 1; } }
-@keyframes bb-drift { to { scale: 1.12; } }
-@keyframes bb-sort {
-  from { transform: translate(var(--fx), var(--fy)); fill: var(--f0); }
-  60% { fill: var(--f0); }
-}
 
 @media (prefers-reduced-motion: no-preference) {
   /* 3. 按鈕：按落即刻縮（90ms），放手慢慢彈返；顏色變化柔和 */
@@ -56,37 +50,26 @@
   .bb-story__steps li { transition: opacity 700ms var(--ease-apple); }
 }
 
-/* 7. 隨碌動嘅效果 */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    /* 相片：碌過時慢慢由近拉遠 */
-    .bb-tiles__c img, .bb-contents__fig img, .bb-case__fig img {
-      animation: bb-zoom linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
-    /* 刊頭：碌走時圖片輕輕推近 */
-    .bb-mosaic img {
-      animation: bb-settle 1800ms var(--ease-apple) both, bb-drift linear both;
-      animation-timeline: auto, scroll(root);
-      animation-range: normal, 0px 70vh;
-    }
-    .bb-mosaic > :nth-child(3) img { animation-delay: 90ms, 0s; }
-    .bb-mosaic > :nth-child(4) img { animation-delay: 140ms, 0s; }
-    .bb-mosaic > :nth-child(5) img { animation-delay: 190ms, 0s; }
-    .bb-mosaic > :nth-child(6) img { animation-delay: 120ms, 0s; }
-    .bb-mosaic > :nth-child(7) img { animation-delay: 230ms, 0s; }
-    .bb-mosaic > :nth-child(9) img { animation-delay: 280ms, 0s; }
-    .bb-mosaic > :nth-child(10) img { animation-delay: 170ms, 0s; }
+/* 7. 相片：所在卡片升起時，相片同時由近拉遠「落位」（用 scale，唔會同滑鼠移上去嘅放大打交） */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal].is-pending .bb-tiles__c img, [data-reveal].is-pending.bb-tiles__c img,
+  .bb-contents__fig.is-pending img, .bb-case.is-pending .bb-case__fig img {
+    scale: 1.16;
+    transition: scale 1800ms var(--ease-apple);
+    transition-delay: calc(var(--i, 0) * 110ms);
+  }
+  [data-reveal].is-pending.is-in .bb-tiles__c img, [data-reveal].is-pending.is-in.bb-tiles__c img,
+  .bb-contents__fig.is-pending.is-in img, .bb-case.is-pending.is-in .bb-case__fig img {
+    scale: 1;
+  }
 
-    /* 「資料好亂？收窄成一隻戒指」：碌到時方塊由左邊亂堆逐粒排隊、排成方陣 */
-    .bb-how__svg { view-timeline: --bb-how block; }
-    .bb-how__svg .m {
-      animation: bb-sort both cubic-bezier(0.55, 0, 0.25, 1);
-      animation-timeline: --bb-how;
-      animation-range: cover var(--a) cover var(--b);
-    }
-
+  /* 「資料好亂？收窄成一隻戒指」：去到畫面時，方塊由左邊亂堆逐粒排隊、排成方陣 */
+  .bb-how__svg.is-ready:not(.is-sorting) .m {
+    transform: translate(var(--fx), var(--fy));
+    fill: var(--f0);
+  }
+  .bb-how__svg.is-sorting .m {
+    transition: transform 1300ms var(--ease-apple) var(--d), fill 700ms var(--ease-apple) calc(var(--d) + 700ms);
   }
 }
 
