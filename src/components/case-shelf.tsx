@@ -51,6 +51,15 @@ export function CaseShelf({
 }) {
   const [cat, setCat] = useState("all");
   const [picked, setPicked] = useState(false);
+  // 相片等成頁載完、瀏覽器得閒先載，唔同首屏搶頻寬（貨架喺第一屏以下）
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    const go = () => (w.requestIdleCallback ? w.requestIdleCallback(() => setReady(true), { timeout: 1500 }) : window.setTimeout(() => setReady(true), 200));
+    if (document.readyState === "complete") go();
+    else window.addEventListener("load", go, { once: true });
+    return () => window.removeEventListener("load", go);
+  }, []);
   const track = useRef<HTMLUListElement>(null);
   const [edge, setEdge] = useState({ prev: false, next: true });
 
@@ -118,7 +127,9 @@ export function CaseShelf({
           <li key={`${cat}:${item.h}`} style={{ "--n": Math.min(i, 6) } as React.CSSProperties}>
             <Link href={item.h} className="bb-shelf__card">
               <span className="bb-shelf__img">
-                <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 240px" : "(max-width: 760px) 70vw, 340px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
+                {ready && (
+                  <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 240px" : "(max-width: 760px) 70vw, 340px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
+                )}
               </span>
               <span className="bb-shelf__body">
                 <span className="bb-shelf__cat">
