@@ -240,20 +240,18 @@ const widths = [320, 390, 768, 1440];
       console.log(`  流程圖碌到 ${Math.round(f * 100)}%：${r.all} 粒方塊之中 ${r.moving} 粒仲喺路上`);
     }
     await pg.screenshot({ path: `shots/motion-how-${opts.isMobile ? "390" : "1440"}.png` }).catch(() => {});
-    // 逐個 data-reveal 碌到畫面中間，應該完全顯示
-    const stuck = [];
+    // 逐個 data-reveal 碌過，之後等動畫播完，應該全部完全顯示
     const n = await pg.evaluate(() => document.querySelectorAll("[data-reveal]").length);
     for (let i = 0; i < n; i++) {
       await pg.evaluate((i) => document.querySelectorAll("[data-reveal]")[i].scrollIntoView({ block: "center", behavior: "instant" }), i);
-      await pg.waitForTimeout(120);
-      const st = await pg.evaluate((i) => {
-        const e = document.querySelectorAll("[data-reveal]")[i]; const cs = getComputedStyle(e);
-        return { o: Number(cs.opacity), t: cs.transform, label: (e.className || e.tagName) + " " + (e.textContent || "").trim().slice(0, 12) };
-      }, i);
-      const nums = (st.t.match(/-?[\d.]+(e-?\\d+)?/g) || []).map(Number); const moved = st.t !== "none" && (Math.abs(nums[4] || 0) > 0.5 || Math.abs(nums[5] || 0) > 0.5 || Math.abs((nums[0] ?? 1) - 1) > 0.005);
-      if (st.o < 0.99 || moved) stuck.push(`${st.label}（透明度 ${st.o.toFixed(2)}，${st.t}）`);
+      await pg.waitForTimeout(80);
     }
-    console.log(`  ${n} 個進場元素碌到畫面中間後未完全顯示：${stuck.length ? stuck.join("；") : "冇"}`);
+    await pg.waitForTimeout(1600);
+    const stuck = await pg.evaluate(() => [...document.querySelectorAll("[data-reveal]")].filter((e) => {
+      const cs = getComputedStyle(e); return Number(cs.opacity) < 0.99 || (e.classList.contains("is-pending") && !e.classList.contains("is-in"));
+    }).map((e) => (e.className || e.tagName) + " " + (e.textContent || "").trim().slice(0, 12)));
+    const used = await pg.evaluate(() => document.querySelectorAll("[data-reveal].is-pending").length);
+    console.log(`  ${n} 個進場元素（${used} 個有進場動畫）碌過之後未完全顯示：${stuck.length ? stuck.join("；") : "冇"}`);
     // 碌到最底：結尾段要完全顯示
     await pg.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
     await pg.waitForTimeout(300);

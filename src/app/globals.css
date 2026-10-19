@@ -994,17 +994,20 @@
 .bb-note > p:last-child { margin-bottom: 0; }
 .bb-note__label { font-weight: 600; color: var(--blue); }
 
-/* ---------- 進場動畫（舊瀏覽器後備）：只限開頁時喺畫面以下嘅內容，由 JS 加 is-pending ---------- */
+/* ---------- 進場動畫：碌到先升起淡入（蘋果官網做法：一次性、按時間播，唔會碌動時逐格計） ----------
+   只限開頁時喺畫面以下嘅內容，由 JS 加 is-pending；冇 JS 時全部照常顯示 */
 [data-reveal].is-pending {
   opacity: 0;
-  transform: translate3d(0, 40px, 0);
-  transition: opacity 900ms var(--ease-apple), transform 900ms var(--ease-apple);
-  transition-delay: calc(var(--i, 0) * 90ms);
+  transform: translate3d(0, 48px, 0);
+  transition: opacity 1000ms var(--ease-apple), transform 1000ms var(--ease-apple), filter 1000ms var(--ease-apple);
+  transition-delay: calc(var(--i, 0) * 110ms);
 }
-[data-reveal="panel"].is-pending { transform: scale(0.94); }
+[data-reveal="panel"].is-pending { transform: scale(0.92); }
+[data-reveal="light"].is-pending { opacity: 0.08; transform: translate3d(0, 32px, 0); filter: blur(10px); }
 [data-reveal].is-pending.is-in {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1327,9 +1330,6 @@
    揀咗「減少動畫」嘅用戶：全部移動效果取消，只保留顏色變化。
    ===================================================================== */
 
-@keyframes bb-rise { from { opacity: 0; transform: translate3d(0, 48px, 0); } }
-@keyframes bb-grow { from { opacity: 0; transform: scale(0.9); } }
-@keyframes bb-light { from { opacity: 0.08; transform: translate3d(0, 32px, 0); filter: blur(10px); } }
 @keyframes bb-zoom { from { scale: 1.16; } to { scale: 1; } }
 @keyframes bb-settle { from { transform: scale(1.22); } }
 @keyframes bb-raise { from { transform: scaleY(0); } }
@@ -1339,7 +1339,6 @@
   from { transform: translate(var(--fx), var(--fy)); fill: var(--f0); }
   60% { fill: var(--f0); }
 }
-@keyframes bb-hairline { from { box-shadow: inset 0 -1px 0 rgba(42, 35, 38, 0); } }
 
 @media (prefers-reduced-motion: no-preference) {
   /* 1. 刊頭：開頁時每格圖由近拉遠「落位」，藍、粉色塊由下升起；第一張圖照常即刻顯示，唔影響首屏速度 */
@@ -1397,22 +1396,6 @@
 /* 7. 隨碌動嘅效果 */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* 文字、卡片：碌入畫面時升起淡入，跟住手指嘅速度；碌返上去會退返 */
-    [data-reveal] {
-      animation: bb-rise both cubic-bezier(0.2, 0.7, 0.3, 1);
-      animation-timeline: view();
-      animation-range: entry calc(var(--i, 0) * 56px) entry calc(280px + var(--i, 0) * 56px);
-    }
-    /* 大色塊、相框：由細放大到位 */
-    [data-reveal="panel"] {
-      animation-name: bb-grow;
-      animation-range: entry calc(var(--i, 0) * 48px) cover 42%;
-    }
-    /* 結尾大字：由朦到清 */
-    [data-reveal="light"] {
-      animation-name: bb-light;
-      animation-range: entry 0% cover 46%;
-    }
     /* 相片：碌過時慢慢由近拉遠 */
     .bb-tiles__c img, .bb-contents__fig img, .bb-case__fig img {
       animation: bb-zoom linear both;
@@ -1441,12 +1424,6 @@
       animation-range: cover var(--a) cover var(--b);
     }
 
-    /* 頁頭：一開始冇分隔線，碌落先出現 */
-    .bb-header {
-      animation: bb-hairline linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0px 80px;
-    }
   }
 }
 

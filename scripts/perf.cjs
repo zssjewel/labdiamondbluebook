@@ -32,7 +32,7 @@ function frameStats(events) {
   const browser = await chromium.launch({ args: ["--enable-gpu-rasterization"] });
   for (const [sname, ctxOpts, cpu] of setups) {
     for (const [pname, path] of pages) {
-      for (const [vname, css] of variants) {
+      for (const [vname, css] of variants) for (let rep = 0; rep < Number(process.env.PERF_REPEAT || 1); rep++) {
         const ctx = await browser.newContext(ctxOpts);
         const page = await ctx.newPage();
         const cdp = await ctx.newCDPSession(page);

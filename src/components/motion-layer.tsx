@@ -9,8 +9,7 @@ const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffe
 
 /**
  * 動效補位：
- * 1. 新瀏覽器（Chrome、Edge、Safari 26 起）用 CSS 碌動動畫做進場，隨手指碌動，唔使 JS；
- *    舊瀏覽器先用呢度嘅 IntersectionObserver，只俾「開頁時喺畫面以下」嘅 data-reveal 元素淡入。
+ * 1. 進場：只俾「開頁時喺畫面以下」嘅 data-reveal 元素，碌到時一次過升起淡入（按時間播，碌動時唔使逐格計，手機唔會卡）。
  * 2. 站內換頁：新頁面輕輕淡入升起，唔再一下跳過去。第一次開頁唔做，唔影響首屏速度。
  * 冇 JS 或者揀咗減少動畫時，全部內容照常即刻顯示。
  */
@@ -38,7 +37,6 @@ export function MotionLayer() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (typeof CSS !== "undefined" && CSS.supports("animation-timeline: view()")) return;
     if (!("IntersectionObserver" in window)) return;
     const vh = window.innerHeight;
     const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter((el) => el.getBoundingClientRect().top > vh);
