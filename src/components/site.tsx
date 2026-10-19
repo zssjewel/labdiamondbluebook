@@ -3,6 +3,7 @@ import { CHAPTERS } from "@/config/chapters";
 import { HEADER_LINKS } from "@/config/navigation";
 import { SITE, hasContact, isExternal, localizeHref, orDemo, waHref } from "@/config/site";
 import { Demo } from "@/components/demo";
+import { PROMISE_SHORT } from "@/config/promises";
 
 export { localizeHref };
 
@@ -79,6 +80,16 @@ export function AskMaster({ topic }: { topic?: string }) {
     <section className="bb-ask" aria-label="問師傅">
       <h2 className="bb-display">睇完仲有問題？直接問師傅</h2>
       <p>傳張款式圖、講個預算或者手寸，師傅會用 WhatsApp 直接答你。好多人問嘅問題，我哋會整理成新文章，唔會公開你嘅資料。</p>
+      <ul className="bb-trust bb-trust--on-dark" aria-label="工坊承諾">
+        {PROMISE_SHORT.map((t) => (
+          <li key={t}>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="m3.5 8.5 3 3 6-7" />
+            </svg>
+            {t}
+          </li>
+        ))}
+      </ul>
       <SmartLink href={waHref(message)} className="bb-btn bb-btn--accent">
         WhatsApp 問師傅
       </SmartLink>
@@ -95,7 +106,7 @@ export function SiteFooter({ locale }: { locale: string }) {
       <div className="bb-footer__row">
         <ul className="bb-footer__places">
           <li>{hasContact ? <SmartLink href={waHref()}>WhatsApp 問師傅</SmartLink> : "聯絡方式籌備中"}</li>
-          <li>鄒三山工坊 · 香港</li>
+          <li>東莞廠房直出 · 全港送貨上門</li>
           {(SITE.demo || SITE.social.instagram || SITE.social.facebook || SITE.social.xiaohongshu) && (
             <li className="bb-footer__social">
               {[

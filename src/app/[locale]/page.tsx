@@ -13,6 +13,7 @@ import { CASES, mixed, visibleCategories } from "@/config/cases";
 import { HomeShelf } from "@/components/cases";
 import { imgProps } from "@/lib/images";
 import { robotsFor } from "@/lib/indexing";
+import { PROMISES } from "@/config/promises";
 import { shareImages } from "@/lib/share";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -75,6 +76,21 @@ const FAQ = [
     q: "喺香港訂定去深圳訂？",
     more: "/choose",
     a: "兩邊都有好有唔好，價錢、溝通、驗貨同售後方式都唔同。第七章會逐項比較，你睇完再揀。",
+  },
+  {
+    q: "你哋喺邊度做？",
+    more: "/about#story",
+    a: "東莞廠房，做咗 25 年；師傅係九十年代港資廠出身，工齡 20 年以上，堅持港工。做好之後全港送貨上門。",
+  },
+  {
+    q: "唔滿意點算？",
+    more: "/about#promise",
+    a: "送貨上門，見面睇貨滿意先付尾款；唔滿意即場退返全數訂金，刻咗字都照退。",
+  },
+  {
+    q: "點證明材質冇問題？",
+    more: "/certificate",
+    a: "出貨附廣東省質量監督金銀珠寶檢驗站（GDTC）省檢證書，驗金屬材質同鑽石係培育定天然，支持全球複檢；如有不符，按成交價賠十倍。",
   },
   {
     q: "你哋會唔會推薦自己？",
@@ -210,6 +226,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {hasContact ? "由邊度開始睇" : "睇九章目錄"}
           </Link>
         </div>
+        <ul className="bb-trust bb-after-title" aria-label="工坊承諾">
+          {PROMISES.map((p) => (
+            <li key={p.key}>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="m3.5 8.5 3 3 6-7" />
+              </svg>
+              {p.badge}
+            </li>
+          ))}
+        </ul>
         <ContinueReading />
         <ul className="bb-answers bb-after-title" aria-label="快答">
           {ANSWERS.map((x) => (
@@ -323,31 +349,49 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* 宣言 */}
-      <section className="bb-tiles" aria-label="關於本書">
-        <div className="bb-tiles__a" data-reveal="panel">
-          <p className="bb-display">
-            做嘢嘅人
-            <br />
-            寫嘅書
-          </p>
-        </div>
-        <div className="bb-tiles__b" data-reveal="panel" style={{ "--i": 1 } as React.CSSProperties}>
-          <p className="bb-display">九章</p>
-        </div>
-        <div className="bb-tiles__c" data-reveal="panel" style={{ "--i": 2 } as React.CSSProperties}>
-          <img decoding="async" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 50vw, 34vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} loading="lazy" />
-        </div>
-        <div className="bb-tiles__d">
-          <div data-reveal>
-            <p>
-              《培育鑽石藍皮書》由香港鄒三山工坊編著。客人問得最多嘅問題，就係呢本書嘅目錄：價錢點計、證書點睇、邊啲錢值得畀、邊啲錢唔使畀，同埋老實講，培育鑽石唔保值。
-            </p>
-            <p>
-              講揀商家嗰章會比較品牌店、工廠、網購同深圳水貝，當中包括我哋自己。呢點一開始就講明，你睇完自己判斷。
-            </p>
+      {/* 點解揀鄒三山工坊：四個承諾 */}
+      <section className="bb-why" aria-labelledby="why-title">
+        <h2 id="why-title" className="bb-sechead bb-display" data-reveal>
+          點解揀鄒三山工坊
+        </h2>
+        <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+          《培育鑽石藍皮書》由鄒三山工坊編著。講揀商家嗰章會比較埋我哋自己，你睇完自己判斷。
+        </p>
+        <div className="bb-why__grid">
+          <div className="bb-why__a" data-reveal="panel">
+            <p className="bb-why__kicker">25 年</p>
+            <h3 className="bb-display">{PROMISES[0].title}</h3>
+            <p>{PROMISES[0].body}</p>
+            <Link className="bb-link bb-link--on-dark" href={localizeHref("/about", locale) + "#story"}>
+              工坊故事
+            </Link>
           </div>
+          <figure className="bb-why__img" data-reveal="panel" style={{ "--i": 1 } as React.CSSProperties}>
+            <img decoding="async" loading="lazy" {...imgProps(`${R}/custom-ring-wax-ivory.webp`, "(max-width: 760px) 100vw, 42vw")} alt="工坊示意圖：戒指蠟版同設計草圖（AI 示意圖，待換工廠實拍）" width={1000} height={1000} />
+            <figcaption>
+              工場相<span className="bb-demo">示例</span>
+            </figcaption>
+          </figure>
+          {PROMISES.slice(1).map((p, i) => (
+            <div key={p.key} className={`bb-why__card bb-why__card--${p.key}`} data-reveal style={{ "--i": i } as React.CSSProperties}>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+              {p.key === "cert" && (
+                <figure className="bb-why__cert">
+                  <img decoding="async" loading="lazy" {...imgProps(`${R}/certificate-verification-ivory.webp`, "120px")} alt="證書示意圖（AI 示意圖，待換省檢證書實拍）" width={1000} height={1000} />
+                  <figcaption>
+                    證書相<span className="bb-demo">示例</span>
+                  </figcaption>
+                </figure>
+              )}
+            </div>
+          ))}
         </div>
+        <p className="bb-why__more">
+          <Link className="bb-link" href={localizeHref("/about", locale) + "#promise"}>
+            睇完整條款
+          </Link>
+        </p>
       </section>
 
       {/* 多變一 */}

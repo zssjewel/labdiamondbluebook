@@ -1209,7 +1209,7 @@
 }
 
 /* ---------- 開頁速度：畫面以外嘅大段落，等碌到附近先排版同繪製 ---------- */
-.bb-routes, .bb-tool, .bb-related, .bb-contents, .bb-tiles, .bb-how, .bb-faq, .bb-close, .bb-footer,
+.bb-routes, .bb-tool, .bb-related, .bb-contents, .bb-why, .bb-how, .bb-faq, .bb-close, .bb-footer,
 .bb-author, .bb-prevnext, .bb-ask, .bb-only-narrow, .bb-subhead, .bb-list {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
@@ -1581,3 +1581,105 @@ main:focus { outline: none; }
 @media (max-width: 760px) {
   .bb-seg > button, .bb-seg > a { padding: 0 15px; }
 }
+
+/* =====================================================================
+   工坊承諾
+   ===================================================================== */
+/* 首屏四個小承諾（亦用喺問師傅區塊、作品頁） */
+.bb-trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 22px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-soft);
+  font-size: var(--step-small);
+}
+.bb-trust li { display: inline-flex; align-items: center; gap: 6px; }
+.bb-trust svg { flex: none; width: 16px; height: 16px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.bb-trust--on-dark { justify-content: flex-start; margin: 0 0 24px; color: rgba(255, 255, 255, 0.86); }
+.bb-trust--on-dark svg { stroke: var(--gold); }
+.bb-trust--list { flex-direction: column; align-items: flex-start; gap: 8px; margin: 24px 0 0; padding: 18px 20px; border-radius: var(--radius-panel); background: var(--steel); color: var(--ink); }
+.bb-trust__more { margin-top: 2px; }
+@media (max-width: 560px) {
+  .bb-hero .bb-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; justify-items: start; text-align: left; font-size: var(--step-caption); }
+}
+
+/* 首頁：點解揀鄒三山工坊 */
+.bb-why { padding: var(--gap-section) var(--pad); }
+.bb-why__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 12px;
+  max-width: var(--max);
+  margin: clamp(32px, 4vw, 56px) auto 0;
+}
+.bb-why__a {
+  grid-column: 1 / 8;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 14px;
+  min-height: clamp(360px, 40vw, 520px);
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: var(--radius-panel);
+  background: var(--blue);
+  color: var(--blue-ink);
+}
+.bb-why__kicker { margin: 0 0 auto; font-family: var(--font-display); font-size: clamp(4rem, 2.5rem + 6vw, 8rem); font-weight: 600; line-height: 1; letter-spacing: -0.03em; color: var(--rose); }
+.bb-why__a h3 { margin: 0; font-size: var(--step-head); line-height: 1.15; }
+.bb-why__a p { margin: 0; max-width: 34em; font-size: var(--step-body); line-height: 1.75; color: rgba(255, 255, 255, 0.86); }
+.bb-link--on-dark { color: var(--blue-ink); }
+.bb-why__img { position: relative; grid-column: 8 / 13; margin: 0; overflow: hidden; border-radius: var(--radius-panel); background: var(--steel); }
+.bb-why__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bb-why__img figcaption, .bb-why__cert figcaption {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  padding: 4px 6px 4px 12px;
+  border-radius: 999px;
+  background: rgba(251, 247, 246, 0.86);
+  color: var(--ink);
+  font-size: var(--step-caption);
+}
+.bb-why__card {
+  position: relative;
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(24px, 3vw, 32px);
+  border-radius: var(--radius-panel);
+  background: var(--steel);
+}
+.bb-why__card--price { background: var(--pale); }
+.bb-why__card--delivery { background: var(--rose); }
+.bb-why__card h3 { margin: 0; font-size: var(--step-lead); font-weight: 600; line-height: 1.35; }
+.bb-why__card p { margin: 0; color: var(--ink-soft); font-size: var(--step-small); line-height: 1.75; }
+.bb-why__card--delivery p { color: var(--ink); }
+.bb-why__cert { position: relative; margin: 6px 0 0; height: 140px; overflow: hidden; border-radius: var(--radius-img); }
+.bb-why__cert img { width: 100%; height: 100%; object-fit: cover; }
+.bb-why__more { margin: 28px 0 0; text-align: center; }
+@media (max-width: 860px) {
+  .bb-why__grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .bb-why__a, .bb-why__img, .bb-why__card { grid-column: 1; }
+  .bb-why__a { min-height: 0; }
+  .bb-why__kicker { margin-bottom: 8px; }
+  .bb-why__img { aspect-ratio: 16 / 10; }
+  .bb-why__cert { height: 120px; }
+}
+
+/* 章節頁：「鄒三山工坊嘅做法」 */
+.bb-ourway { margin-top: 40px; }
+.bb-ourway p:not(.bb-note__label) { margin: 6px 0 10px; }
+
+/* 關於本書：條款、相片 */
+.bb-terms { margin: 0 0 1.4em; padding-left: 1.4em; }
+.bb-terms li { margin-bottom: 0.9em; line-height: 1.8; }
+.bb-about__fig { margin: 0 0 1.6em; max-width: 360px; }
+.bb-about__fig img { width: 100%; height: auto; border-radius: var(--radius-img); }
+.bb-about__fig figcaption { display: flex; align-items: center; margin-top: 6px; color: var(--ink-soft); font-size: var(--step-small); }

@@ -7,6 +7,8 @@ export type Chapter = {
   number: string;
   title: string;
   answers: string;
+  /** 「鄒三山工坊嘅做法」小框：講工坊自己點做，同中立內容分開 */
+  ourWay?: string;
   intro: string;
   topics: string[];
   /** 章節封面（3D 示意圖） */
@@ -33,6 +35,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "price",
+    ourWay: "工廠直出，冇中間商，訂一件都係出廠價。主石可以揀唔帶證書，會平啲。",
     image: "/images/renders/princess-wg-white.webp",
     imageAlt: "銀白色四爪公主方形主石戒指（AI 示意圖）",
     number: "第二章",
@@ -50,6 +53,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "certificate",
+    ourWay: "出貨附廣東省質量監督金銀珠寶檢驗站（GDTC）省檢證書，驗金屬材質同鑽石係培育定天然，支持全球複檢；如有不符，按成交價賠十倍。主石可以揀帶證書（IGI 或 GIA）或者唔帶證書（平啲）；碎鑽一般唔帶證書。",
     image: "/images/renders/certificate-verification-ivory.webp",
     imageAlt: "圓形鑽石、珠寶放大鏡與無品牌報告紙，示意證書核驗（AI 示意圖）",
     number: "第三章",
@@ -97,6 +101,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "custom",
+    ourWay: "傾好規格先開工，按傾好嘅做，唔摻假、唔虛標。全港任何地區送貨上門，見面睇貨滿意先付尾款；唔滿意即場退返全數訂金，刻咗字都照退。",
     image: "/images/renders/custom-ring-wax-ivory.webp",
     imageAlt: "綠色單石戒指蠟模與戒指設計草圖，示意訂造設計階段（AI 示意圖）",
     number: "第六章",
@@ -116,6 +121,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     slug: "choose",
+    ourWay: "我哋係東莞廠房直出、香港送貨上門：工坊做咗 25 年，師傅係九十年代港資廠出身，工齡 20 年以上。比較渠道嘅時候我哋都喺入面，你睇完自己判斷。",
     image: "/images/renders/stud-wg-blue.webp",
     imageAlt: "白金六爪培育鑽石耳釘（3D 示意）",
     number: "第七章",

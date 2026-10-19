@@ -10,6 +10,7 @@ import { CASES, casesIn, categoryOf, isDemoCases, mixed, visibleCategories } fro
 import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { robotsFor } from "@/lib/indexing";
+import { PROMISE_SHORT } from "@/config/promises";
 import { shareImages } from "@/lib/share";
 
 type Params = { locale: string; category: string; slug: string };
@@ -106,6 +107,21 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
               睇其他{cat.name}
             </Link>
           </div>
+          <ul className="bb-trust bb-trust--list" aria-label="工坊承諾">
+            {PROMISE_SHORT.map((t) => (
+              <li key={t}>
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="m3.5 8.5 3 3 6-7" />
+                </svg>
+                {t}
+              </li>
+            ))}
+            <li className="bb-trust__more">
+              <Link className="bb-link" href={localizeHref("/about", locale) + "#promise"}>
+                睇完整條款
+              </Link>
+            </li>
+          </ul>
           <div className="bb-guides bb-guides--inline">
             <h2>訂之前可以先睇</h2>
             <ul>

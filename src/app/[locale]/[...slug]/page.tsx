@@ -173,6 +173,15 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
           </>
         )}
 
+        {chapter.ourWay && (
+          <aside className="bb-note bb-ourway" aria-label="鄒三山工坊嘅做法">
+            <p className="bb-note__label">鄒三山工坊嘅做法</p>
+            <p>{chapter.ourWay}</p>
+            <Link className="bb-link" href={localizeHref("/about", locale) + "#promise"}>
+              睇完整條款
+            </Link>
+          </aside>
+        )}
         <RelatedShelf locale={locale} list={casesForChapter(slug)} title="相關作品" sub="工坊訂造過嘅款式，撳入去睇主石、金屬同工期。" />
         <AskMaster topic={`${chapter.number} ${chapter.title}`} />
 

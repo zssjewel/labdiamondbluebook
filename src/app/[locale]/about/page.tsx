@@ -4,10 +4,11 @@ import { SmartLink } from "@/components/site";
 import { SITE, hasContact, localizeHref, orDemo, waHref } from "@/config/site";
 import { Demo } from "@/components/demo";
 import { robotsFor } from "@/lib/indexing";
+import { CERT_LAB } from "@/config/promises";
 
 export const metadata: Metadata = {
   title: `關於本書及編著聲明｜${SITE.name}`,
-  description: "《培育鑽石藍皮書》由香港鄒三山工坊編著。本頁說明本書由誰撰寫、內容怎樣核對，以及比較和推薦內容包括工坊自己。",
+  description: "《培育鑽石藍皮書》由鄒三山工坊編著。本頁介紹工坊（東莞 25 年老廠、香港送貨上門）、四項承諾和條款，以及本書的編著聲明。",
   alternates: { canonical: localizeHref("/about") },
   robots: robotsFor(true),
 };
@@ -16,8 +17,45 @@ export default function AboutPage() {
   return (
     <LegalPage title="關於本書">
       <p>
-        《培育鑽石藍皮書》是一本寫給想訂造培育鑽石首飾的人看的攻略，由香港鄒三山工坊編著。書分九章，由入門、價錢、證書、4C、形狀款式，一直講到訂造流程、揀商家、場景和保養。
+        《培育鑽石藍皮書》是一本寫給想訂造培育鑽石首飾的人看的攻略，由鄒三山工坊編著。書分九章，由入門、價錢、證書、4C、形狀款式，一直講到訂造流程、揀商家、場景和保養。
       </p>
+      <h2 id="story">工坊故事</h2>
+      <p>
+        鄒三山是廠二代。父輩是九十年代從港資珠寶廠出身的老師傅，工坊在東莞做了 25 年，一直堅持純正港工工藝。現在的師傅同樣是九十年代港資廠出身，工齡全部在 20 年以上。
+      </p>
+      <p>
+        工坊自己生產，沒有中間商，訂一件也是出廠價；做好之後由香港送貨上門。
+      </p>
+      <figure className="bb-about__fig">
+        <img src="/images/renders/custom-ring-wax-ivory-720.webp" alt="工坊示意圖：戒指蠟版和設計草圖（AI 示意圖，待換工廠實拍）" width={720} height={720} loading="lazy" decoding="async" />
+        <figcaption>
+          工廠相片待換 <Demo />
+        </figcaption>
+      </figure>
+
+      <h2 id="promise">四項承諾及條款</h2>
+      <ol className="bb-terms">
+        <li>
+          <strong>工廠直出價。</strong>工坊自己生產，沒有中間商，訂一件也按出廠價計算。
+        </li>
+        <li>
+          <strong>按約定規格製作。</strong>材質不摻假、不虛標，按雙方確認的款式和規格製作。
+        </li>
+        <li>
+          <strong>省檢證書，全球複檢，假一罰十。</strong>出貨前附{CERT_LAB}省檢證書，檢測金屬材質，以及鑽石屬培育鑽石還是天然鑽石，證書支持全球複檢。如材質或鑽石與證書、單據不符，按成交價十倍賠償。
+          主石可選擇附國際證書（IGI 或 GIA）或不附證書（價錢較低）；碎鑽、小顆粒鑽石一般不附證書。
+        </li>
+        <li>
+          <strong>送貨上門，滿意才付尾款。</strong>全港任何地區送貨上門。客人見面驗貨，滿意才付尾款；如不滿意，可即場取消，訂金全數退還。已刻字的貨品同樣適用。
+        </li>
+      </ol>
+      <figure className="bb-about__fig">
+        <img src="/images/renders/certificate-verification-ivory-720.webp" alt="證書示意圖（AI 示意圖，待換省檢證書實拍）" width={720} height={720} loading="lazy" decoding="async" />
+        <figcaption>
+          省檢證書樣本待換 <Demo />
+        </figcaption>
+      </figure>
+
       <h2 id="disclosure">編著聲明</h2>
       <p>
         本書由鄒三山工坊編著，工坊本身提供培育鑽石首飾訂造服務。我們在書中比較不同購買渠道時，比較對象<strong>包括我們自己</strong>；推薦名單之中亦有工坊本身。
