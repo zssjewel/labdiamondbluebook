@@ -1443,26 +1443,6 @@
   line-height: 1;
 }
 
-.bb-shelf__paddles { display: none; justify-content: flex-end; gap: 12px; padding: 0 var(--pad); }
-.bb-shelf--inset .bb-shelf__paddles { padding: 0; }
-@media (hover: hover) and (pointer: fine) {
-  .bb-shelf__paddles { display: flex; }
-}
-.bb-shelf__paddles button {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(42, 35, 38, 0.08);
-  color: var(--ink);
-  cursor: pointer;
-}
-.bb-shelf__paddles button:hover:not(:disabled) { background: rgba(42, 35, 38, 0.14); }
-.bb-shelf__paddles button:disabled { opacity: 0.35; cursor: default; }
-.bb-shelf__paddles svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (max-width: 760px) {
   .bb-shelf__tabs { margin-bottom: 18px; }
