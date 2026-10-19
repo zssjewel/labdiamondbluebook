@@ -133,19 +133,12 @@ export function CaseShelf({
           {shown.map((item, i) => (
             <li key={`${cat}:${item.h}`} style={{ "--n": Math.min(i, 6) } as React.CSSProperties}>
               <Link href={item.h} className="bb-shelf__card">
-                <span className="bb-shelf__body">
-                  <span className="bb-shelf__cat">
-                    {catNames[item.c]}
-                    {demo && <span className="bb-demo">示例</span>}
-                  </span>
-                  <strong>{item.t}</strong>
-                  <span className="bb-shelf__more">睇主石、金屬同工期</span>
-                </span>
                 <span className="bb-shelf__img">
                   {ready && (
                     <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 260px" : "(max-width: 760px) 78vw, 400px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
                   )}
                 </span>
+                <CardText cat={catNames[item.c]} title={item.t} demo={demo} />
               </Link>
             </li>
           ))}
@@ -168,5 +161,20 @@ export function CaseShelf({
         </button>
       </div>
     </div>
+  );
+}
+
+/** 卡片下面嘅字：分類（細灰字）→ 款式名（粗）→ 金屬等變化（細灰字）。標題「・」後面嗰段拆出嚟做第三行，唔使擠埋一齊斷行 */
+export function CardText({ cat, title, demo }: { cat?: string; title: string; demo: boolean }) {
+  const [name, variant] = title.split("・");
+  return (
+    <span className="bb-shelf__body">
+      <span className="bb-shelf__cat">
+        {cat}
+        {demo && <span className="bb-demo">示例</span>}
+      </span>
+      <strong>{name}</strong>
+      {variant && <span className="bb-shelf__variant">{variant}</span>}
+    </span>
   );
 }

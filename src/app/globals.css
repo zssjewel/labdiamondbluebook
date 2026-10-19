@@ -1356,15 +1356,14 @@
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
-/* 蘋果式卡：字喺上面，相片貼住卡底 */
-.bb-shelf__img { display: block; margin-top: auto; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
+.bb-shelf__img { display: block; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
 .bb-shelf__img img { width: 100%; height: 100%; object-fit: cover; }
-.bb-shelf__body { display: flex; flex-direction: column; gap: 6px; padding: 24px 24px 18px; }
+/* 相片下面嘅字：三行分層，字細啲、行距穩定，唔再每張重複「睇主石…」 */
+.bb-shelf__body { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: 16px 20px 20px; }
 .bb-shelf__cat { display: flex; align-items: center; color: var(--ink-soft); font-size: var(--step-caption); }
 .bb-shelf__cat .bb-demo { margin-left: 6px; }
-.bb-shelf__body strong { font-family: var(--font-display); font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.5rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
-.bb-shelf__more { color: var(--blue); font-size: var(--step-small); }
-.bb-shelf__more::after { content: " ›"; }
+.bb-shelf__body strong { font-size: var(--step-body); font-weight: 600; line-height: 1.4; text-wrap: pretty; }
+.bb-shelf__variant { color: var(--ink-soft); font-size: var(--step-small); line-height: 1.4; }
 .bb-shelf__card--all {
   align-items: center;
   justify-content: center;
@@ -1392,10 +1391,9 @@
 @media (max-width: 760px) {
   .bb-shelf__tabs { margin-bottom: 20px; }
   .bb-shelf__track { gap: 12px; }
-  .bb-shelf__body { padding: 18px 18px 14px; }
+  .bb-shelf__body { padding: 14px 16px 18px; }
 }
-.bb-shelf--inset .bb-shelf__body { padding: 18px 18px 14px; }
-.bb-shelf--inset .bb-shelf__body strong { font-size: var(--step-body); }
+.bb-shelf--inset .bb-shelf__body { padding: 14px 16px 18px; }
 
 /* 左右箭咀：圓形毛玻璃，浮喺卡片兩邊；滑鼠移入貨架先出現，去到盡頭就收埋。手機用手指滑，唔顯示 */
 .bb-shelf__paddle {
@@ -1451,9 +1449,9 @@
 }
 @media (max-width: 760px) {
   .bb-casegrid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .bb-casegrid .bb-shelf__body { padding: 12px 12px 10px; gap: 2px; }
+  .bb-casegrid .bb-shelf__body { padding: 10px 12px 14px; gap: 2px; }
   .bb-casegrid .bb-shelf__body strong { font-size: var(--step-small); }
-  .bb-casegrid .bb-shelf__more { display: none; }
+  .bb-casegrid .bb-shelf__variant { font-size: var(--step-caption); }
 }
 .bb-guides { margin-top: 56px; padding: 24px; border-radius: var(--radius-panel); background: var(--steel); }
 .bb-guides h2 { margin: 0 0 10px; font-size: var(--step-body); font-weight: 600; }

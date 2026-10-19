@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { CaseShelf, type ShelfItem } from "@/components/case-shelf";
+import { CardText, CaseShelf, type ShelfItem } from "@/components/case-shelf";
 import { Demo } from "@/components/demo";
 import { CASE_CATEGORIES, CASES, type Case, caseHref, categoryOf, isDemoCases, visibleCategories } from "@/config/cases";
 import { localizeHref } from "@/config/site";
@@ -64,14 +64,6 @@ export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
       {list.map((c, i) => (
         <li key={c.slug} data-reveal style={{ "--i": i % 3 } as React.CSSProperties}>
           <Link href={localizeHref(caseHref(c), locale)} className="bb-shelf__card">
-            <span className="bb-shelf__body">
-              <span className="bb-shelf__cat">
-                {categoryOf(c.category)?.name}
-                <Demo show={isDemoCases} />
-              </span>
-              <strong>{c.title}</strong>
-              <span className="bb-shelf__more">睇主石、金屬同工期</span>
-            </span>
             <span className="bb-shelf__img">
               <img
                 {...imgProps(c.images[0].src, "(max-width: 760px) 50vw, (max-width: 1100px) 33vw, 360px")}
@@ -82,6 +74,7 @@ export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
                 decoding="async"
               />
             </span>
+            <CardText cat={categoryOf(c.category)?.name} title={c.title} demo={isDemoCases} />
           </Link>
         </li>
       ))}
