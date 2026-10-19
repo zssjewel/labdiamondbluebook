@@ -1,0 +1,832 @@
+== 第 1 輪 A (main) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 1.60s，LCP 1.60s，CLS 0.000，載完 3.7s，請求 22 個，共 778KB（HTML 152KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 182→588 10KB
+     /images/renders/bracelet-steel-480.webp 184→659 11KB
+     /images/renders/halo-rg-pale-480.webp 185→738 14KB
+     /images/renders/macro-ink-480.webp 185→952 26KB
+     /images/hand/stone-top.webp 185→1324 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 186→1203 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 188→1446 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 189→3498 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 189→3514 170KB
+     atic/chunks/main-app-df9632a01b438074.js 189→1405 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 190→1675 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 190→1712 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 190→2046 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 192→1862 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 192→2075 8KB
+   HTML 首字節 6ms／收完 2304ms，CSS 186→1203ms、3930→4100ms，DOM 可互動 2318ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 1.19s，LCP 1.19s，CLS 0.000，載完 3.1s，請求 14 個，共 538KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 181→800 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 182→879 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 182→979 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 182→2896 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 183→2917 170KB
+     atic/chunks/main-app-df9632a01b438074.js 183→1073 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 183→1208 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 183→1150 5KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 183→1251 0KB
+     xt/static/chunks/251-e6702302cbf97610.js 183→1487 17KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 183→1473 8KB
+   HTML 首字節 6ms／收完 807ms，CSS 182→879ms、3347→3518ms，DOM 可互動 1152ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 1.22s，LCP 1.24s，CLS 0.000，載完 3.2s，請求 14 個，共 582KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink.webp 187→1096 79KB
+     /_next/static/css/3b79dc7aabda8d72.css 189→939 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 189→1189 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 189→2999 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 189→3013 170KB
+     atic/chunks/main-app-df9632a01b438074.js 189→1126 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 189→1261 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 193→1354 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 193→1625 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 193→1376 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 194→1583 8KB
+   HTML 首字節 4ms／收完 753ms，CSS 189→939ms、3415→3592ms，DOM 可互動 1202ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.32s，LCP 0.32s，CLS 0.000，載完 0.4s，請求 24 個，共 765KB（HTML 152KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 29→74 10KB
+     /images/renders/bracelet-steel-800.webp 29→102 25KB
+     /images/renders/halo-rg-pale-480.webp 30→90 14KB
+     /images/renders/macro-ink-480.webp 30→110 26KB
+     /_next/static/css/3b79dc7aabda8d72.css 30→125 45KB
+     /images/hand/stone-top.webp 30→144 32KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 31→152 5KB
+     atic/chunks/main-app-df9632a01b438074.js 31→155 1KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→325 170KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→325 169KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→176 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→181 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 31→199 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→180 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→208 8KB
+     images/renders/pendant-yg-white-480.webp 237→289 12KB
+     ages/renders/solitaire-yg-steel-480.webp 237→289 11KB
+     /images/renders/band-rg-steel-480.webp 237→286 10KB
+     mages/renders/princess-wg-white-480.webp 238→284 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 424→449 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 429→455 3KB
+     /images/cases-demo/studs-yg-480.webp 544→580 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 545→579 10KB
+   HTML 首字節 3ms／收完 151ms，CSS 30→125ms、429→455ms，DOM 可互動 255ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.23s，LCP 0.23s，CLS 0.000，載完 0.3s，請求 14 個，共 538KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 32→82 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 32→87 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 32→107 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 32→266 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 33→268 170KB
+     atic/chunks/main-app-df9632a01b438074.js 33→117 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 34→126 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 34→123 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 34→153 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 35→140 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 35→156 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 367→391 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 374→397 3KB
+   HTML 首字節 4ms／收完 54ms，CSS 32→87ms、374→397ms，DOM 可互動 184ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.3s，請求 14 個，共 557KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-800.webp 28→93 54KB
+     /_next/static/css/3b79dc7aabda8d72.css 30→92 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 31→117 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→272 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→276 170KB
+     atic/chunks/main-app-df9632a01b438074.js 31→121 1KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→130 5KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→133 8KB
+     xt/static/chunks/251-e6702302cbf97610.js 31→164 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→144 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→165 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 374→399 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 379→405 3KB
+   HTML 首字節 3ms／收完 56ms，CSS 30→92ms、379→405ms，DOM 可互動 183ms
+== 第 1 輪 B (warm-preview) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 1.49s，LCP 1.49s，CLS 0.000，載完 3.6s，請求 21 個，共 748KB（HTML 153KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 181→586 10KB
+     /images/renders/bracelet-steel-480.webp 182→629 11KB
+     /images/renders/halo-rg-pale-480.webp 184→729 14KB
+     /images/renders/macro-ink-480.webp 184→937 26KB
+     /_next/static/css/7de3f9d504d4625f.css 184→1115 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 185→1159 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 186→3347 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 186→3364 170KB
+     atic/chunks/main-app-df9632a01b438074.js 186→1309 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 187→1488 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 188→1452 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 188→1888 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 189→1638 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 189→1855 8KB
+   HTML 首字節 5ms／收完 2088ms，CSS 184→1115ms、3743→3919ms，DOM 可互動 2099ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 1.19s，LCP 1.19s，CLS 0.000，載完 3.1s，請求 14 個，共 539KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 184→795 32KB
+     /_next/static/css/7de3f9d504d4625f.css 186→882 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→974 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 186→2898 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 186→2920 170KB
+     atic/chunks/main-app-df9632a01b438074.js 187→1061 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 188→1225 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 188→1161 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 188→1490 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 190→1246 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 190→1483 8KB
+   HTML 首字節 6ms／收完 810ms，CSS 186→882ms、3355→3528ms，DOM 可互動 1165ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 1.21s，LCP 1.23s，CLS 0.000，載完 3.2s，請求 14 個，共 557KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-1000.webp 184→974 53KB
+     /_next/static/css/7de3f9d504d4625f.css 186→938 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 187→1145 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 187→2991 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 187→3005 170KB
+     atic/chunks/main-app-df9632a01b438074.js 189→1124 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 189→1281 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 190→1246 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 190→1603 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 190→1326 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 190→1567 8KB
+   HTML 首字節 4ms／收完 759ms，CSS 186→938ms、3400→3577ms，DOM 可互動 1219ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.30s，LCP 0.30s，CLS 0.000，載完 0.4s，請求 23 個，共 735KB（HTML 153KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 29→72 10KB
+     /images/renders/bracelet-steel-800.webp 29→99 25KB
+     /images/renders/halo-rg-pale-480.webp 29→90 14KB
+     /images/renders/macro-ink-480.webp 30→109 26KB
+     /_next/static/css/7de3f9d504d4625f.css 30→119 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→137 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→316 169KB
+     atic/chunks/main-app-df9632a01b438074.js 31→149 1KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→317 170KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→157 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 33→166 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 33→186 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 34→172 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 34→191 8KB
+     images/renders/pendant-yg-white-480.webp 230→277 12KB
+     ages/renders/solitaire-yg-steel-480.webp 231→282 11KB
+     /images/renders/band-rg-steel-480.webp 231→282 10KB
+     mages/renders/princess-wg-white-480.webp 231→279 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 408→433 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 415→438 3KB
+     /images/cases-demo/studs-yg-480.webp 523→563 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 523→560 10KB
+   HTML 首字節 4ms／收完 139ms，CSS 30→119ms、415→438ms，DOM 可互動 247ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.3s，請求 14 個，共 539KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 28→77 32KB
+     /_next/static/css/7de3f9d504d4625f.css 28→84 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 28→101 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 28→263 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 28→265 170KB
+     atic/chunks/main-app-df9632a01b438074.js 28→110 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 29→123 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 29→119 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 29→148 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 29→135 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 29→152 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 361→385 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 367→392 3KB
+   HTML 首字節 3ms／收完 52ms，CSS 28→84ms、367→392ms，DOM 可互動 176ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.3s，請求 14 個，共 534KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-640.webp 28→78 30KB
+     /_next/static/css/7de3f9d504d4625f.css 29→85 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→102 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 30→266 169KB
+     atic/chunks/main-app-df9632a01b438074.js 30→112 1KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 30→267 170KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 30→123 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 30→120 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 31→147 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→136 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→154 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 365→390 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 370→394 3KB
+   HTML 首字節 2ms／收完 50ms，CSS 29→85ms、370→394ms，DOM 可互動 176ms
+== 第 2 輪 A (main) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 1.56s，LCP 1.56s，CLS 0.000，載完 3.7s，請求 22 個，共 778KB（HTML 152KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 181→585 10KB
+     /images/renders/bracelet-steel-480.webp 183→634 11KB
+     /images/renders/halo-rg-pale-480.webp 183→735 14KB
+     /images/renders/macro-ink-480.webp 184→935 26KB
+     /images/hand/stone-top.webp 185→1322 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 186→1207 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→1464 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 186→3503 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 186→3511 170KB
+     atic/chunks/main-app-df9632a01b438074.js 187→1401 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 188→1672 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 188→1708 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 188→2066 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 188→1860 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 189→2072 8KB
+   HTML 首字節 5ms／收完 2286ms，CSS 186→1207ms、3885→4061ms，DOM 可互動 2298ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 1.18s，LCP 1.18s，CLS 0.000，載完 3.1s，請求 14 個，共 538KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 181→800 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 182→879 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→979 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 186→2895 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 186→2917 170KB
+     atic/chunks/main-app-df9632a01b438074.js 187→1065 1KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 187→1172 5KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 187→1222 8KB
+     xt/static/chunks/251-e6702302cbf97610.js 188→1486 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 188→1251 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 189→1493 8KB
+   HTML 首字節 3ms／收完 807ms，CSS 182→879ms、3327→3503ms，DOM 可互動 1154ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 1.22s，LCP 1.24s，CLS 0.000，載完 3.2s，請求 14 個，共 582KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink.webp 185→1096 79KB
+     /_next/static/css/3b79dc7aabda8d72.css 186→939 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→1196 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 186→2999 169KB
+     atic/chunks/main-app-df9632a01b438074.js 187→1118 1KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 187→3013 170KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 187→1254 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 189→1361 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 189→1626 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 190→1382 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 190→1576 8KB
+   HTML 首字節 5ms／收完 760ms，CSS 186→939ms、3407→3585ms，DOM 可互動 1208ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.31s，LCP 0.31s，CLS 0.000，載完 0.4s，請求 24 個，共 765KB（HTML 152KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 28→68 10KB
+     /images/renders/halo-rg-pale-480.webp 30→84 14KB
+     /images/renders/bracelet-steel-800.webp 30→99 25KB
+     /images/renders/macro-ink-480.webp 31→108 26KB
+     /_next/static/css/3b79dc7aabda8d72.css 31→127 45KB
+     /images/hand/stone-top.webp 31→140 32KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 31→153 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→330 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→327 170KB
+     atic/chunks/main-app-df9632a01b438074.js 31→157 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→172 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→177 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 32→201 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 32→180 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 32→204 8KB
+     images/renders/pendant-yg-white-480.webp 239→286 12KB
+     ages/renders/solitaire-yg-steel-480.webp 239→289 11KB
+     /images/renders/band-rg-steel-480.webp 239→290 10KB
+     mages/renders/princess-wg-white-480.webp 239→288 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 427→452 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 434→458 3KB
+     /images/cases-demo/studs-yg-480.webp 553→589 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 553→588 10KB
+   HTML 首字節 3ms／收完 149ms，CSS 31→127ms、434→458ms，DOM 可互動 256ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.23s，LCP 0.23s，CLS 0.000，載完 0.3s，請求 14 個，共 538KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 32→82 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 33→88 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 33→107 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 33→262 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 33→268 170KB
+     atic/chunks/main-app-df9632a01b438074.js 33→117 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 33→129 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 34→126 5KB
+     xt/static/chunks/251-e6702302cbf97610.js 34→154 17KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 34→141 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 34→159 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 367→392 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 374→399 3KB
+   HTML 首字節 4ms／收完 53ms，CSS 33→88ms、374→399ms，DOM 可互動 186ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.3s，請求 14 個，共 557KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-800.webp 29→92 54KB
+     /_next/static/css/3b79dc7aabda8d72.css 29→89 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 29→114 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 29→272 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 29→273 170KB
+     atic/chunks/main-app-df9632a01b438074.js 29→121 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 30→133 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 30→127 5KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 30→144 0KB
+     xt/static/chunks/251-e6702302cbf97610.js 30→160 17KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 30→162 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 378→403 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 383→408 3KB
+   HTML 首字節 2ms／收完 53ms，CSS 29→89ms、383→408ms，DOM 可互動 96ms
+== 第 2 輪 B (warm-preview) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 1.49s，LCP 1.49s，CLS 0.000，載完 3.6s，請求 21 個，共 748KB（HTML 153KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 181→611 10KB
+     /images/renders/bracelet-steel-480.webp 182→639 11KB
+     /images/renders/halo-rg-pale-480.webp 182→733 14KB
+     /images/renders/macro-ink-480.webp 183→933 26KB
+     /_next/static/css/7de3f9d504d4625f.css 183→1112 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 183→1155 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 184→3343 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 184→3359 170KB
+     atic/chunks/main-app-df9632a01b438074.js 185→1292 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 185→1492 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 185→1449 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 186→1884 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 186→1634 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 186→1855 8KB
+   HTML 首字節 3ms／收完 2084ms，CSS 183→1112ms、3751→3930ms，DOM 可互動 2097ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 1.18s，LCP 1.18s，CLS 0.000，載完 3.1s，請求 14 個，共 539KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 180→792 32KB
+     /_next/static/css/7de3f9d504d4625f.css 181→877 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 182→971 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 183→2894 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 183→2916 170KB
+     atic/chunks/main-app-df9632a01b438074.js 183→1064 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 185→1221 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 185→1164 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 186→1478 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 186→1250 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 187→1485 8KB
+   HTML 首字節 6ms／收完 806ms，CSS 181→877ms、3334→3509ms，DOM 可互動 1154ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 1.22s，LCP 1.24s，CLS 0.000，載完 3.2s，請求 14 個，共 557KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-1000.webp 187→971 53KB
+     /_next/static/css/7de3f9d504d4625f.css 189→935 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 189→1170 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 190→2994 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 190→3002 170KB
+     atic/chunks/main-app-df9632a01b438074.js 191→1115 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 191→1264 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 191→1249 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 192→1593 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 192→1351 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 192→1571 8KB
+   HTML 首字節 8ms／收完 749ms，CSS 189→935ms、3415→3588ms，DOM 可互動 1216ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.30s，LCP 0.30s，CLS 0.000，載完 0.4s，請求 23 個，共 735KB（HTML 153KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 30→74 10KB
+     /images/renders/bracelet-steel-800.webp 30→105 25KB
+     /images/renders/halo-rg-pale-480.webp 30→91 14KB
+     /images/renders/macro-ink-480.webp 30→111 26KB
+     /_next/static/css/7de3f9d504d4625f.css 30→123 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 31→138 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→317 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→319 170KB
+     atic/chunks/main-app-df9632a01b438074.js 31→150 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→159 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→167 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 31→188 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→173 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 32→192 8KB
+     images/renders/pendant-yg-white-480.webp 234→273 12KB
+     ages/renders/solitaire-yg-steel-480.webp 234→289 11KB
+     mages/renders/princess-wg-white-480.webp 234→287 10KB
+     /images/renders/band-rg-steel-480.webp 234→289 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 421→446 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 426→451 3KB
+     /images/cases-demo/studs-yg-480.webp 540→575 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 540→574 10KB
+   HTML 首字節 4ms／收完 140ms，CSS 30→123ms、426→451ms，DOM 可互動 247ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.3s，請求 14 個，共 539KB（HTML 69KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 29→80 32KB
+     /_next/static/css/7de3f9d504d4625f.css 30→87 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 31→106 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→258 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→263 170KB
+     atic/chunks/main-app-df9632a01b438074.js 31→116 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 32→127 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 32→126 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 32→150 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 32→139 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 32→160 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 358→383 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 364→388 3KB
+   HTML 首字節 4ms／收完 58ms，CSS 30→87ms、364→388ms，DOM 可互動 184ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.3s，請求 14 個，共 534KB（HTML 66KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-640.webp 29→77 30KB
+     /_next/static/css/7de3f9d504d4625f.css 30→82 45KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 31→102 5KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→252 169KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→259 170KB
+     atic/chunks/main-app-df9632a01b438074.js 31→112 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→124 8KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 32→120 5KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 32→147 18KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 32→136 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 32→153 8KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 352→377 3KB
+     /_next/static/css/ca2fd97ba992ce97.css 356→383 3KB
+   HTML 首字節 3ms／收完 52ms，CSS 30→82ms、356→383ms，DOM 可互動 172ms
+== 有壓縮 第 1 輪 A (main) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 0.94s，LCP 0.94s，CLS 0.000，載完 1.7s，請求 22 個，共 344KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 184→543 10KB
+     /images/renders/bracelet-steel-480.webp 185→593 11KB
+     /images/renders/halo-rg-pale-480.webp 186→629 14KB
+     /images/renders/macro-ink-480.webp 187→701 26KB
+     /images/hand/stone-top.webp 188→1301 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 188→572 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 190→765 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 190→1502 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 190→1467 45KB
+     atic/chunks/main-app-df9632a01b438074.js 191→809 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 192→937 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 192→983 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 192→1109 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 192→1124 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 193→1215 3KB
+   HTML 首字節 4ms／收完 279ms，CSS 188→572ms、1883→2039ms，DOM 可互動 952ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.70s，LCP 0.70s，CLS 0.000，載完 1.4s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 187→546 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 188→432 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 188→597 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 189→1197 53KB
+     atic/chunks/main-app-df9632a01b438074.js 190→618 0KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 190→1162 45KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 191→667 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 191→732 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 191→868 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 191→796 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 191→896 3KB
+   HTML 首字節 5ms／收完 231ms，CSS 188→432ms、1617→1776ms，DOM 可互動 715ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.69s，LCP 1.28s，CLS 0.000，載完 1.6s，請求 14 個，共 223KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink.webp 189→1253 79KB
+     /_next/static/css/3b79dc7aabda8d72.css 189→430 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 191→638 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 191→1389 53KB
+     atic/chunks/main-app-df9632a01b438074.js 192→624 0KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 192→1353 45KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 193→695 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 193→838 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 193→953 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 194→881 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 194→1074 3KB
+   HTML 首字節 3ms／收完 222ms，CSS 189→430ms、1790→1947ms，DOM 可互動 669ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.27s，LCP 0.29s，CLS 0.000，載完 0.3s，請求 24 個，共 331KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 29→73 10KB
+     /images/renders/bracelet-steel-800.webp 29→87 25KB
+     /images/renders/halo-rg-pale-480.webp 29→80 14KB
+     /images/renders/macro-ink-480.webp 29→90 26KB
+     /images/hand/stone-top.webp 30→136 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 30→70 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→103 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 30→160 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 30→158 45KB
+     atic/chunks/main-app-df9632a01b438074.js 30→110 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 30→118 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 30→128 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 30→141 0KB
+     xt/static/chunks/251-e6702302cbf97610.js 30→142 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→152 3KB
+     images/renders/pendant-yg-white-480.webp 189→230 12KB
+     ages/renders/solitaire-yg-steel-480.webp 190→226 11KB
+     /images/renders/band-rg-steel-480.webp 190→232 10KB
+     mages/renders/princess-wg-white-480.webp 190→230 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 334→359 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 342→367 1KB
+     /images/cases-demo/studs-yg-480.webp 445→481 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 446→479 10KB
+   HTML 首字節 4ms／收完 36ms，CSS 30→70ms、342→367ms，DOM 可互動 194ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.2s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 29→71 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 30→61 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→85 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→136 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→131 45KB
+     atic/chunks/main-app-df9632a01b438074.js 31→87 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→97 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→97 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→109 0KB
+     xt/static/chunks/251-e6702302cbf97610.js 31→115 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→123 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 271→294 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 278→301 1KB
+   HTML 首字節 3ms／收完 32ms，CSS 30→61ms、278→301ms，DOM 可互動 157ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.24s，CLS 0.000，載完 0.2s，請求 14 個，共 198KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-800.webp 28→81 54KB
+     /_next/static/css/3b79dc7aabda8d72.css 29→61 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 29→86 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 29→139 53KB
+     atic/chunks/main-app-df9632a01b438074.js 29→94 0KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 29→135 45KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 29→99 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 30→105 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 31→114 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→115 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→125 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 308→332 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 312→337 1KB
+   HTML 首字節 2ms／收完 29ms，CSS 29→61ms、312→337ms，DOM 可互動 162ms
+== 有壓縮 第 1 輪 B (warm-preview) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 0.93s，LCP 0.93s，CLS 0.000，載完 1.5s，請求 21 個，共 313KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 190→549 10KB
+     /images/renders/bracelet-steel-480.webp 192→599 11KB
+     /images/renders/halo-rg-pale-480.webp 196→635 14KB
+     /images/renders/macro-ink-480.webp 196→706 26KB
+     /_next/static/css/7de3f9d504d4625f.css 197→577 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 198→764 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 198→1350 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 199→1314 45KB
+     atic/chunks/main-app-df9632a01b438074.js 199→771 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 200→849 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 200→899 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 200→1037 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 201→943 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 201→1078 3KB
+   HTML 首字節 6ms／收完 291ms，CSS 197→577ms、1774→1930ms，DOM 可互動 953ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.72s，LCP 0.72s，CLS 0.000，載完 1.4s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 183→538 32KB
+     /_next/static/css/7de3f9d504d4625f.css 185→430 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 185→595 2KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 190→1160 45KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 190→1196 53KB
+     atic/chunks/main-app-df9632a01b438074.js 190→618 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 190→667 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 190→732 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 191→860 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 192→795 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 192→896 3KB
+   HTML 首字節 4ms／收完 230ms，CSS 185→430ms、1619→1775ms，DOM 可互動 726ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.70s，LCP 0.81s，CLS 0.000，載完 1.4s，請求 14 個，共 197KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-1000.webp 185→789 53KB
+     /_next/static/css/7de3f9d504d4625f.css 185→431 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→640 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 187→1261 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 187→1226 45KB
+     atic/chunks/main-app-df9632a01b438074.js 188→625 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 188→696 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 188→832 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 190→876 0KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 190→918 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 190→1003 3KB
+   HTML 首字節 5ms／收完 224ms，CSS 185→431ms、1661→1820ms，DOM 可互動 680ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.28s，LCP 0.31s，CLS 0.000，載完 0.3s，請求 23 個，共 300KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 33→77 10KB
+     /images/renders/bracelet-steel-800.webp 33→96 25KB
+     /images/renders/halo-rg-pale-480.webp 34→86 14KB
+     /images/renders/macro-ink-480.webp 34→97 26KB
+     /_next/static/css/7de3f9d504d4625f.css 34→77 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 34→107 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 34→158 53KB
+     atic/chunks/main-app-df9632a01b438074.js 34→111 0KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 34→156 45KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 34→123 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 35→122 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 35→136 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 35→135 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 35→148 3KB
+     images/renders/pendant-yg-white-480.webp 201→244 12KB
+     ages/renders/solitaire-yg-steel-480.webp 202→244 11KB
+     /images/renders/band-rg-steel-480.webp 202→244 10KB
+     mages/renders/princess-wg-white-480.webp 202→241 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 359→386 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 368→395 1KB
+     /images/cases-demo/studs-yg-480.webp 471→506 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 471→504 10KB
+   HTML 首字節 4ms／收完 37ms，CSS 34→77ms、368→395ms，DOM 可互動 207ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.23s，LCP 0.23s，CLS 0.000，載完 0.2s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 28→73 32KB
+     /_next/static/css/7de3f9d504d4625f.css 29→61 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 29→87 2KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 29→134 45KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 29→137 53KB
+     atic/chunks/main-app-df9632a01b438074.js 29→90 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 29→92 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 29→97 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 29→119 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 30→112 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 30→119 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 281→305 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 285→308 1KB
+   HTML 首字節 2ms／收完 32ms，CSS 29→61ms、285→308ms，DOM 可互動 166ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.21s，LCP 0.22s，CLS 0.000，載完 0.2s，請求 14 個，共 174KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-640.webp 30→69 30KB
+     /_next/static/css/7de3f9d504d4625f.css 30→60 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→84 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 30→131 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 30→134 45KB
+     atic/chunks/main-app-df9632a01b438074.js 31→92 0KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→95 2KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→96 3KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 31→113 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→114 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→120 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 290→315 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 294→317 1KB
+   HTML 首字節 3ms／收完 29ms，CSS 30→60ms、294→317ms，DOM 可互動 153ms
+== 有壓縮 第 2 輪 A (main) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 0.91s，LCP 0.91s，CLS 0.000，載完 1.7s，請求 22 個，共 344KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 184→524 10KB
+     /images/renders/bracelet-steel-480.webp 186→588 11KB
+     /images/renders/halo-rg-pale-480.webp 186→624 14KB
+     /images/renders/macro-ink-480.webp 186→695 26KB
+     /images/hand/stone-top.webp 186→1289 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 186→560 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→753 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 186→1490 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 187→1461 45KB
+     atic/chunks/main-app-df9632a01b438074.js 189→803 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 190→925 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 190→968 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 190→1103 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 191→1112 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 192→1204 3KB
+   HTML 首字節 5ms／收完 281ms，CSS 186→560ms、1851→2012ms，DOM 可互動 918ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.71s，LCP 0.71s，CLS 0.000，載完 1.4s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 184→546 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 186→431 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 186→596 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 187→1197 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 188→1161 45KB
+     atic/chunks/main-app-df9632a01b438074.js 188→618 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 188→668 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 188→739 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 188→867 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 188→790 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 191→896 3KB
+   HTML 首字節 3ms／收完 231ms，CSS 186→431ms、1610→1769ms，DOM 可互動 724ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.70s，LCP 1.27s，CLS 0.000，載完 1.6s，請求 14 個，共 223KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink.webp 179→1228 79KB
+     /_next/static/css/3b79dc7aabda8d72.css 181→428 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 181→635 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 182→1378 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 185→1343 45KB
+     atic/chunks/main-app-df9632a01b438074.js 185→620 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 185→692 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 186→828 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 186→878 0KB
+     xt/static/chunks/251-e6702302cbf97610.js 186→950 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 187→1064 3KB
+   HTML 首字節 4ms／收完 220ms，CSS 181→428ms、1775→1930ms，DOM 可互動 682ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.27s，LCP 0.29s，CLS 0.000，載完 0.3s，請求 24 個，共 331KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 29→75 10KB
+     /images/renders/bracelet-steel-800.webp 29→90 25KB
+     /images/renders/halo-rg-pale-480.webp 30→81 14KB
+     /images/renders/macro-ink-480.webp 30→93 26KB
+     /images/hand/stone-top.webp 30→135 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 30→69 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→100 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 30→160 53KB
+     atic/chunks/main-app-df9632a01b438074.js 30→114 0KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 30→159 45KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 30→121 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 30→126 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 31→143 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→144 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→151 3KB
+     images/renders/pendant-yg-white-480.webp 186→229 12KB
+     ages/renders/solitaire-yg-steel-480.webp 186→226 11KB
+     /images/renders/band-rg-steel-480.webp 187→226 10KB
+     mages/renders/princess-wg-white-480.webp 187→226 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 334→358 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 339→363 1KB
+     /images/cases-demo/studs-yg-480.webp 453→487 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 453→486 10KB
+   HTML 首字節 3ms／收完 38ms，CSS 30→69ms、339→363ms，DOM 可互動 193ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.2s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 35→75 32KB
+     /_next/static/css/3b79dc7aabda8d72.css 36→67 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 36→94 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 36→142 53KB
+     atic/chunks/main-app-df9632a01b438074.js 36→96 0KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 36→140 45KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 36→102 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 37→101 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 37→120 0KB
+     xt/static/chunks/251-e6702302cbf97610.js 37→127 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 37→126 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 287→311 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 293→317 1KB
+   HTML 首字節 5ms／收完 32ms，CSS 36→67ms、293→317ms，DOM 可互動 168ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.26s，CLS 0.000，載完 0.2s，請求 14 個，共 198KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-800.webp 30→80 54KB
+     /_next/static/css/3b79dc7aabda8d72.css 30→62 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→87 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 30→140 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→137 45KB
+     atic/chunks/main-app-df9632a01b438074.js 31→94 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→96 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→103 2KB
+     xt/static/chunks/251-e6702302cbf97610.js 31→117 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→118 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 32→122 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 302→326 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 308→331 1KB
+   HTML 首字節 4ms／收完 31ms，CSS 30→62ms、308→331ms，DOM 可互動 155ms
+== 有壓縮 第 2 輪 B (warm-preview) ==
+手機 4G（慢 CPU） · /zh-hk（3 次中位數）：FCP 0.94s，LCP 0.94s，CLS 0.000，載完 1.6s，請求 21 個，共 313KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 188→569 10KB
+     /images/renders/bracelet-steel-480.webp 189→583 11KB
+     /images/renders/halo-rg-pale-480.webp 193→634 14KB
+     /_next/static/css/7de3f9d504d4625f.css 193→577 10KB
+     /images/renders/macro-ink-480.webp 193→704 26KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 194→769 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 195→1349 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 195→1313 45KB
+     atic/chunks/main-app-df9632a01b438074.js 195→762 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 196→848 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 196→898 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 196→1034 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 196→942 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 197→1070 3KB
+   HTML 首字節 7ms／收完 290ms，CSS 193→577ms、1751→1908ms，DOM 可互動 953ms
+手機 4G（慢 CPU） · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.72s，LCP 0.72s，CLS 0.000，載完 1.4s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 181→537 32KB
+     /_next/static/css/7de3f9d504d4625f.css 182→423 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 182→587 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 184→1188 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 184→1152 45KB
+     atic/chunks/main-app-df9632a01b438074.js 185→610 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 186→658 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 186→730 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 186→860 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 187→788 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 187→888 3KB
+   HTML 首字節 3ms／收完 230ms，CSS 182→423ms、1625→1782ms，DOM 可互動 715ms
+手機 4G（慢 CPU） · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.70s，LCP 0.85s，CLS 0.000，載完 1.5s，請求 14 個，共 197KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-1000.webp 183→816 53KB
+     /_next/static/css/7de3f9d504d4625f.css 184→429 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 184→637 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 185→1266 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 185→1230 45KB
+     atic/chunks/main-app-df9632a01b438074.js 185→623 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 185→695 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 185→837 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 185→924 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 186→874 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 186→1030 3KB
+   HTML 首字節 5ms／收完 222ms，CSS 184→429ms、1667→1825ms，DOM 可互動 666ms
+電腦寬頻 · /zh-hk（3 次中位數）：FCP 0.26s，LCP 0.30s，CLS 0.000，載完 0.3s，請求 23 個，共 300KB（HTML 26KB，未壓縮）
+   時間線：
+     /images/renders/ring-oval-pale-480.webp 31→69 10KB
+     /images/renders/bracelet-steel-800.webp 31→88 25KB
+     /images/renders/halo-rg-pale-480.webp 32→80 14KB
+     /_next/static/css/7de3f9d504d4625f.css 32→72 10KB
+     /images/renders/macro-ink-480.webp 32→91 26KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 32→100 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 32→149 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 33→146 45KB
+     atic/chunks/main-app-df9632a01b438074.js 33→103 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 33→114 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 34→116 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 34→126 0KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 34→130 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 34→140 3KB
+     images/renders/pendant-yg-white-480.webp 190→235 12KB
+     ages/renders/solitaire-yg-steel-480.webp 190→232 11KB
+     /images/renders/band-rg-steel-480.webp 191→235 10KB
+     mages/renders/princess-wg-white-480.webp 191→232 10KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 341→366 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 348→374 1KB
+     /images/cases-demo/studs-yg-480.webp 448→483 13KB
+     /images/cases-demo/pair-yg-wg-480.webp 448→480 10KB
+   HTML 首字節 3ms／收完 36ms，CSS 32→72ms、348→374ms，DOM 可互動 193ms
+電腦寬頻 · /zh-hk/4c/carat-size-on-hand（3 次中位數）：FCP 0.22s，LCP 0.22s，CLS 0.000，載完 0.2s，請求 14 個，共 176KB（HTML 15KB，未壓縮）
+   時間線：
+     /images/hand/stone-top.webp 30→75 32KB
+     /_next/static/css/7de3f9d504d4625f.css 30→62 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 30→87 2KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 31→137 45KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 31→140 53KB
+     atic/chunks/main-app-df9632a01b438074.js 31→92 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 31→95 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 31→99 2KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 31→115 0KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 31→116 6KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 31→121 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 281→305 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 289→313 1KB
+   HTML 首字節 3ms／收完 32ms，CSS 30→62ms、289→313ms，DOM 可互動 164ms
+電腦寬頻 · /zh-hk/basics/vs-natural-moissanite（3 次中位數）：FCP 0.22s，LCP 0.23s，CLS 0.000，載完 0.2s，請求 14 個，共 174KB（HTML 14KB，未壓縮）
+   時間線：
+     /images/renders/macro-ink-wide-640.webp 32→73 30KB
+     /_next/static/css/7de3f9d504d4625f.css 33→64 10KB
+     tatic/chunks/webpack-be7172bad8ebbeaf.js 33→88 2KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 33→139 53KB
+     xt/static/chunks/255-a70cfdedd3f61710.js 33→136 45KB
+     atic/chunks/main-app-df9632a01b438074.js 33→92 0KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 33→96 3KB
+     xt/static/chunks/309-10e10b61186ef8cd.js 34→99 2KB
+     xt/static/chunks/251-c5c36c695a0d8091.js 34→118 6KB
+     D/%5B...slug%5D/page-247918f6467379fe.js 34→115 0KB
+     /%5Blocale%5D/layout-732e67aaeabfe8d7.js 34→122 3KB
+     xt/static/chunks/558.2c1cb30ad4fd6139.js 301→325 1KB
+     /_next/static/css/ca2fd97ba992ce97.css 306→329 1KB
+   HTML 首字節 2ms／收完 29ms，CSS 33→64ms、306→329ms，DOM 可互動 159ms
