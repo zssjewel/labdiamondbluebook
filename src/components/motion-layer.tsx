@@ -83,39 +83,77 @@ export default function MotionLayer() {
 }
 
 /**
- * 「資料好亂？」流程圖：仲未碌到嘅話，先將要郁嘅方塊擺返去左邊亂堆（is-ready），
- * 去到畫面時加 is-sorting，逐粒按次序排入隊、排成方陣。已經喺畫面入面就唔郁。
+ * 「資料好亂？」流程圖：仲未碌到嘅話，先將要郁嘅方塊擺返去左邊亂堆、三張圖收埋（is-ready）；
+ * 去到畫面、三張圖解碼好之後加 is-sorting：方塊逐粒排入隊、排成方陣，
+ * 方塊去到邊一區，嗰區嘅寫實圖就升起淡入，該區方塊隨即淡出。播完拎走 class，回到靜態（只見三張圖）。
+ * 已經喺畫面入面、圖載唔到、或者中途轉頁，都直接顯示靜態內容。
  */
+// 三區方塊幾時淡出（ms，由 is-sorting 起計）：一區＝左邊亂堆，二區＝中間收窄帶，三區＝右邊方陣
+const ZONE_OUT = [450, 1750, 2450];
+const SORT_DONE = 3200;
+
 function sortDiagram(): (() => void) | undefined {
   if (!("IntersectionObserver" in window)) return;
-  const svgs = Array.from(document.querySelectorAll<SVGSVGElement>(".bb-how__svg")).filter((svg) => svg.getBoundingClientRect().top > window.innerHeight);
-  if (!svgs.length) return;
-  svgs.forEach((svg) => {
-    const vertical = svg.classList.contains("bb-how__svg--v");
-    const rects = svg.querySelectorAll("rect");
-    SQUARES.forEach((s, i) => {
-      const r = rects[i];
-      if (!s.move || !r) return;
-      const m = s.move;
-      r.style.setProperty("--fx", `${vertical ? m.fy : m.fx}px`);
-      r.style.setProperty("--fy", `${vertical ? m.fx : m.fy}px`);
-      r.style.setProperty("--d", `${Math.round((m.a - 5) * 34)}ms`);
-      r.style.setProperty("--f0", FILL[s.from ?? s.tone]);
-      r.classList.add("m");
+  const stages = Array.from(document.querySelectorAll<HTMLElement>(".bb-how__stage")).filter((el) => el.getBoundingClientRect().top > window.innerHeight);
+  if (!stages.length) return;
+  const timers: number[] = [];
+  let alive = true;
+  const reset = (stage: Element) => stage.classList.remove("is-ready", "is-sorting");
+  stages.forEach((stage) => {
+    stage.querySelectorAll<SVGSVGElement>(".bb-how__svg").forEach((svg) => {
+      const vertical = svg.classList.contains("bb-how__svg--v");
+      const rects = svg.querySelectorAll("rect");
+      SQUARES.forEach((s, i) => {
+        const r = rects[i];
+        if (!r) return;
+        if (!s.move) {
+          r.style.setProperty("--o", `${ZONE_OUT[0]}ms`);
+          return;
+        }
+        const m = s.move;
+        r.style.setProperty("--fx", `${vertical ? m.fy : m.fx}px`);
+        r.style.setProperty("--fy", `${vertical ? m.fx : m.fy}px`);
+        r.style.setProperty("--d", `${Math.round((m.a - 5) * 34)}ms`);
+        r.style.setProperty("--f0", FILL[s.from ?? s.tone]);
+        r.style.setProperty("--o", `${ZONE_OUT[s.x < 600 ? 1 : 2]}ms`);
+        r.classList.add("m");
+      });
     });
-    svg.classList.add("is-ready");
+    stage.classList.add("is-ready");
   });
+  const play = (stage: Element) => {
+    const imgs = Array.from(stage.querySelectorAll("img"));
+    const decoded = Promise.all(imgs.map((img) => (img.decode ? img.decode() : Promise.resolve())));
+    const late = new Promise<never>((_, no) => timers.push(window.setTimeout(() => no(new Error("late")), 2500)));
+    Promise.race([decoded, late]).then(
+      () => {
+        if (!alive) return;
+        // 下一格先開始過渡，確保收埋狀態已經畫咗出嚟
+        requestAnimationFrame(() => {
+          if (!alive) return;
+          stage.classList.add("is-sorting");
+          timers.push(window.setTimeout(() => reset(stage), SORT_DONE));
+        });
+      },
+      () => reset(stage),
+    );
+  };
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
-          e.target.classList.add("is-sorting");
           io.unobserve(e.target);
+          play(e.target);
         }
       }
     },
     { threshold: 0.45 },
   );
-  svgs.forEach((svg) => io.observe(svg));
-  return () => io.disconnect();
+  stages.forEach((stage) => io.observe(stage));
+  return () => {
+    alive = false;
+    io.disconnect();
+    timers.forEach((t) => window.clearTimeout(t));
+    stages.forEach(reset);
+  };
 }

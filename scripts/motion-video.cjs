@@ -12,23 +12,25 @@ async function glide(page, pxPerSec, stops = []) {
   await page.evaluate(
     async ([speed, stops]) => {
       const max = document.documentElement.scrollHeight - innerHeight;
-      const stopAt = stops.map((sel) => {
-        const el = document.querySelector(sel);
+      // stops 可以係 "選擇器" 或者 ["選擇器", 停幾耐 ms]
+      const stopAt = stops.map((st) => {
+        const [sel, ms] = Array.isArray(st) ? st : [st, 900];
+        const el = [...document.querySelectorAll(sel)].find((e) => e.getClientRects().length);
         if (!el) return null;
         const r = el.getBoundingClientRect();
-        return Math.min(max, Math.max(0, r.top + scrollY - (innerHeight - r.height) / 2));
-      }).filter((v) => v !== null).sort((a, b) => a - b);
+        return { y: Math.min(max, Math.max(0, r.top + scrollY - (innerHeight - Math.min(r.height, innerHeight * 0.8)) / 2)), ms };
+      }).filter((v) => v !== null).sort((a, b) => a.y - b.y);
       let y = scrollY;
       let last = performance.now();
       while (y < max - 1) {
         await new Promise((r) => requestAnimationFrame(r));
         const now = performance.now();
         const next = Math.min(max, y + ((now - last) / 1000) * speed);
-        const hit = stopAt.find((s) => s > y && s <= next);
-        y = hit ?? next;
+        const hit = stopAt.find((s) => s.y > y && s.y <= next);
+        y = hit ? hit.y : next;
         last = now;
         window.scrollTo(0, y);
-        if (hit !== undefined) { await new Promise((r) => setTimeout(r, 900)); last = performance.now(); }
+        if (hit) { await new Promise((r) => setTimeout(r, hit.ms)); last = performance.now(); }
       }
     },
     [pxPerSec, stops],
@@ -58,7 +60,7 @@ async function glide(page, pxPerSec, stops = []) {
       else await page.locator(".bb-works .bb-shelf__paddle--next").click();
       await page.waitForTimeout(1100);
     }
-    await glide(page, speed, [".bb-tool__plate", tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h", ".bb-why__a"]);
+    await glide(page, speed, [".bb-tool__plate", [".bb-how__stage", 4200], ".bb-why__a"]);
     await page.waitForTimeout(600);
     // 撳入文章，睇換頁
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
@@ -107,18 +109,17 @@ async function glide(page, pxPerSec, stops = []) {
     } else {
       await page.screenshot({ path: `${out}/${tag}-shelf.png` });
     }
-    // 流程圖排隊過程
-    const sel = tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h";
-    for (const f of [0.12, 0.25, 0.38, 0.5]) {
-      for (let k = 0; k < 3; k++) {
-      await page.evaluate(([sel, f]) => {
-          const r = document.querySelector(sel).getBoundingClientRect();
-          window.scrollTo(0, scrollY + r.top - innerHeight + (innerHeight + r.height) * f);
-        }, [sel, f]);
-        await page.waitForTimeout(200);
+    // 流程圖：碌到畫面中間之後按時間截圖（粒子排隊 → 三張圖逐張出 → 播完停留）
+    await page.evaluate(() => {
+      const r = document.querySelector(".bb-how__stage").getBoundingClientRect();
+      window.scrollTo(0, scrollY + r.top - (innerHeight - Math.min(r.height, innerHeight * 0.8)) / 2);
+    });
+    {
+      const t0 = Date.now();
+      for (const ms of [150, 700, 1300, 1900, 2500, 4000]) {
+        await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
+        await page.screenshot({ path: `${out}/${tag}-how-${ms}.png` });
       }
-      await page.waitForTimeout(300);
-      await page.screenshot({ path: `${out}/${tag}-how-${Math.round(f * 100)}.png` });
     }
     // 宣言色塊放大
     for (const f of [0.08, 0.2, 0.42]) {

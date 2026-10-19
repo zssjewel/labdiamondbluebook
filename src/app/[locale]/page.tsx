@@ -423,6 +423,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <p>揀石、3D 圖、蠟版、鑲石，做出你嗰一隻。</p>
             </li>
           </ol>
+          <p className="bb-how__note">圖片為 AI 寫實示意圖</p>
         </div>
       </section>
 

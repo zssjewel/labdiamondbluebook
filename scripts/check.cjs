@@ -231,9 +231,13 @@ const widths = [320, 390, 768, 1440];
     await pg.evaluate((sel) => document.querySelector(sel).scrollIntoView({ block: "center", behavior: "instant" }), svgSel);
     await pg.waitForTimeout(600);
     const mid = await sortInfo();
-    await pg.waitForTimeout(2600);
+    const pics = () => pg.evaluate(() => [...document.querySelectorAll(".bb-how__pic img")].map((i) => `${Number(getComputedStyle(i).opacity).toFixed(2)}${i.complete && i.naturalWidth ? "" : "(未載)"}`).join("/"));
+    const picMid = await pics();
+    await pg.waitForTimeout(3400);
     const after = await sortInfo();
-    console.log(`  碌到之後 0.6 秒：${mid.away} 粒仲喺路上；3.2 秒：${after.away} 粒仲喺路上`);
+    const picEnd = await pics();
+    const left = await pg.evaluate(() => document.querySelectorAll(".bb-how__stage.is-ready, .bb-how__stage.is-sorting").length);
+    console.log(`  碌到之後 0.6 秒：${mid.away} 粒仲喺路上，三張圖透明度 ${picMid}；4 秒：${after.away} 粒仲喺路上，三張圖透明度 ${picEnd}，動畫狀態未清：${left}`);
     await pg.screenshot({ path: `shots/motion-how-${opts.isMobile ? "390" : "1440"}.png` }).catch(() => {});
     // 逐個 data-reveal 碌過，之後等動畫播完，應該全部完全顯示
     const n = await pg.evaluate(() => document.querySelectorAll("[data-reveal]").length);
@@ -259,10 +263,107 @@ const widths = [320, 390, 768, 1440];
     const pg = await ctx.newPage();
     await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
     const r = await pg.evaluate(() => {
-      const all = [...document.querySelectorAll("[data-reveal], .bb-answers > li, .bb-mosaic img, .bb-how__svg .m")];
+      const all = [...document.querySelectorAll("[data-reveal], .bb-answers > li, .bb-mosaic img, .bb-how__svg .m, .bb-how__pic img")];
       return { n: all.length, hidden: all.filter((e) => { const cs = getComputedStyle(e); return Number(cs.opacity) < 0.99 || cs.animationName !== "none"; }).length };
     });
     console.log(`減少動畫模式：${r.n} 個元素之中 ${r.hidden} 個仲有動畫或者未顯示`);
+    await ctx.close();
+  }
+
+  console.log("\n== 流程圖示意圖（睇書 → 問師傅 → 訂造） ==");
+  {
+    // 圖片 200、真透明底
+    const ctx = await browser.newContext();
+    const pg = await ctx.newPage();
+    for (const k of ["learn", "consult", "finished"]) for (const w of [480, 720]) {
+      const res = await pg.goto(`${base}/images/process/process-${k}-${w}.webp`);
+      const body = await res.body();
+      const alpha = body.slice(12, 40).toString("latin1");
+      console.log(`  process-${k}-${w}.webp：${res.status()}，${res.headers()["content-type"]}，${body.length} bytes，${/VP8X/.test(alpha) && (body[20] & 0x10) ? "有透明通道" : "冇透明通道！"}`);
+    }
+    await ctx.close();
+  }
+  // 各闊度：圖完整、唔重疊、冇橫向溢出、手機圖文成對
+  for (const w of [375, 430, 768, 1440]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: "reduce" });
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.evaluate(() => document.querySelector(".bb-how__stage").scrollIntoView({ block: "center", behavior: "instant" }));
+    await pg.waitForFunction(() => [...document.querySelectorAll(".bb-how__pic img")].every((i) => i.complete && i.naturalWidth), null, { timeout: 8000 }).catch(() => {});
+    const r = await pg.evaluate(() => {
+      const st = document.querySelector(".bb-how__stage").getBoundingClientRect();
+      const imgs = [...document.querySelectorAll(".bb-how__pic img")];
+      const box = imgs.map((i) => i.getBoundingClientRect());
+      const steps = [...document.querySelectorAll(".bb-how__steps li")].map((l) => l.getBoundingClientRect());
+      const hit = (a, b) => a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1;
+      const svg = [...document.querySelectorAll(".bb-how__svg")].find((s) => s.getClientRects().length);
+      return {
+        size: box.map((b) => Math.round(b.width)).join("/"),
+        loaded: imgs.filter((i) => i.complete && i.naturalWidth).length,
+        src: imgs.map((i) => (i.currentSrc.match(/-(\d+)\.webp/) || [])[1]).join("/"),
+        out: box.filter((b) => b.left < st.left - 2 - b.width * 0.05 || b.right > st.right + 2 + b.width * 0.05).length,
+        overlapImg: box.some((a, i) => box.some((b, j) => i < j && hit(a, b))),
+        overlapText: steps.some((s) => box.some((b) => hit(s, b))),
+        pair: steps.map((s, i) => Math.round(Math.abs((s.top + s.bottom) / 2 - (box[i].top + box[i].bottom) / 2))).join("/"),
+        svg: svg ? `${svg.classList.contains("bb-how__svg--v") ? "直" : "橫"}版，${getComputedStyle(svg).visibility}` : "冇",
+        overflow: document.documentElement.scrollWidth - innerWidth,
+      };
+    });
+    console.log(`  ${w}px：圖闊 ${r.size}px（載入 ${r.loaded}/3，用 ${r.src}w），超出舞台 ${r.out}，圖互相重疊 ${r.overlapImg ? "有！" : "冇"}，圖字重疊 ${r.overlapText ? "有！" : "冇"}，${w <= 760 ? `圖文中心相差 ${r.pair}px，` : ""}方塊層 ${r.svg}，橫向溢出 ${r.overflow}px`);
+    await pg.screenshot({ path: `shots/how-${w}.png` }).catch(() => {});
+    await ctx.close();
+  }
+  // 停用 JavaScript：靜態圖文照見
+  {
+    const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.evaluate(() => document.querySelector(".bb-how__stage").scrollIntoView({ block: "center", behavior: "instant" }));
+    await pg.waitForTimeout(1500);
+    const r = await pg.evaluate(() => [...document.querySelectorAll(".bb-how__pic img, .bb-how__steps li")].map((e) => Number(getComputedStyle(e).opacity).toFixed(2)).join("/"));
+    console.log(`  停用 JS：三張圖同三步文字透明度 ${r}`);
+    await ctx.close();
+  }
+  // 圖載得慢 + 站內轉頁返首頁 + 來回碌 + 改視窗大小
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const pg = await ctx.newPage();
+    await pg.route("**/images/process/**", async (route) => { await new Promise((r) => setTimeout(r, 1800)); await route.continue(); });
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.waitForTimeout(1500);
+    const state = () => pg.evaluate(() => ({
+      op: [...document.querySelectorAll(".bb-how__pic img")].map((i) => Number(getComputedStyle(i).opacity).toFixed(2)).join("/"),
+      cls: document.querySelector(".bb-how__stage").className.replace("bb-how__stage", "").trim() || "靜態",
+      stages: document.querySelectorAll(".bb-how__stage").length,
+    }));
+    await pg.evaluate(() => document.querySelector(".bb-how__stage").scrollIntoView({ block: "center", behavior: "instant" }));
+    await pg.waitForTimeout(700);
+    const s1 = await state();
+    await pg.waitForTimeout(5200);
+    const s2 = await state();
+    console.log(`  圖慢 1.8 秒先到：碌到 0.7 秒 ${s1.cls}（${s1.op}）；6 秒後 ${s2.cls}（${s2.op}）`);
+    // 去價錢章再撳返首頁（站內轉頁），碌落去睇有冇重複初始化、透明圖
+    const toPrice = pg.locator('a[href$="/price"], a[href$="/price.html"], a[href*="/price/"]').first();
+    if (await toPrice.count()) {
+      await pg.evaluate(() => window.scrollTo(0, 0));
+      await toPrice.click();
+      await pg.waitForTimeout(1500);
+      await pg.locator(".bb-header__mark").first().click();
+      await pg.waitForTimeout(1500);
+      for (const y of [0.3, 0.7, 0.4, 0.8]) {
+        await pg.evaluate((f) => window.scrollTo(0, (document.documentElement.scrollHeight - innerHeight) * f), y);
+        await pg.waitForTimeout(250);
+      }
+      await pg.evaluate(() => document.querySelector(".bb-how__stage").scrollIntoView({ block: "center", behavior: "instant" }));
+      await pg.waitForTimeout(700);
+      const s3 = await state();
+      await pg.setViewportSize({ width: 700, height: 800 });
+      await pg.waitForTimeout(400);
+      await pg.setViewportSize({ width: 1280, height: 800 });
+      await pg.waitForTimeout(4500);
+      const s4 = await state();
+      console.log(`  轉頁返首頁：${s3.stages} 個舞台，碌到 0.7 秒 ${s3.cls}（${s3.op}）；來回碌兼改視窗之後 ${s4.cls}（${s4.op}）`);
+    } else console.log("  搵唔到去價錢章嘅連結");
     await ctx.close();
   }
 

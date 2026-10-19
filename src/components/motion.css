@@ -68,13 +68,29 @@
     scale: 1;
   }
 
-  /* 「資料好亂？收窄成一隻戒指」：去到畫面時，方塊由左邊亂堆逐粒排隊、排成方陣 */
-  .bb-how__svg.is-ready:not(.is-sorting) .m {
+  /* 「資料好亂？收窄成一隻戒指」：去到畫面時，方塊由左邊亂堆逐粒排隊、排成方陣；
+     方塊去到邊區，嗰區寫實圖就升起淡入，該區方塊隨即淡出（只郁 transform／opacity） */
+  .bb-how__stage.is-ready .bb-how__svg { visibility: visible; }
+  .bb-how__stage.is-ready:not(.is-sorting) .m {
     transform: translate(var(--fx), var(--fy));
     fill: var(--f0);
   }
-  .bb-how__svg.is-sorting .m {
-    transition: transform 1300ms var(--ease-apple) var(--d), fill 700ms var(--ease-apple) calc(var(--d) + 700ms);
+  .bb-how__stage.is-ready .bb-how__pic img { opacity: 0; translate: 0 10px; scale: 0.97; }
+  .bb-how__stage.is-sorting .bb-how__pic img {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    transition: opacity 700ms var(--ease-apple) var(--pd), translate 700ms var(--ease-apple) var(--pd), scale 700ms var(--ease-apple) var(--pd);
+  }
+  .bb-how__pic--learn { --pd: 250ms; }
+  .bb-how__pic--consult { --pd: 1450ms; }
+  .bb-how__pic--finished { --pd: 2100ms; }
+  .bb-how__stage.is-sorting rect {
+    opacity: 0;
+    transition: opacity 500ms var(--ease-apple) var(--o, 450ms);
+  }
+  .bb-how__stage.is-sorting .m {
+    transition: transform 1300ms var(--ease-apple) var(--d), fill 700ms var(--ease-apple) calc(var(--d) + 700ms), opacity 500ms var(--ease-apple) var(--o, 450ms);
   }
 }
 

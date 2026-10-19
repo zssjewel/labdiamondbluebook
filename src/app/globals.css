@@ -541,31 +541,56 @@
   line-height: 1.12;
 }
 .bb-how__intro p { margin: 0; font-size: var(--step-body); }
+/* 方塊（SVG 裝飾層）同三張寫實示意圖共用 .bb-how__stage 定位；三張圖中心對正方塊三個區。
+   靜態（冇 JS／減少動畫／播完）只見三張圖，方塊層收埋；排隊動畫見 motion.css */
+.bb-how__layout { max-width: 1080px; margin: clamp(40px, 5vw, 72px) auto 0; }
+.bb-how__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
 .bb-how__svg {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  margin-top: clamp(40px, 5vw, 72px);
+  height: 100%;
+  pointer-events: none;
+  visibility: hidden;
 }
 .bb-how__svg--v { display: none; }
+.bb-how__pic {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 300 / 270;
+}
+/* 三張主體大細唔同：書最闊、戒指最窄，略縮略放令視覺分量接近 */
+.bb-how__pic img { display: block; width: calc(90% * var(--s, 1)); height: auto; }
+.bb-how__pic--learn { --s: 0.94; }
+.bb-how__pic--finished { --s: 1.06; }
 .bb-how__steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin: 32px 0 0;
+  margin: 20px 0 0;
   padding: 0;
   list-style: none;
 }
 .bb-how__steps li { text-align: center; }
 .bb-how__steps strong { display: block; font-size: var(--step-lead); font-weight: 600; margin-bottom: 6px; }
 .bb-how__steps p { margin: 0 auto; font-size: var(--step-small); line-height: 1.7; max-width: 20em; }
+.bb-how__note { margin: 28px 0 0; text-align: center; font-size: var(--step-caption); color: var(--ink-soft); }
 @media (max-width: 760px) {
-  .bb-how__layout { display: grid; grid-template-columns: 1fr 38vw; gap: 16px; margin-top: 40px; }
+  .bb-how__layout { display: grid; grid-template-columns: min(46vw, 240px) minmax(0, 1fr); column-gap: 16px; margin-top: 40px; }
+  .bb-how__stage { grid-template-columns: 1fr; }
   .bb-how__svg--h { display: none; }
-  .bb-how__svg--v { display: block; margin: 0; }
+  .bb-how__svg--v { display: block; }
+  .bb-how__pic { aspect-ratio: 1 / 1.1; }
+  .bb-how__pic img { width: calc(94% * var(--s, 1)); }
   .bb-how__steps { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); margin: 0; gap: 0; }
   .bb-how__steps li { align-self: center; text-align: left; }
   .bb-how__steps p { margin: 0; }
+  .bb-how__note { grid-column: 1 / -1; margin-top: 20px; }
 }
 
 /* ---------- 卡數戴喺手上（首頁工具、文章邊碌邊變） ---------- */
