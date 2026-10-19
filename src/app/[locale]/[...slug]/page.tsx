@@ -290,9 +290,11 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
         )}
         {item.metadata.cover !== false && (
           <figure className="bb-artfig">
+            {/* 文章題圖通常係手機首屏最大嘅元素（LCP），提早下載 */}
             <img
               decoding="async"
-              {...imgProps(item.metadata.image ?? chapter.image, "(max-width: 960px) 100vw, 760px")}
+              fetchPriority="high"
+              {...imgProps(item.metadata.image ?? chapter.image, "(max-width: 960px) calc(100vw - 32px), 612px")}
               alt={item.metadata.imageAlt ?? (item.metadata.image ? item.metadata.title : chapter.imageAlt)}
               width={item.metadata.imageWidth ?? 1000}
               height={item.metadata.imageHeight ?? 1000}
