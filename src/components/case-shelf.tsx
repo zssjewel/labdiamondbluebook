@@ -118,7 +118,7 @@ export function CaseShelf({
           <li key={`${cat}:${item.h}`} style={{ "--n": Math.min(i, 6) } as React.CSSProperties}>
             <Link href={item.h} className="bb-shelf__card">
               <span className="bb-shelf__img">
-                <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 240px" : "(max-width: 760px) 70vw, 340px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" />
+                <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 240px" : "(max-width: 760px) 70vw, 340px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
               </span>
               <span className="bb-shelf__body">
                 <span className="bb-shelf__cat">
