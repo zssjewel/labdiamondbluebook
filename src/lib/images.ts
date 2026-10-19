@@ -40,3 +40,23 @@ export function imgProps(src: string, sizes: string) {
   const srcSet = srcSetFor(src);
   return srcSet ? { src, srcSet, sizes } : { src };
 }
+
+/** 章節圖嘅 16:9 裁切版（同 CSS 置中裁切一模一樣），用做文章題圖：唔使為咗一張橫圖下載成張正方形 */
+const WIDE = new Set([
+  "macro-ink",
+  "princess-wg-white",
+  "certificate-verification-ivory",
+  "princess-macro-white",
+  "halo-rg-pale",
+  "custom-ring-wax-ivory",
+  "stud-wg-blue",
+  "oval-pt-ink",
+  "bracelet-close-pale",
+]);
+
+export function coverProps(src: string, sizes: string) {
+  const m = src.match(/^(.*\/)([^/]+)\.webp$/);
+  if (!m || !WIDE.has(m[2])) return { ...imgProps(src, sizes), wide: false };
+  const [, dir, name] = m;
+  return { src: `${dir}${name}-wide-1000.webp`, srcSet: `${dir}${name}-wide-640.webp 640w, ${dir}${name}-wide-1000.webp 1000w`, sizes, wide: true };
+}

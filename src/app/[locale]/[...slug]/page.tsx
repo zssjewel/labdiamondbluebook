@@ -9,7 +9,7 @@ import { SITE, localizeHref, orDemo } from "@/config/site";
 import { Demo } from "@/components/demo";
 import { routing, type Locale } from "@/i18n/routing";
 import { getAllArticles, getAllContent, getAllContentPaths, getBookOrder, getContent } from "@/lib/content";
-import { imgProps } from "@/lib/images";
+import { coverProps, imgProps } from "@/lib/images";
 import { articleReady, robotsFor } from "@/lib/indexing";
 import { BookNav, PrevNext } from "@/components/book-nav";
 import { RelatedShelf } from "@/components/cases";
@@ -288,20 +288,24 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             </ol>
           </details>
         )}
-        {item.metadata.cover !== false && (
+        {item.metadata.cover !== false &&
+          (() => {
+            const { wide, ...cover } = coverProps(item.metadata.image ?? chapter.image, "(max-width: 960px) calc(100vw - 32px), 612px");
+            return (
           <figure className="bb-artfig">
-            {/* 文章題圖通常係手機首屏最大嘅元素（LCP），提早下載 */}
+            {/* 文章題圖通常係手機首屏最大嘅元素（LCP），提早下載；章節圖用預先裁好嘅 16:9 版 */}
             <img
               decoding="async"
               fetchPriority="high"
-              {...imgProps(item.metadata.image ?? chapter.image, "(max-width: 960px) calc(100vw - 32px), 612px")}
+              {...cover}
               alt={item.metadata.imageAlt ?? (item.metadata.image ? item.metadata.title : chapter.imageAlt)}
-              width={item.metadata.imageWidth ?? 1000}
-              height={item.metadata.imageHeight ?? 1000}
+              width={wide ? 1000 : (item.metadata.imageWidth ?? 1000)}
+              height={wide ? 563 : (item.metadata.imageHeight ?? 1000)}
             />
             <figcaption>{item.metadata.image ? "" : chapter.imageAlt}</figcaption>
           </figure>
-        )}
+            );
+          })()}
         <div className="bb-prose">
           <item.MDXContent />
         </div>
