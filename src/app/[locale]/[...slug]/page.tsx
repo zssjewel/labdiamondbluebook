@@ -13,6 +13,7 @@ import { imgProps } from "@/lib/images";
 import { articleReady, robotsFor } from "@/lib/indexing";
 import { BookNav, PrevNext } from "@/components/book-nav";
 import { RelatedShelf } from "@/components/cases";
+import { shareImages } from "@/lib/share";
 import { casesForChapter } from "@/config/cases";
 import { ReadingTracker } from "@/components/reading";
 
@@ -43,7 +44,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       // 冇一篇核對完成嘅文章，章節頁唔收錄
       robots: robotsFor(items.some((i) => articleReady(i.metadata))),
       // 章節圖係 1000×1000 正方形，分享圖標明尺寸，唔好當橫圖
-      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}`, images: [{ url: chapter.image, width: 1000, height: 1000, alt: chapter.imageAlt }] },
+      openGraph: { title, description: chapter.intro, url: `${SITE.url}${localizeHref(`/${chapter.slug}`, locale)}`, images: shareImages({ url: chapter.image, width: 1000, height: 1000, alt: chapter.imageAlt }).ogImages },
+      twitter: shareImages({ url: chapter.image, width: 1000, height: 1000, alt: chapter.imageAlt }).twitter,
     };
   }
   const item = await getContent(slug[0], slug.slice(1), locale);
@@ -110,7 +112,7 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
   const others = items.length === 0 ? (await getAllArticles(locale)).slice(0, 4) : [];
 
   return (
-    <main className="bb-page">
+    <main id="main" tabIndex={-1} className="bb-page">
       {items.length > 0 && <JsonLd data={listData} />}
       <JsonLd data={crumbData} />
       <aside className="bb-page__side bb-only-wide" aria-label="章節導覽">
@@ -226,7 +228,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
   };
 
   return (
-    <main className="bb-page">
+    <main id="main" tabIndex={-1} className="bb-page">
       <JsonLd data={articleData} />
       <JsonLd data={crumbData} />
       <aside className="bb-page__side bb-only-wide" aria-label="文章導覽">

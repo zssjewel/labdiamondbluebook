@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function NotFoundPage() {
   return (
-    <main className="bb-page">
+    <main id="main" tabIndex={-1} className="bb-page">
       <aside className="bb-page__side" />
       <div className="bb-page__main">
         <h1 className="bb-page__title bb-display">找不到這一頁</h1>

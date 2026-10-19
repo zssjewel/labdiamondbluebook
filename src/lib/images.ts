@@ -14,6 +14,11 @@ const SMALL_WIDTHS: Record<string, number[]> = {
   "carat-size-round-cover": [480, 800],
   "certificate-verification-ivory": [480, 720],
   "custom-ring-wax-ivory": [480, 720],
+  // 2026-10-19：其餘章節圖補細版
+  "princess-macro-white": [480, 800],
+  "stud-wg-blue": [480, 800],
+  "oval-pt-ink": [480, 800],
+  "bracelet-close-pale": [480, 800],
 };
 
 /** 原圖闊度：手鏈 1400，分享封面 1200，其他 1000 */

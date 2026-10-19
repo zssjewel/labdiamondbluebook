@@ -34,7 +34,8 @@ export function HomeShelf({ locale, featured }: { locale: string; featured: Case
 }
 
 /** 章節、文章、作品頁：相關作品（冇分類列） */
-export function RelatedShelf({ locale, list, title, sub, moreHref }: { locale: string; list: Case[]; title: string; sub?: string; moreHref?: string }) {
+/** 出口卡：去分類頁就寫「睇全部＋分類名」，去總表就寫「睇更多作品」，唔寫數字（推薦只係部分作品） */
+export function RelatedShelf({ locale, list, title, sub, moreHref, moreLabel = "睇更多作品" }: { locale: string; list: Case[]; title: string; sub?: string; moreHref?: string; moreLabel?: string }) {
   if (list.length === 0) return null;
   return (
     <section className="bb-related" aria-label={title}>
@@ -46,6 +47,7 @@ export function RelatedShelf({ locale, list, title, sub, moreHref }: { locale: s
         items={toShelf(list, locale)}
         catNames={catNames}
         allHref={moreHref ?? localizeHref("/cases", locale)}
+        moreLabel={moreLabel}
         label={title}
         demo={isDemoCases}
         inset

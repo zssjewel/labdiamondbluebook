@@ -30,6 +30,7 @@ export function CaseShelf({
   catNames,
   allHref,
   catHref,
+  moreLabel,
   label,
   demo,
   inset = false,
@@ -44,6 +45,8 @@ export function CaseShelf({
   allHref: string;
   /** 分類頁網址樣板，{c} 會換成分類 slug */
   catHref?: string;
+  /** 最尾出口卡嘅字；唔傳就用「睇全部 N 件作品」（N 要同目的地一致，所以只啱首頁用） */
+  moreLabel?: string;
   label: string;
   demo: boolean;
   /** 放喺正文欄入面（章節、文章頁）：卡片細啲，唔貼邊 */
@@ -107,7 +110,8 @@ export function CaseShelf({
     const card = el.querySelector<HTMLElement>("li");
     const step = card ? card.offsetWidth + 16 : el.clientWidth * 0.8;
     const n = Math.max(1, Math.floor(el.clientWidth / step));
-    el.scrollBy({ left: dir * step * n, behavior: "smooth" });
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollBy({ left: dir * step * n, behavior: reduce ? "auto" : "smooth" });
   };
 
   return (
@@ -144,7 +148,7 @@ export function CaseShelf({
         ))}
         <li key={`${cat}:end`} className="bb-shelf__end" style={{ "--n": Math.min(shown.length, 6) } as React.CSSProperties}>
           <Link href={moreHref} className="bb-shelf__card bb-shelf__card--all">
-            <strong>{cat === "all" ? `睇全部 ${moreCount} 件作品` : `睇全部${catNames[cat]}`}</strong>
+            <strong>{cat !== "all" ? `睇全部${catNames[cat]}` : (moreLabel ?? `睇全部 ${moreCount} 件作品`)}</strong>
             <span aria-hidden="true">›</span>
           </Link>
         </li>

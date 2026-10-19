@@ -27,7 +27,8 @@ export function CaseGallery({ images, placeholders = [] }: { images: { src: stri
   const go = (i: number) => {
     const el = track.current;
     if (!el) return;
-    el.scrollTo({ left: Math.max(0, Math.min(total - 1, i)) * el.clientWidth, behavior: "smooth" });
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollTo({ left: Math.max(0, Math.min(total - 1, i)) * el.clientWidth, behavior: reduce ? "auto" : "smooth" });
   };
 
   return (

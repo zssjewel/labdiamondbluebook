@@ -3,7 +3,7 @@ import { localizeHref } from "@/config/site";
 
 export function LegalPage({ title, side, children }: { title: string; side?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <main className="bb-page">
+    <main id="main" tabIndex={-1} className="bb-page">
       <aside className="bb-page__side">
         <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/") }, { label: title }]} />
         {side}

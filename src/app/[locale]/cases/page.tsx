@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/site";
 import { CASES, isDemoCases, visibleCategories } from "@/config/cases";
 import { SITE, localizeHref } from "@/config/site";
 import { robotsFor } from "@/lib/indexing";
+import { shareImages } from "@/lib/share";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -18,7 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
     // 未有真實作品之前唔俾收錄
     robots: robotsFor(CASES.length > 0 && !isDemoCases),
-    openGraph: { title, description, url: `${SITE.url}${url}` },
+    openGraph: { title, description, url: `${SITE.url}${url}`, images: shareImages().ogImages },
+    twitter: shareImages().twitter,
   };
 }
 
@@ -27,7 +29,7 @@ export default async function CasesPage({ params }: { params: Promise<{ locale: 
   setRequestLocale(locale);
   const shown = new Set(visibleCategories().map((c) => c.slug));
   return (
-    <main className="bb-cases-page">
+    <main id="main" tabIndex={-1} className="bb-cases-page">
       <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: "作品案例" }]} />
       <h1 className="bb-page__title bb-display">作品案例</h1>
       {CASES.length > 0 ? (

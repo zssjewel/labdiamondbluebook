@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { MotionLazy } from "@/components/motion-lazy";
 import { JsonLd, SiteFooter, SiteHeader } from "@/components/site";
 import { SITE } from "@/config/site";
+import { shareImages } from "@/lib/share";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -24,8 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: { default: SITE.homeTitle, template: "%s" },
     description: SITE.description,
     applicationName: SITE.name,
-    openGraph: { type: "website", locale: "zh_HK", siteName: SITE.name, images: [{ url: "/og.png", width: 1200, height: 630 }] },
-    twitter: { card: "summary_large_image", images: ["/og.png"] },
+    // 預設分享封面（舊 /og.png 檔案保留，唔再引用）
+    openGraph: { type: "website", locale: "zh_HK", siteName: SITE.name, images: shareImages().ogImages },
+    twitter: shareImages().twitter,
     icons: { icon: [{ url: "/favicon.ico" }, { url: "/favicon-32x32.png", sizes: "32x32" }], apple: "/apple-touch-icon.png" },
     manifest: "/manifest.json",
     // 正式上線前不讓搜尋引擎收錄
@@ -77,6 +79,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         )}
         <NextIntlClientProvider messages={messages}>
           <div id="top" />
+          {/* 鍵盤用家：按 Tab 第一下會見到，直接跳去正文 */}
+          <a className="bb-skip" href="#main">
+            跳至主要內容
+          </a>
           <JsonLd data={organization} />
           <SiteHeader locale={locale} />
           {children}

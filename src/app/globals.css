@@ -514,7 +514,8 @@
 .bb-latest__meta { color: var(--ink-soft); font-size: var(--step-caption); }
 @media (max-width: 960px) {
   .bb-contents__body { grid-template-columns: 1fr; }
-  .bb-contents__fig { position: relative; top: auto; width: 62%; max-width: 360px; justify-self: center; }
+  /* 手機、細平板：目錄頁直接睇章節，唔放裝飾圖 */
+  .bb-contents__fig { display: none; }
   .bb-group a { grid-template-columns: 3.6em minmax(0, 1fr) 1em; gap: 2px 8px; padding: 12px 18px; }
   .bb-group a::after { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
   .bb-toc__ans { grid-column: 2; text-align: left; }
@@ -1546,3 +1547,19 @@
 .bb-gallery__dots button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 35, 38, 0.22); transition: background-color 240ms; }
 .bb-gallery__dots button[aria-current="true"]::before { background: var(--ink); }
 .bb-gallery__paddles { padding: 0; }
+
+/* 跳至主要內容：平時收埋，鍵盤聚焦先出現 */
+.bb-skip {
+  position: absolute;
+  left: 12px;
+  top: -64px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: var(--blue-ink);
+  font-size: var(--step-small);
+  text-decoration: none;
+}
+.bb-skip:focus { top: 8px; }
+main:focus { outline: none; }

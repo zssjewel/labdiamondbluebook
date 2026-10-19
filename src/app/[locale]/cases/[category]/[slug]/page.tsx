@@ -10,6 +10,7 @@ import { CASES, casesIn, categoryOf, isDemoCases, mixed, visibleCategories } fro
 import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { robotsFor } from "@/lib/indexing";
+import { shareImages } from "@/lib/share";
 
 type Params = { locale: string; category: string; slug: string };
 
@@ -31,12 +32,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const title = `${item.title}｜培育鑽石${cat?.name ?? ""}作品｜${SITE.name}`;
   const description = `${item.title}：主石 ${item.stone}；金屬 ${item.metal}。${item.story}`.slice(0, 150);
   const image = item.images[0];
+  const share = shareImages(image ? { url: image.src, width: 1000, height: 1000, alt: image.alt } : undefined);
   return {
     title,
     description,
     alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
     robots: robotsFor(!isDemoCases),
-    openGraph: { title, description, url: `${SITE.url}${url}`, images: image ? [{ url: image.src, width: 1000, height: 1000, alt: image.alt }] : undefined },
+    openGraph: { title, description, url: `${SITE.url}${url}`, images: share.ogImages },
+    twitter: share.twitter,
   };
 }
 
@@ -69,7 +72,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
     ["完成", item.date.replace("-", " 年 ") + " 月"],
   ];
   return (
-    <main className="bb-case-page">
+    <main id="main" tabIndex={-1} className="bb-case-page">
       <JsonLd data={breadcrumbLd} />
       <Breadcrumbs items={crumbs} />
       <div className="bb-case-page__grid">
@@ -117,7 +120,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
           </div>
         </div>
       </div>
-      <RelatedShelf locale={locale} list={same} title={`其他${cat.name}`} moreHref={localizeHref(`/cases/${category}`, locale)} />
+      <RelatedShelf locale={locale} list={same} title={`其他${cat.name}`} moreHref={localizeHref(`/cases/${category}`, locale)} moreLabel={`睇全部${cat.name}`} />
       <RelatedShelf locale={locale} list={other} title="其他類別" />
     </main>
   );

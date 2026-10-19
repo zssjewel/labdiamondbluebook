@@ -160,7 +160,8 @@ function Band({ ids }: { ids: Record<string, string> }) {
 }
 
 /** 手 + 戒指。ct 決定主石大小，finger 決定手指粗幼（橫向縮放，主石唔跟住縮）。 */
-export function HandFigure({ ct, finger, label }: { ct: number; finger: number; label?: string }) {
+/** lazy：首頁工具喺第一屏以下，主石圖等碌近先載，唔同首屏搶頻寬 */
+export function HandFigure({ ct, finger, label, lazy = false }: { ct: number; finger: number; label?: string; lazy?: boolean }) {
   const mm = diameterOf(ct);
   const base = 6.4 * UNIT;
   const w = base / SPRITE.girdle;
@@ -236,6 +237,7 @@ export function HandFigure({ ct, finger, label }: { ct: number; finger: number; 
         width={520}
         height={503}
         decoding="async"
+        loading={lazy ? "lazy" : undefined}
         style={{
           left: `${((200 - VB.x) / VB.w) * 100}%`,
           top: `${((RING_Y - VB.y) / VB.h) * 100}%`,
@@ -304,7 +306,7 @@ export function CaratTool({ locale, worksHref }: { locale: string; worksHref?: s
   return (
     <section className="bb-tool" aria-labelledby="tool-title">
       <div className="bb-tool__plate" data-reveal="panel">
-        <HandFigure ct={ct} finger={finger} />
+        <HandFigure ct={ct} finger={finger} lazy />
       </div>
       <div className="bb-tool__panel">
         <div data-reveal>

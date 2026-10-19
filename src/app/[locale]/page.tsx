@@ -13,6 +13,7 @@ import { CASES, mixed, visibleCategories } from "@/config/cases";
 import { HomeShelf } from "@/components/cases";
 import { imgProps } from "@/lib/images";
 import { robotsFor } from "@/lib/indexing";
+import { shareImages } from "@/lib/share";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -22,7 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     description: SITE.description,
     alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
     robots: robotsFor(true),
-    openGraph: { title: SITE.homeTitle, description: SITE.description, url: `${SITE.url}${url}`, images: ["/og.png"] },
+    openGraph: { title: SITE.homeTitle, description: SITE.description, url: `${SITE.url}${url}`, images: shareImages().ogImages },
+    twitter: shareImages().twitter,
   };
 }
 
@@ -149,7 +151,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   };
 
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       <JsonLd data={webSite} />
       <JsonLd data={faqData} />
 

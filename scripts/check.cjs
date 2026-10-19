@@ -317,5 +317,92 @@ const widths = [320, 390, 768, 1440];
     }
     await pg.close();
   }
+
+  console.log("\n== 分享圖（原始 HTML）==");
+  const metaOf = (html, prop) => [...html.matchAll(new RegExp(`<meta (?:property|name)="${prop}" content="([^"]+)"`, "g"))].map((m) => m[1]);
+  for (const p of ["/zh-hk", "/zh-hk/cases", ...["engagement-rings", "earrings", "eternity-rings", "pendants", "bracelets", "wedding-bands", "remake"].map((c) => `/zh-hk/cases/${c}`), "/zh-hk/cases/engagement-rings/oval-solitaire", "/zh-hk/certificate", "/zh-hk/custom", "/zh-hk/4c/carat-size-on-hand", "/zh-hk/about"]) {
+    const html = await (await fetch(base + p + ".html")).text();
+    const og = metaOf(html, "og:image"), tw = metaOf(html, "twitter:image");
+    const ogw = metaOf(html, "og:image:width")[0], ogh = metaOf(html, "og:image:height")[0];
+    const short = (u) => (u || "冇").replace(/^https?:\/\/[^/]+/, "");
+    const abs = og.every((u) => /^https:\/\//.test(u)) && tw.every((u) => /^https:\/\//.test(u));
+    console.log(`${p}：og ${og.length} 個 ${short(og[0])}（${ogw}×${ogh}）｜twitter ${tw.length} 個 ${short(tw[0])}｜一致 ${og[0] === tw[0] ? "係" : "唔係"}｜絕對網址 ${abs ? "係" : "唔係"}`);
+  }
+  {
+    const r = await fetch(base + "/images/social/share-cover-labdiamond-1200x630.jpg");
+    const buf = Buffer.from(await r.arrayBuffer());
+    let w = 0, h = 0;
+    for (let i = 2; i < buf.length; ) { if (buf[i] !== 0xff) break; const m = buf[i + 1], len = buf.readUInt16BE(i + 2); if (m >= 0xc0 && m <= 0xc3) { h = buf.readUInt16BE(i + 5); w = buf.readUInt16BE(i + 7); break; } i += 2 + len; }
+    console.log(`分享封面：HTTP ${r.status}，${r.headers.get("content-type")}，${w}×${h}，${Math.round(buf.length / 1024)}KB`);
+  }
+
+  console.log("\n== 推薦作品出口文案 ==");
+  for (const [p, sel] of [["/zh-hk.html", ".bb-works"], ["/zh-hk/price.html", ".bb-related"], ["/zh-hk/4c/carat-size-on-hand.html", ".bb-related"], ["/zh-hk/cases/engagement-rings/oval-solitaire.html", ".bb-related"]]) {
+    const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await pg.goto(base + p, { waitUntil: "load" });
+    const r = await pg.evaluate((sel) => [...document.querySelectorAll(sel)].map((s) => { const a = s.querySelector(".bb-shelf__card--all"); return `「${(s.querySelector("h2") || {}).textContent || ""}」→「${a.textContent.replace("›", "").trim()}」連去 ${a.getAttribute("href")}`; }), sel);
+    for (const x of r) {
+      const href = x.match(/連去 (\S+)/)[1];
+      const dest = await browser.newPage();
+      await dest.goto(base + href + ".html", { waitUntil: "load" });
+      const n = await dest.evaluate(() => document.querySelectorAll(".bb-casegrid > li").length);
+      await dest.close();
+      console.log(`${p.replace(".html", "")} ${x}（目的地有 ${n} 件）`);
+    }
+    await pg.close();
+  }
+
+  console.log("\n== 首頁目錄（手機唔放裝飾圖）==");
+  for (const w of [375, 400, 430, 960, 1440]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, isMobile: w < 800, hasTouch: w < 800 });
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html#contents", { waitUntil: "load" });
+    await pg.waitForTimeout(800);
+    await pg.evaluate(() => document.getElementById("contents").scrollIntoView({ block: "start", behavior: "instant" }));
+    await pg.waitForTimeout(600);
+    const r = await pg.evaluate(() => {
+      const fig = document.querySelector(".bb-contents__fig");
+      const first = document.querySelector(".bb-toc a");
+      const head = document.getElementById("contents-title").getBoundingClientRect();
+      const bar = document.querySelector(".bb-header").getBoundingClientRect();
+      const fr = first.getBoundingClientRect();
+      return { fig: getComputedStyle(fig).display, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
+    });
+    console.log(`${w}px：裝飾圖 ${r.fig === "none" ? "隱藏" : "顯示"}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
+    await ctx.close();
+  }
+  for (const from of ["/zh-hk/price.html", "/zh-hk/custom.html"]) {
+    const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await pg.goto(base + from, { waitUntil: "load" });
+    await pg.waitForTimeout(1200);
+    await pg.click('.bb-header__tab a:has-text("目錄")');
+    await pg.waitForTimeout(2500);
+    const r = await pg.evaluate(() => {
+      const head = document.getElementById("contents-title").getBoundingClientRect();
+      const bar = document.querySelector(".bb-header").getBoundingClientRect();
+      const toc = document.querySelector(".bb-toc").getBoundingClientRect();
+      return { url: location.pathname + location.hash, head: Math.round(head.top), bar: Math.round(bar.bottom), toc: Math.round(toc.top), op: getComputedStyle(document.querySelector(".bb-toc")).opacity };
+    });
+    console.log(`由 ${from.replace(".html", "")} 撳頂部「目錄」：去到 ${r.url}，目錄標題頂 ${r.head}px（頁頭底 ${r.bar}px，${r.head >= r.bar ? "冇被遮" : "被遮住"}），章節表頂 ${r.toc}px，透明度 ${r.op}`);
+    await pg.goBack();
+    await pg.waitForTimeout(800);
+    const back = await pg.evaluate(() => location.pathname);
+    await pg.goForward();
+    await pg.waitForTimeout(800);
+    const fwd = await pg.evaluate(() => location.pathname + location.hash);
+    console.log(`  返回：${back}；前進：${fwd}`);
+    await pg.close();
+  }
+  {
+    const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    await pg.goto(base + "/zh-hk/price.html", { waitUntil: "load" });
+    await pg.keyboard.press("Tab");
+    const skip = await pg.evaluate(() => ({ t: document.activeElement.textContent, top: Math.round(document.activeElement.getBoundingClientRect().top) }));
+    await pg.keyboard.press("Enter");
+    await pg.waitForTimeout(300);
+    const after = await pg.evaluate(() => `${document.activeElement.tagName}#${document.activeElement.id}`);
+    console.log(`跳至正文：第一下 Tab 聚焦「${skip.t}」（頂 ${skip.top}px），撳 Enter 後焦點喺 ${after}；main 數量 ${await pg.evaluate(() => document.querySelectorAll("main").length)}`);
+    await pg.close();
+  }
   await browser.close();
 })();

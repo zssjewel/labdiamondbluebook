@@ -8,6 +8,7 @@ import { casesIn, categoryOf, isDemoCases, visibleCategories } from "@/config/ca
 import { SITE, localizeHref } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { robotsFor } from "@/lib/indexing";
+import { shareImages } from "@/lib/share";
 
 type Params = { locale: string; category: string };
 
@@ -27,7 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     description,
     alternates: { canonical: url, languages: { [SITE.htmlLang]: url, "x-default": url } },
     robots: robotsFor(!isDemoCases),
-    openGraph: { title, description, url: `${SITE.url}${url}` },
+    openGraph: { title, description, url: `${SITE.url}${url}`, images: shareImages().ogImages },
+    twitter: shareImages().twitter,
   };
 }
 
@@ -48,7 +50,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
     itemListElement: crumbs.map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.label, ...(c.href ? { item: `${SITE.url}${c.href}` } : {}) })),
   };
   return (
-    <main className="bb-cases-page">
+    <main id="main" tabIndex={-1} className="bb-cases-page">
       <JsonLd data={breadcrumbLd} />
       <Breadcrumbs items={crumbs} />
       <h1 className="bb-page__title bb-display">{cat.name}</h1>
