@@ -3,6 +3,8 @@ name: Tabs probe
 # 手機首頁作品分類：撳分類時逐格量度（WebKit iPhone + Chromium Android），結果放 tabs-probe 分支。
 on:
   workflow_dispatch:
+  push:
+    branches: [probe]
 
 permissions:
   contents: write
