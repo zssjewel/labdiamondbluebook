@@ -1,48 +1,105 @@
-import type { Case } from "@/config/cases";
-import { isDemoCases } from "@/config/cases";
+import Link from "@/components/link";
+import { CaseShelf, type ShelfItem } from "@/components/case-shelf";
 import { Demo } from "@/components/demo";
+import { CASE_CATEGORIES, CASES, type Case, caseHref, categoryOf, isDemoCases, visibleCategories } from "@/config/cases";
+import { localizeHref } from "@/config/site";
 import { imgProps } from "@/lib/images";
 
-/** 作品卡：相片、標題、規格。首頁同 /cases 共用 */
-export function CaseCard({ item, sizes, i = 0 }: { item: Case; sizes: string; i?: number }) {
-  const cover = item.images[0];
+export const catNames: Record<string, string> = Object.fromEntries(CASE_CATEGORIES.map((c) => [c.slug, c.name]));
+
+export function toShelf(list: Case[], locale: string): ShelfItem[] {
+  return list.map((c) => ({ h: localizeHref(caseHref(c), locale), t: c.title, c: c.category, s: c.images[0]?.src ?? "", a: c.images[0]?.alt ?? c.title }));
+}
+
+/** 首頁：有分類嘅作品貨架 */
+export function HomeShelf({ locale, featured }: { locale: string; featured: Case[] }) {
+  const tabs = visibleCategories().map((c) => ({ slug: c.slug, name: c.name, count: c.count }));
+  const shownSlugs = new Set(tabs.map((t) => t.slug));
+  const items = toShelf(
+    CASES.filter((c) => shownSlugs.has(c.category)),
+    locale,
+  );
   return (
-    <article className="bb-case" data-reveal style={{ "--i": i % 3 } as React.CSSProperties}>
-      {cover && (
-        <figure className="bb-case__fig">
-          <img {...imgProps(cover.src, sizes)} alt={cover.alt} width={1000} height={1000} loading="lazy" decoding="async" />
-        </figure>
-      )}
-      <div className="bb-case__body">
-        <p className="bb-case__type">
-          {item.type}
-          <Demo show={isDemoCases} />
-        </p>
-        <h3>{item.title}</h3>
-        <dl>
-          <div>
-            <dt>主石</dt>
-            <dd>{item.stone}</dd>
-          </div>
-          <div>
-            <dt>金屬</dt>
-            <dd>{item.metal}</dd>
-          </div>
-          {item.priceRange && (
-            <div>
-              <dt>價錢</dt>
-              <dd>{item.priceRange}</dd>
-            </div>
-          )}
-          {item.duration && (
-            <div>
-              <dt>工期</dt>
-              <dd>{item.duration}</dd>
-            </div>
-          )}
-        </dl>
-        <p className="bb-case__story">{item.story}</p>
+    <CaseShelf
+      items={items}
+      all={toShelf(featured, locale).map((i) => i.h)}
+      tabs={tabs}
+      catNames={catNames}
+      allHref={localizeHref("/cases", locale)}
+      catHref={localizeHref("/cases/{c}", locale)}
+      label="工坊作品"
+      demo={isDemoCases}
+    />
+  );
+}
+
+/** 章節、文章、作品頁：相關作品（冇分類列） */
+export function RelatedShelf({ locale, list, title, sub, moreHref }: { locale: string; list: Case[]; title: string; sub?: string; moreHref?: string }) {
+  if (list.length === 0) return null;
+  return (
+    <section className="bb-related" aria-label={title}>
+      <div className="bb-related__head">
+        <h2>{title}</h2>
+        {sub && <p>{sub}</p>}
       </div>
-    </article>
+      <CaseShelf
+        items={toShelf(list, locale)}
+        catNames={catNames}
+        allHref={moreHref ?? localizeHref("/cases", locale)}
+        label={title}
+        demo={isDemoCases}
+        inset
+      />
+    </section>
+  );
+}
+
+/** 作品列表頁、分類頁：卡片網格 */
+export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
+  return (
+    <ul className="bb-casegrid">
+      {list.map((c, i) => (
+        <li key={c.slug} data-reveal style={{ "--i": i % 3 } as React.CSSProperties}>
+          <Link href={localizeHref(caseHref(c), locale)} className="bb-shelf__card">
+            <span className="bb-shelf__img">
+              <img
+                {...imgProps(c.images[0].src, "(max-width: 760px) 50vw, (max-width: 1100px) 33vw, 360px")}
+                alt={c.images[0].alt}
+                width={1000}
+                height={1000}
+                loading={i < 6 ? undefined : "lazy"}
+                decoding="async"
+              />
+            </span>
+            <span className="bb-shelf__body">
+              <span className="bb-shelf__cat">
+                {categoryOf(c.category)?.name}
+                <Demo show={isDemoCases} />
+              </span>
+              <strong>{c.title}</strong>
+              <span className="bb-shelf__more">睇主石、金屬同工期</span>
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** 分類列（連結版）：列表頁同分類頁用，可以左右滑 */
+export function CategoryNav({ locale, current }: { locale: string; current?: string }) {
+  const cats = visibleCategories();
+  return (
+    <nav className="bb-shelf__tabs bb-shelf__tabs--links" aria-label="作品分類">
+      <Link href={localizeHref("/cases", locale)} aria-current={current ? undefined : "page"}>
+        全部<span>{CASES.length}</span>
+      </Link>
+      {cats.map((c) => (
+        <Link key={c.slug} href={localizeHref(`/cases/${c.slug}`, locale)} aria-current={current === c.slug ? "page" : undefined}>
+          {c.name}
+          <span>{c.count}</span>
+        </Link>
+      ))}
+    </nav>
   );
 }

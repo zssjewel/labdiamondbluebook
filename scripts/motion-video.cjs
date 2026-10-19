@@ -46,6 +46,18 @@ async function glide(page, pxPerSec, stops = []) {
     const page = await ctx.newPage();
     await page.goto(base + "/zh-hk.html", { waitUntil: "load" });
     await page.waitForTimeout(2200);
+    // 作品貨架：揀分類、左右滑
+    await page.evaluate(() => document.querySelector(".bb-works").scrollIntoView({ behavior: "smooth", block: "start" }));
+    await page.waitForTimeout(1200);
+    for (const name of ["耳環", "求婚戒指"]) {
+      await page.locator(".bb-works .bb-shelf__tabs button", { hasText: name }).click();
+      await page.waitForTimeout(1300);
+    }
+    for (let k = 0; k < 2; k++) {
+      if (tag === "phone") await page.evaluate(() => document.querySelector(".bb-works .bb-shelf__track").scrollBy({ left: 260, behavior: "smooth" }));
+      else await page.locator(".bb-works .bb-shelf__paddles button[aria-label='下一組']").click();
+      await page.waitForTimeout(1100);
+    }
     await glide(page, speed, [".bb-tool__plate", tag === "phone" ? ".bb-how__svg--v" : ".bb-how__svg--h", ".bb-tiles__a"]);
     await page.waitForTimeout(600);
     // 撳入文章，睇換頁
@@ -58,6 +70,10 @@ async function glide(page, pxPerSec, stops = []) {
       const fold = page.locator(".bb-tocfold summary");
       if (await fold.count()) { await fold.click(); await page.waitForTimeout(900); await fold.click(); await page.waitForTimeout(700); }
     }
+    await page.goto(base + "/zh-hk/cases/engagement-rings/oval-solitaire.html", { waitUntil: "load" });
+    await page.waitForTimeout(1500);
+    await glide(page, speed * 0.6, []);
+    await page.waitForTimeout(800);
     const video = page.video();
     await ctx.close();
     const p = await video.path();

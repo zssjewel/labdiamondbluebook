@@ -10,6 +10,8 @@ const pages = [
   "/zh-hk/custom.html",
   "/zh-hk/about.html",
   "/zh-hk/cases.html",
+  "/zh-hk/cases/engagement-rings.html",
+  "/zh-hk/cases/engagement-rings/oval-solitaire.html",
   "/zh-hk/basics/vs-natural-moissanite.html",
   "/zh-hk/4c/carat-size-on-hand.html",
 ];
@@ -262,6 +264,58 @@ const widths = [320, 390, 768, 1440];
     });
     console.log(`減少動畫模式：${r.n} 個元素之中 ${r.hidden} 個仲有動畫或者未顯示`);
     await ctx.close();
+  }
+
+  console.log("\n== 作品貨架 ==");
+  for (const [tag, opts] of [["電腦 1440", { viewport: { width: 1440, height: 900 } }], ["手機 390", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 }]]) {
+    const ctx = await browser.newContext(opts);
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.waitForTimeout(1500);
+    const info = async () => pg.evaluate(() => {
+      const sec = document.querySelector(".bb-works");
+      const tr = sec.querySelector(".bb-shelf__track");
+      const cards = [...tr.querySelectorAll(":scope > li")];
+      const r = sec.getBoundingClientRect();
+      const tabs = [...sec.querySelectorAll(".bb-shelf__tabs button")].map((b) => `${b.textContent}${b.getAttribute("aria-pressed") === "true" ? "✓" : ""}`);
+      const broken = [...tr.querySelectorAll("img")].filter((i) => i.complete && i.naturalWidth === 0).length;
+      return { top: Math.round(r.top + scrollY), h: Math.round(r.height), cards: cards.length, tabs: tabs.join(" "), scrollW: tr.scrollWidth, w: tr.clientWidth, cardW: Math.round(cards[0].getBoundingClientRect().width), broken, pageOver: document.documentElement.scrollWidth - innerWidth };
+    });
+    let i = await info();
+    console.log(`${tag}：作品段喺 ${i.top}px，高 ${i.h}px；分類「${i.tabs}」；卡 ${i.cards} 張（每張闊 ${i.cardW}px，可滑 ${i.scrollW - i.w}px）；破圖 ${i.broken}；頁面橫向溢出 ${i.pageOver}px`);
+    await pg.locator(".bb-works .bb-shelf__tabs button", { hasText: "耳環" }).click();
+    await pg.waitForTimeout(900);
+    i = await info();
+    console.log(`  撳「耳環」：卡 ${i.cards} 張，分類「${i.tabs}」`);
+    const first = await pg.evaluate(() => document.querySelector(".bb-works .bb-shelf__track li a").getAttribute("href"));
+    console.log(`  第一張連去 ${first}`);
+    if (!opts.isMobile) {
+      await pg.locator(".bb-works .bb-shelf__tabs button", { hasText: "全部" }).click();
+      await pg.waitForTimeout(500);
+      await pg.locator(".bb-works .bb-shelf__paddles button[aria-label='下一組']").click();
+      await pg.waitForTimeout(1200);
+      const sl = await pg.evaluate(() => document.querySelector(".bb-works .bb-shelf__track").scrollLeft);
+      console.log(`  撳右箭咀：滑咗 ${Math.round(sl)}px`);
+    }
+    await ctx.close();
+  }
+  {
+    const pg = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await pg.goto(base + "/zh-hk/cases/engagement-rings/oval-solitaire.html", { waitUntil: "load" });
+    const d = await pg.evaluate(() => ({
+      h1: document.querySelector("h1")?.textContent,
+      slides: document.querySelectorAll(".bb-gallery__slide").length,
+      specs: [...document.querySelectorAll(".bb-specs div")].map((x) => x.textContent).join("｜"),
+      related: [...document.querySelectorAll(".bb-related h2")].map((x) => x.textContent).join("、"),
+      robots: document.querySelector('meta[name="robots"]')?.content,
+    }));
+    console.log(`作品頁：${d.h1}｜相 ${d.slides} 格｜${d.specs}｜相關：${d.related}｜robots ${d.robots}`);
+    for (const p of ["/zh-hk/price.html", "/zh-hk/4c/carat-size-on-hand.html"]) {
+      await pg.goto(base + p, { waitUntil: "load" });
+      const r = await pg.evaluate(() => [...document.querySelectorAll(".bb-related")].map((s) => `${s.querySelector("h2").textContent}（${s.querySelectorAll(".bb-shelf__track > li").length - 1} 件）`).join("、"));
+      console.log(`${p} 相關作品：${r || "冇"}`);
+    }
+    await pg.close();
   }
   await browser.close();
 })();

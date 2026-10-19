@@ -296,7 +296,7 @@ function Controls({ ct, finger, setCt, setFinger, idPrefix }: { ct: number; fing
 }
 
 /** 首頁：自己拉動試 */
-export function CaratTool({ locale }: { locale: string }) {
+export function CaratTool({ locale, worksHref }: { locale: string; worksHref?: string }) {
   const [ct, setCt] = useState(1);
   const [finger, setFinger] = useState(MID_MM);
   const ask = waHref(`你好，想問 ${fmtCt(ct)} 卡培育鑽石戒指大概幾錢？`);
@@ -323,6 +323,11 @@ export function CaratTool({ locale }: { locale: string }) {
           <Link href={localizeHref("/4c/carat-size-on-hand", locale)} className="bb-btn bb-btn--blue">
             睇完整比較
           </Link>
+          {worksHref && (
+            <Link href={worksHref} className="bb-link">
+              睇求婚戒指作品
+            </Link>
+          )}
           {hasContact && (
             <a href={ask} {...askProps} className="bb-link">
               問 {fmtCt(ct)} 卡價錢

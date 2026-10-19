@@ -1,0 +1,155 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "@/components/link";
+import { imgProps } from "@/lib/images";
+
+export type ShelfItem = {
+  /** 作品頁網址 */
+  h: string;
+  /** 標題 */
+  t: string;
+  /** 分類 slug */
+  c: string;
+  /** 封面圖 */
+  s: string;
+  /** 封面圖 alt */
+  a: string;
+};
+
+type Tab = { slug: string; name: string; count: number };
+
+/**
+ * 蘋果官網式作品貨架：上面一行分類（左右滑），下面一排卡片（左右滑、自動對齊）。
+ * 揀分類即刻換卡片，唔使轉頁；電腦有左右箭咀，手機用手指滑。
+ */
+export function CaseShelf({
+  items,
+  all,
+  tabs,
+  catNames,
+  allHref,
+  catHref,
+  label,
+  demo,
+  inset = false,
+}: {
+  /** 全部作品（分類用） */
+  items: ShelfItem[];
+  /** 「全部」時顯示嘅作品次序（href 列表）；唔傳就用 items 次序 */
+  all?: string[];
+  tabs?: Tab[];
+  catNames: Record<string, string>;
+  /** 最尾「睇全部」卡連去邊 */
+  allHref: string;
+  /** 分類頁網址樣板，{c} 會換成分類 slug */
+  catHref?: string;
+  label: string;
+  demo: boolean;
+  /** 放喺正文欄入面（章節、文章頁）：卡片細啲，唔貼邊 */
+  inset?: boolean;
+}) {
+  const [cat, setCat] = useState("all");
+  const [picked, setPicked] = useState(false);
+  const track = useRef<HTMLUListElement>(null);
+  const [edge, setEdge] = useState({ prev: false, next: true });
+
+  const byHref = new Map(items.map((i) => [i.h, i]));
+  const shown =
+    cat === "all" ? (all ? all.map((h) => byHref.get(h)).filter((x): x is ShelfItem => Boolean(x)) : items) : items.filter((i) => i.c === cat);
+  const moreHref = cat !== "all" && catHref ? catHref.replace("{c}", cat) : allHref;
+  const moreCount = cat === "all" ? items.length : shown.length;
+
+  const update = useCallback(() => {
+    const el = track.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setEdge({ prev: el.scrollLeft > 4, next: el.scrollLeft < max - 4 });
+  }, []);
+
+  useEffect(() => {
+    const el = track.current;
+    if (!el) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+    update();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [update]);
+
+  const pick = (slug: string) => {
+    setCat(slug);
+    setPicked(true);
+    track.current?.scrollTo({ left: 0, behavior: "instant" as ScrollBehavior });
+    requestAnimationFrame(update);
+  };
+
+  const page = (dir: 1 | -1) => {
+    const el = track.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("li");
+    const step = card ? card.offsetWidth + 16 : el.clientWidth * 0.8;
+    const n = Math.max(1, Math.floor(el.clientWidth / step));
+    el.scrollBy({ left: dir * step * n, behavior: "smooth" });
+  };
+
+  return (
+    <div className={`bb-shelf${inset ? " bb-shelf--inset" : ""}`}>
+      {tabs && tabs.length > 1 && (
+        <div className="bb-shelf__tabs" role="group" aria-label="作品分類">
+          {[{ slug: "all", name: "全部", count: items.length }, ...tabs].map((t) => (
+            <button key={t.slug} type="button" aria-pressed={cat === t.slug} onClick={() => pick(t.slug)}>
+              {t.name}
+              <span>{t.count}</span>
+            </button>
+          ))}
+        </div>
+      )}
+      <ul className="bb-shelf__track" ref={track} aria-label={label} data-picked={picked || undefined}>
+        {shown.map((item, i) => (
+          <li key={`${cat}:${item.h}`} style={{ "--n": Math.min(i, 6) } as React.CSSProperties}>
+            <Link href={item.h} className="bb-shelf__card">
+              <span className="bb-shelf__img">
+                <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 240px" : "(max-width: 760px) 70vw, 340px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" />
+              </span>
+              <span className="bb-shelf__body">
+                <span className="bb-shelf__cat">
+                  {catNames[item.c]}
+                  {demo && <span className="bb-demo">示例</span>}
+                </span>
+                <strong>{item.t}</strong>
+                <span className="bb-shelf__more">睇主石、金屬同工期</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+        <li key={`${cat}:end`} className="bb-shelf__end" style={{ "--n": Math.min(shown.length, 6) } as React.CSSProperties}>
+          <Link href={moreHref} className="bb-shelf__card bb-shelf__card--all">
+            <strong>{cat === "all" ? `睇全部 ${moreCount} 件作品` : `睇全部${catNames[cat]}`}</strong>
+            <span aria-hidden="true">›</span>
+          </Link>
+        </li>
+      </ul>
+      <div className="bb-shelf__paddles">
+        <button type="button" onClick={() => page(-1)} disabled={!edge.prev} aria-label="上一組">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M10 3 5 8l5 5" />
+          </svg>
+        </button>
+        <button type="button" onClick={() => page(1)} disabled={!edge.next} aria-label="下一組">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="m6 3 5 5-5 5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}

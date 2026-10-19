@@ -26,19 +26,25 @@
   .bb-btn:active { transform: var(--press); transition-duration: 90ms; }
 
   /* 4. 卡片：滑鼠移上去輕輕浮起、影子變深（只限有滑鼠嘅裝置）；手機按落輕縮 */
-  .bb-answers a, .bb-routes__card, .bb-case, .bb-prevnext a {
+  .bb-answers a, .bb-routes__card, .bb-shelf__card, .bb-prevnext a {
     transition: transform 480ms var(--ease-out), box-shadow 480ms var(--ease-out), background-color 240ms var(--ease-apple);
   }
-  .bb-case__fig { overflow: hidden; }
-  .bb-case__fig img { transition: transform 900ms var(--ease-out); }
+  .bb-shelf__img img { transition: transform 900ms var(--ease-out); }
+  .bb-shelf__tabs > button, .bb-shelf__tabs > a { transition: background-color 280ms var(--ease-apple), color 280ms var(--ease-apple), box-shadow 280ms var(--ease-apple); }
+  .bb-shelf__tabs > button:active, .bb-shelf__tabs > a:active { transform: scale(0.96); }
+  .bb-shelf__paddles button { transition: background-color 240ms var(--ease-apple), opacity 240ms var(--ease-apple), transform 420ms var(--ease-out); }
+  .bb-shelf__paddles button:active:not(:disabled) { transform: scale(0.92); transition-duration: 90ms; }
+  /* 換分類：卡片由右邊逐張滑入 */
+  .bb-shelf__track[data-picked] > li { animation: bb-shelfin 620ms var(--ease-apple) both; animation-delay: calc(var(--n, 0) * 45ms); }
   @media (hover: hover) {
-    .bb-answers a:hover, .bb-routes__card:hover, .bb-case:hover, .bb-prevnext a:hover {
+    .bb-answers a:hover, .bb-routes__card:hover, .bb-shelf__card:hover, .bb-prevnext a:hover {
       transform: translate3d(0, -4px, 0);
       box-shadow: 0 22px 44px -24px rgba(42, 35, 38, 0.3);
     }
-    .bb-case:hover .bb-case__fig img { transform: scale(1.05); }
+    .bb-shelf__card:hover .bb-shelf__img img { transform: scale(1.05); }
+    .bb-shelf__tabs > button:hover:not([aria-pressed="true"]), .bb-shelf__tabs > a:hover:not([aria-current]) { background: var(--paper); }
   }
-  .bb-answers a:active, .bb-routes__card:active, .bb-prevnext a:active { transform: scale(0.98); transition-duration: 120ms; }
+  .bb-answers a:active, .bb-routes__card:active, .bb-shelf__card:active, .bb-prevnext a:active { transform: scale(0.98); transition-duration: 120ms; }
 
   /* 5. 清單行、文字連結：底色同箭咀過渡順滑啲 */
   .bb-group a { transition: background-color 240ms var(--ease-apple); }
@@ -53,13 +59,13 @@
 /* 7. 相片：所在卡片升起時，相片同時由近拉遠「落位」（用 scale，唔會同滑鼠移上去嘅放大打交） */
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal].is-pending .bb-tiles__c img, [data-reveal].is-pending.bb-tiles__c img,
-  .bb-contents__fig.is-pending img, .bb-case.is-pending .bb-case__fig img {
+  .bb-contents__fig.is-pending img, .bb-casegrid > li.is-pending .bb-shelf__img img {
     scale: 1.16;
     transition: scale 1800ms var(--ease-apple);
     transition-delay: calc(var(--i, 0) * 110ms);
   }
   [data-reveal].is-pending.is-in .bb-tiles__c img, [data-reveal].is-pending.is-in.bb-tiles__c img,
-  .bb-contents__fig.is-pending.is-in img, .bb-case.is-pending.is-in .bb-case__fig img {
+  .bb-contents__fig.is-pending.is-in img, .bb-casegrid > li.is-pending.is-in .bb-shelf__img img {
     scale: 1;
   }
 
@@ -85,3 +91,5 @@
     .bb-tocfold[open]::details-content { block-size: auto; }
   }
 }
+
+@keyframes bb-shelfin { from { opacity: 0; transform: translate3d(32px, 0, 0); } }

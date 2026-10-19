@@ -12,6 +12,8 @@ import { getAllArticles, getAllContent, getAllContentPaths, getBookOrder, getCon
 import { imgProps } from "@/lib/images";
 import { articleReady, robotsFor } from "@/lib/indexing";
 import { BookNav, PrevNext } from "@/components/book-nav";
+import { RelatedShelf } from "@/components/cases";
+import { casesForChapter } from "@/config/cases";
 import { ReadingTracker } from "@/components/reading";
 
 type Params = { locale: Locale; slug: string[] };
@@ -169,6 +171,7 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
           </>
         )}
 
+        <RelatedShelf locale={locale} list={casesForChapter(slug)} title="相關作品" sub="工坊訂造過嘅款式，撳入去睇主石、金屬同工期。" />
         <AskMaster topic={`${chapter.number} ${chapter.title}`} />
 
         <nav className="bb-chapnav" aria-label="上下章">
@@ -313,6 +316,7 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
           <Link href={`${localizeHref("/about", locale)}#master`}>師傅介紹</Link>。
         </div>
 
+        <RelatedShelf locale={locale} list={casesForChapter(contentType)} title="同類作品" sub="睇完想睇實物？以下係相關款式。" />
         <PrevNext book={book} locale={locale} contentType={contentType} slug={item.slug} />
 
         <AskMaster topic={item.metadata.title} />

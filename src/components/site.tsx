@@ -35,6 +35,9 @@ export function SiteHeader({ locale }: { locale: string }) {
           </Link>
         ))}
       </nav>
+      <Link href={localizeHref("/cases", locale)} className="bb-header__menu">
+        作品
+      </Link>
       <Link href={localizeHref("/#contents", locale)} className="bb-header__menu">
         目錄
       </Link>

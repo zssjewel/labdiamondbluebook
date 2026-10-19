@@ -1,7 +1,8 @@
 import { CHAPTER_SLUGS } from "@/config/chapters";
 
-/** 頁頭的連結（目錄 + 三個最常用章節）。 */
+/** 頁頭的連結（作品 + 目錄 + 三個最常用章節）。 */
 export const HEADER_LINKS = [
+  { label: "作品", path: "/cases" },
   { label: "目錄", path: "/#contents" },
   { label: "價錢", path: "/price" },
   { label: "證書", path: "/certificate" },

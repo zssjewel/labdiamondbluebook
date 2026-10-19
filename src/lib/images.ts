@@ -23,7 +23,8 @@ export function srcSetFor(src: string) {
   const m = src.match(/^(.*\/)([^/]+)\.webp$/);
   if (!m) return undefined;
   const [, dir, name] = m;
-  const smalls = SMALL_WIDTHS[name];
+  // 示例作品圖：一律有 480、800 兩個細版
+  const smalls = dir === "/images/cases-demo/" ? [480, 800] : SMALL_WIDTHS[name];
   if (!smalls) return undefined;
   const full = FULL_WIDTH[name] ?? 1000;
   return [...smalls.map((w) => `${dir}${name}-${w}.webp ${w}w`), `${src} ${full}w`].join(", ");

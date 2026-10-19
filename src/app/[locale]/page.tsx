@@ -9,8 +9,8 @@ import { CHAPTERS } from "@/config/chapters";
 import { getAllArticles } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
-import { CASES } from "@/config/cases";
-import { CaseCard } from "@/components/cases";
+import { CASES, mixed, visibleCategories } from "@/config/cases";
+import { HomeShelf } from "@/components/cases";
 import { imgProps } from "@/lib/images";
 import { robotsFor } from "@/lib/indexing";
 
@@ -222,6 +222,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </section>
 
+      {/* 工坊作品：蘋果式左右滑貨架，上面分類 */}
+      {CASES.length > 0 && (
+        <section className="bb-works" id="works" aria-labelledby="works-title">
+          <div className="bb-works__head">
+            <h2 id="works-title" className="bb-sechead bb-display" data-reveal>
+              工坊作品
+            </h2>
+            <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
+              按類別左右滑，撳入去睇主石、金屬同工期。
+            </p>
+          </div>
+          <HomeShelf locale={locale} featured={mixed(undefined, 12)} />
+        </section>
+      )}
+
       {/* 閱讀路線 */}
       <section className="bb-routes" id="routes" aria-labelledby="routes-title">
         <h2 id="routes-title" className="bb-sechead bb-display" data-reveal>
@@ -256,29 +271,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* 卡數戴喺手上有幾大（互動） */}
-      <CaratTool locale={locale} />
-
-      {/* 作品案例：有真實作品先出現 */}
-      {CASES.length > 0 && (
-        <section className="bb-casesec" aria-labelledby="cases-title">
-          <h2 id="cases-title" className="bb-sechead bb-display" data-reveal>
-            工坊做過嘅作品
-          </h2>
-          <p className="bb-secsub" data-reveal>
-            真實作品，寫明主石、金屬同工期，經客人同意公開。
-          </p>
-          <div className="bb-cases">
-            {CASES.slice(0, 3).map((c, i) => (
-              <CaseCard key={c.slug} item={c} i={i} sizes="(max-width: 760px) 100vw, 33vw" />
-            ))}
-          </div>
-          <p className="bb-casesec__more">
-            <Link className="bb-link" href={localizeHref("/cases", locale)}>
-              睇全部作品
-            </Link>
-          </p>
-        </section>
-      )}
+      <CaratTool locale={locale} worksHref={visibleCategories().some((c) => c.slug === "engagement-rings") ? localizeHref("/cases/engagement-rings", locale) : undefined} />
 
       {/* 目錄 */}
       <section className="bb-contents" id="contents" aria-labelledby="contents-title">
