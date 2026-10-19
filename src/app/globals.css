@@ -1338,12 +1338,4 @@
 
 }
 
-/* 8. 頁頭毛玻璃：底下內容碌過時透出朦朧色彩 */
-@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .bb-header {
-    background: rgba(251, 247, 246, 0.78);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
-  }
-}
 
