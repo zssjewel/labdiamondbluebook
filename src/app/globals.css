@@ -53,7 +53,8 @@
     --max: 1360px;
     --pad: max(var(--m), calc((100% - var(--max)) / 2));
     /* 段與段之間：同一底色嘅段只留一份空位；有色段內上下各一份 */
-    --gap-section: clamp(64px, 7vw, 112px);
+    /* 段落之間留白（參考蘋果官網：電腦約 100–130px，手機約 64px）；同底色相連嘅段落只留一份，唔會疊成雙倍 */
+    --gap-section: clamp(72px, 8.5vw, 128px);
     /* 動效曲線：UI 回饋用 ease-out（快出慢停）；進場、碌動、換頁用蘋果官網常用嘅 ease-apple */
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
@@ -770,7 +771,7 @@
 
 /* ---------- 首頁：問答 ---------- */
 .bb-faq {
-  padding: calc(var(--gap-section) * 0.5) var(--pad) var(--gap-section);
+  padding: var(--gap-section) var(--pad);
 }
 .bb-faq__list {
   display: grid;
@@ -1013,7 +1014,7 @@
 @media (max-width: 760px) {
   .bb-hero__toc-link { display: none; }
   :root {
-    --gap-section: 56px;
+    --gap-section: 64px;
   }
 }
 
@@ -1341,7 +1342,7 @@
    作品貨架（蘋果官網式）：上面分類左右滑，下面卡片左右滑、自動對齊
    ===================================================================== */
 .bb-works {
-  padding: calc(var(--gap-section) * 0.8) 0 calc(var(--gap-section) * 0.7);
+  padding: var(--gap-section) 0 calc(var(--gap-section) * 0.75);
   background: var(--steel);
 }
 .bb-works__head { padding-inline: var(--pad); margin-bottom: clamp(24px, 3vw, 40px); }
@@ -1636,6 +1637,8 @@ main:focus { outline: none; }
 
 /* 首頁：點解揀鄒三山工坊 */
 .bb-why { padding: var(--gap-section) var(--pad); }
+/* 同底色（暖白）相連嘅段落：上面唔再加一份留白，間距同其他段落一樣 */
+.bb-tool + .bb-contents, .bb-contents + .bb-why { padding-top: 0; }
 .bb-why__grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -1693,7 +1696,8 @@ main:focus { outline: none; }
 .bb-why__fig img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; border-radius: var(--radius-img); background: var(--steel); }
 .bb-why__fig figcaption { display: flex; align-items: center; margin-top: 10px; color: var(--ink-soft); font-size: var(--step-caption); }
 .bb-why__card--delivery .bb-why__fig figcaption { color: var(--ink); }
-.bb-why__more { margin: 28px 0 0; text-align: center; }
+/* 「睇完整條款」跟副標題，好似蘋果段落標題下面嘅連結 */
+.bb-why__more { margin: 14px 0 0; text-align: center; font-size: var(--step-body); }
 @media (max-width: 860px) {
   .bb-why__grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .bb-why__a, .bb-why__img, .bb-why__card { grid-column: 1; }

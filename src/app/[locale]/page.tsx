@@ -369,6 +369,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           《培育鑽石藍皮書》由鄒三山工坊編著。講揀商家嗰章會比較埋我哋自己，你睇完自己判斷。
         </p>
+        <p className="bb-why__more" data-reveal style={{ "--i": 2 } as React.CSSProperties}>
+          <Link className="bb-link" href={localizeHref("/about", locale) + "#promise"}>
+            睇完整條款
+          </Link>
+        </p>
         <div className="bb-why__grid">
           <div className="bb-why__a" data-reveal="panel">
             <h3 className="bb-display">
@@ -418,11 +423,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           ))}
         </div>
-        <p className="bb-why__more">
-          <Link className="bb-link" href={localizeHref("/about", locale) + "#promise"}>
-            睇完整條款
-          </Link>
-        </p>
       </section>
 
       {/* 多變一 */}

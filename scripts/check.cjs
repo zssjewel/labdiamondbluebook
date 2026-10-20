@@ -428,6 +428,25 @@ const widths = [320, 390, 768, 1440];
     await ctx.close();
   }
 
+  console.log("\n== 首頁段落之間留白（上一段內容底 → 下一段內容頂） ==");
+  for (const w of [1440, 390]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: "reduce" });
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    for (let y = 0; y < 14; y++) { await pg.evaluate((y) => window.scrollTo(0, y * 800), y); await pg.waitForTimeout(80); }
+    const r = await pg.evaluate(() => {
+      const secs = [...document.querySelectorAll("main > section, main > * > section")].filter((s) => s.getClientRects().length && s.closest("main"));
+      const box = (s) => {
+        const kids = [...s.children].filter((k) => k.getClientRects().length && getComputedStyle(k).position !== "absolute");
+        return { name: s.className.split(" ")[0], top: kids.length ? Math.min(...kids.map((k) => k.getBoundingClientRect().top)) : s.getBoundingClientRect().top, bottom: kids.length ? Math.max(...kids.map((k) => k.getBoundingClientRect().bottom)) : s.getBoundingClientRect().bottom, bg: getComputedStyle(s).backgroundColor };
+      };
+      const b = secs.map(box);
+      return b.slice(1).map((x, i) => `${b[i].name}→${x.name} ${Math.round(x.top - b[i].bottom)}px${b[i].bg === x.bg ? "（同底色）" : ""}`);
+    });
+    console.log(`  ${w}px：${r.join("，")}`);
+    await ctx.close();
+  }
+
   console.log("\n== 作品貨架 ==");
   for (const [tag, opts] of [["電腦 1440", { viewport: { width: 1440, height: 900 } }], ["手機 390", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 }]]) {
     const ctx = await browser.newContext(opts);
