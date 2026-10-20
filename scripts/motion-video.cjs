@@ -73,7 +73,7 @@ async function glide(page, pxPerSec, stops = []) {
       const fold = page.locator(".bb-tocfold summary");
       if (await fold.count()) { await fold.click(); await page.waitForTimeout(900); await fold.click(); await page.waitForTimeout(700); }
     }
-    await page.goto(base + "/zh-hk/cases/engagement-rings/oval-solitaire.html", { waitUntil: "load" });
+    await page.goto(base + "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
     await page.waitForTimeout(1500);
     await glide(page, speed * 0.6, []);
     await page.waitForTimeout(800);

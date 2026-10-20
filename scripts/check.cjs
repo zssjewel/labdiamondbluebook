@@ -11,7 +11,7 @@ const pages = [
   "/zh-hk/about.html",
   "/zh-hk/cases.html",
   "/zh-hk/cases/engagement-rings.html",
-  "/zh-hk/cases/engagement-rings/oval-solitaire.html",
+  "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html",
   "/zh-hk/basics/vs-natural-moissanite.html",
   "/zh-hk/4c/carat-size-on-hand.html",
 ];
@@ -485,7 +485,7 @@ const widths = [320, 390, 768, 1440];
   }
   {
     const pg = await browser.newPage({ viewport: { width: 390, height: 844 } });
-    await pg.goto(base + "/zh-hk/cases/engagement-rings/oval-solitaire.html", { waitUntil: "load" });
+    await pg.goto(base + "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
     const d = await pg.evaluate(() => ({
       h1: document.querySelector("h1")?.textContent,
       slides: document.querySelectorAll(".bb-gallery__slide").length,
@@ -495,7 +495,7 @@ const widths = [320, 390, 768, 1440];
     }));
     {
       const dp = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-      await dp.goto(base + "/zh-hk/cases/engagement-rings/oval-solitaire.html", { waitUntil: "load" });
+      await dp.goto(base + "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
       await dp.waitForTimeout(800);
       await dp.hover(".bb-gallery__stage");
       await dp.waitForTimeout(400);
@@ -518,7 +518,7 @@ const widths = [320, 390, 768, 1440];
 
   console.log("\n== 分享圖（原始 HTML）==");
   const metaOf = (html, prop) => [...html.matchAll(new RegExp(`<meta (?:property|name)="${prop}" content="([^"]+)"`, "g"))].map((m) => m[1]);
-  for (const p of ["/zh-hk", "/zh-hk/cases", ...["engagement-rings", "earrings", "eternity-rings", "pendants", "bracelets", "wedding-bands", "remake"].map((c) => `/zh-hk/cases/${c}`), "/zh-hk/cases/engagement-rings/oval-solitaire", "/zh-hk/certificate", "/zh-hk/custom", "/zh-hk/4c/carat-size-on-hand", "/zh-hk/about"]) {
+  for (const p of ["/zh-hk", "/zh-hk/cases", ...["engagement-rings", "earrings", "eternity-rings", "pendants", "bracelets", "wedding-bands", "remake"].map((c) => `/zh-hk/cases/${c}`), "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold", "/zh-hk/certificate", "/zh-hk/custom", "/zh-hk/4c/carat-size-on-hand", "/zh-hk/about"]) {
     const html = await (await fetch(base + p + ".html")).text();
     const og = metaOf(html, "og:image"), tw = metaOf(html, "twitter:image");
     const ogw = metaOf(html, "og:image:width")[0], ogh = metaOf(html, "og:image:height")[0];
@@ -535,7 +535,7 @@ const widths = [320, 390, 768, 1440];
   }
 
   console.log("\n== 推薦作品出口文案 ==");
-  for (const [p, sel] of [["/zh-hk.html", ".bb-works"], ["/zh-hk/price.html", ".bb-related"], ["/zh-hk/4c/carat-size-on-hand.html", ".bb-related"], ["/zh-hk/cases/engagement-rings/oval-solitaire.html", ".bb-related"]]) {
+  for (const [p, sel] of [["/zh-hk.html", ".bb-works"], ["/zh-hk/price.html", ".bb-related"], ["/zh-hk/4c/carat-size-on-hand.html", ".bb-related"], ["/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", ".bb-related"]]) {
     const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     await pg.goto(base + p, { waitUntil: "load" });
     const r = await pg.evaluate((sel) => [...document.querySelectorAll(sel)].map((s) => { const a = s.querySelector(".bb-shelf__card--all"); return `「${(s.querySelector("h2") || {}).textContent || ""}」→「${a.textContent.replace("›", "").trim()}」連去 ${a.getAttribute("href")}`; }), sel);
