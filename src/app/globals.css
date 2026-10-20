@@ -978,6 +978,8 @@
 }
 /* 未到嘅步驟淡啲：0.66 仍然夠對比度（WCAG 4.5:1），睇得清 */
 .bb-story.is-live .bb-story__steps li { opacity: 0.66; }
+/* 「自己試」嗰步有拉桿同按鈕，唔好淡化（可以撳嘅嘢要清楚） */
+.bb-story.is-live .bb-story__steps li.bb-story__tool { opacity: 1; }
 .bb-story__steps li:first-child { min-height: 50vh; justify-content: flex-start; padding-top: 24px; }
 .bb-story.is-live .bb-story__steps li.is-active { opacity: 1; }
 .bb-story__steps h2, .bb-prose .bb-story__steps h2 { margin: 0 0 0.4em; padding: 0; border: 0; font-family: var(--font-display); font-weight: 600; font-size: var(--step-lead); line-height: 1.3; }
