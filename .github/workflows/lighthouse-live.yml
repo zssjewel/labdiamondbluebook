@@ -1,0 +1,46 @@
+name: Lighthouse live
+
+# 對正式網站（Cloudflare）跑手機 Lighthouse，另外叫一次 PageSpeed Insights API，結果放 lighthouse-live 分支。
+on:
+  workflow_dispatch:
+  push:
+    branches: [probe-live]
+
+permissions:
+  contents: write
+
+jobs:
+  lh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Lighthouse on live site
+        continue-on-error: true
+        run: |
+          mkdir -p lh
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable)
+          for p in home:zh-hk root: chapter:zh-hk/price article:zh-hk/4c/carat-size-on-hand cases:zh-hk/cases about:zh-hk/about; do
+            name="${p%%:*}"; path="${p#*:}"
+            for i in 1 2 3; do
+              npx -y lighthouse@12.6.1 "https://labdiamondbluebook.com/$path" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
+            done
+          done
+          node scripts/lh-summary.cjs lh/*.json | tee lh/summary.txt
+          for u in zh-hk ""; do
+            curl -s "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://labdiamondbluebook.com/$u&strategy=mobile&category=performance" -o "lh/psi-${u:-root}.json" || true
+            node -e "const r=require('./lh/psi-${u:-root}.json');const l=r.lighthouseResult;if(!l){console.log('PSI ${u:-root}:',JSON.stringify(r).slice(0,300));process.exit(0)}const a=l.audits;console.log('PSI ${u:-root}:',Math.round(l.categories.performance.score*100),'FCP',a['first-contentful-paint'].displayValue,'LCP',a['largest-contentful-paint'].displayValue,'TBT',a['total-blocking-time'].displayValue,'SI',a['speed-index'].displayValue,'final',l.finalDisplayedUrl,'redirects',(a.redirects&&a.redirects.displayValue)||'')" | tee -a lh/summary.txt
+          done
+      - name: Publish
+        if: always()
+        run: |
+          mkdir -p lh && cd lh
+          git init -q
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          echo "${GITHUB_SHA}" > COMMIT
+          git add -A
+          git commit -qm "Lighthouse live for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:lighthouse-live
