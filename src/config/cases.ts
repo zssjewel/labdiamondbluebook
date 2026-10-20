@@ -4,9 +4,10 @@ import { SITE } from "@/config/site";
  * 作品案例：只放工坊真實做過、客人同意公開嘅作品。
  *
  * 點樣加一件真作品：喺 REAL_CASES 加一項，揀好 category（見下面 CASE_CATEGORIES），
- * 相片放 public/images/cases/<slug>-1.webp、-2.webp……（建議正方形 1200×1200，最少一張，最好有一張戴喺手上）。
+ * 相片放 public/images/cases/<slug>-1.webp、-2.webp……（正方形 1000×1000，另出 -480、-800 細版；由作品上線流水線出圖）。
+ * 文案按流水線《上架标准.md》寫：seoTitle、description、specs、sections、faq、guides。
  * 加咗之後：首頁作品、/cases、分類頁、作品詳情頁、各章節同文章嘅「相關作品」全部自動更新。
- * 第一件真作品加入後，示例作品會自動全部消失。唔好用 AI 圖或者 3D 示意圖做真作品相。
+ * 預覽期真作品排前、示例補位；SITE.demo 改 false 之後示例作品全部消失。
  */
 
 /** 分類次序按市場數據排：求婚戒指最多人訂，其次係耳環（近年升得最快），之後排鑽戒、吊墜、手鏈、對戒、改造 */
@@ -98,9 +99,87 @@ export type Case = {
   date: string;
   /** 客人已同意公開相片同資料 */
   consent: true;
+  /** 示例作品（AI 或 3D 示意圖、規格待填）；真作品唔使填 */
+  demo?: true;
+  /* ---- 以下按《作品上架標準》填（流水線 上架标准.md），真作品建議全部填 ---- */
+  /** 搜尋結果標題（32 字內），唔填就用 title */
+  seoTitle?: string;
+  /** 搜尋結果描述（70–80 字，一句講晒） */
+  description?: string;
+  /** 規格表，一行一項；有就取代 stone / metal 嗰幾行 */
+  specs?: [string, string][];
+  /** 正文段落：每段一個小標題 */
+  sections?: { h: string; p?: string[]; list?: [string, string][] }[];
+  /** 常見問題：問題帶呢件嘅規格，答案第一句直接答 */
+  faq?: { q: string; a: string; link?: { label: string; href: string } }[];
+  /** 相關章節；唔填就用分類預設 */
+  guides?: { label: string; href: string }[];
 };
 
-const REAL_CASES: Case[] = [];
+const REAL_CASES: Case[] = [
+  {
+    slug: "pear-halo-3-09ct-18k-white-gold",
+    category: "engagement-rings",
+    title: "3.09 卡梨形培育鑽石求婚戒指・碎鑽光環",
+    seoTitle: "3.09卡梨形培育鑽石求婚戒指｜E VS1・18K白金",
+    description: "3.09 卡梨形培育鑽石，E 色 VS1，IGI 證書，18K 白金碎鑽光環戒托，戒臂一排微鑲。鄒三山工坊港工師傅喺東莞訂造，約 10 日完成。想做類似款可以 WhatsApp 問報價。",
+    stone: "3.09 卡 梨形 E VS1，IGI 證書",
+    metal: "18K 白金",
+    duration: "約 10 日",
+    story: "呢隻係 3.09 卡梨形培育鑽石求婚戒指：主石 E 色、VS1，拋光同對稱都係 Excellent，附 IGI 證書；外圍一圈碎鑽光環，戒臂再排一行微鑲，金屬用 18K 白金。由鄒三山工坊港工師傅喺東莞廠房訂造，由落單到完成約 10 日。",
+    specs: [
+      ["主石", "培育鑽石，梨形，3.09 卡"],
+      ["顏色淨度", "E 色，VS1"],
+      ["拋光對稱", "Excellent，Excellent（2EX）"],
+      ["證書", "IGI"],
+      ["鑲法", "主石一圈碎鑽光環，戒臂單排微鑲"],
+      ["金屬", "18K 白金"],
+      ["工期", "約 10 日"],
+    ],
+    sections: [
+      {
+        h: "呢件作品點做",
+        p: [
+          "梨形鑽石一頭圓、一頭尖，戴落手會令手指睇落修長。呢隻用光環戒托：主石外面圍一圈碎鑽，令主石輪廓更清楚，遠睇面積亦會大啲；戒臂再排一行微鑲，由正面到側面都有閃光，唔會淨係得粒主石。",
+          "主石揀 E 色，屬於無色級，鑲喺白金上面唔會睇到偏黃；VS1 嘅內含物要用放大鏡先睇到，肉眼睇唔出。3 卡以上嘅梨形石，顏色同淨度值得揀高啲，因為石面大，底色同瑕疵都比細石容易被睇到。",
+        ],
+      },
+      {
+        h: "戴喺手上有幾大",
+        p: ["3 卡左右嘅梨形鑽石，按一般比例估算大約 12 × 8 毫米（實際以證書尺寸為準），戴喺無名指上差唔多遮住手指一半闊度，加埋光環會再大一圈。尖頭向指甲方向係最常見嘅戴法，手指會顯得長啲。"],
+      },
+      {
+        h: "揀呢款要諗嘅嘢",
+        list: [
+          ["尖位保護", "梨形最脆弱係尖嗰頭，訂造時要確認尖位有爪包住。"],
+          ["光環碎鑽", "碎鑽多，日常勾衫機會比單石戒高少少；建議半年到一年俾師傅檢查一次爪位，順便清洗。"],
+          ["疊戴", "光環戒托比較闊，想之後配結婚戒疊戴，落單時同師傅講，可以預留位置。"],
+        ],
+      },
+    ],
+    faq: [
+      { q: "3 卡梨形培育鑽石戴喺手上有幾大？", a: "大約 12 × 8 毫米，差唔多遮住無名指一半闊度。梨形同卡數通常比圓形睇落大，加光環會再大一圈。", link: { label: "1 卡戴喺手上有幾大", href: "/4c/carat-size-on-hand" } },
+      { q: "E 色 VS1 嘅培育鑽石值唔值得揀？", a: "3 卡呢個大小值得。E 色屬於無色級，VS1 肉眼睇唔到內含物；石面大嘅時候，顏色同淨度揀低咗會比細石明顯。預算有限可以考慮 F 至 G 色、VS2，肉眼分別唔大。", link: { label: "第四章 4C 選石", href: "/4c" } },
+      { q: "梨形鑽石嘅尖位會唔會易崩？", a: "尖位係梨形最容易受撞嘅位置，所以戒托一定要有爪包住尖頭。訂造前可以叫師傅俾相或者影片你睇清楚尖位點鑲。" },
+      { q: "3 卡梨形培育鑽石戒指大概幾錢？", a: "主要睇主石顏色、淨度、證書，同戒托用金量、碎鑽數量。呢件價錢唔公開；同規格最新報價可以 WhatsApp 問師傅。", link: { label: "第二章 價錢", href: "/price" } },
+      { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。每隻都係按客人預算、手寸同喜好訂造，所以唔會完全一樣；卡數、顏色、金屬同光環款式都可以改。" },
+    ],
+    guides: [
+      { label: "第四章 4C 選石", href: "/4c" },
+      { label: "1 卡戴喺手上有幾大", href: "/4c/carat-size-on-hand" },
+      { label: "第五章 形狀款式", href: "/styles" },
+      { label: "第三章 證書", href: "/certificate" },
+    ],
+    images: [
+      { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-1.webp", alt: "3.09 卡梨形培育鑽石求婚戒指正面，18K 白金碎鑽光環戒托" },
+      { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-2.webp", alt: "梨形主石同一圈碎鑽光環特寫" },
+      { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-3.webp", alt: "3.09 卡梨形培育鑽石求婚戒指戴喺左手無名指" },
+      { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-4.webp", alt: "戴黑手套嘅手指拎住梨形鑽石戒指，睇到戒托高度同戒臂微鑲" },
+    ],
+    date: "2026-09",
+    consent: true,
+  },
+];
 
 /* ---------- 示例作品（SITE.demo = true 而且未有真作品時顯示） ----------
  * 相片係 AI 示意圖或者 3D 示意圖，規格全部「待填」，唔係真實作品。 */
@@ -138,6 +217,7 @@ const demo = (
   images: [{ src: img, alt: `示例作品圖：${alt}` }],
   date: "2026-10",
   consent: true,
+  demo: true,
 });
 
 const DEMO_CASES: Case[] = [
@@ -177,8 +257,10 @@ const DEMO_CASES: Case[] = [
   demo("remake-band", "remake", "舊戒改排鑽戒", `${D}/band-pt-pale.webp`, `白色金屬排鑽戒指${CG}`, "排鑽數量（待填）", "舊金折算／新金（待填）", STORY.remake),
 ];
 
-export const isDemoCases = REAL_CASES.length === 0 && SITE.demo;
-export const CASES: Case[] = isDemoCases ? DEMO_CASES : REAL_CASES;
+/** 預覽期（SITE.demo）：真作品排前，示例作品補位，等每個分類都夠件數顯示；正式上線（demo = false）就淨係真作品 */
+export const CASES: Case[] = SITE.demo ? [...REAL_CASES, ...DEMO_CASES] : REAL_CASES;
+/** 仲有冇示例作品喺度（列表頁顯示「示例」提示、唔俾收錄） */
+export const isDemoCases = CASES.some((c) => c.demo);
 
 /** 少過呢個數嘅分類先唔顯示，避免一撳入去得一兩件 */
 export const MIN_CATEGORY = 3;

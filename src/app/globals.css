@@ -1747,6 +1747,17 @@
   .bb-case-page__media { position: static; margin-inline: calc(-1 * var(--m)); }
   .bb-case-page__media .bb-gallery__track { border-radius: 0; }
 }
+/* 作品正文、常見問題（按上架標準寫嘅真作品先有） */
+.bb-case-body { max-width: 720px; margin: clamp(56px, 7vw, 96px) auto 0; }
+.bb-case-body__sec + .bb-case-body__sec { margin-top: clamp(40px, 5vw, 64px); }
+.bb-case-body h2 { margin: 0 0 16px; font-size: var(--step-lead); line-height: 1.35; }
+.bb-case-body p { margin: 0 0 14px; line-height: 1.85; }
+.bb-case-body__list { margin: 0; }
+.bb-case-body__list div { padding: 14px 0; box-shadow: inset 0 1px 0 var(--hairline); } /* taste-skill-ignore: 要點之間的細分隔 */
+.bb-case-body__list dt { margin: 0 0 4px; font-weight: 600; }
+.bb-case-body__list dd { margin: 0; line-height: 1.75; }
+.bb-case-faq__list { margin: 0; }
+.bb-case-faq__list .bb-faq__item dt { font-size: var(--step-body); }
 
 /* 作品相：左右滑 */
 .bb-gallery__track {

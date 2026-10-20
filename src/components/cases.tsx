@@ -9,7 +9,7 @@ import { CategoryTabs } from "@/components/category-tabs";
 export const catNames: Record<string, string> = Object.fromEntries(CASE_CATEGORIES.map((c) => [c.slug, c.name]));
 
 export function toShelf(list: Case[], locale: string): ShelfItem[] {
-  return list.map((c) => ({ h: localizeHref(caseHref(c), locale), t: c.title, c: c.category, s: c.images[0]?.src ?? "", a: c.images[0]?.alt ?? c.title }));
+  return list.map((c) => ({ h: localizeHref(caseHref(c), locale), t: c.title, c: c.category, s: c.images[0]?.src ?? "", a: c.images[0]?.alt ?? c.title, d: !!c.demo }));
 }
 
 /** 首頁：有分類嘅作品貨架 */
@@ -74,7 +74,7 @@ export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
                 decoding="async"
               />
             </span>
-            <CardText cat={categoryOf(c.category)?.name} title={c.title} demo={isDemoCases} />
+            <CardText cat={categoryOf(c.category)?.name} title={c.title} demo={!!c.demo} />
           </Link>
         </li>
       ))}
