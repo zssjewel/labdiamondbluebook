@@ -140,6 +140,18 @@ const ANSWERS = [
   },
 ];
 
+/** 「點解揀鄒三山工坊」嘅 AI 寫實示意圖（workshop-v2，每張有 480/800/1200 三個闊度）。唔係工坊、客人或檢驗機構實拍 */
+const W2 = "/images/workshop-v2";
+function workshopImg(name: string, widths: number[], sizes: string) {
+  const top = widths[widths.length - 1];
+  return { src: `${W2}/${name}-${top}.webp`, srcSet: widths.map((w) => `${W2}/${name}-${w}.webp ${w}w`).join(", "), sizes };
+}
+const WHY_FIGS: Record<string, { name: string; alt: string; cap: string }> = {
+  price: { name: "factory-direct-v2", alt: "工坊師傅把單件戒指禮盒裝箱出貨（AI 示意圖）", cap: "工坊直接出貨" },
+  cert: { name: "quality-certificate-v2", alt: "珠寶品質檢驗報告的示意樣本，並非真實證書（AI 生成）", cap: "質檢報告示意" },
+  delivery: { name: "doorstep-handover-v2", alt: "工作人員送貨到家，與顧客當面開盒驗看戒指（AI 示意圖）", cap: "上門交付驗貨" },
+};
+
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -371,20 +383,35 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           </div>
           <figure className="bb-why__img" data-reveal="panel" style={{ "--i": 1 } as React.CSSProperties}>
-            <img decoding="async" loading="lazy" {...imgProps(`${R}/custom-ring-wax-ivory.webp`, "(max-width: 760px) 100vw, 42vw")} alt="工坊示意圖：戒指蠟版同設計草圖（AI 示意圖，待換工廠實拍）" width={1000} height={1000} />
+            <img
+              {...workshopImg("workshop-interior-v2", [480, 800, 1200], "(max-width: 860px) 100vw, min(42vw, 570px)")}
+              alt="珠寶工坊內師傅、工作台與工具的場景（AI 寫實示意圖）"
+              width={1200}
+              height={1200}
+              loading="lazy"
+              decoding="async"
+            />
             <figcaption>
-              工場相<span className="bb-demo">示例</span>
+              工坊場景<span className="bb-demo">AI 示意</span>
             </figcaption>
           </figure>
           {PROMISES.slice(1).map((p, i) => (
             <div key={p.key} className={`bb-why__card bb-why__card--${p.key}`} data-reveal style={{ "--i": i } as React.CSSProperties}>
               <h3>{p.title}</h3>
               <p>{p.body}</p>
-              {p.key === "cert" && (
-                <figure className="bb-why__cert">
-                  <img decoding="async" loading="lazy" {...imgProps(`${R}/certificate-verification-ivory.webp`, "120px")} alt="證書示意圖（AI 示意圖，待換省檢證書實拍）" width={1000} height={1000} />
+              {WHY_FIGS[p.key] && (
+                <figure className="bb-why__fig">
+                  <img
+                    {...workshopImg(WHY_FIGS[p.key].name, [480, 800, 1200], "(max-width: 860px) calc(100vw - 80px), min(29vw, 400px)")}
+                    alt={WHY_FIGS[p.key].alt}
+                    width={1200}
+                    height={800}
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <figcaption>
-                    證書相<span className="bb-demo">示例</span>
+                    {WHY_FIGS[p.key].cap}
+                    <span className="bb-demo">AI 示意</span>
                   </figcaption>
                 </figure>
               )}

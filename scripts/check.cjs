@@ -379,6 +379,55 @@ const widths = [320, 390, 768, 1440];
     await ctx.close();
   }
 
+  console.log("\n== 點解揀鄒三山工坊：四張示意圖 ==");
+  {
+    const ctx = await browser.newContext();
+    const pg = await ctx.newPage();
+    for (const k of ["workshop-interior-v2", "factory-direct-v2", "quality-certificate-v2", "doorstep-handover-v2"]) {
+      const st = [];
+      for (const w of [480, 800, 1200]) st.push((await pg.goto(`${base}/images/workshop-v2/${k}-${w}.webp`)).status());
+      console.log(`  ${k}：${st.join("/")}`);
+    }
+    await ctx.close();
+  }
+  for (const [w, extra] of [[375, {}], [430, {}], [768, {}], [1440, {}], [390, { javaScriptEnabled: false }], [390, { reducedMotion: "reduce" }]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, ...extra });
+    const pg = await ctx.newPage();
+    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    for (let k = 0; k < 6; k++) {
+      await pg.evaluate(() => document.querySelector(".bb-why__grid").scrollIntoView({ block: "start", behavior: "instant" }));
+      await pg.waitForTimeout(150);
+    }
+    await pg.waitForFunction(() => [...document.querySelectorAll(".bb-why img")].every((i) => i.complete && i.naturalWidth), null, { timeout: 8000 }).catch(() => {});
+    await pg.waitForTimeout(2200);
+    const r = await pg.evaluate(() => {
+      const imgs = [...document.querySelectorAll(".bb-why img")];
+      const hit = (a, b) => a.left < b.right - 1 && b.left < a.right - 1 && a.top < b.bottom - 1 && b.top < a.bottom - 1;
+      return {
+        list: imgs.map((i) => {
+          const b = i.getBoundingClientRect();
+          const cap = i.closest("figure").querySelector("figcaption").getBoundingClientRect();
+          const box = i.closest(".bb-why__card");
+          const card = box ? box.getBoundingClientRect() : null;
+          return {
+            name: (i.currentSrc.match(/workshop-v2\/(.+?)-v2-(\d+)/) || []).slice(1).join("@"),
+            size: `${Math.round(b.width)}×${Math.round(b.height)}`,
+            ratio: Math.round((b.width / b.height) * 100) / 100,
+            nat: Math.round((i.naturalWidth / i.naturalHeight) * 100) / 100,
+            op: Number(getComputedStyle(i).opacity).toFixed(2),
+            capOver: !box ? false : hit(b, cap),
+            outCard: card ? b.left < card.left - 1 || b.right > card.right + 1 || b.bottom > card.bottom + 1 : false,
+          };
+        }),
+        overflow: document.documentElement.scrollWidth - innerWidth,
+      };
+    });
+    const tag = extra.javaScriptEnabled === false ? "390px 停用 JS" : extra.reducedMotion ? "390px 減少動畫" : `${w}px`;
+    console.log(`  ${tag}：${r.list.map((x) => `${x.name} ${x.size}（顯示比例 ${x.ratio}／原圖 ${x.nat}，透明度 ${x.op}${x.capOver ? "，圖說遮圖！" : ""}${x.outCard ? "，出咗卡！" : ""}）`).join("；")}；橫向溢出 ${r.overflow}px`);
+    if (extra.javaScriptEnabled !== false && !extra.reducedMotion) await pg.locator(".bb-why").screenshot({ path: `shots/why-${w}.png` }).catch(() => {});
+    await ctx.close();
+  }
+
   console.log("\n== 作品貨架 ==");
   for (const [tag, opts] of [["電腦 1440", { viewport: { width: 1440, height: 900 } }], ["手機 390", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 }]]) {
     const ctx = await browser.newContext(opts);

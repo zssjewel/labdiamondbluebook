@@ -1661,7 +1661,7 @@ main:focus { outline: none; }
 .bb-link--on-dark { color: var(--blue-ink); }
 .bb-why__img { position: relative; grid-column: 8 / 13; margin: 0; overflow: hidden; border-radius: var(--radius-panel); background: var(--steel); }
 .bb-why__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.bb-why__img figcaption, .bb-why__cert figcaption {
+.bb-why__img figcaption {
   position: absolute;
   left: 12px;
   bottom: 12px;
@@ -1688,16 +1688,20 @@ main:focus { outline: none; }
 .bb-why__card h3 { margin: 0; font-size: var(--step-lead); font-weight: 600; line-height: 1.35; }
 .bb-why__card p { margin: 0; color: var(--ink-soft); font-size: var(--step-small); line-height: 1.75; }
 .bb-why__card--delivery p { color: var(--ink); }
-.bb-why__cert { position: relative; margin: 6px 0 0; height: 140px; overflow: hidden; border-radius: var(--radius-img); }
-.bb-why__cert img { width: 100%; height: 100%; object-fit: cover; }
+/* 下面三張卡嘅示意圖：保持完整 3:2，唔裁；貼卡底對齊，文字自然撐開。圖說放喺圖下面，唔遮證書示意聲明、人面或戒指盒 */
+.bb-why__fig { margin: auto 0 0; padding-top: 8px; }
+.bb-why__fig img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; border-radius: var(--radius-img); background: var(--steel); }
+.bb-why__fig figcaption { display: flex; align-items: center; margin-top: 10px; color: var(--ink-soft); font-size: var(--step-caption); }
+.bb-why__card--delivery .bb-why__fig figcaption { color: var(--ink); }
 .bb-why__more { margin: 28px 0 0; text-align: center; }
 @media (max-width: 860px) {
   .bb-why__grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .bb-why__a, .bb-why__img, .bb-why__card { grid-column: 1; }
   .bb-why__a { min-height: 0; }
   .bb-why__a h3 { font-size: var(--step-head); }
-  .bb-why__img { aspect-ratio: 2 / 1; }
-  .bb-why__cert { height: 120px; }
+  /* 手機主圖：4:3 由正方形裁上下，睇得到師傅同前面工作台 */
+  .bb-why__img { aspect-ratio: 4 / 3; }
+  .bb-why__img img { object-position: 50% 40%; }
 }
 
 /* 章節頁：「鄒三山工坊嘅做法」 */
