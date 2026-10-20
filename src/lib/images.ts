@@ -1,16 +1,17 @@
 /**
  * 首飾示意圖：有細圖嘅檔案，自動提供 srcset，手機按槽寬揀細圖。
  * 2026-10-17 圖片包：-480 / -800；2026-10-18 章節圖包：-480 / -720。
+ * 2026-10-20：刊頭拼貼用嘅幾張加 -320（手機格仔只有約 140px 闊，唔使下載 480）。
  */
 const SMALL_WIDTHS: Record<string, number[]> = {
-  "ring-oval-pale": [480, 800],
+  "ring-oval-pale": [320, 480, 800],
   "bracelet-steel": [480, 800],
-  "pendant-yg-white": [480, 800],
-  "band-rg-steel": [480, 800],
-  "halo-rg-pale": [480, 800],
-  "macro-ink": [480, 800],
-  "solitaire-yg-steel": [480, 800],
-  "princess-wg-white": [480, 800],
+  "pendant-yg-white": [320, 480, 800],
+  "band-rg-steel": [320, 480, 800],
+  "halo-rg-pale": [320, 480, 800],
+  "macro-ink": [320, 480, 800],
+  "solitaire-yg-steel": [320, 480, 800],
+  "princess-wg-white": [320, 480, 800],
   "carat-size-round-cover": [480, 800],
   "certificate-verification-ivory": [480, 720],
   "custom-ring-wax-ivory": [480, 720],

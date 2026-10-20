@@ -27,7 +27,7 @@ for (const [page, runs] of Object.entries(byPage)) {
   for (const x of ops.slice(0, 14)) {
     const sav = x.metricSavings ? Object.entries(x.metricSavings).filter(([, v]) => v).map(([k, v]) => `${k} ${ms(v)}`).join(" ") : "";
     console.log(`  - ${x.id}：${x.title}${x.displayValue ? `（${x.displayValue}）` : ""}${sav ? ` [${sav}]` : ""}`);
-    const items = (x.details.items || []).slice(0, 4);
+    const items = Array.isArray(x.details.items) ? x.details.items.slice(0, 4) : [];
     for (const it of items) {
       const u = it.url || it.node?.snippet || it.source?.url || it.label || "";
       const extra = ["wastedBytes", "totalBytes", "wastedMs", "duration", "transferSize"].filter((k) => it[k]).map((k) => `${k}=${Math.round(it[k])}`).join(" ");
