@@ -398,7 +398,7 @@ export function CaratStory() {
             }}
             className={i === active ? "is-active" : undefined}
           >
-            <h3>{s.title}</h3>
+            <h2>{s.title}</h2>
             <p>{s.text}</p>
           </li>
         ))}
@@ -409,7 +409,7 @@ export function CaratStory() {
           }}
           className={isTool ? "is-active bb-story__tool" : "bb-story__tool"}
         >
-          <h3>自己試</h3>
+          <h2>自己試</h2>
           <p>拉動揀卡數，再揀手指粗幼。數字係標準圓形明亮式切工嘅大約直徑。</p>
           <Controls
             ct={ct}
