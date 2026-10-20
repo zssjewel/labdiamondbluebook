@@ -312,7 +312,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 刊頭拼貼：8 張 AI 示意圖 + 兩格品牌色 */}
       <div className="bb-mosaic">
         <div className="t-white">
-          <img decoding="async" {...imgProps(`${R}/ring-oval-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪橢圓主石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
+          <img decoding="async" fetchPriority="high" {...imgProps(`${R}/ring-oval-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪橢圓主石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-blue span2r" />
         <div className="t-white span2c">

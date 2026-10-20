@@ -35,7 +35,7 @@ jobs:
           for p in home:zh-hk.html chapter:zh-hk/price.html article:zh-hk/4c/carat-size-on-hand.html article2:zh-hk/basics/vs-natural-moissanite.html cases:zh-hk/cases.html case:zh-hk/cases/engagement-rings/oval-solitaire.html about:zh-hk/about.html; do
             name="${p%%:*}"; path="${p#*:}"
             for i in 1 2 3; do
-              npx -y lighthouse@12.6.1 "http://localhost:8090/$path" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
+              npx -y lighthouse@13 "http://localhost:8090/$path" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
             done
           done
           node scripts/lh-summary.cjs lh/*.json | tee lh/summary.txt

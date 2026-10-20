@@ -25,7 +25,7 @@ jobs:
           for p in home:zh-hk root: chapter:zh-hk/price article:zh-hk/4c/carat-size-on-hand cases:zh-hk/cases about:zh-hk/about; do
             name="${p%%:*}"; path="${p#*:}"
             for i in 1 2 3; do
-              npx -y lighthouse@12.6.1 "https://labdiamondbluebook.com/$path" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
+              npx -y lighthouse@13 "https://labdiamondbluebook.com/$path" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
             done
           done
           node scripts/lh-summary.cjs lh/*.json | tee lh/summary.txt
