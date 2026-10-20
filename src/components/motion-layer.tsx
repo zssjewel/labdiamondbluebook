@@ -101,8 +101,13 @@ function sortDiagram(): (() => void) | undefined {
   const timers: number[] = [];
   let alive = true;
   const reset = (stage: Element) => stage.classList.remove("is-ready", "is-sorting");
-  stages.forEach((stage) => {
+  // 準備：方塊同收埋嘅圖，等舞台去到離畫面一屏以內先做（開頁時唔使畫 300 幾粒方塊）
+  const prepped = new WeakSet<Element>();
+  const prep = (stage: Element) => {
+    if (prepped.has(stage)) return;
+    prepped.add(stage);
     stage.querySelectorAll<SVGSVGElement>(".bb-how__svg").forEach((svg) => {
+      if (!svg.getClientRects().length) return; // 只畫而家顯示緊嗰個方向
       const vertical = svg.classList.contains("bb-how__svg--v");
       // 方塊唔喺 HTML 入面，播動畫前先畫（最終位置；直版 x/y 對調）
       if (!svg.querySelector("rect")) {
@@ -137,8 +142,21 @@ function sortDiagram(): (() => void) | undefined {
       });
     });
     stage.classList.add("is-ready");
-  });
+  };
+  const near = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          near.unobserve(e.target);
+          prep(e.target);
+        }
+      }
+    },
+    { rootMargin: "0px 0px 100% 0px" },
+  );
+  stages.forEach((stage) => near.observe(stage));
   const play = (stage: Element) => {
+    prep(stage);
     const imgs = Array.from(stage.querySelectorAll("img"));
     const decoded = Promise.all(imgs.map((img) => (img.decode ? img.decode() : Promise.resolve())));
     const late = new Promise<never>((_, no) => timers.push(window.setTimeout(() => no(new Error("late")), 2500)));
@@ -169,6 +187,7 @@ function sortDiagram(): (() => void) | undefined {
   stages.forEach((stage) => io.observe(stage));
   return () => {
     alive = false;
+    near.disconnect();
     io.disconnect();
     timers.forEach((t) => window.clearTimeout(t));
     stages.forEach(reset);

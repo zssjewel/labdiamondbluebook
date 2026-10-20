@@ -1464,7 +1464,7 @@
 }
 
 /* ---------- 開頁速度：畫面以外嘅大段落，等碌到附近先排版同繪製 ---------- */
-.bb-routes, .bb-tool, .bb-related, .bb-why, .bb-how, .bb-faq, .bb-close, .bb-footer,
+.bb-routes, .bb-tool, .bb-related, .bb-contents, .bb-why, .bb-how, .bb-faq, .bb-close, .bb-footer,
 .bb-author, .bb-prevnext, .bb-ask, .bb-only-narrow, .bb-subhead, .bb-list {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
