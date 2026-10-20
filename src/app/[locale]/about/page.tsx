@@ -26,12 +26,20 @@ export default function AboutPage() {
       <p>
         工坊自己生產，沒有中間商，訂一件也是出廠價；做好之後由香港送貨上門。
       </p>
-      <figure className="bb-about__fig">
-        <img src="/images/renders/custom-ring-wax-ivory-720.webp" alt="工坊示意圖：戒指蠟版和設計草圖（AI 示意圖，待換工廠實拍）" width={720} height={720} loading="lazy" decoding="async" />
-        <figcaption>
-          工廠相片待換 <Demo />
-        </figcaption>
-      </figure>
+      <div className="bb-about__figs">
+        <figure>
+          <img src="/images/workshop-v2/workshop-interior-v2-800.webp" srcSet="/images/workshop-v2/workshop-interior-v2-480.webp 480w, /images/workshop-v2/workshop-interior-v2-800.webp 800w" sizes="(max-width: 760px) 46vw, 300px" alt="珠寶工坊內師傅、工作台與工具的場景（AI 寫實示意圖）" width={1200} height={1200} loading="lazy" decoding="async" style={{ objectPosition: "50% 40%" }} />
+          <figcaption>
+            工坊場景<span className="bb-demo">AI 示意</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="/images/workshop-v2/factory-direct-v2-800.webp" srcSet="/images/workshop-v2/factory-direct-v2-480.webp 480w, /images/workshop-v2/factory-direct-v2-800.webp 800w" sizes="(max-width: 760px) 46vw, 300px" alt="工坊師傅把單件戒指禮盒裝箱出貨（AI 示意圖）" width={1200} height={800} loading="lazy" decoding="async" />
+          <figcaption>
+            工坊直接出貨<span className="bb-demo">AI 示意</span>
+          </figcaption>
+        </figure>
+      </div>
 
       <h2 id="promise">四項承諾及條款</h2>
       <ol className="bb-terms">
@@ -49,12 +57,20 @@ export default function AboutPage() {
           <strong>送貨上門，滿意才付尾款。</strong>全港任何地區送貨上門。客人見面驗貨，滿意才付尾款；如不滿意，可即場取消，訂金全數退還。已刻字的貨品同樣適用。
         </li>
       </ol>
-      <figure className="bb-about__fig">
-        <img src="/images/renders/certificate-verification-ivory-720.webp" alt="證書示意圖（AI 示意圖，待換省檢證書實拍）" width={720} height={720} loading="lazy" decoding="async" />
-        <figcaption>
-          省檢證書樣本待換 <Demo />
-        </figcaption>
-      </figure>
+      <div className="bb-about__figs">
+        <figure>
+          <img src="/images/workshop-v2/quality-certificate-v2-800.webp" srcSet="/images/workshop-v2/quality-certificate-v2-480.webp 480w, /images/workshop-v2/quality-certificate-v2-800.webp 800w" sizes="(max-width: 760px) 46vw, 300px" alt="珠寶品質檢驗報告的示意樣本，並非真實證書（AI 生成）" width={1200} height={800} loading="lazy" decoding="async" />
+          <figcaption>
+            質檢報告示意<span className="bb-demo">AI 示意</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="/images/workshop-v2/doorstep-handover-v2-800.webp" srcSet="/images/workshop-v2/doorstep-handover-v2-480.webp 480w, /images/workshop-v2/doorstep-handover-v2-800.webp 800w" sizes="(max-width: 760px) 46vw, 300px" alt="工作人員送貨到家，與顧客當面開盒驗看戒指（AI 示意圖）" width={1200} height={800} loading="lazy" decoding="async" />
+          <figcaption>
+            上門交付驗貨<span className="bb-demo">AI 示意</span>
+          </figcaption>
+        </figure>
+      </div>
 
       <h2 id="disclosure">編著聲明</h2>
       <p>

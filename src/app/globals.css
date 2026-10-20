@@ -1711,6 +1711,8 @@ main:focus { outline: none; }
 /* 關於本書：條款、相片 */
 .bb-terms { margin: 0 0 1.4em; padding-left: 1.4em; }
 .bb-terms li { margin-bottom: 0.9em; line-height: 1.8; }
-.bb-about__fig { margin: 0 0 1.6em; max-width: 360px; }
-.bb-about__fig img { width: 100%; height: auto; border-radius: var(--radius-img); }
-.bb-about__fig figcaption { display: flex; align-items: center; margin-top: 6px; color: var(--ink-soft); font-size: var(--step-small); }
+/* 關於本書：兩張示意圖並排，統一 3:2（正方形工坊圖略裁上下），圖說喺圖下面 */
+.bb-about__figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 620px; margin: 0 0 1.6em; }
+.bb-about__figs figure { margin: 0; }
+.bb-about__figs img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-img); }
+.bb-about__figs figcaption { display: flex; align-items: center; margin-top: 6px; color: var(--ink-soft); font-size: var(--step-small); }
