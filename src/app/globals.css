@@ -463,6 +463,7 @@
   --th: 28px; /* 書嘅厚度 */
   --board: #26467f;
   --board-dark: #1c365f;
+  --book-blue: var(--board);
   --book-paper: #fffcf6;
   --book-serif: "Songti TC", "STSong", "Noto Serif CJK TC", "Noto Serif TC", "Source Han Serif TC", "PMingLiU", "MingLiU", serif;
   width: min(100% - 2 * var(--ov), 1020px);
