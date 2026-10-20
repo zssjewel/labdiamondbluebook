@@ -21,8 +21,12 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p lh
-          curl -s https://labdiamondbluebook.com/zh-hk | grep -o "<script[^>]*cloudflareinsights[^>]*>" | sed 's/^/beacon: /' > lh/beacon.txt || true
+          curl -s -A "Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Mobile Safari/537.36" -H "Accept: text/html" https://labdiamondbluebook.com/zh-hk | grep -o "<script[^>]*cloudflareinsights[^>]*>" | sed 's/^/beacon: /' > lh/beacon.txt || true
           cat lh/beacon.txt
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable)
+          for i in 1 2 3; do
+            npx -y lighthouse@13 "https://labdiamondbluebook.com/zh-hk" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --blocked-url-patterns="*cloudflareinsights*" --blocked-url-patterns="*cdn-cgi/rum*" --output=json --output-path="lh/nobeacon-$i.json" --quiet || true
+          done
           CHROME=$(command -v google-chrome || command -v google-chrome-stable)
           for p in home:zh-hk root: chapter:zh-hk/price article:zh-hk/4c/carat-size-on-hand cases:zh-hk/cases about:zh-hk/about; do
             name="${p%%:*}"; path="${p#*:}"
