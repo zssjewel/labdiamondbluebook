@@ -559,18 +559,17 @@ const widths = [320, 390, 768, 1440];
     await pg.evaluate(() => document.getElementById("contents").scrollIntoView({ block: "start", behavior: "instant" }));
     await pg.waitForTimeout(600);
     const r = await pg.evaluate(() => {
-      const fig = document.querySelector(".bb-contents__fig");
+      const front = document.querySelector(".bb-book__front");
       const first = document.querySelector(".bb-toc a");
       const head = document.getElementById("contents-title").getBoundingClientRect();
       const bar = document.querySelector(".bb-header").getBoundingClientRect();
       const fr = first.getBoundingClientRect();
-      const img = fig.querySelector("img");
-      const ir = img.getBoundingClientRect();
-      const lr = document.querySelector(".bb-contents__list").getBoundingClientRect();
-      const side = getComputedStyle(fig).display === "none" ? "" : `，書模喺${ir.left > lr.right ? "右" : "左"}邊 ${Math.round(ir.width)}×${Math.round(ir.height)}（原圖 ${img.naturalWidth}×${img.naturalHeight}，用 ${(img.currentSrc.match(/-(\d+)\.webp/) || [])[1]}w），頂部同目錄相差 ${Math.round(ir.top - lr.top)}px`;
-      return { fig: getComputedStyle(fig).display, side, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
+      const inside = document.querySelector(".bb-book__inside").getBoundingClientRect();
+      const page = document.querySelector(".bb-book__page").getBoundingClientRect();
+      const side = getComputedStyle(front).display === "none" ? "，手機版：目錄先，最新文章喺後" : `，打開咗：內頁喺${inside.right <= page.left + 2 ? "左" : "右"}（${Math.round(inside.width)}×${Math.round(inside.height)}），目錄頁喺右（${Math.round(page.width)}×${Math.round(page.height)}）`;
+      return { fig: getComputedStyle(front).display, side, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
     });
-    console.log(`${w}px：裝飾圖 ${r.fig === "none" ? "隱藏" : "顯示"}${r.side}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
+    console.log(`${w}px：書${r.fig === "none" ? "（封面隱藏）" : ""}${r.side}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
     if (w >= 1024 || w === 375) await pg.locator(".bb-contents").screenshot({ path: `shots/contents-${w}.png` }).catch(() => {});
     await ctx.close();
   }

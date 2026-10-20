@@ -61,7 +61,7 @@ async function glide(page, pxPerSec, stops = []) {
       else await page.locator(".bb-works .bb-shelf__paddle--next").click();
       await page.waitForTimeout(1100);
     }
-    await glide(page, speed, [".bb-tool__plate", [".bb-how__stage", 4200], ".bb-why__a"]);
+    await glide(page, speed, [".bb-tool__plate", [".bb-book", 3200], [".bb-how__stage", 4200], ".bb-why__a"]);
     await page.waitForTimeout(600);
     // 撳入文章，睇換頁
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
@@ -109,6 +109,26 @@ async function glide(page, pxPerSec, stops = []) {
       await page.screenshot({ path: `${out}/${tag}-shelf-next.png` });
     } else {
       await page.screenshot({ path: `${out}/${tag}-shelf.png` });
+    }
+    // 目錄嗰本書：重新開頁，碌到書嗰度按時間截圖（合埋 → 揭開 → 打開）
+    if (tag === "desktop") {
+      await page.goto(base + "/zh-hk.html", { waitUntil: "load" });
+      await page.waitForTimeout(1800);
+      for (let k = 0; k < 8; k++) {
+        const moved = await page.evaluate(() => {
+          const r = document.querySelector(".bb-book").getBoundingClientRect();
+          const d = r.top - (innerHeight - Math.min(r.height, innerHeight * 0.85)) / 2;
+          window.scrollTo(0, scrollY + d);
+          return Math.abs(d);
+        });
+        if (moved < 2) break;
+        await page.waitForTimeout(120);
+      }
+      const t0 = Date.now();
+      for (const ms of [0, 400, 800, 1200, 1600, 2400]) {
+        await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
+        await page.screenshot({ path: `${out}/${tag}-book-${ms}.png` });
+      }
     }
     // 流程圖：碌到畫面中間之後按時間截圖（粒子排隊 → 三張圖逐張出 → 播完停留）
     // 上面段落延遲排版，高度會變：反覆對位直到穩定

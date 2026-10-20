@@ -140,6 +140,44 @@ const ANSWERS = [
   },
 ];
 
+/** 封面上用代碼畫嘅圓形明亮式鑽石（俯視：八角檯面、星刻面、風箏面），唔使載圖 */
+function BookDiamond() {
+  const pts = (r: number, n: number, off = 0) => Array.from({ length: n }, (_, i) => {
+    const t = ((i + off) / n) * Math.PI * 2 - Math.PI / 2;
+    return [Math.round((60 + r * Math.cos(t)) * 10) / 10, Math.round((60 + r * Math.sin(t)) * 10) / 10];
+  });
+  const table = pts(26, 8, 0.5);
+  const star = pts(40, 8);
+  const girdle = pts(56, 16, 0.5);
+  const lines: string[] = [];
+  table.forEach(([x, y], i) => {
+    const [sx, sy] = star[(i + 1) % 8];
+    const [s0x, s0y] = star[i];
+    lines.push(`M${x} ${y}L${s0x} ${s0y}M${x} ${y}L${sx} ${sy}`);
+  });
+  star.forEach(([x, y], i) => {
+    const [g1x, g1y] = girdle[(i * 2 + 15) % 16];
+    const [g2x, g2y] = girdle[i * 2];
+    lines.push(`M${x} ${y}L${g1x} ${g1y}M${x} ${y}L${g2x} ${g2y}`);
+  });
+  return (
+    <svg className="bb-book__gem" viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <radialGradient id="bb-gem" cx="45%" cy="40%" r="65%">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="0.55" stopColor="#dfe7f5" />
+          <stop offset="1" stopColor="#9fb3d9" />
+        </radialGradient>
+      </defs>
+      <circle cx="60" cy="60" r="56" fill="url(#bb-gem)" />
+      <polygon points={table.map((p) => p.join(",")).join(" ")} fill="rgba(255,255,255,0.55)" />
+      <path d={lines.join("")} fill="none" stroke="rgba(52,80,143,0.45)" strokeWidth="0.8" />
+      <polygon points={table.map((p) => p.join(",")).join(" ")} fill="none" stroke="rgba(52,80,143,0.5)" strokeWidth="0.9" />
+      <circle cx="60" cy="60" r="56" fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
 /** 「點解揀鄒三山工坊」嘅 AI 寫實示意圖（workshop-v2，每張有 480/800/1200 三個闊度）。唔係工坊、客人或檢驗機構實拍 */
 const W2 = "/images/workshop-v2";
 function workshopImg(name: string, widths: number[], sizes: string) {
@@ -321,58 +359,67 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           已出 {articles.length} 篇 · 撰寫中 {pendingCount} 篇
         </p>
-        <div className="bb-contents__body">
-          <div className="bb-contents__list">
-            <ol className="bb-toc bb-group" data-reveal aria-label="目錄">
-              {CHAPTERS.map((c) => (
-                <li key={c.slug}>
-                  <Link href={localizeHref(`/${c.slug}`, locale)}>
-                    <span className="bb-toc__num">{c.number}</span>
-                    <span className="bb-toc__title">
-                      {c.title}
-                      <span className="bb-tag">{countOf(c.slug) > 0 ? `${countOf(c.slug)} 篇` : "撰寫中"}</span>
-                    </span>
-                    <span className="bb-toc__ans">{c.answers}</span>
-                  </Link>
-                </li>
-              ))}
-            </ol>
-            {latest.length > 0 && (
-              <div className="bb-latest" data-reveal>
-                <h3>最新文章</h3>
-                <ul className="bb-group">
-                  {latest.map((a) => (
-                    <li key={`${a.contentType}/${a.slug}`}>
-                      <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>
-                        <span className="bb-latest__title">{a.metadata.title}</span>
-                        <span className="bb-latest__meta">
-                          {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+        {/* 一本用代碼畫嘅書：碌到呢度先慢慢揭開封面，右頁係九章目錄，左頁（封面內頁）係書名同最新文章。
+            冇 JS、減少動畫、手機：直接係打開咗嘅狀態，連結即刻用得 */}
+        <div className="bb-book">
+          <div className="bb-book__spread">
+            <div className="bb-book__gutter" aria-hidden="true" />
+            <div className="bb-book__page">
+              <p className="bb-book__running" aria-hidden="true">
+                目錄
+              </p>
+              <ol className="bb-toc bb-book__toc" aria-label="目錄">
+                {CHAPTERS.map((c, i) => (
+                  <li key={c.slug} style={{ "--r": i } as React.CSSProperties}>
+                    <Link href={localizeHref(`/${c.slug}`, locale)}>
+                      <span className="bb-book__num">{c.number}</span>
+                      <span className="bb-book__title">
+                        {c.title}
+                        <span className="bb-tag">{countOf(c.slug) > 0 ? `${countOf(c.slug)} 篇` : "撰寫中"}</span>
+                      </span>
+                      <span className="bb-book__ans">{c.answers}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="bb-book__cover">
+              <div className="bb-book__front" aria-hidden="true">
+                <span className="bb-book__kicker">專業選購指南</span>
+                <span className="bb-book__name">
+                  培育鑽石
+                  <br />
+                  藍皮書
+                </span>
+                <span className="bb-book__sub">由入門到訂造，一本教你揀啱培育鑽</span>
+                <BookDiamond />
+                <span className="bb-book__topics">價錢・證書・4C・款式・訂造</span>
+                <span className="bb-book__imprint">鄒三山工坊 編著</span>
               </div>
-            )}
+              <div className="bb-book__inside">
+                <p className="bb-book__ititle">培育鑽石藍皮書</p>
+                <p className="bb-book__isub">由入門到訂造，一本教你揀啱培育鑽</p>
+                {latest.length > 0 && (
+                  <div className="bb-book__latest">
+                    <h3>最新文章</h3>
+                    <ul>
+                      {latest.map((a) => (
+                        <li key={`${a.contentType}/${a.slug}`}>
+                          <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>
+                            <span>{a.metadata.title}</span>
+                            <small>
+                              {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
+                            </small>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <p className="bb-book__iimprint">鄒三山工坊 編著</p>
+              </div>
+            </div>
           </div>
-          {/* 書模放右邊，排喺目錄之後：讀屏同鍵盤先到目錄；手機隱藏 */}
-          <figure className="bb-contents__fig" data-reveal="panel">
-            <span className="bb-contents__frame">
-              <img
-                src="/images/contents/bluebook-model-1000.webp"
-                srcSet="/images/contents/bluebook-model-480.webp 480w, /images/contents/bluebook-model-720.webp 720w, /images/contents/bluebook-model-1000.webp 1000w"
-                sizes="min(30vw, 380px)"
-                alt="培育鑽石藍皮書精裝立體書概念模型，藍色封面與書脊印有書名，封面附鑽石及選購主題（AI 示意圖）"
-                width={1000}
-                height={1250}
-                loading="lazy"
-                decoding="async"
-              />
-            </span>
-            <figcaption>
-              本站內容示意封面，非出版書籍<span className="bb-demo">AI 示意</span>
-            </figcaption>
-          </figure>
         </div>
       </section>
 

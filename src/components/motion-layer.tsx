@@ -53,6 +53,7 @@ export default function MotionLayer() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const stopSort = sortDiagram();
+    const stopBook = openBook();
     if (!("IntersectionObserver" in window)) return;
     const vh = window.innerHeight;
     const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter((el) => el.getBoundingClientRect().top > vh);
@@ -76,6 +77,7 @@ export default function MotionLayer() {
     return () => {
       io.disconnect();
       stopSort?.();
+      stopBook?.();
     };
   }, [pathname]);
 
@@ -155,5 +157,38 @@ function sortDiagram(): (() => void) | undefined {
     io.disconnect();
     timers.forEach((t) => window.clearTimeout(t));
     stages.forEach(reset);
+  };
+}
+
+/**
+ * 首頁目錄嗰本書：仲未碌到（喺畫面下面）就先合埋（is-closed）；去到畫面加 is-opening、拎走 is-closed，
+ * 封面慢慢揭開。播完拎走 class，回到預設打開狀態。手機唔做（手機直接係目錄）。
+ */
+function openBook(): (() => void) | undefined {
+  if (!("IntersectionObserver" in window) || window.matchMedia("(max-width: 960px)").matches) return;
+  const books = Array.from(document.querySelectorAll<HTMLElement>(".bb-book")).filter((b) => b.getBoundingClientRect().top > window.innerHeight * 0.75);
+  if (!books.length) return;
+  const timers: number[] = [];
+  books.forEach((b) => b.classList.add("is-closed"));
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const b = e.target as HTMLElement;
+        io.unobserve(b);
+        requestAnimationFrame(() => {
+          b.classList.add("is-opening");
+          b.classList.remove("is-closed");
+          timers.push(window.setTimeout(() => b.classList.remove("is-opening"), 2800));
+        });
+      }
+    },
+    { threshold: 0.35 },
+  );
+  books.forEach((b) => io.observe(b));
+  return () => {
+    io.disconnect();
+    timers.forEach((t) => window.clearTimeout(t));
+    books.forEach((b) => b.classList.remove("is-closed", "is-opening"));
   };
 }

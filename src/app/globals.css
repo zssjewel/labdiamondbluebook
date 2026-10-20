@@ -453,36 +453,134 @@
   font-size: var(--step-lead);
   line-height: 1.5;
 }
-.bb-contents__body {
+/* ---------- 首頁目錄：用代碼畫嘅一本書 ----------
+   打開咗嘅狀態係預設（冇 JS／減少動畫／手機都係咁），
+   電腦有動效時由 motion-layer 先合埋（is-closed），碌到先揭開封面。 */
+.bb-book {
+  --book-blue: #244681;
+  --book-blue-2: #34508f;
+  --book-paper: #fffdf8;
+  --book-serif: "Songti TC", "STSong", "Noto Serif CJK TC", "Noto Serif TC", "Source Han Serif TC", "PMingLiU", "MingLiU", serif;
+  width: min(100%, 1040px);
+  margin: clamp(40px, 5vw, 72px) auto 0;
+  perspective: 2600px;
+}
+.bb-book__spread {
+  position: relative;
   display: grid;
-  /* 左：目錄同最新文章；右：書模（約 7:5） */
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  grid-template-areas: "list fig";
-  gap: clamp(24px, 3vw, 48px);
-  align-items: start;
-  margin-top: clamp(40px, 5vw, 72px);
+  grid-template-columns: 1fr 1fr;
+  transform-style: preserve-3d;
 }
-.bb-contents__list { grid-area: list; }
-.bb-contents__fig {
-  grid-area: fig;
-  justify-self: center;
-  /* 書做點綴、目錄做主角：最闊 380px */
-  width: min(100%, 380px);
-  margin: 0;
-  position: sticky;
-  top: 88px;
+/* 右頁：九章目錄 */
+.bb-book__page {
+  position: relative;
+  padding: clamp(28px, 3.4vw, 48px) clamp(24px, 3vw, 44px) clamp(24px, 3vw, 40px);
+  border-radius: 3px 12px 12px 3px;
+  background: linear-gradient(to right, rgba(42, 35, 38, 0.1), rgba(42, 35, 38, 0) 7%) var(--book-paper);
+  /* 書頁厚度：右邊同底邊幾層紙 */
+  box-shadow: 1px 1px 0 #ece4da, 2px 2px 0 var(--book-paper), 3px 3px 0 #e6ddd2, 4px 4px 0 var(--book-paper), 5px 5px 0 #ded4c8, 0 24px 48px -28px rgba(42, 35, 38, 0.35); /* taste-skill-ignore: 書頁厚度 */
 }
-/* 書模保持原圖 4:5，唔裁。圖本身嘅暖白底四邊淡出，融入段落底色，睇唔到方框，似書直接企喺頁面上 */
-.bb-contents__frame {
-  display: block;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
-  mask-composite: intersect;
+.bb-book__running { margin: 0 0 14px; color: var(--ink-soft); font: 400 var(--step-caption)/1 var(--book-serif); letter-spacing: 0.4em; text-align: center; }
+.bb-book__toc { margin: 0; padding: 0; list-style: none; }
+.bb-book__toc li + li { border-top: 1px dotted rgba(42, 35, 38, 0.2); }
+.bb-book__toc a {
+  display: grid;
+  grid-template-columns: 4.2em minmax(0, 1fr) 1em;
+  align-items: baseline;
+  gap: 2px 10px;
+  padding: 11px 4px;
+  color: var(--ink);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
-.bb-contents__fig img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
-.bb-contents__fig figcaption { display: flex; align-items: center; justify-content: center; margin-top: 10px; color: var(--ink-soft); font-size: var(--step-caption); }
+.bb-book__toc a::after { content: "›"; grid-column: 3; grid-row: 1; color: var(--ink-soft); text-align: right; }
+.bb-book__num { grid-column: 1; color: var(--ink-soft); font: 400 var(--step-caption)/1.4 var(--book-serif); }
+.bb-book__title { grid-column: 2; font: 600 var(--step-body)/1.4 var(--book-serif); }
+.bb-book__title .bb-tag { margin-left: 8px; font-family: var(--font-text); font-weight: 400; vertical-align: 1px; }
+.bb-book__ans { grid-column: 2 / 4; color: var(--ink-soft); font-size: var(--step-caption); line-height: 1.5; }
+@media (hover: hover) {
+  .bb-book__toc a:hover .bb-book__title { color: var(--blue); }
+}
+
+/* 封面：電腦版喺右半邊，以書脊（左邊）為軸揭開 180°，揭開後內頁喺左邊 */
+.bb-book__cover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 50%;
+  transform-origin: left center;
+  transform: rotateY(-180deg) translateZ(1px);
+  transform-style: preserve-3d;
+}
+.bb-book__front, .bb-book__inside {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.bb-book__front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 9% 10% 7% 14%;
+  border-radius: 3px 12px 12px 3px;
+  color: #ffffff;
+  text-align: center;
+  font-family: var(--book-serif);
+  /* 藍色封面：深淺切面紋 + 左邊書脊壓痕 */
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.08) 3.5%, rgba(255, 255, 255, 0.1) 4.2%, rgba(255, 255, 255, 0) 6%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0 30%, rgba(255, 255, 255, 0) 30% 55%, rgba(255, 255, 255, 0.06) 55% 72%, rgba(255, 255, 255, 0) 72%),
+    linear-gradient(200deg, rgba(255, 255, 255, 0.07) 0 40%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(160deg, var(--book-blue-2), var(--book-blue) 60%, #1b3566);
+  box-shadow: 0 30px 60px -30px rgba(27, 53, 102, 0.6); /* taste-skill-ignore: 書嘅影 */
+}
+.bb-book__kicker { display: flex; align-items: center; gap: 12px; font-size: var(--step-caption); letter-spacing: 0.35em; opacity: 0.85; }
+.bb-book__kicker::before, .bb-book__kicker::after { content: ""; width: 2.4em; height: 1px; background: currentColor; opacity: 0.6; }
+.bb-book__name { margin-top: 0.5em; font-size: clamp(2rem, 1rem + 2.6vw, 3.4rem); font-weight: 700; line-height: 1.12; letter-spacing: 0.06em; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25); }
+.bb-book__sub { margin-top: 0.8em; font-size: var(--step-small); opacity: 0.9; }
+.bb-book__gem { width: 46%; margin: auto 0; filter: drop-shadow(0 0 22px rgba(190, 210, 255, 0.45)); }
+.bb-book__topics { font-size: var(--step-small); letter-spacing: 0.2em; opacity: 0.9; }
+.bb-book__imprint { margin-top: 1em; font-size: var(--step-caption); letter-spacing: 0.2em; opacity: 0.75; }
+
+/* 封面內頁（揭開後喺左邊）：書名頁 + 最新文章 */
+.bb-book__inside {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 3.4vw, 48px) clamp(24px, 3vw, 44px) clamp(24px, 3vw, 40px);
+  border-radius: 12px 3px 3px 12px;
+  background: linear-gradient(to left, rgba(42, 35, 38, 0.1), rgba(42, 35, 38, 0) 7%) var(--book-paper);
+  box-shadow: -1px 1px 0 #ece4da, -2px 2px 0 var(--book-paper), -3px 3px 0 #e6ddd2, -4px 4px 0 var(--book-paper), -5px 5px 0 #ded4c8, 0 24px 48px -28px rgba(42, 35, 38, 0.35); /* taste-skill-ignore: 書頁厚度 */
+}
+.bb-book__ititle { margin: 8% 0 0; font: 700 clamp(1.6rem, 1rem + 1.6vw, 2.4rem)/1.2 var(--book-serif); letter-spacing: 0.08em; text-align: center; color: var(--book-blue); }
+.bb-book__isub { margin: 12px 0 0; color: var(--ink-soft); font: 400 var(--step-small)/1.6 var(--book-serif); text-align: center; }
+.bb-book__latest { margin-top: auto; }
+.bb-book__latest h3 { margin: 0 0 6px; padding-bottom: 8px; border-bottom: 1px solid rgba(42, 35, 38, 0.14); font: 600 var(--step-small)/1.4 var(--book-serif); }
+.bb-book__latest ul { margin: 0; padding: 0; list-style: none; }
+.bb-book__latest a { display: flex; flex-direction: column; gap: 2px; padding: 9px 0; color: var(--ink); text-decoration: none; }
+.bb-book__latest li + li { border-top: 1px dotted rgba(42, 35, 38, 0.2); }
+.bb-book__latest a span { font-size: var(--step-small); line-height: 1.5; }
+.bb-book__latest a small { color: var(--ink-soft); font-size: var(--step-caption); }
+@media (hover: hover) {
+  .bb-book__latest a:hover span { color: var(--blue); }
+}
+.bb-book__iimprint { margin: 18px 0 0; color: var(--ink-soft); font: 400 var(--step-caption)/1 var(--book-serif); letter-spacing: 0.2em; text-align: center; }
+
+/* 手機、細平板：唔做立體書，直接目錄（先）+ 書名頁同最新文章（後） */
+@media (max-width: 960px) {
+  .bb-book { perspective: none; }
+  .bb-book__spread { grid-template-columns: 1fr; gap: 12px; }
+  .bb-book__gutter, .bb-book__front { display: none; }
+  .bb-book__page { border-radius: var(--radius-panel); background: var(--book-paper); box-shadow: none; padding: 20px 18px; }
+  .bb-book__cover { position: static; width: auto; transform: none; }
+  .bb-book__inside { position: static; transform: none; border-radius: var(--radius-panel); background: var(--book-paper); box-shadow: none; padding: 20px 18px; }
+  .bb-book__ititle, .bb-book__isub { display: none; }
+  .bb-book__latest { margin-top: 0; }
+  .bb-book__iimprint { display: none; }
+}
+
 /* Apple 式分組清單：白底圓角，一行一項，右邊 › */
 .bb-group {
   margin: 0;
@@ -524,9 +622,6 @@
 .bb-latest__title { font-weight: 400; }
 .bb-latest__meta { color: var(--ink-soft); font-size: var(--step-caption); }
 @media (max-width: 960px) {
-  .bb-contents__body { grid-template-columns: 1fr; grid-template-areas: "list"; }
-  /* 手機、細平板：目錄頁直接睇章節，唔放裝飾圖 */
-  .bb-contents__fig { display: none; }
   .bb-group a { grid-template-columns: 3.6em minmax(0, 1fr) 1em; gap: 2px 8px; padding: 12px 18px; }
   .bb-group a::after { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
   .bb-toc__ans { grid-column: 2; text-align: left; }
