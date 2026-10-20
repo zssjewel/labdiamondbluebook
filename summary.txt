@@ -1,0 +1,194 @@
+
+== about：手機效能 100（3 次：100/100/100）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.25s（分 99）
+  largest-contentful-paint: 1.25s（分 100）
+  total-blocking-time: 44ms（分 100）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 1.25s（分 100）
+  - unused-css-rules：Reduce unused CSS（Est savings of 49 KiB）
+      · https://labdiamondbluebook.com/_next/static/css/c504e2ccadd3e7d9.css wastedBytes=50227 totalBytes=60141
+  - unused-javascript：Reduce unused JavaScript（Est savings of 129 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79940 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=52506 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 20 KiB）
+      · https://labdiamondbluebook.com/images/workshop-v2/workshop-interior-v2-480.webp wastedBytes=7193 totalBytes=71933
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=4191 totalBytes=10478
+      · https://labdiamondbluebook.com/images/workshop-v2/factory-direct-v2-480.webp wastedBytes=4044 totalBytes=40443
+      · https://labdiamondbluebook.com/images/workshop-v2/doorstep-handover-v2-480.webp wastedBytes=2722 totalBytes=27224
+  - document-latency-insight：Document request latency（Est savings of 48 KiB）
+  - image-delivery-insight：Improve image delivery（Est savings of 95 KiB）
+      · https://labdiamondbluebook.com/images/workshop-v2/workshop-interior-v2-480.webp wastedBytes=54137 totalBytes=71418
+      · https://labdiamondbluebook.com/images/workshop-v2/factory-direct-v2-480.webp wastedBytes=28403 totalBytes=39922
+      · https://labdiamondbluebook.com/images/workshop-v2/doorstep-handover-v2-480.webp wastedBytes=15197 totalBytes=26716
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 53 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=10483
+  請求 23 個，共 728KB；JS 13 個 431KB；CSS 64KB；圖 155KB
+  主線程：Script Evaluation 330ms，Other 262ms，Style & Layout 153ms，Script Parsing & Compilation 105ms，Parse HTML & CSS 28ms
+
+== article：手機效能 99（3 次：99/99/100）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.31s（分 98）
+  largest-contentful-paint: 1.74s（分 99）
+  total-blocking-time: 83ms（分 99）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 1.36s（分 100）
+  - unused-css-rules：Reduce unused CSS（Est savings of 43 KiB）
+      · *,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-… wastedBytes=43987 totalBytes=60123
+  - unused-javascript：Reduce unused JavaScript（Est savings of 121 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79910 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=43937 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 7 KiB）
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=4191 totalBytes=10478
+      · https://labdiamondbluebook.com/images/hand/stone-top.webp wastedBytes=3285 totalBytes=32847
+  - document-latency-insight：Document request latency（Est savings of 61 KiB）
+  - image-delivery-insight：Improve image delivery（Est savings of 31 KiB）
+      · https://labdiamondbluebook.com/images/hand/stone-top.webp wastedBytes=32000 totalBytes=32342
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 53 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=10483
+  請求 19 個，共 641KB；JS 12 個 446KB；CSS 64KB；圖 32KB
+  主線程：Script Evaluation 403ms，Style & Layout 292ms，Other 279ms，Script Parsing & Compilation 65ms，Parse HTML & CSS 45ms
+
+== cases：手機效能 99（3 次：99/99/99）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.43s（分 97）
+  largest-contentful-paint: 2.11s（分 96）
+  total-blocking-time: 57ms（分 100）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 1.86s（分 100）
+  - unused-css-rules：Reduce unused CSS（Est savings of 48 KiB）
+      · https://labdiamondbluebook.com/_next/static/css/c504e2ccadd3e7d9.css wastedBytes=49661 totalBytes=60141
+  - unused-javascript：Reduce unused JavaScript（Est savings of 129 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79940 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=52113 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 33 KiB）
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=4191 totalBytes=10478
+      · https://labdiamondbluebook.com/images/renders/macro-ink-480.webp wastedBytes=2758 totalBytes=27577
+      · https://labdiamondbluebook.com/images/cases-demo/bracelet-detail-480.webp wastedBytes=2311 totalBytes=23108
+      · https://labdiamondbluebook.com/images/renders/halo-rg-pale-480.webp wastedBytes=1453 totalBytes=14529
+  - document-latency-insight：Document request latency（Est savings of 60 KiB）
+  - image-delivery-insight：Improve image delivery（Est savings of 26 KiB）
+      · https://labdiamondbluebook.com/images/renders/macro-ink-480.webp wastedBytes=14757 totalBytes=27074
+      · https://labdiamondbluebook.com/images/cases-demo/bracelet-detail-480.webp wastedBytes=12323 totalBytes=22608
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 53 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=10483
+  請求 41 個，共 883KB；JS 11 個 435KB；CSS 64KB；圖 288KB
+  主線程：Other 502ms，Script Evaluation 383ms，Style & Layout 247ms，Script Parsing & Compilation 103ms，Rendering 91ms
+
+== chapter：手機效能 99（3 次：99/99/100）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.35s（分 98）
+  largest-contentful-paint: 1.37s（分 100）
+  total-blocking-time: 107ms（分 98）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 1.35s（分 100）
+  - unused-css-rules：Reduce unused CSS（Est savings of 45 KiB）
+      · *,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-… wastedBytes=45796 totalBytes=60123
+  - unused-javascript：Reduce unused JavaScript（Est savings of 124 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79940 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=46817 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 7 KiB）
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=4191 totalBytes=10478
+      · https://labdiamondbluebook.com/images/renders/solitaire-yg-steel-480.webp wastedBytes=1191 totalBytes=11911
+      · https://labdiamondbluebook.com/images/renders/ring-oval-pale-480.webp wastedBytes=1073 totalBytes=10735
+      · https://labdiamondbluebook.com/images/renders/princess-wg-white-480.webp wastedBytes=1028 totalBytes=10285
+  - document-latency-insight：Document request latency（Est savings of 50 KiB）
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 53 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=10483
+  請求 21 個，共 616KB；JS 12 個 437KB；CSS 64KB；圖 32KB
+  主線程：Script Evaluation 382ms，Style & Layout 228ms，Other 219ms，Script Parsing & Compilation 76ms，Parse HTML & CSS 34ms
+
+== home：手機效能 99（3 次：99/99/100）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.52s（分 95）
+  largest-contentful-paint: 1.52s（分 100）
+  total-blocking-time: 65ms（分 100）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 2.51s（分 98）
+  - unused-css-rules：Reduce unused CSS（Est savings of 41 KiB）
+      · https://labdiamondbluebook.com/_next/static/css/c504e2ccadd3e7d9.css wastedBytes=41895 totalBytes=60141
+  - unused-javascript：Reduce unused JavaScript（Est savings of 123 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79910 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=45587 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 23 KiB）
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=4191 totalBytes=10478
+      · https://labdiamondbluebook.com/images/renders/pendant-yg-white-800.webp wastedBytes=2865 totalBytes=28649
+      · https://labdiamondbluebook.com/images/renders/bracelet-steel-800.webp wastedBytes=2637 totalBytes=26367
+      · https://labdiamondbluebook.com/images/cases-demo/studs-yg-800.webp wastedBytes=2621 totalBytes=26214
+  - document-latency-insight：Document request latency（Est savings of 78 KiB）
+  - image-delivery-insight：Improve image delivery（Est savings of 51 KiB）
+      · https://labdiamondbluebook.com/images/renders/pendant-yg-white-800.webp wastedBytes=14231 totalBytes=28134
+      · https://labdiamondbluebook.com/images/cases-demo/studs-yg-800.webp wastedBytes=13002 totalBytes=25704
+      · https://labdiamondbluebook.com/images/renders/solitaire-yg-steel-800.webp wastedBytes=12476 totalBytes=24664
+      · https://labdiamondbluebook.com/images/renders/band-rg-steel-800.webp wastedBytes=12350 totalBytes=24416
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 53 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=10483
+  請求 29 個，共 859KB；JS 12 個 483KB；CSS 64KB；圖 187KB
+  主線程：Other 643ms，Script Evaluation 521ms，Style & Layout 484ms，Script Parsing & Compilation 84ms，Rendering 77ms
+
+== nobeacon：手機效能 91（3 次：81/91/99）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.45s（分 96）
+  largest-contentful-paint: 1.58s（分 99）
+  total-blocking-time: 353ms（分 73）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 2.29s（分 99）
+  - mainthread-work-breakdown：Minimize main-thread work（2.9 s） [TBT 350ms]
+      ·  duration=1001
+      ·  duration=874
+      ·  duration=727
+      ·  duration=117
+  - unused-css-rules：Reduce unused CSS（Est savings of 41 KiB）
+      · *,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-… wastedBytes=41882 totalBytes=60123
+  - unused-javascript：Reduce unused JavaScript（Est savings of 123 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79910 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=45587 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 19 KiB）
+      · https://labdiamondbluebook.com/images/renders/pendant-yg-white-800.webp wastedBytes=2864 totalBytes=28638
+      · https://labdiamondbluebook.com/images/renders/bracelet-steel-800.webp wastedBytes=2636 totalBytes=26361
+      · https://labdiamondbluebook.com/images/cases-demo/studs-yg-800.webp wastedBytes=2622 totalBytes=26218
+      · https://labdiamondbluebook.com/images/renders/solitaire-yg-steel-800.webp wastedBytes=2518 totalBytes=25178
+  - document-latency-insight：Document request latency（Est savings of 78 KiB）
+  - image-delivery-insight：Improve image delivery（Est savings of 51 KiB）
+      · https://labdiamondbluebook.com/images/renders/pendant-yg-white-800.webp wastedBytes=14231 totalBytes=28134
+      · https://labdiamondbluebook.com/images/cases-demo/studs-yg-800.webp wastedBytes=13002 totalBytes=25704
+      · https://labdiamondbluebook.com/images/renders/solitaire-yg-steel-800.webp wastedBytes=12476 totalBytes=24664
+      · https://labdiamondbluebook.com/images/renders/band-rg-steel-800.webp wastedBytes=12350 totalBytes=24416
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 43 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+  請求 28 個，共 848KB；JS 12 個 473KB；CSS 64KB；圖 187KB
+  主線程：Other 1.00s，Script Evaluation 874ms，Style & Layout 727ms，Script Parsing & Compilation 117ms，Rendering 105ms
+
+== root：手機效能 100（3 次：99/100/100）｜accessibility 100，best-practices 100
+  first-contentful-paint: 1.51s（分 96）
+  largest-contentful-paint: 1.52s（分 100）
+  total-blocking-time: 53ms（分 100）
+  cumulative-layout-shift: 0.000（分 100）
+  speed-index: 2.21s（分 99）
+  - mainthread-work-breakdown：Minimize main-thread work（2.0 s） [TBT 50ms]
+      ·  duration=805
+      ·  duration=533
+      ·  duration=455
+      ·  duration=78
+  - unused-css-rules：Reduce unused CSS（Est savings of 41 KiB）
+      · *,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-… wastedBytes=41882 totalBytes=60123
+  - unused-javascript：Reduce unused JavaScript（Est savings of 123 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=79910 totalBytes=173917
+      · https://labdiamondbluebook.com/_next/static/chunks/4bd1b696-c023c6e3521b1417.js wastedBytes=45587 totalBytes=173019
+  - cache-insight：Use efficient cache lifetimes（Est savings of 23 KiB）
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=4191 totalBytes=10478
+      · https://labdiamondbluebook.com/images/renders/pendant-yg-white-800.webp wastedBytes=2864 totalBytes=28643
+      · https://labdiamondbluebook.com/images/renders/bracelet-steel-800.webp wastedBytes=2636 totalBytes=26362
+      · https://labdiamondbluebook.com/images/cases-demo/studs-yg-800.webp wastedBytes=2621 totalBytes=26206
+  - document-latency-insight：Document request latency（Est savings of 78 KiB）
+  - image-delivery-insight：Improve image delivery（Est savings of 51 KiB）
+      · https://labdiamondbluebook.com/images/renders/pendant-yg-white-800.webp wastedBytes=14231 totalBytes=28134
+      · https://labdiamondbluebook.com/images/cases-demo/studs-yg-800.webp wastedBytes=13002 totalBytes=25704
+      · https://labdiamondbluebook.com/images/renders/solitaire-yg-steel-800.webp wastedBytes=12476 totalBytes=24664
+      · https://labdiamondbluebook.com/images/renders/band-rg-steel-800.webp wastedBytes=12350 totalBytes=24416
+  - legacy-javascript-insight：Legacy JavaScript（Est savings of 53 KiB）
+      · https://labdiamondbluebook.com/_next/static/chunks/255-a70cfdedd3f61710.js wastedBytes=44176
+      · https://static.cloudflareinsights.com/beacon.min.js wastedBytes=10483
+  請求 29 個，共 859KB；JS 12 個 483KB；CSS 64KB；圖 187KB
+  主線程：Other 805ms，Script Evaluation 533ms，Style & Layout 455ms，Script Parsing & Compilation 78ms，Rendering 76ms
+PSI zh-hk: {"error":{"code":429,"message":"Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespeedonline.googleapis.com' for consumer 'project_number:583797351490'.","errors":[{"message":"Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pages
+PSI root: {"error":{"code":429,"message":"Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pagespeedonline.googleapis.com' for consumer 'project_number:583797351490'.","errors":[{"message":"Quota exceeded for quota metric 'Queries' and limit 'Queries per day' of service 'pages
