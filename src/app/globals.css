@@ -547,6 +547,8 @@
   text-align: center;
   font-family: var(--book-serif);
   overflow: hidden;
+  /* 封面背面朝上時（打開咗）唔可以擋住內頁連結 */
+  pointer-events: none;
   /* 藍色封面：純色，切面紋同書脊用獨立元素（見 BookFacets、.bb-book__spine） */
   background: var(--book-blue);
 }

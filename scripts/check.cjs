@@ -567,7 +567,9 @@ const widths = [320, 390, 768, 1440];
       const inside = document.querySelector(".bb-book__inside").getBoundingClientRect();
       const page = document.querySelector(".bb-book__page").getBoundingClientRect();
       const side = getComputedStyle(front).display === "none" ? "，手機版：目錄先，最新文章喺後" : `，打開咗：內頁喺${inside.right <= page.left + 2 ? "左" : "右"}（${Math.round(inside.width)}×${Math.round(inside.height)}），目錄頁喺右（${Math.round(page.width)}×${Math.round(page.height)}）`;
-      return { fig: getComputedStyle(front).display, side, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
+      const hitOk = (sel) => { const a = document.querySelector(sel); if (!a) return "冇"; const b = a.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return "唔喺畫面"; const e = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return a.contains(e) ? "撳得到" : `被 ${e?.className || e?.tagName} 擋住`; };
+      const side2 = side + `；最新文章連結${hitOk(".bb-book__latest a")}，第一章連結${hitOk(".bb-toc a")}`;
+      return { fig: getComputedStyle(front).display, side: side2, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
     });
     console.log(`${w}px：書${r.fig === "none" ? "（封面隱藏）" : ""}${r.side}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
     if (w >= 1024 || w === 375) { await pg.waitForTimeout(2600); await pg.screenshot({ path: `shots/contents-${w}.png` }).catch(() => {}); }
