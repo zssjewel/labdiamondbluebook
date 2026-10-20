@@ -14,7 +14,18 @@ for (const [page, runs] of Object.entries(byPage)) {
   const med = runs[Math.floor(runs.length / 2)];
   const a = med.audits;
   const scores = runs.map((r) => Math.round(r.categories.performance.score * 100)).join("/");
-  console.log(`\n== ${page}：手機效能 ${Math.round(med.categories.performance.score * 100)}（${runs.length} 次：${scores}）`);
+  const others = Object.entries(med.categories).filter(([k]) => k !== "performance").map(([k, c]) => `${k} ${Math.round(c.score * 100)}`).join("，");
+  console.log(`\n== ${page}：手機效能 ${Math.round(med.categories.performance.score * 100)}（${runs.length} 次：${scores}）${others ? "｜" + others : ""}`);
+  for (const [k, c] of Object.entries(med.categories)) {
+    if (k === "performance") continue;
+    for (const ref of c.auditRefs) {
+      const x = med.audits[ref.id];
+      if (ref.weight > 0 && x.score !== null && x.score < 1) {
+        const its = Array.isArray(x.details?.items) ? x.details.items.slice(0, 3).map((it) => (it.node?.snippet || it.url || it.description || JSON.stringify(it)).toString().slice(0, 140)) : [];
+        console.log(`  ✗ [${k}] ${x.id}：${x.title}${its.length ? "\n      · " + its.join("\n      · ") : ""}`);
+      }
+    }
+  }
   for (const k of ["first-contentful-paint", "largest-contentful-paint", "total-blocking-time", "cumulative-layout-shift", "speed-index"]) {
     const x = a[k];
     console.log(`  ${k}: ${k === "cumulative-layout-shift" ? x.numericValue.toFixed(3) : ms(x.numericValue)}（分 ${Math.round((x.score ?? 0) * 100)}）`);

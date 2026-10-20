@@ -140,6 +140,21 @@ const ANSWERS = [
   },
 ];
 
+/** 刊頭拼貼相：先放透明佔位，由下面 LATE_IMG_JS 決定幾時換真圖；冇 JS 時用 noscript 入面嘅普通圖 */
+const BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+function LateImg({ src, sizes, alt, width, height, high }: { src: string; sizes: string; alt: string; width: number; height: number; high?: boolean }) {
+  const p = imgProps(src, sizes);
+  return (
+    <>
+      <img className="is-late" src={BLANK} data-src={p.src} data-srcset={p.srcSet} data-sizes={p.sizes} data-high={high ? "1" : undefined} alt={alt} width={width} height={height} decoding="async" />
+      <noscript>
+        <img {...p} alt={alt} width={width} height={height} decoding="async" />
+      </noscript>
+    </>
+  );
+}
+const LATE_IMG_JS = `(function(){var m=matchMedia("(max-width: 760px)").matches;var a=document.querySelectorAll(".bb-mosaic img.is-late");function go(){a.forEach(function(i){if(!m)i.classList.add("is-in");else i.onload=function(){i.classList.add("is-in")};if(i.dataset.high&&!m)i.fetchPriority="high";if(i.dataset.sizes)i.sizes=i.dataset.sizes;if(i.dataset.srcset)i.srcset=i.dataset.srcset;i.src=i.dataset.src})}if(!m)go();else requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(go,300)})})})()`;
+
 /** 書布紋理：feTurbulence 雜訊，極淡，令封面似布面精裝而唔係平面色塊 */
 function BookCloth({ id }: { id: string }) {
   return (
@@ -312,11 +327,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 刊頭拼貼：8 張 AI 示意圖 + 兩格品牌色 */}
       <div className="bb-mosaic">
         <div className="t-white">
-          <img decoding="async" fetchPriority="high" {...imgProps(`${R}/ring-oval-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪橢圓主石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
+          <LateImg src={`${R}/ring-oval-pale.webp`} sizes="(max-width: 760px) 34vw, 17vw" alt="銀白色四爪橢圓主石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} high />
         </div>
         <div className="t-blue span2r" />
         <div className="t-white span2c">
-          <img decoding="async" fetchPriority="high" {...imgProps(`${R}/bracelet-steel.webp`, "(max-width: 760px) 34vw, 34vw")} alt="銀白色圓鑽網球手鏈，橢圓形平放展示（AI 示意圖）" width={1400} height={700} />
+          <LateImg src={`${R}/bracelet-steel.webp`} sizes="(max-width: 760px) 34vw, 34vw" alt="銀白色圓鑽網球手鏈，橢圓形平放展示（AI 示意圖）" width={1400} height={700} high />
         </div>
         <div className="t-white hide-sm">
           <img decoding="async" loading="lazy" style={{ objectPosition: "50% 70%" }} {...imgProps(`${R}/pendant-yg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單鑽吊墜與細鏈（AI 示意圖）" width={1000} height={1000} />
@@ -325,7 +340,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <img decoding="async" loading="lazy" {...imgProps(`${R}/solitaire-yg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="黃金色四爪單石戒指，暖白背景（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-white">
-          <img decoding="async" {...imgProps(`${R}/halo-rg-pale.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色光環主石戒指（AI 示意圖）" width={1000} height={1000} />
+          <LateImg src={`${R}/halo-rg-pale.webp`} sizes="(max-width: 760px) 34vw, 17vw" alt="玫瑰金色光環主石戒指（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-white hide-sm">
           <img decoding="async" loading="lazy" {...imgProps(`${R}/band-rg-steel.webp`, "(max-width: 760px) 34vw, 17vw")} alt="玫瑰金色排鑽戒指，側前方展示（AI 示意圖）" width={1000} height={1000} />
@@ -335,9 +350,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <img decoding="async" loading="lazy" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 760px) 34vw, 17vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} />
         </div>
         <div className="t-ink">
-          <img decoding="async" {...imgProps(`${R}/macro-ink.webp`, "(max-width: 760px) 34vw, 17vw")} alt="深藍背景下的六爪鑽石鑲嵌特寫（AI 示意圖）" width={1000} height={1000} />
+          <LateImg src={`${R}/macro-ink.webp`} sizes="(max-width: 760px) 34vw, 17vw" alt="深藍背景下的六爪鑽石鑲嵌特寫（AI 示意圖）" width={1000} height={1000} />
         </div>
       </div>
+      {/* 手機：刊頭字先出，拼貼相 0.3 秒後先下載、淡入（首屏快啲）；電腦即刻載，同以前一樣 */}
+      <script dangerouslySetInnerHTML={{ __html: LATE_IMG_JS }} />
 
       {/* 標題 + 三條快答 */}
       <section className="bb-hero" aria-labelledby="hero-title">

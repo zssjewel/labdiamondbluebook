@@ -50,6 +50,18 @@ export default function MotionLayer() {
     );
   }, [pathname]);
 
+  // 站內轉頁返首頁時，React 重新畫出嘅刊頭相仲係透明佔位（嗰段 inline script 唔會再行），喺度補返
+  useEffect(() => {
+    document.querySelectorAll<HTMLImageElement>(".bb-mosaic img.is-late").forEach((i) => {
+      if (i.dataset.src && !i.src.endsWith(i.dataset.src) && !i.currentSrc.includes("/images/")) {
+        if (i.dataset.sizes) i.sizes = i.dataset.sizes;
+        if (i.dataset.srcset) i.srcset = i.dataset.srcset;
+        i.src = i.dataset.src;
+      }
+      i.classList.add("is-in");
+    });
+  }, [pathname]);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const stopSort = sortDiagram();

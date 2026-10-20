@@ -299,6 +299,9 @@
   height: 100%;
   object-fit: cover;
 }
+/* 手機刊頭：文字先出，相 0.3 秒後淡入（is-late → is-in）；電腦即刻 is-in，同以前一樣 */
+.bb-mosaic img.is-late { opacity: 0; transition: opacity 600ms var(--ease-apple); }
+.bb-mosaic img.is-late.is-in { opacity: 1; }
 .t-blue { background: var(--blue); }
 .t-pale { background: var(--pale); }
 .t-steel { background: var(--steel); }
@@ -1950,3 +1953,6 @@ main:focus { outline: none; }
 .bb-about__figs figure { margin: 0; }
 .bb-about__figs img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--radius-img); }
 .bb-about__figs figcaption { display: flex; align-items: center; margin-top: 6px; color: var(--ink-soft); font-size: var(--step-small); }
+@media (prefers-reduced-motion: reduce) {
+  .bb-mosaic img.is-late { transition: none; }
+}
