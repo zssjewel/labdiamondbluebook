@@ -577,8 +577,8 @@
   left: 50%;
   width: calc(50% + var(--ov));
   transform-origin: left center;
-  /* 先向前推 2px 再轉：打開後喺左邊空格之上，連結撳得到 */
-  transform: translateZ(2px) rotateY(-180deg);
+  /* 打開咗：Z 保持 0，唔好有透視放大，內頁字先清晰（左邊空格已設 pointer-events: none，連結照撳得到） */
+  transform: translateZ(0px) rotateY(-180deg);
   transform-style: preserve-3d;
 }
 .bb-book__front, .bb-book__inside {
