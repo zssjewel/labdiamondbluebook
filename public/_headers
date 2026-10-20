@@ -7,3 +7,8 @@
 
 /*.ico
   Cache-Control: public, max-age=604800
+
+# 網頁：叫 Cloudflare 唔好自動喺 HTML 插入 Web Analytics 程式（佢會喺首屏之前下載，拖慢手機分數）；
+# 改由網頁喺載完之後自己載入（scripts/defer-js.cjs），統計照常
+/*
+  Cache-Control: no-transform
