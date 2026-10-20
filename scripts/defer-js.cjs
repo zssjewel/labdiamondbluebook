@@ -63,7 +63,7 @@ for (const f of files) {
   });
   const loader =
     `<script data-defer-js>(function(){var f=${JSON.stringify(flightSrc)},s=${JSON.stringify(list)};function all(){s.forEach(function(x){var e=document.createElement("script");e.src=x[0];e.async=true;if(x[1])e.noModule=true;if(x[2])e.id=x[2];document.body.appendChild(e)})}` +
-    `function cf(){if(document.querySelector('script[src*="cloudflareinsights"]'))return;var e=document.createElement("script");e.defer=true;e.src="https://static.cloudflareinsights.com/beacon.min.js";e.setAttribute("data-cf-beacon",'{"token":"${CF_BEACON}"}');document.body.appendChild(e)}` +
+    `function cf(){if(document.querySelector('script[src*="cloudflareinsights"]'))return;var e=document.createElement("script");e.defer=true;e.src="https://static.cloudflareinsights.com/beacon.min.js";e.setAttribute("data-cf-beacon",JSON.stringify({version:"2024.11.0",token:"${CF_BEACON}",r:1,spa:2,send:{to:location.origin+"/cdn-cgi/rum"}}));document.body.appendChild(e)}` +
     `function go(){setTimeout(cf,1500);if(!f)return all();var e=document.createElement("script");e.src=f;e.onload=all;e.onerror=all;document.body.appendChild(e)}` +
     `function later(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(go,300)})})}if(document.readyState==="complete")later();else addEventListener("load",later,{once:true})})()</script>`;
   html = html.replace("</body>", loader + "</body>");
