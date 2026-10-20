@@ -104,6 +104,21 @@ function sortDiagram(): (() => void) | undefined {
   stages.forEach((stage) => {
     stage.querySelectorAll<SVGSVGElement>(".bb-how__svg").forEach((svg) => {
       const vertical = svg.classList.contains("bb-how__svg--v");
+      // 方塊唔喺 HTML 入面，播動畫前先畫（最終位置；直版 x/y 對調）
+      if (!svg.querySelector("rect")) {
+        const NS = "http://www.w3.org/2000/svg";
+        const frag = document.createDocumentFragment();
+        SQUARES.forEach((sq) => {
+          const r = document.createElementNS(NS, "rect");
+          r.setAttribute("x", String(vertical ? sq.y : sq.x));
+          r.setAttribute("y", String(vertical ? sq.x : sq.y));
+          r.setAttribute("width", "11");
+          r.setAttribute("height", "11");
+          r.setAttribute("fill", FILL[sq.tone]);
+          frag.appendChild(r);
+        });
+        svg.appendChild(frag);
+      }
       const rects = svg.querySelectorAll("rect");
       SQUARES.forEach((s, i) => {
         const r = rects[i];

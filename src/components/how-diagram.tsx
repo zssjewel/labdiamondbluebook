@@ -5,7 +5,6 @@
  * 三張圖中心對正方塊三個區（橫版 x=150/450/750，直版 y=150/450/750），縮放視窗都唔會錯位。
  * 冇 JS／減少動畫時：只見三張圖，方塊層收埋；排隊動畫由 motion-layer 喺瀏覽器加上。
  */
-import { FILL, SQUARES } from "./how-data";
 
 const PICS = [
   { key: "learn", alt: "示意圖：攤開嘅參考書同幾粒培育鑽石裸石" },
@@ -18,16 +17,9 @@ const SIZES = "(max-width: 760px) min(46vw, 240px), min(30vw, 324px)";
 export function HowDiagram() {
   return (
     <div className="bb-how__stage">
-      <svg className="bb-how__svg bb-how__svg--h" viewBox="0 0 900 200" aria-hidden="true">
-        {SQUARES.map((s, i) => (
-          <rect key={i} x={s.x} y={s.y} width={11} height={11} fill={FILL[s.tone]} />
-        ))}
-      </svg>
-      <svg className="bb-how__svg bb-how__svg--v" viewBox="0 0 200 900" aria-hidden="true">
-        {SQUARES.map((s, i) => (
-          <rect key={i} x={s.y} y={s.x} width={11} height={11} fill={FILL[s.tone]} />
-        ))}
-      </svg>
+      {/* 方塊只喺播動畫時由 motion-layer 畫（靜態時方塊層本身收埋），HTML 少 300 幾個元素，手機開頁快啲 */}
+      <svg className="bb-how__svg bb-how__svg--h" viewBox="0 0 900 200" aria-hidden="true" />
+      <svg className="bb-how__svg bb-how__svg--v" viewBox="0 0 200 900" aria-hidden="true" />
       {PICS.map((p, i) => (
         <div key={p.key} className={`bb-how__pic bb-how__pic--${p.key}`} style={{ "--k": i } as React.CSSProperties}>
           <img
