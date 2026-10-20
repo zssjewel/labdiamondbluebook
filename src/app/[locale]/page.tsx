@@ -140,6 +140,19 @@ const ANSWERS = [
   },
 ];
 
+/** 封面底紋：幾塊淡淡嘅大切面（純色半透明多邊形），唔用漸變 */
+function BookFacets() {
+  return (
+    <svg className="bb-book__facets" viewBox="0 0 100 140" preserveAspectRatio="none" aria-hidden="true">
+      <polygon points="0,0 58,0 18,52" fill="rgba(255,255,255,0.07)" />
+      <polygon points="100,18 100,96 62,70" fill="rgba(255,255,255,0.06)" />
+      <polygon points="0,96 40,140 0,140" fill="rgba(0,0,0,0.12)" />
+      <polygon points="58,0 100,0 100,18 74,30" fill="rgba(0,0,0,0.08)" />
+      <polygon points="62,70 100,96 100,140 70,140" fill="rgba(255,255,255,0.04)" />
+    </svg>
+  );
+}
+
 /** 封面上用代碼畫嘅圓形明亮式鑽石（俯視：八角檯面、星刻面、風箏面），唔使載圖 */
 function BookDiamond() {
   const pts = (r: number, n: number, off = 0) => Array.from({ length: n }, (_, i) => {
@@ -385,7 +398,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
             <div className="bb-book__cover">
               <div className="bb-book__front" aria-hidden="true">
-                <span className="bb-book__kicker">專業選購指南</span>
+                <BookFacets />
+                <span className="bb-book__spine" />
                 <span className="bb-book__name">
                   培育鑽石
                   <br />

@@ -570,7 +570,7 @@ const widths = [320, 390, 768, 1440];
       return { fig: getComputedStyle(front).display, side, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
     });
     console.log(`${w}px：書${r.fig === "none" ? "（封面隱藏）" : ""}${r.side}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
-    if (w >= 1024 || w === 375) await pg.locator(".bb-contents").screenshot({ path: `shots/contents-${w}.png` }).catch(() => {});
+    if (w >= 1024 || w === 375) { await pg.waitForTimeout(2600); await pg.screenshot({ path: `shots/contents-${w}.png` }).catch(() => {}); }
     await ctx.close();
   }
   for (const from of ["/zh-hk/price.html", "/zh-hk/custom.html"]) {
