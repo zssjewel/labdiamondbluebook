@@ -4,6 +4,7 @@
 // 時間：load 之後等首屏畫完（兩個 animation frame）再隔 0.3 秒先開始下載程式。
 // 用法：node scripts/defer-js.cjs out
 const fs = require("fs");
+const crypto = require("crypto");
 const path = require("path");
 
 const root = process.argv[2] || "out";
@@ -21,6 +22,7 @@ const PRELOAD = /<link rel="preload" as="script"[^>]*href="\/_next\/static\/[^"]
 const CSSLINK = /<link rel="stylesheet" href="(\/_next\/static\/css\/[^"]+\.css)"[^>]*\/?>/g;
 let changed = 0;
 let inlined = 0;
+let flightFiles = 0;
 for (const f of files) {
   let html = fs.readFileSync(f, "utf8");
   if (html.includes("data-defer-js")) continue;
@@ -33,6 +35,22 @@ for (const f of files) {
   });
   if (!list.length) continue;
   html = html.replace(PRELOAD, "");
+  // 頁面資料（React 用嚟接手畫面嘅 self.__next_f）由 HTML 搬去獨立檔案，同程式一齊遲啲先載：
+  // HTML 細一半左右，手機首屏更快；畫面內容本身仍然全部喺 HTML 入面
+  const flight = [];
+  html = html.replace(/<script>((?:\(self\.__next_f|self\.__next_f)[\s\S]*?)<\/script>/g, (m, code) => {
+    flight.push(code);
+    return "";
+  });
+  let flightSrc = "";
+  if (flight.length) {
+    const body = flight.map((c) => c.replace(/;?\s*$/, ";")).join("\n");
+    const hash = crypto.createHash("sha1").update(body).digest("hex").slice(0, 16);
+    fs.mkdirSync(path.join(root, "_next/static/flight"), { recursive: true });
+    fs.writeFileSync(path.join(root, `_next/static/flight/${hash}.js`), body);
+    flightSrc = `/_next/static/flight/${hash}.js`;
+    flightFiles++;
+  }
   // 主樣式表直接內嵌入 HTML：手機開頁少一個來回（慢網絡下首屏快 0.2–0.3 秒），樣式內容完全一樣
   html = html.replace(CSSLINK, (m, href) => {
     const file = path.join(root, href);
@@ -42,10 +60,11 @@ for (const f of files) {
     return `<style data-inline-href="${href}">${css}</style>`;
   });
   const loader =
-    `<script data-defer-js>(function(){var s=${JSON.stringify(list)};function go(){s.forEach(function(x){var e=document.createElement("script");e.src=x[0];e.async=true;if(x[1])e.noModule=true;if(x[2])e.id=x[2];document.body.appendChild(e)})}` +
+    `<script data-defer-js>(function(){var f=${JSON.stringify(flightSrc)},s=${JSON.stringify(list)};function all(){s.forEach(function(x){var e=document.createElement("script");e.src=x[0];e.async=true;if(x[1])e.noModule=true;if(x[2])e.id=x[2];document.body.appendChild(e)})}` +
+    `function go(){if(!f)return all();var e=document.createElement("script");e.src=f;e.onload=all;e.onerror=all;document.body.appendChild(e)}` +
     `function later(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(go,300)})})}if(document.readyState==="complete")later();else addEventListener("load",later,{once:true})})()</script>`;
   html = html.replace("</body>", loader + "</body>");
   fs.writeFileSync(f, html);
   changed++;
 }
-console.log(`defer-js：${changed}/${files.length} 個 HTML 改為頁面載完先載程式，內嵌樣式表 ${inlined} 次`);
+console.log(`defer-js：${changed}/${files.length} 個 HTML 改為頁面載完先載程式，內嵌樣式表 ${inlined} 次，頁面資料搬出 ${flightFiles} 個檔`);
