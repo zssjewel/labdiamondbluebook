@@ -140,6 +140,50 @@ const ANSWERS = [
   },
 ];
 
+/** 書布紋理：feTurbulence 雜訊，極淡，令封面似布面精裝而唔係平面色塊 */
+function BookCloth({ id }: { id: string }) {
+  return (
+    <svg className="bb-book__cloth" aria-hidden="true">
+      <filter id={id}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0" />
+      </filter>
+      <rect width="100%" height="100%" filter={`url(#${id})`} />
+    </svg>
+  );
+}
+
+/** 書頁近書脊位置嘅弧度陰影（SVG 漸變，唔用 CSS 漸變） */
+function BookCurve({ side }: { side: "left" | "right" }) {
+  const id = `bb-curve-${side}`;
+  return (
+    <svg className="bb-book__curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id={id} x1={side === "right" ? 0 : 1} x2={side === "right" ? 1 : 0} y1="0" y2="0">
+          <stop offset="0" stopColor="#2a2326" stopOpacity="0.2" />
+          <stop offset="0.035" stopColor="#2a2326" stopOpacity="0.07" />
+          <stop offset="0.12" stopColor="#2a2326" stopOpacity="0" />
+          <stop offset="0.97" stopColor="#2a2326" stopOpacity="0" />
+          <stop offset="1" stopColor="#2a2326" stopOpacity="0.05" />
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" fill={`url(#${id})`} />
+    </svg>
+  );
+}
+
+/** 書放喺枱面嘅影：一個模糊橢圓 */
+function BookFloor() {
+  return (
+    <svg className="bb-book__floor" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true">
+      <filter id="bb-floor" x="-10%" y="-100%" width="120%" height="300%">
+        <feGaussianBlur stdDeviation="1.6" />
+      </filter>
+      <ellipse cx="50" cy="5" rx="47" ry="2.2" fill="rgba(42,35,38,0.28)" filter="url(#bb-floor)" />
+    </svg>
+  );
+}
+
 /** 封面底紋：幾塊淡淡嘅大切面（純色半透明多邊形），唔用漸變 */
 function BookFacets() {
   return (
@@ -378,7 +422,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="bb-book">
           <div className="bb-book__spread">
             <div className="bb-book__gutter" aria-hidden="true" />
+            {/* 立體部件（只喺電腦版見到）：底板、書脊、右頁書口厚度、桌面影 */}
+            <BookFloor />
+            <div className="bb-book__back" aria-hidden="true" />
+            <div className="bb-book__spineface" aria-hidden="true">
+              <BookCloth id="bb-cloth-s" />
+              <span>培育鑽石藍皮書</span>
+              <small>鄒三山工坊</small>
+            </div>
+            <span className="bb-book__edge bb-book__edge--side" aria-hidden="true" />
+            <span className="bb-book__edge bb-book__edge--foot" aria-hidden="true" />
             <div className="bb-book__page">
+              <BookCurve side="right" />
               <p className="bb-book__running" aria-hidden="true">
                 目錄
               </p>
@@ -399,8 +454,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
             <div className="bb-book__cover">
               <div className="bb-book__front" aria-hidden="true">
+                <BookCloth id="bb-cloth-f" />
                 <BookFacets />
-                <span className="bb-book__spine" />
+                <span className="bb-book__hinge" />
                 <span className="bb-book__name">
                   培育鑽石
                   <br />
@@ -411,27 +467,33 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <span className="bb-book__topics">價錢・證書・4C・款式・訂造</span>
                 <span className="bb-book__imprint">鄒三山工坊 編著</span>
               </div>
+              {/* 封面內側：藍色書板，上面黐住第一頁（書名頁 + 最新文章） */}
               <div className="bb-book__inside">
-                <p className="bb-book__ititle">培育鑽石藍皮書</p>
-                <p className="bb-book__isub">由入門到訂造，一本教你揀啱培育鑽</p>
-                {latest.length > 0 && (
-                  <div className="bb-book__latest">
-                    <h3>最新文章</h3>
-                    <ul>
-                      {latest.map((a) => (
-                        <li key={`${a.contentType}/${a.slug}`}>
-                          <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>
-                            <span>{a.metadata.title}</span>
-                            <small>
-                              {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
-                            </small>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                <p className="bb-book__iimprint">鄒三山工坊 編著</p>
+                <span className="bb-book__edge bb-book__edge--iside" aria-hidden="true" />
+                <span className="bb-book__edge bb-book__edge--ifoot" aria-hidden="true" />
+                <div className="bb-book__leaf">
+                  <BookCurve side="left" />
+                  <p className="bb-book__ititle">培育鑽石藍皮書</p>
+                  <p className="bb-book__isub">由入門到訂造，一本教你揀啱培育鑽</p>
+                  {latest.length > 0 && (
+                    <div className="bb-book__latest">
+                      <h3>最新文章</h3>
+                      <ul>
+                        {latest.map((a) => (
+                          <li key={`${a.contentType}/${a.slug}`}>
+                            <Link href={localizeHref(`/${a.contentType}/${a.slug}`, locale)}>
+                              <span>{a.metadata.title}</span>
+                              <small>
+                                {chapterOf(a.contentType)?.number} · {a.metadata.lastModified ?? a.metadata.date}
+                              </small>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <p className="bb-book__iimprint">鄒三山工坊 編著</p>
+                </div>
               </div>
             </div>
           </div>

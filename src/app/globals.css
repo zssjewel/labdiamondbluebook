@@ -454,47 +454,41 @@
   font-size: var(--step-lead);
   line-height: 1.5;
 }
-/* ---------- 首頁目錄：用代碼畫嘅一本書 ----------
-   打開咗嘅狀態係預設（冇 JS／減少動畫／手機都係咁），
-   電腦有動效時由 motion-layer 先合埋（is-closed），碌到先揭開封面。 */
+/* ---------- 首頁目錄：用代碼畫嘅一本精裝書 ----------
+   打開咗嘅狀態係預設（冇 JS／減少動畫／手機都係咁）；電腦有動效時由 motion-layer 先合埋（is-closed），
+   書斜斜擺、見到書脊同厚度，碌到就自己轉正、揭開封面。
+   質感：藍色布面書板（比書頁大一圈）、書脊有厚度同書名、書口一層層紙、書縫弧度陰影、枱面影；全部用代碼畫，唔載圖。 */
 .bb-book {
-  --book-blue: #244681;
-  --book-blue-2: #34508f;
-  --book-paper: #fffdf8;
+  --ov: 10px; /* 書板比書頁大幾多 */
+  --th: 28px; /* 書嘅厚度 */
+  --board: #26467f;
+  --board-dark: #1c365f;
+  --book-paper: #fffcf6;
   --book-serif: "Songti TC", "STSong", "Noto Serif CJK TC", "Noto Serif TC", "Source Han Serif TC", "PMingLiU", "MingLiU", serif;
-  width: min(100%, 1040px);
+  width: min(100% - 2 * var(--ov), 1020px);
   margin: clamp(40px, 5vw, 72px) auto 0;
-  perspective: 2600px;
+  padding: var(--ov) 0 calc(var(--ov) + 40px);
+  perspective: 1900px;
 }
-.bb-book__gutter { pointer-events: none; }
+.bb-book__gutter { grid-column: 1; pointer-events: none; }
 .bb-contents__anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; }
 .bb-book__spread {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   transform-style: preserve-3d;
+  transform-origin: 75% 50%;
 }
 /* 右頁：九章目錄 */
 .bb-book__page {
+  grid-column: 2;
   position: relative;
   padding: clamp(28px, 3.4vw, 48px) clamp(24px, 3vw, 44px) clamp(24px, 3vw, 40px);
-  border-radius: 3px 12px 12px 3px;
+  border-radius: 2px 3px 3px 2px;
   background: var(--book-paper);
-  /* 書頁厚度：右邊同底邊一條紙邊（純色，唔用陰影） */
-  border-right: 4px solid #e8dfd4;
-  border-bottom: 4px solid #e8dfd4;
 }
-/* 書縫：近書脊一條淡色窄帶 */
-.bb-book__page::before, .bb-book__inside::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 18px;
-  background: rgba(42, 35, 38, 0.05);
-}
-.bb-book__page::before { left: 0; }
-.bb-book__inside::before { right: 0; }
+.bb-book__curve { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.bb-book__page > :not(.bb-book__curve), .bb-book__leaf > :not(.bb-book__curve) { position: relative; }
 .bb-book__running { margin: 0 0 14px; color: var(--ink-soft); font: 400 var(--step-caption)/1 var(--book-serif); letter-spacing: 0.4em; text-align: center; }
 .bb-book__toc { margin: 0; padding: 0; list-style: none; }
 .bb-book__toc li + li { border-top: 1px dotted rgba(42, 35, 38, 0.2); }
@@ -523,16 +517,68 @@
   .bb-book__toc a:hover .bb-book__title { color: var(--blue); }
 }
 
-/* 封面：電腦版喺右半邊，以書脊（左邊）為軸揭開 180°，揭開後內頁喺左邊 */
+
+/* 底板（封底）：喺書頁後面，四邊露出一圈藍 */
+.bb-book__back {
+  position: absolute;
+  top: calc(var(--ov) * -1 - 4px);
+  bottom: calc(var(--ov) * -1 - 4px);
+  left: 50%;
+  right: calc(var(--ov) * -1 - 7px);
+  border-radius: 2px 5px 5px 2px;
+  background: var(--board-dark);
+  transform: translateZ(calc(var(--th) * -1));
+}
+/* 書脊：一塊有厚度嘅面，以中線為軸企起；合埋斜擺時見到，印住書名 */
+.bb-book__spineface {
+  position: absolute;
+  top: calc(var(--ov) * -1);
+  bottom: calc(var(--ov) * -1);
+  left: 50%;
+  width: calc(var(--th) + 2px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18% 0 8%;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--board-dark);
+  color: #e9eef7;
+  font-family: var(--book-serif);
+  transform-origin: left center;
+  transform: translateZ(calc(var(--th) * -1)) rotateY(-90deg);
+}
+.bb-book__spineface span, .bb-book__spineface small { position: relative; writing-mode: vertical-rl; letter-spacing: 0.25em; }
+.bb-book__spineface span { font-size: 0.95rem; font-weight: 700; }
+.bb-book__spineface small { font-size: 0.6rem; opacity: 0.8; }
+/* 書口：書頁一層層嘅紙邊（右邊同底邊），喺書板入面 */
+.bb-book__edge { position: absolute; pointer-events: none; background-color: #f4ede2; }
+.bb-book__edge--side, .bb-book__edge--iside { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='1' height='2' fill='%23dcd1c1'/%3E%3C/svg%3E"); }
+.bb-book__edge--foot, .bb-book__edge--ifoot { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='2' height='1' fill='%23dcd1c1'/%3E%3C/svg%3E"); }
+.bb-book__edge--side { top: 3px; bottom: -5px; left: 100%; width: 6px; border-radius: 0 2px 2px 0; transform: translateZ(-1px); }
+.bb-book__edge--foot { top: 100%; left: calc(50% + 3px); right: -6px; height: 6px; border-radius: 0 0 2px 2px; transform: translateZ(-1px); }
+/* 枱面影 */
+.bb-book__floor {
+  position: absolute;
+  left: -3%;
+  width: 106%;
+  bottom: calc(var(--ov) * -1 - 34px);
+  height: 44px;
+  pointer-events: none;
+  transform: translateZ(calc(var(--th) * -1));
+}
+
+/* 封面書板：喺右半邊，以書脊（左邊）為軸揭開 180°，揭開後內側（連第一頁）喺左邊 */
 .bb-book__cover {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: calc(var(--ov) * -1);
+  bottom: calc(var(--ov) * -1);
   left: 50%;
-  width: 50%;
+  width: calc(50% + var(--ov));
   transform-origin: left center;
-  /* 先向前推 1px 再轉：打開後封面（內頁）喺左邊空格之上，連結撳得到 */
-  transform: translateZ(1px) rotateY(-180deg);
+  /* 先向前推 2px 再轉：打開後喺左邊空格之上，連結撳得到 */
+  transform: translateZ(2px) rotateY(-180deg);
   transform-style: preserve-3d;
 }
 .bb-book__front, .bb-book__inside {
@@ -545,37 +591,48 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 9% 10% 7% 14%;
-  border-radius: 3px 12px 12px 3px;
-  color: #ffffff;
+  padding: 10% 10% 8% 15%;
+  border-radius: 2px 5px 5px 2px;
+  color: #eef2f9;
   text-align: center;
   font-family: var(--book-serif);
   overflow: hidden;
   /* 封面背面朝上時（打開咗）唔可以擋住內頁連結 */
   pointer-events: none;
-  /* 藍色封面：純色，切面紋同書脊用獨立元素（見 BookFacets、.bb-book__spine） */
-  background: var(--book-blue);
+  background: var(--board);
 }
 .bb-book__front > * { position: relative; }
+.bb-book__cloth { position: absolute !important; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .bb-book__facets { position: absolute !important; inset: 0; width: 100%; height: 100%; }
-/* 書脊壓痕：左邊一條深色窄帶 + 一條淺色細線 */
-.bb-book__spine { position: absolute !important; top: 0; bottom: 0; left: 0; width: 4.5%; background: rgba(0, 0, 0, 0.22); border-right: 1px solid rgba(255, 255, 255, 0.14); }
+/* 書脊旁嘅壓坑：一條深色帶 + 一條淺線 + 一條深線（精裝書翻開嗰條摺位） */
+.bb-book__hinge { position: absolute !important; top: 0; bottom: 0; left: 0; width: 5.5%; background: rgba(0, 0, 0, 0.2); border-right: 1px solid rgba(255, 255, 255, 0.16); box-sizing: border-box; }
+.bb-book__hinge::after { content: ""; position: absolute; top: 0; bottom: 0; left: calc(100% + 5px); width: 2px; background: rgba(0, 0, 0, 0.18); }
 .bb-book__name { margin-top: 0.4em; font-size: clamp(2rem, 1rem + 2.6vw, 3.4rem); font-weight: 700; line-height: 1.12; letter-spacing: 0.06em; }
 .bb-book__sub { margin-top: 0.8em; font-size: var(--step-small); opacity: 0.9; }
 .bb-book__gem { width: 46%; margin: auto 0; }
 .bb-book__topics { font-size: var(--step-small); letter-spacing: 0.2em; opacity: 0.9; }
 .bb-book__imprint { margin-top: 1em; font-size: var(--step-caption); letter-spacing: 0.2em; opacity: 0.75; }
 
-/* 封面內頁（揭開後喺左邊）：書名頁 + 最新文章 */
+
+/* 封面內側：藍色書板，第一頁（書名頁 + 最新文章）黐喺上面，四邊（書脊嗰邊除外）露出書板 */
 .bb-book__inside {
   transform: rotateY(180deg);
+  border-radius: 5px 2px 2px 5px;
+  background: var(--board-dark);
+}
+.bb-book__edge--iside { top: calc(var(--ov) + 3px); bottom: calc(var(--ov) - 5px); left: calc(var(--ov) - 6px); width: 6px; border-radius: 2px 0 0 2px; }
+.bb-book__edge--ifoot { left: calc(var(--ov) - 6px); right: 3px; bottom: calc(var(--ov) - 6px); height: 6px; border-radius: 0 0 2px 2px; }
+.bb-book__leaf {
+  position: absolute;
+  top: var(--ov);
+  bottom: var(--ov);
+  left: var(--ov);
+  right: 0;
   display: flex;
   flex-direction: column;
   padding: clamp(28px, 3.4vw, 48px) clamp(24px, 3vw, 44px) clamp(24px, 3vw, 40px);
-  border-radius: 12px 3px 3px 12px;
+  border-radius: 3px 2px 2px 3px;
   background: var(--book-paper);
-  border-left: 4px solid #e8dfd4;
-  border-bottom: 4px solid #e8dfd4;
 }
 .bb-book__ititle { margin: 8% 0 0; font: 700 clamp(1.6rem, 1rem + 1.6vw, 2.4rem)/1.2 var(--book-serif); letter-spacing: 0.08em; text-align: center; color: var(--book-blue); }
 .bb-book__isub { margin: 12px 0 0; color: var(--ink-soft); font: 400 var(--step-small)/1.6 var(--book-serif); text-align: center; }
@@ -591,18 +648,17 @@
 }
 .bb-book__iimprint { margin: 18px 0 0; color: var(--ink-soft); font: 400 var(--step-caption)/1 var(--book-serif); letter-spacing: 0.2em; text-align: center; }
 
-/* 手機、細平板：唔做立體書，直接目錄（先）+ 書名頁同最新文章（後） */
+/* 手機、細平板：唔做立體書，直接目錄（先）+ 最新文章（後） */
 @media (max-width: 960px) {
-  .bb-book { perspective: none; }
-  .bb-book__spread { grid-template-columns: 1fr; gap: 12px; }
-  .bb-book__gutter, .bb-book__front { display: none; }
-  .bb-book__page { border: 0; border-radius: var(--radius-panel); padding: 20px 18px; }
-  .bb-book__page::before, .bb-book__inside::before { display: none; }
+  .bb-book { width: auto; padding: 0; perspective: none; }
+  .bb-book__spread { grid-template-columns: 1fr; gap: 12px; transform: none; }
+  .bb-book__gutter, .bb-book__front, .bb-book__back, .bb-book__spineface, .bb-book__edge, .bb-book__floor, .bb-book__curve { display: none; }
+  .bb-book__page { grid-column: 1; border-radius: var(--radius-panel); padding: 20px 18px; }
   .bb-book__cover { position: static; width: auto; transform: none; }
-  .bb-book__inside { position: static; transform: none; border: 0; border-radius: var(--radius-panel); padding: 20px 18px; }
-  .bb-book__ititle, .bb-book__isub { display: none; }
+  .bb-book__inside { position: static; transform: none; background: none; }
+  .bb-book__leaf { position: static; border-radius: var(--radius-panel); padding: 20px 18px; }
+  .bb-book__ititle, .bb-book__isub, .bb-book__iimprint { display: none; }
   .bb-book__latest { margin-top: 0; }
-  .bb-book__iimprint { display: none; }
 }
 
 /* Apple 式分組清單：白底圓角，一行一項，右邊 › */

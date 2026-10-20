@@ -180,7 +180,7 @@ function openBook(): (() => void) | undefined {
         requestAnimationFrame(() => {
           b.classList.add("is-opening");
           b.classList.remove("is-closed");
-          timers.push(window.setTimeout(() => b.classList.remove("is-opening"), 3200));
+          timers.push(window.setTimeout(() => b.classList.remove("is-opening"), 3600));
         });
       }
     },

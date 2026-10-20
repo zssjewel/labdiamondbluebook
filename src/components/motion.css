@@ -69,19 +69,21 @@
     scale: 1;
   }
 
-  /* 首頁目錄：學蘋果 iPhone Duo 頁面嘅折疊屏——書碌到畫面就自己慢慢打開，唔使跟住碌。
-     合埋時書置中，封面以書脊為軸揭開，同時書移返原位，右頁九章逐行浮現（只郁 transform／opacity） */
-  .bb-book.is-closed .bb-book__spread { transform: translateX(-25%); }
-  .bb-book.is-closed .bb-book__cover { transform: translateZ(1px) rotateY(0deg); }
+  /* 首頁目錄：學蘋果 iPhone Duo 頁面嘅折疊屏——書碌到畫面就自己打開，唔使跟住碌。
+     合埋時書斜斜擺喺中間（見到書脊同厚度）→ 先轉正、移返原位 → 封面以書脊為軸揭開 → 右頁九章逐行浮現。只郁 transform／opacity */
+  .bb-book.is-closed .bb-book__spread { transform: translateX(-25%) rotateY(24deg) rotateX(3deg); }
+  .bb-book.is-closed .bb-book__cover { transform: translateZ(2px) rotateY(0deg); }
+  .bb-book.is-closed .bb-book__floor { transform: translateZ(calc(var(--th) * -1)) translateX(24%) scaleX(0.56); }
   .bb-book.is-closed .bb-book__toc li, .bb-book.is-closed .bb-book__running { opacity: 0; }
   .bb-book.is-closed .bb-book__inside { visibility: hidden; }
-  .bb-book.is-opening .bb-book__spread { transition: transform 2000ms cubic-bezier(0.65, 0, 0.25, 1) 200ms; }
-  .bb-book.is-opening .bb-book__cover { transition: transform 2100ms cubic-bezier(0.65, 0, 0.25, 1) 200ms; }
-  /* 封面翻過一半先見到內頁，避免內頁字疊喺封面下面 */
-  .bb-book.is-opening .bb-book__inside { transition: visibility 0s linear 1150ms; }
+  .bb-book.is-opening .bb-book__spread { transition: transform 1500ms cubic-bezier(0.6, 0, 0.25, 1) 150ms; }
+  .bb-book.is-opening .bb-book__floor { transition: transform 1500ms cubic-bezier(0.6, 0, 0.25, 1) 150ms; }
+  .bb-book.is-opening .bb-book__cover { transition: transform 2000ms cubic-bezier(0.6, 0, 0.25, 1) 650ms; }
+  /* 封面翻過一半先見到內側，避免字疊喺封面下面 */
+  .bb-book.is-opening .bb-book__inside { transition: visibility 0s linear 1550ms; }
   .bb-book.is-opening .bb-book__toc li, .bb-book.is-opening .bb-book__running {
     transition: opacity 600ms var(--ease-apple);
-    transition-delay: calc(1300ms + var(--r, 0) * 70ms);
+    transition-delay: calc(1900ms + var(--r, 0) * 70ms);
   }
 
   /* 「資料好亂？收窄成一隻戒指」：去到畫面時，方塊由左邊亂堆逐粒排隊、排成方陣；

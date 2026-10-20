@@ -125,7 +125,7 @@ async function glide(page, pxPerSec, stops = []) {
         await page.waitForTimeout(100);
       }
       const t0 = Date.now();
-      for (const ms of [0, 500, 1000, 1500, 2000, 3000]) {
+      for (const ms of [0, 600, 1200, 1800, 2400, 3400]) {
         await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
         await page.screenshot({ path: `${out}/${tag}-book-${ms}.png` });
       }
