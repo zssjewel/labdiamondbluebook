@@ -153,6 +153,37 @@ function BookCloth({ id }: { id: string }) {
   );
 }
 
+/** 紙張纖維：比書布更淡嘅雜訊，令書頁唔係一塊死白 */
+function BookPaper({ id }: { id: string }) {
+  return (
+    <svg className="bb-book__curve" aria-hidden="true">
+      <filter id={id}>
+        <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
+        <feColorMatrix values="0 0 0 0 0.45  0 0 0 0 0.38  0 0 0 0 0.3  0 0 0 0.06 0" />
+      </filter>
+      <rect width="100%" height="100%" filter={`url(#${id})`} />
+    </svg>
+  );
+}
+
+/** 圓脊：書脊兩邊暗、中間有一條高光，似精裝書嘅圓背 */
+function BookRound() {
+  return (
+    <svg className="bb-book__curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="bb-round" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stopColor="#000" stopOpacity="0.35" />
+          <stop offset="0.35" stopColor="#fff" stopOpacity="0.1" />
+          <stop offset="0.5" stopColor="#fff" stopOpacity="0.16" />
+          <stop offset="0.7" stopColor="#fff" stopOpacity="0.04" />
+          <stop offset="1" stopColor="#000" stopOpacity="0.4" />
+        </linearGradient>
+      </defs>
+      <rect width="100" height="100" fill="url(#bb-round)" />
+    </svg>
+  );
+}
+
 /** 書頁近書脊位置嘅弧度陰影（SVG 漸變，唔用 CSS 漸變） */
 function BookCurve({ side }: { side: "left" | "right" }) {
   const id = `bb-curve-${side}`;
@@ -427,12 +458,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <div className="bb-book__back" aria-hidden="true" />
             <div className="bb-book__spineface" aria-hidden="true">
               <BookCloth id="bb-cloth-s" />
+              <BookRound />
+              <i className="bb-book__band" />
               <span>培育鑽石藍皮書</span>
               <small>鄒三山工坊</small>
+              <i className="bb-book__band" />
             </div>
+            {/* 書頁頂面：合埋斜擺時由上面望落見到一疊紙 */}
+            <span className="bb-book__top" aria-hidden="true" />
+            {/* 書縫頂同底嘅堵頭布、絲帶書籤 */}
+            <span className="bb-book__headband bb-book__headband--top" aria-hidden="true" />
+            <span className="bb-book__headband bb-book__headband--foot" aria-hidden="true" />
+            <span className="bb-book__ribbon" aria-hidden="true" />
             <span className="bb-book__edge bb-book__edge--side" aria-hidden="true" />
             <span className="bb-book__edge bb-book__edge--foot" aria-hidden="true" />
             <div className="bb-book__page">
+              <BookPaper id="bb-paper-r" />
               <BookCurve side="right" />
               <p className="bb-book__running" aria-hidden="true">
                 目錄
@@ -457,6 +498,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <BookCloth id="bb-cloth-f" />
                 <BookFacets />
                 <span className="bb-book__hinge" />
+                <span className="bb-book__frame" />
                 <span className="bb-book__name">
                   培育鑽石
                   <br />
@@ -472,6 +514,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 <span className="bb-book__edge bb-book__edge--iside" aria-hidden="true" />
                 <span className="bb-book__edge bb-book__edge--ifoot" aria-hidden="true" />
                 <div className="bb-book__leaf">
+                  <BookPaper id="bb-paper-l" />
                   <BookCurve side="left" />
                   <p className="bb-book__ititle">培育鑽石藍皮書</p>
                   <p className="bb-book__isub">由入門到訂造，一本教你揀啱培育鑽</p>

@@ -71,7 +71,7 @@
 
   /* 首頁目錄：學蘋果 iPhone Duo 頁面嘅折疊屏——書碌到畫面就自己打開，唔使跟住碌。
      合埋時書斜斜擺喺中間（見到書脊同厚度）→ 先轉正、移返原位 → 封面以書脊為軸揭開 → 右頁九章逐行浮現。只郁 transform／opacity */
-  .bb-book.is-closed .bb-book__spread { transform: translateX(-25%) rotateY(24deg) rotateX(3deg); }
+  .bb-book.is-closed .bb-book__spread { transform: translateX(-25%) rotateY(28deg) rotateX(-12deg); }
   .bb-book.is-closed .bb-book__cover { transform: translateZ(2px) rotateY(0deg); }
   .bb-book.is-closed .bb-book__floor { transform: translateZ(calc(var(--th) * -1)) translateX(24%) scaleX(0.56); }
   .bb-book.is-closed .bb-book__toc li, .bb-book.is-closed .bb-book__running { opacity: 0; }

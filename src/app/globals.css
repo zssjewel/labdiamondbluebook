@@ -460,7 +460,7 @@
    質感：藍色布面書板（比書頁大一圈）、書脊有厚度同書名、書口一層層紙、書縫弧度陰影、枱面影；全部用代碼畫，唔載圖。 */
 .bb-book {
   --ov: 10px; /* 書板比書頁大幾多 */
-  --th: 28px; /* 書嘅厚度 */
+  --th: 34px; /* 書嘅厚度 */
   --board: #26467f;
   --board-dark: #1c365f;
   --book-blue: var(--board);
@@ -550,9 +550,50 @@
   transform-origin: left center;
   transform: translateZ(calc(var(--th) * -1)) rotateY(-90deg);
 }
-.bb-book__spineface span, .bb-book__spineface small { position: relative; writing-mode: vertical-rl; letter-spacing: 0.25em; }
+.bb-book__spineface > span, .bb-book__spineface > small, .bb-book__band { position: relative; }
+.bb-book__spineface > span, .bb-book__spineface > small { writing-mode: vertical-rl; letter-spacing: 0.25em; }
+/* 書脊上下兩對燙銀橫線 */
+.bb-book__band { display: block; width: 70%; height: 5px; border-top: 1px solid rgba(233, 238, 247, 0.55); border-bottom: 1px solid rgba(233, 238, 247, 0.55); }
 .bb-book__spineface span { font-size: 0.95rem; font-weight: 700; }
 .bb-book__spineface small { font-size: 0.6rem; opacity: 0.8; }
+/* 書頁頂面：一疊紙（橫紋），喺兩塊書板之間；平放打開時係側面，見唔到 */
+.bb-book__top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: calc(50% - 2px);
+  height: calc(var(--th) - 2px);
+  background-color: #f4ede2;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='3' height='3'%3E%3Crect width='3' height='1' fill='%23dcd1c1'/%3E%3C/svg%3E");
+  transform-origin: top center;
+  transform: translateZ(calc(var(--th) * -1 + 1px)) rotateX(90deg);
+}
+/* 堵頭布：書縫頂同底一小段間條布 */
+.bb-book__headband {
+  position: absolute;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 4px;
+  border-radius: 2px;
+  background: #c9b9a6;
+  border-left: 3px solid #a23f45;
+  border-right: 3px solid #a23f45;
+  transform: translateZ(1px);
+}
+.bb-book__headband--top { top: -3px; }
+.bb-book__headband--foot { bottom: -3px; }
+/* 絲帶書籤：由書縫頂垂落右頁，尾端燕尾剪口，露出書底 */
+.bb-book__ribbon {
+  position: absolute;
+  top: -6px;
+  left: calc(50% + 16px);
+  width: 9px;
+  height: calc(100% + 40px);
+  background: #a23f45;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 7px), 0 100%);
+  transform: translateZ(1.5px);
+  pointer-events: none;
+}
 /* 書口：書頁一層層嘅紙邊（右邊同底邊），喺書板入面 */
 .bb-book__edge { position: absolute; pointer-events: none; background-color: #f4ede2; }
 .bb-book__edge--side, .bb-book__edge--iside { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='2'%3E%3Crect width='1' height='2' fill='%23dcd1c1'/%3E%3C/svg%3E"); }
@@ -608,6 +649,8 @@
 /* 書脊旁嘅壓坑：一條深色帶 + 一條淺線 + 一條深線（精裝書翻開嗰條摺位） */
 .bb-book__hinge { position: absolute !important; top: 0; bottom: 0; left: 0; width: 5.5%; background: rgba(0, 0, 0, 0.2); border-right: 1px solid rgba(255, 255, 255, 0.16); box-sizing: border-box; }
 .bb-book__hinge::after { content: ""; position: absolute; top: 0; bottom: 0; left: calc(100% + 5px); width: 2px; background: rgba(0, 0, 0, 0.18); }
+/* 封面壓印框線 */
+.bb-book__frame { position: absolute !important; top: 4.5%; bottom: 4.5%; left: 11%; right: 5.5%; border: 1px solid rgba(233, 238, 247, 0.22); border-radius: 2px; pointer-events: none; }
 .bb-book__name { margin-top: 0.4em; font-size: clamp(2rem, 1rem + 2.6vw, 3.4rem); font-weight: 700; line-height: 1.12; letter-spacing: 0.06em; }
 .bb-book__sub { margin-top: 0.8em; font-size: var(--step-small); opacity: 0.9; }
 .bb-book__gem { width: 46%; margin: auto 0; }
@@ -653,7 +696,7 @@
 @media (max-width: 960px) {
   .bb-book { width: auto; padding: 0; perspective: none; }
   .bb-book__spread { grid-template-columns: 1fr; gap: 12px; transform: none; }
-  .bb-book__gutter, .bb-book__front, .bb-book__back, .bb-book__spineface, .bb-book__edge, .bb-book__floor, .bb-book__curve { display: none; }
+  .bb-book__gutter, .bb-book__front, .bb-book__back, .bb-book__spineface, .bb-book__edge, .bb-book__floor, .bb-book__curve, .bb-book__top, .bb-book__headband, .bb-book__ribbon { display: none; }
   .bb-book__page { grid-column: 1; border-radius: var(--radius-panel); padding: 20px 18px; }
   .bb-book__cover { position: static; width: auto; transform: none; }
   .bb-book__inside { position: static; transform: none; background: none; }
