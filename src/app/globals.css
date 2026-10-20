@@ -53,7 +53,7 @@
     --max: 1360px;
     --pad: max(var(--m), calc((100% - var(--max)) / 2));
     /* 段與段之間：同一底色嘅段只留一份空位；有色段內上下各一份 */
-    /* 段落之間留白（參考蘋果官網：電腦約 100–130px，手機約 64px）；同底色相連嘅段落只留一份，唔會疊成雙倍 */
+    /* 段落之間留白（參考蘋果官網：電腦約 100–130px，手機約 64px）；相鄰段落底色交替，每段上下同一份留白 */
     --gap-section: clamp(72px, 8.5vw, 128px);
     /* 動效曲線：UI 回饋用 ease-out（快出慢停）；進場、碌動、換頁用蘋果官網常用嘅 ease-apple */
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -436,6 +436,8 @@
 /* ---------- 首頁：目錄 ---------- */
 .bb-contents {
   padding: var(--gap-section) var(--pad);
+  /* 同上下段落（手寸工具、工坊）分開底色，好似蘋果白／灰段落交替 */
+  background: var(--steel);
 }
 .bb-sechead {
   margin: 0 auto;
@@ -1637,8 +1639,6 @@ main:focus { outline: none; }
 
 /* 首頁：點解揀鄒三山工坊 */
 .bb-why { padding: var(--gap-section) var(--pad); }
-/* 同底色（暖白）相連嘅段落：上面唔再加一份留白，間距同其他段落一樣 */
-.bb-tool + .bb-contents, .bb-contents + .bb-why { padding-top: 0; }
 .bb-why__grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -1696,8 +1696,8 @@ main:focus { outline: none; }
 .bb-why__fig img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; border-radius: var(--radius-img); background: var(--steel); }
 .bb-why__fig figcaption { display: flex; align-items: center; margin-top: 10px; color: var(--ink-soft); font-size: var(--step-caption); }
 .bb-why__card--delivery .bb-why__fig figcaption { color: var(--ink); }
-/* 「睇完整條款」跟副標題，好似蘋果段落標題下面嘅連結 */
-.bb-why__more { margin: 14px 0 0; text-align: center; font-size: var(--step-body); }
+/* 條款連結併入副標題句尾（蘋果段落副標題常見做法），唔再孤零零吊喺卡片下面 */
+.bb-why__terms { margin-left: 0.4em; white-space: nowrap; }
 @media (max-width: 860px) {
   .bb-why__grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .bb-why__a, .bb-why__img, .bb-why__card { grid-column: 1; }
