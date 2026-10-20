@@ -465,6 +465,7 @@
   margin: clamp(40px, 5vw, 72px) auto 0;
   perspective: 2600px;
 }
+.bb-book__gutter { pointer-events: none; }
 .bb-book__spread {
   position: relative;
   display: grid;
@@ -528,7 +529,8 @@
   left: 50%;
   width: 50%;
   transform-origin: left center;
-  transform: rotateY(-180deg) translateZ(1px);
+  /* 先向前推 1px 再轉：打開後封面（內頁）喺左邊空格之上，連結撳得到 */
+  transform: translateZ(1px) rotateY(-180deg);
   transform-style: preserve-3d;
 }
 .bb-book__front, .bb-book__inside {

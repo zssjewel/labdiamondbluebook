@@ -71,7 +71,7 @@
 
   /* 首頁目錄：一本合埋嘅書（置中），碌到時封面以書脊為軸慢慢揭開，同時書移返原位，右頁九章逐行浮現 */
   .bb-book.is-closed .bb-book__spread { transform: translateX(-25%); }
-  .bb-book.is-closed .bb-book__cover { transform: rotateY(0deg) translateZ(1px); }
+  .bb-book.is-closed .bb-book__cover { transform: translateZ(1px) rotateY(0deg); }
   .bb-book.is-closed .bb-book__toc li, .bb-book.is-closed .bb-book__running { opacity: 0; }
   /* 合埋時內頁唔算喺畫面（被封面蓋住），揭開時先出現 */
   .bb-book.is-closed .bb-book__inside { visibility: hidden; }
