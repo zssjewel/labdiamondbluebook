@@ -21,6 +21,8 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p lh
+          curl -s https://labdiamondbluebook.com/zh-hk | grep -o "<script[^>]*cloudflareinsights[^>]*>" | sed 's/^/beacon: /' > lh/beacon.txt || true
+          cat lh/beacon.txt
           CHROME=$(command -v google-chrome || command -v google-chrome-stable)
           for p in home:zh-hk root: chapter:zh-hk/price article:zh-hk/4c/carat-size-on-hand cases:zh-hk/cases about:zh-hk/about; do
             name="${p%%:*}"; path="${p#*:}"
