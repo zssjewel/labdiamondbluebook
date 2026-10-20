@@ -55,7 +55,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
       <Breadcrumbs items={crumbs} />
       <h1 className="bb-page__title bb-display">{cat.name}</h1>
       <p className="bb-page__lead">{cat.intro}</p>
-      {isDemoCases && <p className="bb-draft">而家顯示嘅係<strong>示例</strong>：相片係 AI 或 3D 示意圖，規格全部待填。</p>}
+      {isDemoCases && <p className="bb-draft">標住<strong>示例</strong>嘅係示意作品：相片係 AI 或 3D 示意圖，規格待填。</p>}
       <CategoryNav locale={locale} current={category} />
       <CaseGrid list={list} locale={locale} />
       <aside className="bb-guides" aria-label="訂造前可以先睇">

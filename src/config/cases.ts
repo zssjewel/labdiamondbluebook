@@ -102,6 +102,8 @@ export type Case = {
   /** 示例作品（AI 或 3D 示意圖、規格待填）；真作品唔使填 */
   demo?: true;
   /* ---- 以下按《作品上架標準》填（流水線 上架标准.md），真作品建議全部填 ---- */
+  /** 作品頁大標題（可以長過卡片標題，帶「培育鑽石」），唔填就用 title */
+  h1?: string;
   /** 搜尋結果標題（32 字內），唔填就用 title */
   seoTitle?: string;
   /** 搜尋結果描述（70–80 字，一句講晒） */
@@ -120,7 +122,8 @@ const REAL_CASES: Case[] = [
   {
     slug: "pear-halo-3-09ct-18k-white-gold",
     category: "engagement-rings",
-    title: "3.09 卡梨形培育鑽石求婚戒指・碎鑽光環",
+    title: "3.09 卡梨形光環求婚戒指・18K 白金",
+    h1: "3.09 卡梨形培育鑽石求婚戒指・碎鑽光環",
     seoTitle: "3.09卡梨形培育鑽石求婚戒指｜E VS1・18K白金",
     description: "3.09 卡梨形培育鑽石，E 色 VS1，IGI 證書，18K 白金碎鑽光環戒托，戒臂一排微鑲。鄒三山工坊港工師傅喺東莞訂造，約 10 日完成。想做類似款可以 WhatsApp 問報價。",
     stone: "3.09 卡 梨形 E VS1，IGI 證書",

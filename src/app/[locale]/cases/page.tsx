@@ -35,7 +35,7 @@ export default async function CasesPage({ params }: { params: Promise<{ locale: 
       {CASES.length > 0 ? (
         <>
           <p className="bb-page__lead">工坊訂造過嘅首飾，按類別揀。每件寫明主石、金屬、價錢區間同工期，相片同資料經客人同意公開。</p>
-          {isDemoCases && <p className="bb-draft">而家顯示嘅係<strong>示例</strong>：相片係 AI 或 3D 示意圖，規格全部待填，換上真實作品後會自動消失。</p>}
+          {isDemoCases && <p className="bb-draft">標住<strong>示例</strong>嘅係示意作品：相片係 AI 或 3D 示意圖，規格待填，正式上線前會換走。</p>}
           <CategoryNav locale={locale} />
           <CaseGrid list={CASES.filter((c) => shown.has(c.category))} locale={locale} />
         </>

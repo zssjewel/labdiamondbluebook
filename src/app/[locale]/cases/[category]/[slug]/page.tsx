@@ -71,7 +71,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
     : {
         "@context": "https://schema.org",
         "@type": "Product",
-        name: item.title,
+        name: item.h1 ?? item.title,
         description: item.description ?? item.story,
         image: item.images.map((im) => `${SITE.url}${im.src}`),
         url: `${SITE.url}${localizeHref(`/cases/${category}/${slug}`, locale)}`,
@@ -111,7 +111,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
             <Link href={localizeHref(`/cases/${category}`, locale)}>{cat.name}</Link>
             <Demo show={!!item.demo} />
           </p>
-          <h1 className="bb-page__title bb-display">{item.title}</h1>
+          <h1 className="bb-page__title bb-display">{item.h1 ?? item.title}</h1>
           <dl className="bb-specs">
             {specs
               .filter(([, v]) => v)
