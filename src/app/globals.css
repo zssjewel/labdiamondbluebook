@@ -466,13 +466,21 @@
 .bb-contents__fig {
   grid-area: fig;
   justify-self: center;
-  width: min(100%, 440px);
+  /* 書做點綴、目錄做主角：最闊 380px */
+  width: min(100%, 380px);
   margin: 0;
   position: sticky;
   top: 88px;
 }
-/* 書模保持原圖 4:5，唔裁；圖本身係暖白底，外面唔再鋪色塊 */
-.bb-contents__frame { display: block; overflow: hidden; border-radius: var(--radius-panel); }
+/* 書模保持原圖 4:5，唔裁。圖本身嘅暖白底四邊淡出，融入段落底色，睇唔到方框，似書直接企喺頁面上 */
+.bb-contents__frame {
+  display: block;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+  mask-composite: intersect;
+}
 .bb-contents__fig img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
 .bb-contents__fig figcaption { display: flex; align-items: center; justify-content: center; margin-top: 10px; color: var(--ink-soft); font-size: var(--step-caption); }
 /* Apple 式分組清單：白底圓角，一行一項，右邊 › */

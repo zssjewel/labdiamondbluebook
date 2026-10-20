@@ -361,7 +361,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <img
                 src="/images/contents/bluebook-model-1000.webp"
                 srcSet="/images/contents/bluebook-model-480.webp 480w, /images/contents/bluebook-model-720.webp 720w, /images/contents/bluebook-model-1000.webp 1000w"
-                sizes="min(34vw, 440px)"
+                sizes="min(30vw, 380px)"
                 alt="培育鑽石藍皮書精裝立體書概念模型，藍色封面與書脊印有書名，封面附鑽石及選購主題（AI 示意圖）"
                 width={1000}
                 height={1250}
@@ -370,7 +370,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               />
             </span>
             <figcaption>
-              書籍概念示意<span className="bb-demo">AI 示意</span>
+              本站內容示意封面，非出版書籍<span className="bb-demo">AI 示意</span>
             </figcaption>
           </figure>
         </div>
