@@ -476,7 +476,10 @@ const widths = [320, 390, 768, 1440];
       await pg.locator(".bb-works .bb-shelf__paddle--next").click();
       await pg.waitForTimeout(1200);
       const sl = await pg.evaluate(() => document.querySelector(".bb-works .bb-shelf__track").scrollLeft);
-      console.log(`  撳右箭咀：滑咗 ${Math.round(sl)}px`);
+      await pg.locator(".bb-works .bb-shelf__paddle--next").click();
+      await pg.waitForTimeout(1200);
+      const sl2 = await pg.evaluate(() => document.querySelector(".bb-works .bb-shelf__track").scrollLeft);
+      console.log(`  撳右箭咀：第一下滑咗 ${Math.round(sl)}px，第二下再滑 ${Math.round(sl2 - sl)}px（一張卡闊 + 間距 = ${i.cardW + 16}px）`);
     }
     await ctx.close();
   }

@@ -105,14 +105,15 @@ export function CaseShelf({
     requestAnimationFrame(update);
   };
 
+  // 同蘋果官網一樣：撳一下箭咀滑一張卡（卡闊 + 間距），配合對齊落喺下一張卡
   const page = (dir: 1 | -1) => {
     const el = track.current;
     if (!el) return;
     const card = el.querySelector<HTMLElement>("li");
-    const step = card ? card.offsetWidth + 16 : el.clientWidth * 0.8;
-    const n = Math.max(1, Math.floor(el.clientWidth / step));
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 16;
+    const step = card ? card.offsetWidth + gap : el.clientWidth * 0.8;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    el.scrollBy({ left: dir * step * n, behavior: reduce ? "auto" : "smooth" });
+    el.scrollBy({ left: dir * step, behavior: reduce ? "auto" : "smooth" });
   };
 
   return (
