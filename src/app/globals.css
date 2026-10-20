@@ -455,26 +455,26 @@
 }
 .bb-contents__body {
   display: grid;
-  grid-template-columns: 5fr 7fr;
+  /* 左：目錄同最新文章；右：書模（約 7:5） */
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas: "list fig";
   gap: clamp(24px, 3vw, 48px);
   align-items: start;
   margin-top: clamp(40px, 5vw, 72px);
 }
+.bb-contents__list { grid-area: list; }
 .bb-contents__fig {
+  grid-area: fig;
+  justify-self: center;
+  width: min(100%, 440px);
+  margin: 0;
   position: sticky;
-  top: 80px;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: var(--radius-panel);
-  background: var(--paper);
+  top: 88px;
 }
-.bb-contents__fig img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/* 書模保持原圖 4:5，唔裁；圖本身係暖白底，外面唔再鋪色塊 */
+.bb-contents__frame { display: block; overflow: hidden; border-radius: var(--radius-panel); }
+.bb-contents__fig img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+.bb-contents__fig figcaption { display: flex; align-items: center; justify-content: center; margin-top: 10px; color: var(--ink-soft); font-size: var(--step-caption); }
 /* Apple 式分組清單：白底圓角，一行一項，右邊 › */
 .bb-group {
   margin: 0;
@@ -516,7 +516,7 @@
 .bb-latest__title { font-weight: 400; }
 .bb-latest__meta { color: var(--ink-soft); font-size: var(--step-caption); }
 @media (max-width: 960px) {
-  .bb-contents__body { grid-template-columns: 1fr; }
+  .bb-contents__body { grid-template-columns: 1fr; grid-template-areas: "list"; }
   /* 手機、細平板：目錄頁直接睇章節，唔放裝飾圖 */
   .bb-contents__fig { display: none; }
   .bb-group a { grid-template-columns: 3.6em minmax(0, 1fr) 1em; gap: 2px 8px; padding: 12px 18px; }

@@ -322,10 +322,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           已出 {articles.length} 篇 · 撰寫中 {pendingCount} 篇
         </p>
         <div className="bb-contents__body">
-          <div className="bb-contents__fig" data-reveal="panel">
-            <img decoding="async" {...imgProps(`${R}/princess-wg-white.webp`, "(max-width: 960px) 62vw, 40vw")} alt="銀白色四爪公主方形主石戒指（AI 示意圖）" width={1000} height={1000} loading="lazy" />
-          </div>
-          <div>
+          <div className="bb-contents__list">
             <ol className="bb-toc bb-group" data-reveal aria-label="目錄">
               {CHAPTERS.map((c) => (
                 <li key={c.slug}>
@@ -358,6 +355,24 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             )}
           </div>
+          {/* 書模放右邊，排喺目錄之後：讀屏同鍵盤先到目錄；手機隱藏 */}
+          <figure className="bb-contents__fig" data-reveal="panel">
+            <span className="bb-contents__frame">
+              <img
+                src="/images/contents/bluebook-model-1000.webp"
+                srcSet="/images/contents/bluebook-model-480.webp 480w, /images/contents/bluebook-model-720.webp 720w, /images/contents/bluebook-model-1000.webp 1000w"
+                sizes="min(34vw, 440px)"
+                alt="培育鑽石藍皮書精裝立體書概念模型，藍色封面與書脊印有書名，封面附鑽石及選購主題（AI 示意圖）"
+                width={1000}
+                height={1250}
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <figcaption>
+              書籍概念示意<span className="bb-demo">AI 示意</span>
+            </figcaption>
+          </figure>
         </div>
       </section>
 

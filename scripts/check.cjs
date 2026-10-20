@@ -551,7 +551,7 @@ const widths = [320, 390, 768, 1440];
   }
 
   console.log("\n== 首頁目錄（手機唔放裝飾圖）==");
-  for (const w of [375, 400, 430, 960, 1440]) {
+  for (const w of [375, 400, 430, 960, 1024, 1440]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, isMobile: w < 800, hasTouch: w < 800 });
     const pg = await ctx.newPage();
     await pg.goto(base + "/zh-hk.html#contents", { waitUntil: "load" });
@@ -564,9 +564,14 @@ const widths = [320, 390, 768, 1440];
       const head = document.getElementById("contents-title").getBoundingClientRect();
       const bar = document.querySelector(".bb-header").getBoundingClientRect();
       const fr = first.getBoundingClientRect();
-      return { fig: getComputedStyle(fig).display, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
+      const img = fig.querySelector("img");
+      const ir = img.getBoundingClientRect();
+      const lr = document.querySelector(".bb-contents__list").getBoundingClientRect();
+      const side = getComputedStyle(fig).display === "none" ? "" : `，書模喺${ir.left > lr.right ? "右" : "左"}邊 ${Math.round(ir.width)}×${Math.round(ir.height)}（原圖 ${img.naturalWidth}×${img.naturalHeight}，用 ${(img.currentSrc.match(/-(\d+)\.webp/) || [])[1]}w），頂部同目錄相差 ${Math.round(ir.top - lr.top)}px`;
+      return { fig: getComputedStyle(fig).display, side, first: Math.round(fr.top), inView: fr.top < innerHeight && fr.bottom > 0, headTop: Math.round(head.top), barBottom: Math.round(bar.bottom), over: document.documentElement.scrollWidth - innerWidth };
     });
-    console.log(`${w}px：裝飾圖 ${r.fig === "none" ? "隱藏" : "顯示"}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
+    console.log(`${w}px：裝飾圖 ${r.fig === "none" ? "隱藏" : "顯示"}${r.side}｜第一章連結喺畫面 ${r.first}px（${r.inView ? "睇得到" : "要再碌"}）｜目錄標題頂 ${r.headTop}px，頁頭底 ${r.barBottom}px｜橫向溢出 ${r.over}px`);
+    if (w >= 1024 || w === 375) await pg.locator(".bb-contents").screenshot({ path: `shots/contents-${w}.png` }).catch(() => {});
     await ctx.close();
   }
   for (const from of ["/zh-hk/price.html", "/zh-hk/custom.html"]) {
