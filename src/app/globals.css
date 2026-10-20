@@ -1650,12 +1650,12 @@
 }
 .bb-shelf--inset .bb-shelf__body { padding: 14px 16px 18px; }
 
-/* 左右箭咀：圓形毛玻璃，浮喺卡片兩邊；滑鼠移入貨架先出現，去到盡頭就收埋。手機用手指滑，唔顯示 */
+/* 左右箭咀：圓形毛玻璃，浮喺卡片兩邊；同蘋果官網一樣一直顯示，去到盡頭嗰邊變淡（停用）。手機一樣顯示，細少少 */
 .bb-shelf__paddle {
   position: absolute;
   top: calc(50% - 14px);
   z-index: 2;
-  display: none;
+  display: grid;
   place-items: center;
   width: 56px;
   height: 56px;
@@ -1668,7 +1668,6 @@
   backdrop-filter: saturate(180%) blur(12px);
   transform: translateY(-50%);
   cursor: pointer;
-  opacity: 0;
   transition: opacity 280ms var(--ease-apple), background-color 240ms var(--ease-apple);
 }
 .bb-shelf__paddle--prev { left: 16px; }
@@ -1676,11 +1675,15 @@
 .bb-shelf--inset .bb-shelf__paddle--prev { left: 8px; }
 .bb-shelf--inset .bb-shelf__paddle--next { right: 8px; }
 .bb-shelf__paddle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.bb-shelf__paddle:disabled { opacity: 0 !important; pointer-events: none; }
+.bb-shelf__paddle:disabled { opacity: 0.36; cursor: default; }
 @media (hover: hover) and (pointer: fine) {
-  .bb-shelf__paddle { display: grid; }
-  .bb-shelf__stage:hover .bb-shelf__paddle, .bb-shelf__paddle:focus-visible { opacity: 1; }
-  .bb-shelf__paddle:hover { background: rgba(214, 208, 206, 0.86); }
+  .bb-shelf__paddle:hover:not(:disabled) { background: rgba(214, 208, 206, 0.86); }
+}
+@media (max-width: 760px) {
+  .bb-shelf__paddle { width: 44px; height: 44px; }
+  .bb-shelf__paddle svg { width: 18px; height: 18px; }
+  .bb-shelf__paddle--prev { left: 10px; }
+  .bb-shelf__paddle--next { right: 10px; }
 }
 
 /* 章節、文章、作品頁入面嘅「相關作品」 */

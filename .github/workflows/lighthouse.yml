@@ -1,0 +1,52 @@
+name: Lighthouse
+
+# 手機 Lighthouse 效能分數（模擬慢 4G + 慢 CPU），用 gzip 伺服器模擬 Cloudflare 壓縮。結果放 lighthouse 分支。
+on:
+  workflow_dispatch:
+  push:
+    branches: [probe]
+
+permissions:
+  contents: write
+
+jobs:
+  lh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          NEXT_PUBLIC_SITE_URL: https://labdiamondbluebook.com
+      - name: Lighthouse
+        continue-on-error: true
+        run: |
+          (node scripts/serve-gz.cjs out 8090 >/dev/null 2>&1 &)
+          sleep 2
+          mkdir -p lh
+          CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser)
+          echo "chrome: $CHROME"
+          for p in home:zh-hk.html chapter:zh-hk/price.html article:zh-hk/4c/carat-size-on-hand.html article2:zh-hk/basics/vs-natural-moissanite.html cases:zh-hk/cases.html case:zh-hk/cases/engagement-rings/oval-solitaire.html about:zh-hk/about.html; do
+            name="${p%%:*}"; path="${p#*:}"
+            for i in 1 2 3; do
+              npx -y lighthouse@12.6.1 "http://localhost:8090/$path" --only-categories=performance --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
+            done
+          done
+          node scripts/lh-summary.cjs lh/*.json | tee lh/summary.txt
+      - name: Publish
+        if: always()
+        run: |
+          mkdir -p lh && cd lh
+          git init -q
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          echo "${GITHUB_SHA}" > COMMIT
+          git add -A
+          git commit -qm "Lighthouse for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:lighthouse
