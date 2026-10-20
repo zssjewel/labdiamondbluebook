@@ -508,7 +508,7 @@
 .bb-book__title .bb-tag { margin-left: 8px; font-family: var(--font-text); font-weight: 400; vertical-align: 1px; }
 /* 每章解答：闊嘅時候同章名同一行靠右（書矮啲，一屏睇得晒）；窄啲就落第二行 */
 .bb-book__ans { grid-column: 3; justify-self: end; color: var(--ink-soft); font-size: var(--step-caption); line-height: 1.5; text-align: right; }
-@media (max-width: 1240px) {
+@media (max-width: 1380px) {
   .bb-book__toc a { grid-template-columns: 4em minmax(0, 1fr) 1em; }
   .bb-book__toc a::after { grid-column: 3; }
   .bb-book__ans { grid-column: 2 / 4; justify-self: start; text-align: left; }
