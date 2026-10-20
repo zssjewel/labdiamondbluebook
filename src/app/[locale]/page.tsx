@@ -366,17 +366,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 目錄 */}
       <section className="bb-contents" aria-labelledby="contents-title">
-        {/* 錨點：平時喺段落頂；電腦版跟碌動揭書時，motion-layer 會將佢移去「書已打開」嘅位置，撳「目錄」直接見到九章 */}
         <span id="contents" className="bb-contents__anchor" aria-hidden="true" />
-        <div className="bb-contents__track">
-        <div className="bb-contents__pin">
         <h2 id="contents-title" className="bb-sechead bb-display" data-reveal>
           九章，由入門到戴上手
         </h2>
         <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
           已出 {articles.length} 篇 · 撰寫中 {pendingCount} 篇
         </p>
-        {/* 一本用代碼畫嘅書：碌到呢度先慢慢揭開封面，右頁係九章目錄，左頁（封面內頁）係書名同最新文章。
+        {/* 一本用代碼畫嘅書：碌到呢度自己慢慢揭開封面，右頁係九章目錄，左頁（封面內頁）係書名同最新文章。
             冇 JS、減少動畫、手機：直接係打開咗嘅狀態，連結即刻用得 */}
         <div className="bb-book">
           <div className="bb-book__spread">
@@ -438,8 +435,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
           </div>
-        </div>
-        </div>
         </div>
       </section>
 

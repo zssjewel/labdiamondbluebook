@@ -53,7 +53,7 @@ export default function MotionLayer() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const stopSort = sortDiagram();
-    const stopBook = scrubBook();
+    const stopBook = openBook();
     if (!("IntersectionObserver" in window)) return;
     const vh = window.innerHeight;
     const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter((el) => el.getBoundingClientRect().top > vh);
@@ -161,69 +161,46 @@ function sortDiagram(): (() => void) | undefined {
 }
 
 /**
- * 首頁目錄嗰本書（學蘋果 iPhone Duo 頁面）：段落釘住喺畫面，跟住碌動進度揭開封面。
- * 0–5%：書合埋喺中間；5–75%：封面揭開、書移返原位；55–90%：右頁九章逐行出現；之後放開繼續碌。
- * 撳「目錄」（#contents）會直接去到書已打開嘅位置。手機、減少動畫：唔做，直接係打開咗嘅書。
+ * 首頁目錄嗰本書（學蘋果 iPhone Duo 折疊屏）：仲未碌到就先合埋（is-closed）；
+ * 書去到畫面約四成，就自己慢慢打開（is-opening，約 2 秒），唔使跟住碌。播完拎走 class，回到預設打開狀態。
+ * 手機、減少動畫、已經喺畫面入面（例如撳「目錄」直接跳過嚟）：直接係打開咗嘅書。
  */
-function scrubBook(): (() => void) | undefined {
-  if (window.matchMedia("(max-width: 960px)").matches) return;
-  const sec = document.querySelector<HTMLElement>(".bb-contents");
-  const track = sec?.querySelector<HTMLElement>(".bb-contents__track");
-  const pin = sec?.querySelector<HTMLElement>(".bb-contents__pin");
-  const book = sec?.querySelector<HTMLElement>(".bb-book");
-  const anchor = sec?.querySelector<HTMLElement>(".bb-contents__anchor");
-  if (!sec || !track || !pin || !book || !anchor) return;
-  const header = document.querySelector<HTMLElement>(".bb-header");
-  sec.classList.add("is-scrub");
-  const clamp = (v: number) => Math.min(1, Math.max(0, v));
-  const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-  let headH = 52;
-  const measure = () => {
-    headH = header ? header.getBoundingClientRect().height : 52;
-    sec.style.setProperty("--fit", "1");
-    sec.style.setProperty("--shrink", "0px");
-    const avail = pin.clientHeight - book.offsetTop - 24;
-    const fit = Math.min(1, avail / book.offsetHeight);
-    sec.style.setProperty("--fit", fit.toFixed(3));
-    sec.style.setProperty("--shrink", `${Math.round(book.offsetHeight * (1 - fit))}px`);
-    sec.style.setProperty("--anchor-y", `${track.offsetTop + track.offsetHeight - pin.offsetHeight - headH + 2}px`);
+function openBook(): (() => void) | undefined {
+  if (!("IntersectionObserver" in window) || window.matchMedia("(max-width: 960px)").matches) return;
+  const books = Array.from(document.querySelectorAll<HTMLElement>(".bb-book")).filter((b) => b.getBoundingClientRect().top > window.innerHeight);
+  if (!books.length) return;
+  const timers: number[] = [];
+  books.forEach((b) => b.classList.add("is-closed"));
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const b = e.target as HTMLElement;
+        io.unobserve(b);
+        requestAnimationFrame(() => {
+          b.classList.add("is-opening");
+          b.classList.remove("is-closed");
+          timers.push(window.setTimeout(() => b.classList.remove("is-opening"), 3200));
+        });
+      }
+    },
+    { threshold: 0.4 },
+  );
+  books.forEach((b) => io.observe(b));
+  // 撳「目錄」跳過嚟：唔好俾佢由合埋開始等
+  const skip = () => {
+    if (window.location.hash !== "#contents") return;
+    books.forEach((b) => {
+      io.unobserve(b);
+      b.classList.remove("is-closed", "is-opening");
+    });
   };
-  let raf = 0;
-  const update = () => {
-    raf = 0;
-    const r = track.getBoundingClientRect();
-    if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
-    const dist = Math.max(1, track.offsetHeight - pin.offsetHeight);
-    const p = clamp((headH - r.top) / dist);
-    const open = ease(clamp((p - 0.05) / 0.7));
-    sec.style.setProperty("--slide", open.toFixed(4));
-    sec.style.setProperty("--open", open.toFixed(4));
-    sec.style.setProperty("--rows", clamp((p - 0.55) / 0.35).toFixed(4));
-    sec.classList.toggle("is-past", open > 0.5);
-  };
-  const onScroll = () => {
-    if (!raf) raf = requestAnimationFrame(update);
-  };
-  const onResize = () => {
-    measure();
-    update();
-  };
-  measure();
-  update();
-  // 由其他頁或者頁頭撳「目錄」入嚟：去書已打開嘅位置
-  const toAnchor = () => {
-    if (window.location.hash === "#contents") requestAnimationFrame(() => anchor.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior }));
-  };
-  toAnchor();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onResize);
-  window.addEventListener("hashchange", toAnchor);
+  skip();
+  window.addEventListener("hashchange", skip);
   return () => {
-    cancelAnimationFrame(raf);
-    window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("resize", onResize);
-    window.removeEventListener("hashchange", toAnchor);
-    sec.classList.remove("is-scrub", "is-past");
-    ["--fit", "--shrink", "--anchor-y", "--slide", "--open", "--rows"].forEach((k) => sec.style.removeProperty(k));
+    io.disconnect();
+    window.removeEventListener("hashchange", skip);
+    timers.forEach((t) => window.clearTimeout(t));
+    books.forEach((b) => b.classList.remove("is-closed", "is-opening"));
   };
 }
