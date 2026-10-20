@@ -435,6 +435,7 @@
 
 /* ---------- 首頁：目錄 ---------- */
 .bb-contents {
+  position: relative;
   padding: var(--gap-section) var(--pad);
   /* 同上下段落（手寸工具、工坊）分開底色，好似蘋果白／灰段落交替 */
   background: var(--steel);
@@ -466,6 +467,7 @@
   perspective: 2600px;
 }
 .bb-book__gutter { pointer-events: none; }
+.bb-contents__anchor { position: absolute; top: 0; left: 0; width: 1px; height: 1px; }
 .bb-book__spread {
   position: relative;
   display: grid;
@@ -1362,7 +1364,7 @@
 }
 
 /* ---------- 開頁速度：畫面以外嘅大段落，等碌到附近先排版同繪製 ---------- */
-.bb-routes, .bb-tool, .bb-related, .bb-contents, .bb-why, .bb-how, .bb-faq, .bb-close, .bb-footer,
+.bb-routes, .bb-tool, .bb-related, .bb-why, .bb-how, .bb-faq, .bb-close, .bb-footer,
 .bb-author, .bb-prevnext, .bb-ask, .bb-only-narrow, .bb-subhead, .bb-list {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;

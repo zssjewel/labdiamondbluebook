@@ -53,7 +53,7 @@ export default function MotionLayer() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const stopSort = sortDiagram();
-    const stopBook = openBook();
+    const stopBook = scrubBook();
     if (!("IntersectionObserver" in window)) return;
     const vh = window.innerHeight;
     const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]")).filter((el) => el.getBoundingClientRect().top > vh);
@@ -161,34 +161,69 @@ function sortDiagram(): (() => void) | undefined {
 }
 
 /**
- * 首頁目錄嗰本書：仲未碌到（喺畫面下面）就先合埋（is-closed）；去到畫面加 is-opening、拎走 is-closed，
- * 封面慢慢揭開。播完拎走 class，回到預設打開狀態。手機唔做（手機直接係目錄）。
+ * 首頁目錄嗰本書（學蘋果 iPhone Duo 頁面）：段落釘住喺畫面，跟住碌動進度揭開封面。
+ * 0–5%：書合埋喺中間；5–75%：封面揭開、書移返原位；55–90%：右頁九章逐行出現；之後放開繼續碌。
+ * 撳「目錄」（#contents）會直接去到書已打開嘅位置。手機、減少動畫：唔做，直接係打開咗嘅書。
  */
-function openBook(): (() => void) | undefined {
-  if (!("IntersectionObserver" in window) || window.matchMedia("(max-width: 960px)").matches) return;
-  const books = Array.from(document.querySelectorAll<HTMLElement>(".bb-book")).filter((b) => b.getBoundingClientRect().top > window.innerHeight * 0.75);
-  if (!books.length) return;
-  const timers: number[] = [];
-  books.forEach((b) => b.classList.add("is-closed"));
-  const io = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (!e.isIntersecting) continue;
-        const b = e.target as HTMLElement;
-        io.unobserve(b);
-        requestAnimationFrame(() => {
-          b.classList.add("is-opening");
-          b.classList.remove("is-closed");
-          timers.push(window.setTimeout(() => b.classList.remove("is-opening"), 2800));
-        });
-      }
-    },
-    { threshold: 0.35 },
-  );
-  books.forEach((b) => io.observe(b));
+function scrubBook(): (() => void) | undefined {
+  if (window.matchMedia("(max-width: 960px)").matches) return;
+  const sec = document.querySelector<HTMLElement>(".bb-contents");
+  const track = sec?.querySelector<HTMLElement>(".bb-contents__track");
+  const pin = sec?.querySelector<HTMLElement>(".bb-contents__pin");
+  const book = sec?.querySelector<HTMLElement>(".bb-book");
+  const anchor = sec?.querySelector<HTMLElement>(".bb-contents__anchor");
+  if (!sec || !track || !pin || !book || !anchor) return;
+  const header = document.querySelector<HTMLElement>(".bb-header");
+  sec.classList.add("is-scrub");
+  const clamp = (v: number) => Math.min(1, Math.max(0, v));
+  const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  let headH = 52;
+  const measure = () => {
+    headH = header ? header.getBoundingClientRect().height : 52;
+    sec.style.setProperty("--fit", "1");
+    sec.style.setProperty("--shrink", "0px");
+    const avail = pin.clientHeight - book.offsetTop - 24;
+    const fit = Math.min(1, avail / book.offsetHeight);
+    sec.style.setProperty("--fit", fit.toFixed(3));
+    sec.style.setProperty("--shrink", `${Math.round(book.offsetHeight * (1 - fit))}px`);
+    sec.style.setProperty("--anchor-y", `${track.offsetTop + track.offsetHeight - pin.offsetHeight - headH + 2}px`);
+  };
+  let raf = 0;
+  const update = () => {
+    raf = 0;
+    const r = track.getBoundingClientRect();
+    if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+    const dist = Math.max(1, track.offsetHeight - pin.offsetHeight);
+    const p = clamp((headH - r.top) / dist);
+    const open = ease(clamp((p - 0.05) / 0.7));
+    sec.style.setProperty("--slide", open.toFixed(4));
+    sec.style.setProperty("--open", open.toFixed(4));
+    sec.style.setProperty("--rows", clamp((p - 0.55) / 0.35).toFixed(4));
+    sec.classList.toggle("is-past", open > 0.5);
+  };
+  const onScroll = () => {
+    if (!raf) raf = requestAnimationFrame(update);
+  };
+  const onResize = () => {
+    measure();
+    update();
+  };
+  measure();
+  update();
+  // 由其他頁或者頁頭撳「目錄」入嚟：去書已打開嘅位置
+  const toAnchor = () => {
+    if (window.location.hash === "#contents") requestAnimationFrame(() => anchor.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior }));
+  };
+  toAnchor();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onResize);
+  window.addEventListener("hashchange", toAnchor);
   return () => {
-    io.disconnect();
-    timers.forEach((t) => window.clearTimeout(t));
-    books.forEach((b) => b.classList.remove("is-closed", "is-opening"));
+    cancelAnimationFrame(raf);
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onResize);
+    window.removeEventListener("hashchange", toAnchor);
+    sec.classList.remove("is-scrub", "is-past");
+    ["--fit", "--shrink", "--anchor-y", "--slide", "--open", "--rows"].forEach((k) => sec.style.removeProperty(k));
   };
 }

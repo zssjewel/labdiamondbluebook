@@ -69,18 +69,23 @@
     scale: 1;
   }
 
-  /* 首頁目錄：一本合埋嘅書（置中），碌到時封面以書脊為軸慢慢揭開，同時書移返原位，右頁九章逐行浮現 */
-  .bb-book.is-closed .bb-book__spread { transform: translateX(-25%); }
-  .bb-book.is-closed .bb-book__cover { transform: translateZ(1px) rotateY(0deg); }
-  .bb-book.is-closed .bb-book__toc li, .bb-book.is-closed .bb-book__running { opacity: 0; }
-  /* 合埋時內頁唔算喺畫面（被封面蓋住），揭開時先出現 */
-  .bb-book.is-closed .bb-book__inside { visibility: hidden; }
-  .bb-book.is-opening .bb-book__spread { transition: transform 1700ms cubic-bezier(0.5, 0.05, 0.2, 1) 150ms; }
-  .bb-book.is-opening .bb-book__cover { transition: transform 1800ms cubic-bezier(0.5, 0.05, 0.2, 1) 150ms; }
-  .bb-book.is-opening .bb-book__toc li, .bb-book.is-opening .bb-book__running {
-    transition: opacity 600ms var(--ease-apple);
-    transition-delay: calc(900ms + var(--r, 0) * 70ms);
+  /* 首頁目錄：學蘋果 iPhone Duo 頁面「跟住碌動慢慢打開」——段落釘住喺畫面，碌幾多就揭幾多。
+     --slide／--open／--rows 由 motion-layer 按碌動進度寫入；只郁 transform／opacity */
+  .bb-contents.is-scrub .bb-contents__track { height: calc(100vh - 52px + 130vh); }
+  .bb-contents.is-scrub .bb-contents__pin {
+    position: sticky;
+    top: 52px;
+    height: calc(100vh - 52px);
+    padding-top: 24px;
+    box-sizing: border-box;
   }
+  .bb-contents.is-scrub .bb-contents__anchor { top: var(--anchor-y, 0px); }
+  .bb-contents.is-scrub .bb-book { transform: scale(var(--fit, 1)); transform-origin: top center; margin-bottom: calc(var(--shrink, 0px) * -1); }
+  .bb-contents.is-scrub .bb-book__spread { transform: translateX(calc((1 - var(--slide, 1)) * -25%)); will-change: transform; }
+  .bb-contents.is-scrub .bb-book__cover { transform: translateZ(1px) rotateY(calc(var(--open, 1) * -180deg)); will-change: transform; }
+  .bb-contents.is-scrub .bb-book__toc li, .bb-contents.is-scrub .bb-book__running { opacity: clamp(0, calc(var(--rows, 1) * 2.2 - var(--r, 0) * 0.13), 1); }
+  /* 封面未翻過一半：內頁仲喺封面背後，唔顯示 */
+  .bb-contents.is-scrub:not(.is-past) .bb-book__inside { visibility: hidden; }
 
   /* 「資料好亂？收窄成一隻戒指」：去到畫面時，方塊由左邊亂堆逐粒排隊、排成方陣；
      方塊去到邊區，嗰區寫實圖就升起淡入，該區方塊隨即淡出（只郁 transform／opacity） */

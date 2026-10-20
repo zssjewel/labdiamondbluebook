@@ -365,7 +365,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <CaratTool locale={locale} worksHref={visibleCategories().some((c) => c.slug === "engagement-rings") ? localizeHref("/cases/engagement-rings", locale) : undefined} />
 
       {/* 目錄 */}
-      <section className="bb-contents" id="contents" aria-labelledby="contents-title">
+      <section className="bb-contents" aria-labelledby="contents-title">
+        {/* 錨點：平時喺段落頂；電腦版跟碌動揭書時，motion-layer 會將佢移去「書已打開」嘅位置，撳「目錄」直接見到九章 */}
+        <span id="contents" className="bb-contents__anchor" aria-hidden="true" />
+        <div className="bb-contents__track">
+        <div className="bb-contents__pin">
         <h2 id="contents-title" className="bb-sechead bb-display" data-reveal>
           九章，由入門到戴上手
         </h2>
@@ -434,6 +438,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </div>
             </div>
           </div>
+        </div>
+        </div>
         </div>
       </section>
 
