@@ -1,0 +1,42 @@
+TASTESKILL · INSPECT   http://localhost:8080/index.html
+
+MEASURED (first viewport listed)
+  hero headline   "培育鑽石 訂造攻略"  2 words · 1 line(s) · 80px (5.6vw) · -apple-system 600 · tracking -0.015em · leading 1.12
+  @768px          1 line(s) · 57.7px
+  @390px          2 line(s) · 40.3px
+  typefaces       -apple-system 95%, Songti TC 5%
+  sizes in use    14 / 16 / 17 / 18 / 22 / 23 / 38 / 53 / 55 / 80 px   body 18px / 1.75
+  colour          page #fbf7f6 · sections #f0e9e7 #f4e4de #fbf7f6 #f3ede9 #34508f #2a2326 · button #34508f
+  page            11.7 screens · 207 words · 30 images · hero media none
+  headings        14 · longest 2 line(s) · median 1 words
+
+WARN — fix, or be able to defend
+  [dashed] @1440px (+768, 390)  9 dashed/dotted border(s).
+      → Remove unless it is a real drop zone.
+  [palette-cream] @1440px (+768, 390)  Yellow-cream background (section #f3ede9).
+      → Use the drawn palette. If you want warmth, take a low-chroma stone or bone, not a yellow cream.
+  [no-footage] @1440px  No video anywhere on the page.
+      → Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject.
+  [side-scroll] @1440px (+768, 390)  1 row(s) scroll sideways with content past their edge.
+      → Jurors and most visitors read a row cut at the edge as clipped, not as scrollable. Wrap it onto more lines, or end it inside the grid.
+  [font-not-dealt] @1440px  The sheet dealt Young Serif and Source Serif 4, but the page renders -apple-system, Songti TC.
+      → Load the dealt face (the link on the sheet) and put it first in font-family. A build that falls back to a default face lands on the default look.
+  [empty-middle] @1440px (+768)  1 section(s) have content at both edges and 3654px of nothing between: "工坊作品"
+      → Bring the two parts together on the grid, or put the picture or figure of the section in the middle. An empty middle third reads as a hole, the same as an empty half.
+  [name-only-title] @1440px (+768, 390)  The h1 is a bare name ("培育鑽石 訂造攻略") and nothing else on the first screen says what this is.
+      → Keep the name if it leads, and give the line under it (18px or more) the plain words: what it is, for whom, where or when. In the study of 97 Sites of the Day, first screens that named nothing lost usability and content points.
+
+LOOK AT THE RENDER — open these with your image viewer / Read tool before saying anything about quality:
+  desktop 1440px  .taste-skill/inspect/desktop-fold.jpg
+                  .taste-skill/inspect/desktop-page-01.jpg
+                  .taste-skill/inspect/desktop-page-02.jpg
+                  .taste-skill/inspect/desktop-page-03.jpg
+  tablet 768px    .taste-skill/inspect/tablet-fold.jpg
+                  .taste-skill/inspect/tablet-page-01.jpg
+                  .taste-skill/inspect/tablet-page-02.jpg
+  mobile 390px    .taste-skill/inspect/mobile-fold.jpg
+                  .taste-skill/inspect/mobile-page-01.jpg
+                  .taste-skill/inspect/mobile-page-02.jpg
+
+report: .taste-skill/inspect/report.json
+RESULT: 0 FAIL, 7 WARN — measurements pass. Passing the meter is the floor, not the grade: score the screenshots with references/critique.md.

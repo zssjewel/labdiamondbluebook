@@ -1,0 +1,201 @@
+== 每頁 SEO 狀態（本地構建）==
+/index | HTTP 200 | title「培育鑽石訂造攻略｜價錢、證書、4C、款式一本睇清 - 培育鑽石藍皮書」 | description 71 字 | canonical / | robots noindex, nofollow | H1×1 | JSON-LD Organization、WebSite、FAQPage | 初稿 否 | sitemap 有
+/price | HTTP 200 | title「第二章：培育鑽石價錢｜培育鑽石藍皮書」 | description 45 字 | canonical /price | robots noindex, nofollow | H1×1 | JSON-LD Organization、ItemList、BreadcrumbList | 初稿 否 | sitemap 冇
+/certificate | HTTP 200 | title「第三章：培育鑽石證書｜培育鑽石藍皮書」 | description 59 字 | canonical /certificate | robots noindex, nofollow | H1×1 | JSON-LD Organization、ItemList、BreadcrumbList | 初稿 否 | sitemap 冇
+/custom | HTTP 200 | title「第六章：培育鑽石訂造流程｜培育鑽石藍皮書」 | description 50 字 | canonical /custom | robots noindex, nofollow | H1×1 | JSON-LD Organization、ItemList、BreadcrumbList | 初稿 否 | sitemap 冇
+/about | HTTP 200 | title「關於本書及編著聲明｜培育鑽石藍皮書」 | description 61 字 | canonical /about | robots noindex, nofollow | H1×1 | JSON-LD Organization | 初稿 否 | sitemap 有
+/cases | HTTP 200 | title「培育鑽石作品案例：求婚戒指、耳環、手鏈｜培育鑽石藍皮書」 | description 59 字 | canonical /cases | robots noindex, nofollow | H1×1 | JSON-LD Organization | 初稿 是 | sitemap 冇
+/cases/engagement-rings | HTTP 200 | title「培育鑽石求婚戒指作品｜培育鑽石藍皮書」 | description 54 字 | canonical /cases/engagement-rings | robots noindex, nofollow | H1×1 | JSON-LD Organization、BreadcrumbList | 初稿 是 | sitemap 冇
+/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold | HTTP 200 | title「3.09卡梨形培育鑽石求婚戒指｜E VS1・18K白金｜培育鑽石藍皮書」 | description 88 字 | canonical /cases/engagement-rings/pear-halo-3-09ct-18k-white-gold | robots noindex, nofollow | H1×1 | JSON-LD Organization、BreadcrumbList、Product、FAQPage、VideoObject | 初稿 否 | sitemap 冇
+/basics/vs-natural-moissanite | HTTP 200 | title「培育鑽石同天然鑽石、莫桑石、鋯石有咩分別｜培育鑽石藍皮書」 | description 48 字 | canonical /basics/vs-natural-moissanite | robots noindex, nofollow | H1×1 | JSON-LD Organization、Article、BreadcrumbList | 初稿 是 | sitemap 冇
+/4c/carat-size-on-hand | HTTP 200 | title「卡數同視覺大小：1 卡戴喺手上有幾大｜培育鑽石藍皮書」 | description 56 字 | canonical /4c/carat-size-on-hand | robots noindex, nofollow | H1×1 | JSON-LD Organization、Article、BreadcrumbList | 初稿 是 | sitemap 冇
+/__not_found_check | HTTP 404（本地靜態伺服器；正式網站要另外喺 Cloudflare 複測）
+robots.txt: User-Agent: * / Disallow: / /  / Sitemap: https://labdiamondbluebook.com/sitemap.xml / 
+sitemap 網址： /、/about、/privacy-policy、/terms-of-service
+
+== 版面：橫向溢出、破圖 ==
+320px /index：冇溢出，圖 30 張，破圖 0，用咗細圖 17 張
+320px /price：冇溢出，圖 10 張，破圖 0，用咗細圖 4 張
+320px /certificate：冇溢出，圖 10 張，破圖 0，用咗細圖 3 張
+320px /custom：冇溢出，圖 10 張，破圖 0，用咗細圖 2 張
+320px /about：冇溢出，圖 4 張，破圖 0，用咗細圖 4 張
+320px /cases：冇溢出，圖 31 張，破圖 0，用咗細圖 29 張
+320px /cases/engagement-rings：冇溢出，圖 11 張，破圖 0，用咗細圖 10 張
+320px /cases/engagement-rings/pear-halo-3-09ct-18k-white-gold：冇溢出，圖 36 張，破圖 0，用咗細圖 10 張
+320px /basics/vs-natural-moissanite：冇溢出，圖 11 張，破圖 0，用咗細圖 3 張
+320px /4c/carat-size-on-hand：冇溢出，圖 11 張，破圖 0，用咗細圖 3 張
+390px /index：冇溢出，圖 30 張，破圖 0，用咗細圖 4 張
+390px /price：冇溢出，圖 10 張，破圖 0，用咗細圖 4 張
+390px /certificate：冇溢出，圖 10 張，破圖 0，用咗細圖 3 張
+390px /custom：冇溢出，圖 10 張，破圖 0，用咗細圖 2 張
+390px /about：冇溢出，圖 4 張，破圖 0，用咗細圖 4 張
+390px /cases：冇溢出，圖 31 張，破圖 0，用咗細圖 28 張
+390px /cases/engagement-rings：冇溢出，圖 11 張，破圖 0，用咗細圖 10 張
+390px /cases/engagement-rings/pear-halo-3-09ct-18k-white-gold：冇溢出，圖 36 張，破圖 0，用咗細圖 10 張
+390px /basics/vs-natural-moissanite：冇溢出，圖 11 張，破圖 0，用咗細圖 3 張
+390px /4c/carat-size-on-hand：冇溢出，圖 11 張，破圖 0，用咗細圖 3 張
+768px /index：冇溢出，圖 30 張，破圖 0，用咗細圖 8 張
+768px /price：冇溢出，圖 10 張，破圖 0，用咗細圖 5 張
+768px /certificate：冇溢出，圖 10 張，破圖 0，用咗細圖 4 張
+768px /custom：冇溢出，圖 10 張，破圖 0，用咗細圖 3 張
+768px /about：冇溢出，圖 4 張，破圖 0，用咗細圖 4 張
+768px /cases：冇溢出，圖 31 張，破圖 0，用咗細圖 28 張
+768px /cases/engagement-rings：冇溢出，圖 11 張，破圖 0，用咗細圖 10 張
+768px /cases/engagement-rings/pear-halo-3-09ct-18k-white-gold：冇溢出，圖 36 張，破圖 0，用咗細圖 13 張
+768px /basics/vs-natural-moissanite：冇溢出，圖 11 張，破圖 0，用咗細圖 4 張
+768px /4c/carat-size-on-hand：冇溢出，圖 11 張，破圖 0，用咗細圖 4 張
+1440px /index：冇溢出，圖 30 張，破圖 0，用咗細圖 17 張
+1440px /price：冇溢出，圖 10 張，破圖 0，用咗細圖 3 張
+1440px /certificate：冇溢出，圖 10 張，破圖 0，用咗細圖 4 張
+1440px /custom：冇溢出，圖 10 張，破圖 0，用咗細圖 4 張
+1440px /about：冇溢出，圖 4 張，破圖 0，用咗細圖 4 張
+1440px /cases：冇溢出，圖 31 張，破圖 0，用咗細圖 31 張
+1440px /cases/engagement-rings：冇溢出，圖 11 張，破圖 0，用咗細圖 11 張
+1440px /cases/engagement-rings/pear-halo-3-09ct-18k-white-gold：冇溢出，圖 36 張，破圖 0，用咗細圖 15 張
+1440px /basics/vs-natural-moissanite：冇溢出，圖 11 張，破圖 0，用咗細圖 3 張
+1440px /4c/carat-size-on-hand：冇溢出，圖 11 張，破圖 0，用咗細圖 3 張
+
+== 手機文章：首屏順序、目錄摺疊 ==
+H1 143px，結論 223px，元資料 330px，摺疊目錄 507px，正文 847px（首屏高 844px）
+目錄撳開：成功；撳第一條（#一張表睇清四種石）後標題距頂 80px（要大過黏頂頁頭）
+
+== 圓鑽文章分享圖 ==
+og:image ×1：https://labdiamondbluebook.com/images/renders/carat-size-round-cover.webp（1200×630，alt「暖白背景下的圓形明亮式主石特寫（AI 示意圖）」）
+twitter:image ×1：https://labdiamondbluebook.com/images/renders/carat-size-round-cover.webp
+Article.image：https://labdiamondbluebook.com/images/renders/carat-size-round-cover.webp；JSON-LD 解析失敗 0 個
+仲有冇用方鑽圖做封面：冇
+第四章頁 og:image：https://labdiamondbluebook.com/images/renders/princess-macro-white.webp（應該仍然係方鑽圖）
+/images/renders/carat-size-round-cover.webp：HTTP 200，image/webp，1200×630，50KB
+/images/renders/carat-size-round-cover-800.webp：HTTP 200，image/webp，800×420，28KB
+/images/renders/carat-size-round-cover-480.webp：HTTP 200，image/webp，480×252，13KB
+
+== 第三章、第六章章節圖 ==
+/certificate 分享圖：url=/images/renders/certificate-verification-ivory.webp，width=1000，height=1000，alt=圓形鑽石、珠寶放大鏡與無品牌報告紙，示意證書核驗（AI 示意圖）
+  側欄圖：/images/renders/certificate-verification-ivory.webp（用緊 /images/renders/certificate-verification-ivory-480.webp，原圖 240×240，顯示 240×240，框 240×240，object-fit cover，width/height 1000×1000，載入 eager，sizes 240px）
+  alt：圓形鑽石、珠寶放大鏡與無品牌報告紙，示意證書核驗（AI 示意圖）
+  srcset /images/renders/certificate-verification-ivory-480.webp：HTTP 200 image/webp
+  srcset /images/renders/certificate-verification-ivory-720.webp：HTTP 200 image/webp
+  srcset /images/renders/certificate-verification-ivory.webp：HTTP 200 image/webp
+  係咪用新圖：係
+/custom 分享圖：url=/images/renders/custom-ring-wax-ivory.webp，width=1000，height=1000，alt=綠色單石戒指蠟模與戒指設計草圖，示意訂造設計階段（AI 示意圖）
+  側欄圖：/images/renders/custom-ring-wax-ivory.webp（用緊 /images/renders/custom-ring-wax-ivory-480.webp，原圖 240×240，顯示 240×240，框 240×240，object-fit cover，width/height 1000×1000，載入 eager，sizes 240px）
+  alt：綠色單石戒指蠟模與戒指設計草圖，示意訂造設計階段（AI 示意圖）
+  srcset /images/renders/custom-ring-wax-ivory-480.webp：HTTP 200 image/webp
+  srcset /images/renders/custom-ring-wax-ivory-720.webp：HTTP 200 image/webp
+  srcset /images/renders/custom-ring-wax-ivory.webp：HTTP 200 image/webp
+  係咪用新圖：係
+舊圖 side-girdle-steel.webp 仍然保留：HTTP 200
+舊圖 wax-steel.webp 仍然保留：HTTP 200
+
+== 返回目錄、尺寸工具 ==
+首頁 → 價錢（/price）→ 返回：目錄標題透明度 0.996338，目錄透明度 1
+首頁 → 訂造流程（/custom）→ 返回：目錄標題透明度 1，目錄透明度 1
+拉桿最細：1 卡直徑約 6.4 毫米佔手指闊度約 39%
+拉桿最大：3 卡直徑約 9.3 毫米佔手指闊度約 56%
+揀「手指幼」（已選 true）：3 卡直徑約 9.3 毫米佔手指闊度約 60%
+揀「中等」（已選 true）：3 卡直徑約 9.3 毫米佔手指闊度約 56%
+揀「手指粗」（已選 true）：3 卡直徑約 9.3 毫米佔手指闊度約 52%
+
+== 動效 ==
+電腦 1440：支援碌動動畫 係，有 0 個元素跟碌動，進場範圍「normal」
+  開頁 2.5 秒後首屏未到位：0 個
+  流程圖未碌到：0 粒要郁嘅方塊，0 粒擺咗喺左邊亂堆等緊
+  碌到之前舞台狀態：bb-how__stage
+  碌到之後 0.6 秒：114 粒仲喺路上，三張圖透明度 0.00/0.00/0.00；4 秒：0 粒仲喺路上，三張圖透明度 1.00/1.00/1.00，動畫狀態未清：0
+  40 個進場元素（1 個有進場動畫）碌過之後未完全顯示：冇
+  碌到最底，結尾段透明度：1.00、1.00
+手機 390：支援碌動動畫 係，有 0 個元素跟碌動，進場範圍「normal」
+  開頁 2.5 秒後首屏未到位：0 個
+  流程圖未碌到：0 粒要郁嘅方塊，0 粒擺咗喺左邊亂堆等緊
+  碌到之前舞台狀態：bb-how__stage
+  碌到之後 0.6 秒：0 粒仲喺路上，三張圖透明度 1.00/1.00/1.00；4 秒：0 粒仲喺路上，三張圖透明度 1.00/1.00/1.00，動畫狀態未清：0
+  40 個進場元素（1 個有進場動畫）碌過之後未完全顯示：冇
+  碌到最底，結尾段透明度：1.00、1.00
+減少動畫模式：54 個元素之中 4 個仲有動畫或者未顯示
+
+== 流程圖示意圖（睇書 → 問師傅 → 訂造） ==
+  process-learn-480.webp：200，image/webp，42424 bytes，有透明通道
+  process-learn-720.webp：200，image/webp，83320 bytes，有透明通道
+  process-consult-480.webp：200，image/webp，38596 bytes，有透明通道
+  process-consult-720.webp：200，image/webp，77342 bytes，有透明通道
+  process-finished-480.webp：200，image/webp，33872 bytes，有透明通道
+  process-finished-720.webp：200，image/webp，63628 bytes，有透明通道
+  375px：圖闊 152/162/172px（載入 3/3，用 480/480/480w），超出舞台 0，圖互相重疊 冇，圖字重疊 冇，圖文中心相差 0/0/0px，方塊層 直版，hidden，橫向溢出 0px
+  430px：圖闊 175/186/197px（載入 3/3，用 480/480/480w），超出舞台 0，圖互相重疊 冇，圖字重疊 冇，圖文中心相差 0/0/0px，方塊層 直版，hidden，橫向溢出 0px
+  768px：圖闊 219/233/247px（載入 3/3，用 480/480/480w），超出舞台 1，圖互相重疊 冇，圖字重疊 冇，方塊層 橫版，hidden，橫向溢出 0px
+  1440px：圖闊 323/343/364px（載入 3/3，用 480/480/480w），超出舞台 1，圖互相重疊 冇，圖字重疊 冇，方塊層 橫版，hidden，橫向溢出 0px
+  停用 JS：三張圖同三步文字透明度 1.00/1.00/1.00/1.00/1.00/1.00
+  圖慢 1.8 秒先到：碌到 0.7 秒 is-ready（0.00/0.00/0.00）；6 秒後 靜態（1.00/1.00/1.00）
+  轉頁返首頁：1 個舞台，碌到 0.7 秒 is-ready（0.00/0.00/0.00）；來回碌兼改視窗之後 靜態（1.00/1.00/1.00）
+
+== 點解揀鄒三山工坊：四張示意圖 ==
+  workshop-interior-v2：200/200/200
+  factory-direct-v2：200/200/200
+  quality-certificate-v2：200/200/200
+  doorstep-handover-v2：200/200/200
+  375px：workshop-interior@480 343×257（顯示比例 1.33／原圖 1，透明度 1.00）；factory-direct@480 295×197（顯示比例 1.5／原圖 1.51，透明度 1.00）；quality-certificate@480 295×197（顯示比例 1.5／原圖 1.51，透明度 1.00）；doorstep-handover@480 295×197（顯示比例 1.5／原圖 1.51，透明度 1.00）；橫向溢出 0px
+  430px：workshop-interior@480 398×299（顯示比例 1.33／原圖 1，透明度 1.00）；factory-direct@480 350×233（顯示比例 1.5／原圖 1.5，透明度 1.00）；quality-certificate@480 350×233（顯示比例 1.5／原圖 1.5，透明度 1.00）；doorstep-handover@480 350×233（顯示比例 1.5／原圖 1.5，透明度 1.00）；橫向溢出 0px
+  768px：workshop-interior@800 734×551（顯示比例 1.33／原圖 1，透明度 1.00）；factory-direct@800 686×457（顯示比例 1.5／原圖 1.5，透明度 1.00）；quality-certificate@800 686×457（顯示比例 1.5／原圖 1.5，透明度 1.00）；doorstep-handover@800 686×457（顯示比例 1.5／原圖 1.5，透明度 1.00）；橫向溢出 0px
+  1440px：workshop-interior@800 560×520（顯示比例 1.08／原圖 1，透明度 1.00）；factory-direct@480 381×254（顯示比例 1.5／原圖 1.5，透明度 1.00）；quality-certificate@480 381×254（顯示比例 1.5／原圖 1.5，透明度 1.00）；doorstep-handover@480 381×254（顯示比例 1.5／原圖 1.5，透明度 1.00）；橫向溢出 0px
+  390px 停用 JS：workshop-interior@480 358×269（顯示比例 1.33／原圖 1，透明度 1.00）；factory-direct@480 310×207（顯示比例 1.5／原圖 1.5，透明度 1.00）；quality-certificate@480 310×207（顯示比例 1.5／原圖 1.5，透明度 1.00）；doorstep-handover@480 310×207（顯示比例 1.5／原圖 1.5，透明度 1.00）；橫向溢出 0px
+  390px 減少動畫：workshop-interior@480 358×269（顯示比例 1.33／原圖 1，透明度 1.00）；factory-direct@480 310×207（顯示比例 1.5／原圖 1.5，透明度 1.00）；quality-certificate@480 310×207（顯示比例 1.5／原圖 1.5，透明度 1.00）；doorstep-handover@480 310×207（顯示比例 1.5／原圖 1.5，透明度 1.00）；橫向溢出 0px
+
+== 首頁段落之間留白（上一段內容底 → 下一段內容頂） ==
+  1440px：bb-hero→bb-works 223px，bb-works→bb-routes 214px，bb-routes→bb-tool 245px，bb-tool→bb-contents 245px，bb-contents→bb-why 245px，bb-why→bb-how 245px，bb-how→bb-faq 245px，bb-faq→bb-close 294px
+  390px：bb-hero→bb-works 128px，bb-works→bb-routes 112px，bb-routes→bb-tool 331px，bb-tool→bb-contents 442px，bb-contents→bb-why 128px，bb-why→bb-how 128px，bb-how→bb-faq 128px，bb-faq→bb-close 154px
+
+== 作品貨架 ==
+電腦 1440：作品段喺 1144px，高 995px；分類「所有產品✓ 求婚戒指 耳環 排鑽戒 吊墜項鏈 手鏈 結婚對戒 舊金改造」；卡 13 張（每張闊 400px，可滑 3880px）；破圖 0；頁面橫向溢出 0px
+  撳「耳環」：卡 4 張，分類「所有產品 求婚戒指 耳環✓ 排鑽戒 吊墜項鏈 手鏈 結婚對戒 舊金改造」
+  第一張連去 /cases/earrings/round-studs-yg
+  撳右箭咀：第一下滑咗 416px，第二下再滑 416px（一張卡闊 + 間距 = 416px）
+手機 390：作品段喺 1272px，高 761px；分類「所有產品✓ 求婚戒指 耳環 排鑽戒 吊墜項鏈 手鏈 結婚對戒 舊金改造」；卡 13 張（每張闊 304px，可滑 3625px）；破圖 0；頁面橫向溢出 0px
+  撳「耳環」：卡 4 張，分類「所有產品 求婚戒指 耳環✓ 排鑽戒 吊墜項鏈 手鏈 結婚對戒 舊金改造」
+  第一張連去 /cases/earrings/round-studs-yg
+作品相（電腦）：滑鼠移入 → 上一張 透明度 0.36（停用）、下一張 透明度 1；撳右箭咀後去到第 2 張，縮圖第 2 格亮（共 7 格縮圖）
+放大睇：打開 係｜相闊 900px｜載入 係｜1 / 6｜Esc 關閉 係
+作品頁：3.09 卡梨形培育鑽石求婚戒指・碎鑽光環｜相 7 格｜主石培育鑽石，梨形，3.09 卡｜顏色淨度E 色，VS1｜拋光對稱Excellent，Excellent（2EX）｜證書IGI｜鑲法主石一圈碎鑽光環，戒臂單排微鑲｜金屬18K 白金｜工期約 10 日｜完成2026 年 09 月｜相關：其他求婚戒指、其他類別｜robots noindex, nofollow
+/price.html 相關作品：相關作品（8 件）
+/4c/carat-size-on-hand.html 相關作品：同類作品（8 件）
+
+== 分享圖（原始 HTML）==
+/：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/engagement-rings：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/earrings：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/eternity-rings：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/pendants：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/bracelets：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/wedding-bands：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/remake：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold：og 1 個 /images/cases/pear-halo-3-09ct-18k-white-gold-v2-1.webp（1000×1000）｜twitter 1 個 /images/cases/pear-halo-3-09ct-18k-white-gold-v2-1.webp｜一致 係｜絕對網址 係
+/certificate：og 1 個 /images/renders/certificate-verification-ivory.webp（1000×1000）｜twitter 1 個 /images/renders/certificate-verification-ivory.webp｜一致 係｜絕對網址 係
+/custom：og 1 個 /images/renders/custom-ring-wax-ivory.webp（1000×1000）｜twitter 1 個 /images/renders/custom-ring-wax-ivory.webp｜一致 係｜絕對網址 係
+/4c/carat-size-on-hand：og 1 個 /images/renders/carat-size-round-cover.webp（1200×630）｜twitter 1 個 /images/renders/carat-size-round-cover.webp｜一致 係｜絕對網址 係
+/about：og 1 個 /images/social/share-cover-labdiamond-1200x630.jpg（1200×630）｜twitter 1 個 /images/social/share-cover-labdiamond-1200x630.jpg｜一致 係｜絕對網址 係
+分享封面：HTTP 200，image/jpeg，1200×630，198KB
+
+== 推薦作品出口文案 ==
+/index 「工坊作品」→「睇全部 29 件作品」連去 /cases（目的地有 29 件）
+/price 「相關作品」→「睇更多作品」連去 /cases（目的地有 29 件）
+/4c/carat-size-on-hand 「同類作品」→「睇更多作品」連去 /cases（目的地有 29 件）
+/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold 「其他求婚戒指」→「睇全部求婚戒指」連去 /cases/engagement-rings（目的地有 10 件）
+/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold 「其他類別」→「睇更多作品」連去 /cases（目的地有 29 件）
+
+== 首頁目錄（手機唔放裝飾圖）==
+375px：書（封面隱藏），手機版：目錄先，最新文章喺後；最新文章連結唔喺畫面，第一章連結撳得到｜第一章連結喺畫面 231px（睇得到）｜目錄標題頂 64px，頁頭底 52px｜橫向溢出 0px
+400px：書（封面隱藏），手機版：目錄先，最新文章喺後；最新文章連結唔喺畫面，第一章連結撳得到｜第一章連結喺畫面 231px（睇得到）｜目錄標題頂 64px，頁頭底 52px｜橫向溢出 0px
+430px：書（封面隱藏），手機版：目錄先，最新文章喺後；最新文章連結唔喺畫面，第一章連結撳得到｜第一章連結喺畫面 231px（睇得到）｜目錄標題頂 64px，頁頭底 52px｜橫向溢出 0px
+960px：書（封面隱藏），手機版：目錄先，最新文章喺後；最新文章連結唔喺畫面，第一章連結撳得到｜第一章連結喺畫面 275px（睇得到）｜目錄標題頂 81px，頁頭底 52px｜橫向溢出 0px
+1024px：書，打開咗：內頁喺左（489×766），目錄頁喺右（479×746）；最新文章連結被 undefined 擋住，第一章連結撳得到｜第一章連結喺畫面 310px（睇得到）｜目錄標題頂 87px，頁頭底 52px｜橫向溢出 0px
+1440px：書，打開咗：內頁喺左（520×634），目錄頁喺右（510×614）；最新文章連結撳得到，第一章連結撳得到｜第一章連結喺畫面 393px（睇得到）｜目錄標題頂 122px，頁頭底 52px｜橫向溢出 0px
+由 /price 撳頂部「目錄」：去到 /#contents，目錄標題頂 122px（頁頭底 52px，冇被遮），章節表頂 393px，透明度 1
+  返回：/price.html；前進：/#contents
+由 /custom 撳頂部「目錄」：去到 /#contents，目錄標題頂 122px（頁頭底 52px，冇被遮），章節表頂 393px，透明度 1
+  返回：/custom.html；前進：/#contents
+跳至正文：第一下 Tab 聚焦「跳至主要內容」（頂 8px），撳 Enter 後焦點喺 MAIN#main；main 數量 1
+
+== 作品列表頁分類（同首頁一樣嘅分段選擇器）==
+開頁： {"on":"所有產品","x":4,"want":4,"live":true,"url":"/cases.html","y":0,"n":29}
+撳「耳環」0.15 秒（膠囊滑緊、未換頁）： {"on":"耳環","x":86,"want":209,"live":true,"url":"/cases.html","y":300,"n":29}
+1.9 秒後（已換頁）： {"on":"耳環","x":209,"want":209,"live":true,"url":"/cases/earrings","y":300,"n":3}
