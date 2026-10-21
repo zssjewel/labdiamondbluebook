@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { imgProps } from "@/lib/images";
 
 /** 作品相：左右滑一張張睇（自動對齊），下面有頁碼點；電腦有左右箭咀 */
-export function CaseGallery({ images, placeholders = [] }: { images: { src: string; alt: string }[]; placeholders?: string[] }) {
+export type GalleryVideo = { id: string; poster: string; label: string };
+
+/** 影片放第 2 格（第 1 張係主圖，亦係分享圖同 Google 產品圖）；平時只係封面＋播放掣，撳咗先載入 YouTube，唔拖慢開頁 */
+export function CaseGallery({ images, placeholders = [], video }: { images: { src: string; alt: string }[]; placeholders?: string[]; video?: GalleryVideo }) {
   const track = useRef<HTMLDivElement>(null);
   const [at, setAt] = useState(0);
-  const total = images.length + placeholders.length;
+  const [playing, setPlaying] = useState(false);
+  const total = images.length + placeholders.length + (video ? 1 : 0);
+  const videoAt = video ? Math.min(1, images.length) : -1;
 
   useEffect(() => {
     const el = track.current;
@@ -37,10 +42,22 @@ export function CaseGallery({ images, placeholders = [] }: { images: { src: stri
       <div className="bb-shelf__stage bb-gallery__stage">
         <div className="bb-gallery__track" ref={track} tabIndex={0} aria-label={`作品相，共 ${total} 張，可以左右滑`}>
           {images.map((im, i) => (
-            <figure key={im.src + i} className="bb-gallery__slide">
-              <img {...imgProps(im.src, "(max-width: 960px) 100vw, 560px")} alt={im.alt} width={1000} height={1000} loading={i === 0 ? undefined : "lazy"} decoding="async" />
-            </figure>
+            <Fragment key={im.src + i}>
+              {i === videoAt && video && <VideoSlide video={video} playing={playing} onPlay={() => setPlaying(true)} />}
+              <figure className="bb-gallery__slide">
+                <img {...imgProps(im.src, "(max-width: 960px) 100vw, 560px")} alt={im.alt} width={1000} height={1000} loading={i === 0 ? undefined : "lazy"} decoding="async" />
+                {i === 0 && video && (
+                  <button type="button" className="bb-gallery__vidbtn" onClick={() => go(videoAt)}>
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M5 3.5v9l7.5-4.5z" />
+                    </svg>
+                    {video.label}
+                  </button>
+                )}
+              </figure>
+            </Fragment>
           ))}
+          {video && videoAt >= images.length && <VideoSlide video={video} playing={playing} onPlay={() => setPlaying(true)} />}
           {placeholders.map((p) => (
             <figure key={p} className="bb-gallery__slide bb-gallery__slide--ph">
               <span>
@@ -73,5 +90,30 @@ export function CaseGallery({ images, placeholders = [] }: { images: { src: stri
         </div>
       )}
     </div>
+  );
+}
+
+function VideoSlide({ video, playing, onPlay }: { video: GalleryVideo; playing: boolean; onPlay: () => void }) {
+  return (
+    <figure className="bb-gallery__slide bb-gallery__slide--video">
+      {playing ? (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+          title={video.label}
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+        />
+      ) : (
+        <button type="button" className="bb-gallery__poster" onClick={onPlay} aria-label={`播放${video.label}`}>
+          <img {...imgProps(video.poster, "(max-width: 960px) 100vw, 560px")} alt="" width={1000} height={1000} loading="lazy" decoding="async" />
+          <span className="bb-gallery__play" aria-hidden="true">
+            <svg viewBox="0 0 16 16">
+              <path d="M5 3.5v9l7.5-4.5z" />
+            </svg>
+          </span>
+          <span className="bb-gallery__vlabel">{video.label}</span>
+        </button>
+      )}
+    </figure>
   );
 }

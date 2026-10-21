@@ -82,6 +82,19 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
         productionDate: item.date,
         additionalProperty: (item.specs ?? [["主石", item.stone], ["金屬", item.metal]]).map(([name, value]) => ({ "@type": "PropertyValue", name, value })),
       };
+  const videoLd = item.video
+    ? {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        name: `${item.h1 ?? item.title}｜實拍影片`,
+        description: item.description ?? item.story,
+        thumbnailUrl: `${SITE.url}${item.video.poster}`,
+        uploadDate: item.video.uploadDate,
+        duration: item.video.duration,
+        embedUrl: `https://www.youtube.com/embed/${item.video.youtubeId}`,
+        contentUrl: `https://www.youtube.com/watch?v=${item.video.youtubeId}`,
+      }
+    : null;
   const faqLd = item.faq?.length
     ? {
         "@context": "https://schema.org",
@@ -101,10 +114,15 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
       <JsonLd data={breadcrumbLd} />
       {productLd && <JsonLd data={productLd} />}
       {faqLd && <JsonLd data={faqLd} />}
+      {videoLd && <JsonLd data={videoLd} />}
       <Breadcrumbs items={crumbs} />
       <div className="bb-case-page__grid">
         <div className="bb-case-page__media">
-          <CaseGallery images={item.images} placeholders={placeholders} />
+          <CaseGallery
+            images={item.images}
+            placeholders={placeholders}
+            video={item.video ? { id: item.video.youtubeId, poster: item.video.poster, label: `實拍影片 ${Math.floor(item.video.seconds / 60)}:${String(item.video.seconds % 60).padStart(2, "0")}` } : undefined}
+          />
         </div>
         <div className="bb-case-page__info">
           <p className="bb-case-page__cat">

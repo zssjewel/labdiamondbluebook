@@ -1778,6 +1778,23 @@
 .bb-gallery__track::-webkit-scrollbar { display: none; }
 .bb-gallery__slide { flex: 0 0 100%; margin: 0; aspect-ratio: 1; scroll-snap-align: start; }
 .bb-gallery__slide img { width: 100%; height: 100%; object-fit: cover; }
+.bb-gallery__slide { position: relative; }
+/* 主圖角落「▶ 實拍影片」：撳咗跳去影片格 */
+.bb-gallery__vidbtn {
+  position: absolute; left: 16px; bottom: 16px; display: inline-flex; align-items: center; gap: 6px;
+  min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px;
+  background: rgba(251, 247, 246, 0.92); color: var(--ink); font: inherit; font-size: var(--step-small); cursor: pointer;
+}
+.bb-gallery__vidbtn svg, .bb-gallery__play svg { width: 14px; height: 14px; fill: currentColor; }
+.bb-gallery__slide--video { background: #141214; }
+.bb-gallery__slide--video iframe { display: block; width: 100%; height: 100%; border: 0; }
+.bb-gallery__poster { position: relative; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.bb-gallery__play {
+  position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 72px; height: 72px; margin: -36px 0 0 -36px;
+  border-radius: 50%; background: rgba(251, 247, 246, 0.92); color: var(--ink);
+}
+.bb-gallery__play svg { width: 22px; height: 22px; margin-left: 3px; }
+.bb-gallery__vlabel { position: absolute; left: 16px; bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(20, 18, 20, 0.6); color: #fbf7f6; font-size: var(--step-caption); }
 .bb-gallery__slide--ph { display: grid; place-items: center; color: var(--ink-soft); font-size: var(--step-small); }
 .bb-gallery__slide--ph > span { display: flex; align-items: center; }
 /* 作品相嘅箭咀：置中喺相嘅高度 */

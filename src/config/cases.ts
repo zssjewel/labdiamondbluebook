@@ -114,6 +114,8 @@ export type Case = {
   sections?: { h: string; p?: string[]; list?: [string, string][] }[];
   /** 常見問題：問題帶呢件嘅規格，答案第一句直接答 */
   faq?: { q: string; a: string; link?: { label: string; href: string } }[];
+  /** 實拍影片（YouTube）：作品相第 2 格，撳先載入；poster 係影片截圖（正方形，放 public/images/cases/<slug>-video.webp） */
+  video?: { youtubeId: string; poster: string; uploadDate: string; duration: string; seconds: number };
   /** 相關章節；唔填就用分類預設 */
   guides?: { label: string; href: string }[];
 };
