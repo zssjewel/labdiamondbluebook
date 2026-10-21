@@ -1,0 +1,2793 @@
+{
+ "url": "http://localhost:8080/index.html",
+ "at": "2026-10-21T06:45:12.240Z",
+ "allow": [
+  "glass",
+  "button-fx",
+  "hairline",
+  "outlined-box",
+  "numbering",
+  "all-centred",
+  "size-count",
+  "shadow"
+ ],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.6,
+    0.85,
+    1,
+    0.49,
+    0.93,
+    0.69,
+    0.86,
+    1,
+    0.31,
+    0.24,
+    0.87,
+    1
+   ],
+   "motion": {
+    "elements": 229,
+    "css": 14,
+    "transitions": 213,
+    "scripted": 2,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 10485,
+     "screens": 11.7,
+     "words": 207,
+     "img": 30,
+     "video": 0,
+     "canvas": 0,
+     "svg": 19,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 21,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "ring-oval-pale-320.webp",
+      "bracelet-steel-800.webp",
+      "pendant-yg-white-320.webp",
+      "solitaire-yg-steel-320.webp",
+      "halo-rg-pale-320.webp",
+      "band-rg-steel-320.webp",
+      "princess-wg-white-320.webp",
+      "macro-ink-320.webp"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "培育鑽石 訂造攻略",
+     "words": 2,
+     "chars": 9,
+     "lines": 1,
+     "size": 80,
+     "vw": 5.6,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.015,
+     "leading": 1.12,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.44,
+     "top": 495,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "培育鑽石 訂造攻略",
+     "words": 2,
+     "lines": 1,
+     "size": 80,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "培育鑽石 訂造攻略",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 80,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.44,
+      "top": 495,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "工坊作品",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 1266,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "由邊度開始睇？",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 2261,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "戴喺手上有幾大？",
+      "words": 1,
+      "chars": 8,
+      "lines": 2,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 2995,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1 卡",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": 0.003,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.07,
+      "top": 3152,
+      "tag": "strong",
+      "kind": "statement"
+     },
+     {
+      "text": "九章，由入門到戴上手",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 3862,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "培育鑽石藍皮書",
+      "words": 1,
+      "chars": 7,
+      "lines": 2,
+      "size": 53.4,
+      "vw": 3.7,
+      "font": "Songti TC",
+      "weight": 700,
+      "tracking": 0.06,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.16,
+      "top": 4121,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "培育鑽石藍皮書",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 38.4,
+      "vw": 2.7,
+      "font": "Songti TC",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "left",
+      "widthRatio": 0.29,
+      "top": 4139,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "點解揀鄒三山工坊",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 4966,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "25 年東莞老廠，",
+      "words": 2,
+      "chars": 9,
+      "lines": 2,
+      "size": 80,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.48,
+      "top": 5218,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "資料好亂？",
+      "words": 1,
+      "chars": 5,
+      "lines": 2,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.4,
+      "top": 6470,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "常見問題",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 55.4,
+      "vw": 3.8,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 7486,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "睇完未決定？直接問師傅",
+      "words": 1,
+      "chars": 11,
+      "lines": 2,
+      "size": 80,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.33,
+      "top": 9329,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "培育鑽石藍皮書",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 80,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 9964,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 14,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 3,
+     "centered": 10,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.95,
+       "mono": false
+      },
+      {
+       "family": "Songti TC",
+       "share": 0.05,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      18,
+      22,
+      23,
+      38,
+      53,
+      55,
+      80
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 18,
+      "leading": 1.75,
+      "weight": 400,
+      "tracking": 0.01,
+      "contrast": 7.8
+     },
+     "measureChars": 48,
+     "max": {
+      "size": 80,
+      "vw": 5.6,
+      "font": "-apple-system",
+      "text": "培育鑽石"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.11,
+     "centerShare": 0.2,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#fbf7f6",
+     "bodyBgHsl": {
+      "h": 12,
+      "s": 0.38,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f0e9e7",
+       "top": 1144,
+       "hsl": {
+        "h": 13,
+        "s": 0.23,
+        "l": 0.92
+       }
+      },
+      {
+       "color": "#f4e4de",
+       "top": 2138,
+       "hsl": {
+        "h": 16,
+        "s": 0.5,
+        "l": 0.91
+       }
+      },
+      {
+       "color": "#fbf7f6",
+       "top": 2847,
+       "hsl": {
+        "h": 12,
+        "s": 0.38,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#f3ede9",
+       "top": 2969,
+       "hsl": {
+        "h": 24,
+        "s": 0.29,
+        "l": 0.93
+       }
+      },
+      {
+       "color": "#34508f",
+       "top": 5170,
+       "hsl": {
+        "h": 222,
+        "s": 0.47,
+        "l": 0.38
+       }
+      },
+      {
+       "color": "#2a2326",
+       "top": 9157,
+       "hsl": {
+        "h": 334,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#2a2326",
+       "share": 0.52
+      },
+      {
+       "color": "#66595d",
+       "share": 0.27
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.12
+      },
+      {
+       "color": "#34508f",
+       "share": 0.06
+      },
+      {
+       "color": "#eef2f9",
+       "share": 0.02
+      }
+     ],
+     "button": {
+      "bg": "#34508f",
+      "hsl": {
+       "h": 222,
+       "s": 0.47,
+       "l": 0.38
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 4,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "跳至主要內容",
+      "培育鑽石藍皮書",
+      "WhatsApp 問師傅",
+      "WhatsApp 問師傅"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 12,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 11,
+     "hairlineSamples": [
+      "li 424px",
+      "li 424px",
+      "li 424px",
+      "li 424px",
+      "li 424px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 9,
+     "blurred": 3,
+     "roundedBoxes": 24,
+     "boxRadius": 18,
+     "squareMedia": 11,
+     "roundedMedia": 16,
+     "mediaRadius": 18,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 13,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 7612
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 52,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 10485,
+    "margins": {
+     "left": 40,
+     "right": 41
+    },
+    "sections": [
+     {
+      "sel": "div.bb-mosaic",
+      "tag": "div",
+      "top": 52,
+      "height": 342,
+      "words": 0,
+      "media": 8,
+      "middle": 240,
+      "heading": null,
+      "left": 0,
+      "right": 0,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-hero",
+      "tag": "section",
+      "top": 394,
+      "height": 750,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "培育鑽石",
+       "size": 80,
+       "tag": "h1"
+      },
+      "left": 204,
+      "right": 217,
+      "textLeft": 204,
+      "textRight": 217,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#works.bb-works",
+      "tag": "section",
+      "top": 1144,
+      "height": 995,
+      "words": 59,
+      "media": 12,
+      "middle": 3654,
+      "heading": {
+       "text": "工坊作品",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 0,
+      "textLeft": 60,
+      "textRight": -3778,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#routes.bb-routes",
+      "tag": "section",
+      "top": 2138,
+      "height": 708,
+      "words": 33,
+      "media": 0,
+      "middle": 59,
+      "heading": {
+       "text": "由邊度開始睇？",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 68,
+      "right": 143,
+      "textLeft": 68,
+      "textRight": 143,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-tool",
+      "tag": "section",
+      "top": 2847,
+      "height": 893,
+      "words": 18,
+      "media": 1,
+      "middle": 103,
+      "heading": {
+       "text": "戴喺手上",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 86,
+      "right": 40,
+      "textLeft": 749,
+      "textRight": 45,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-contents",
+      "tag": "section",
+      "top": 3740,
+      "height": 1103,
+      "words": 67,
+      "media": 8,
+      "middle": 0,
+      "heading": {
+       "text": "九章，由入門到戴上手",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 189,
+      "right": 189,
+      "textLeft": 253,
+      "textRight": 285,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-why",
+      "tag": "section",
+      "top": 4843,
+      "height": 1504,
+      "words": 36,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "25 年東莞老廠，",
+       "size": 80,
+       "tag": "h3"
+      },
+      "left": 72,
+      "right": 40,
+      "textLeft": 72,
+      "textRight": 81,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-how",
+      "tag": "section",
+      "top": 6348,
+      "height": 1016,
+      "words": 13,
+      "media": 3,
+      "middle": 6,
+      "heading": {
+       "text": "資料好亂？",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 196,
+      "right": 124,
+      "textLeft": 196,
+      "textRight": 194,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-faq",
+      "tag": "section",
+      "top": 7364,
+      "height": 1793,
+      "words": 75,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "常見問題",
+       "size": 55,
+       "tag": "h2"
+      },
+      "left": 180,
+      "right": 181,
+      "textLeft": 180,
+      "textRight": 181,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-close",
+      "tag": "section",
+      "top": 9157,
+      "height": 692,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "睇完未決定？",
+       "size": 80,
+       "tag": "h2"
+      },
+      "left": 484,
+      "right": 484,
+      "textLeft": 484,
+      "textRight": 484,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bb-footer",
+      "tag": "footer",
+      "top": 9849,
+      "height": 636,
+      "words": 44,
+      "media": 0,
+      "middle": 114,
+      "heading": {
+       "text": "培育鑽石藍皮書",
+       "size": 80,
+       "tag": "p"
+      },
+      "left": 40,
+      "right": 40,
+      "textLeft": 40,
+      "textRight": 40,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "培育鑽石 訂造攻略",
+      "size": 80,
+      "top": 495,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 88,
+      "n": 3
+     },
+     {
+      "x": 749,
+      "n": 3
+     },
+     {
+      "x": 529,
+      "n": 2
+     },
+     {
+      "x": 72,
+      "n": 1
+     },
+     {
+      "x": 180,
+      "n": 1
+     },
+     {
+      "x": 253,
+      "n": 1
+     },
+     {
+      "x": 987,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 12,
+    "bodySize": 18,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.13,
+    "voidBox": {
+     "x": 1080,
+     "y": 420,
+     "w": 360,
+     "h": 480
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    0.66,
+    0.93,
+    1,
+    0.63,
+    0.88,
+    0.84,
+    0.95,
+    0.96,
+    0.93,
+    0.34,
+    0.25
+   ],
+   "motion": {
+    "elements": 215,
+    "css": 14,
+    "transitions": 199,
+    "scripted": 2,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 12895,
+     "screens": 12.6,
+     "words": 204,
+     "img": 30,
+     "video": 0,
+     "canvas": 0,
+     "svg": 19,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 20,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "ring-oval-pale-320.webp",
+      "bracelet-steel-480.webp",
+      "pendant-yg-white-320.webp",
+      "solitaire-yg-steel-320.webp",
+      "halo-rg-pale-320.webp",
+      "band-rg-steel-320.webp",
+      "princess-wg-white-320.webp",
+      "macro-ink-320.webp"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "培育鑽石 訂造攻略",
+     "words": 2,
+     "chars": 9,
+     "lines": 1,
+     "size": 57.7,
+     "vw": 7.5,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.015,
+     "leading": 1.12,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.59,
+     "top": 468,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "培育鑽石 訂造攻略",
+     "words": 2,
+     "lines": 1,
+     "size": 57.7,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "培育鑽石 訂造攻略",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 57.7,
+      "vw": 7.5,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.59,
+      "top": 468,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "工坊作品",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 1345,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "由邊度開始睇？",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 2212,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "戴喺手上有幾大？",
+      "words": 1,
+      "chars": 8,
+      "lines": 2,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 3259,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "九章，由入門到戴上手",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 4373,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "點解揀鄒三山工坊",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 5588,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "25 年東莞老廠，",
+      "words": 2,
+      "chars": 9,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.88,
+      "top": 5773,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "資料好亂？",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.73,
+      "top": 8617,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "常見問題",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 39.2,
+      "vw": 5.1,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 9309,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "睇完未決定？直接問師傅",
+      "words": 1,
+      "chars": 11,
+      "lines": 2,
+      "size": 57.7,
+      "vw": 7.5,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.44,
+      "top": 11902,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "培育鑽石藍皮書",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 57.7,
+      "vw": 7.5,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.96,
+      "top": 12342,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 11,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 1,
+     "centered": 8,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.98,
+       "mono": false
+      },
+      {
+       "family": "Songti TC",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      18,
+      21,
+      22,
+      39,
+      58
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 17.6,
+      "leading": 1.75,
+      "weight": 400,
+      "tracking": 0.01,
+      "contrast": 7.8
+     },
+     "measureChars": 86,
+     "max": {
+      "size": 57.7,
+      "vw": 7.5,
+      "font": "-apple-system",
+      "text": "培育鑽石"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.12,
+     "centerShare": 0.17,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#fbf7f6",
+     "bodyBgHsl": {
+      "h": 12,
+      "s": 0.38,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f0e9e7",
+       "top": 1273,
+       "hsl": {
+        "h": 13,
+        "s": 0.23,
+        "l": 0.92
+       }
+      },
+      {
+       "color": "#f4e4de",
+       "top": 2140,
+       "hsl": {
+        "h": 16,
+        "s": 0.5,
+        "l": 0.91
+       }
+      },
+      {
+       "color": "#fbf7f6",
+       "top": 3187,
+       "hsl": {
+        "h": 12,
+        "s": 0.38,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#f3ede9",
+       "top": 3489,
+       "hsl": {
+        "h": 24,
+        "s": 0.29,
+        "l": 0.93
+       }
+      },
+      {
+       "color": "#fffcf6",
+       "top": 4504,
+       "hsl": {
+        "h": 40,
+        "s": 1,
+        "l": 0.98
+       }
+      },
+      {
+       "color": "#ead3c9",
+       "top": 7850,
+       "hsl": {
+        "h": 18,
+        "s": 0.44,
+        "l": 0.85
+       }
+      },
+      {
+       "color": "#2a2326",
+       "top": 11769,
+       "hsl": {
+        "h": 334,
+        "s": 0.09,
+        "l": 0.15
+       }
+      },
+      {
+       "color": "#34508f",
+       "top": 12262,
+       "hsl": {
+        "h": 222,
+        "s": 0.47,
+        "l": 0.38
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#2a2326",
+       "share": 0.53
+      },
+      {
+       "color": "#66595d",
+       "share": 0.27
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.12
+      },
+      {
+       "color": "#34508f",
+       "share": 0.06
+      },
+      {
+       "color": "#fbf6f6",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#34508f",
+      "hsl": {
+       "h": 222,
+       "s": 0.47,
+       "l": 0.38
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 8,
+     "inHero": 4,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "跳至主要內容",
+      "培育鑽石藍皮書",
+      "WhatsApp 問師傅",
+      "WhatsApp 問師傅"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 12,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 10,
+     "hairlineSamples": [
+      "li 698px",
+      "li 698px",
+      "li 698px",
+      "li 698px",
+      "li 698px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 9,
+     "blurred": 3,
+     "roundedBoxes": 26,
+     "boxRadius": 18,
+     "squareMedia": 4,
+     "roundedMedia": 16,
+     "mediaRadius": 18,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": true,
+     "height": 52,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 12895,
+    "margins": {
+     "left": 17,
+     "right": 17
+    },
+    "sections": [
+     {
+      "sel": "div.bb-mosaic",
+      "tag": "div",
+      "top": 52,
+      "height": 360,
+      "words": 0,
+      "media": 8,
+      "middle": 128,
+      "heading": null,
+      "left": 0,
+      "right": 0,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-hero",
+      "tag": "section",
+      "top": 412,
+      "height": 861,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "培育鑽石",
+       "size": 58,
+       "tag": "h1"
+      },
+      "left": 35,
+      "right": 53,
+      "textLeft": 35,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#works.bb-works",
+      "tag": "section",
+      "top": 1273,
+      "height": 868,
+      "words": 59,
+      "media": 12,
+      "middle": 4303,
+      "heading": {
+       "text": "工坊作品",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 0,
+      "textLeft": 37,
+      "textRight": -4427,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#routes.bb-routes",
+      "tag": "section",
+      "top": 2140,
+      "height": 1046,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "由邊度開始睇？",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 45,
+      "right": 165,
+      "textLeft": 45,
+      "textRight": 165,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-tool",
+      "tag": "section",
+      "top": 3187,
+      "height": 1114,
+      "words": 18,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "戴喺手上",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 17,
+      "right": 17,
+      "textLeft": 17,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-contents",
+      "tag": "section",
+      "top": 4301,
+      "height": 1216,
+      "words": 57,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "九章，由入門到戴上手",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 35,
+      "right": 191,
+      "textLeft": 35,
+      "textRight": 191,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-why",
+      "tag": "section",
+      "top": 5516,
+      "height": 3028,
+      "words": 36,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "點解揀鄒三山工坊",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 17,
+      "right": 17,
+      "textLeft": 41,
+      "textRight": 50,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-how",
+      "tag": "section",
+      "top": 8545,
+      "height": 692,
+      "words": 13,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "資料好亂？",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 17,
+      "right": 0,
+      "textLeft": 24,
+      "textRight": 22,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-faq",
+      "tag": "section",
+      "top": 9237,
+      "height": 2533,
+      "words": 64,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "常見問題",
+       "size": 39,
+       "tag": "h2"
+      },
+      "left": 17,
+      "right": 21,
+      "textLeft": 17,
+      "textRight": 21,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-close",
+      "tag": "section",
+      "top": 11769,
+      "height": 493,
+      "words": 2,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "睇完未決定？",
+       "size": 58,
+       "tag": "h2"
+      },
+      "left": 213,
+      "right": 213,
+      "textLeft": 213,
+      "textRight": 213,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bb-footer",
+      "tag": "footer",
+      "top": 12262,
+      "height": 632,
+      "words": 44,
+      "media": 0,
+      "middle": 26,
+      "heading": {
+       "text": "培育鑽石藍皮書",
+       "size": 58,
+       "tag": "p"
+      },
+      "left": 17,
+      "right": 17,
+      "textLeft": 17,
+      "textRight": 17,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "培育鑽石 訂造攻略",
+      "size": 58,
+      "top": 468,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 35,
+      "n": 5
+     },
+     {
+      "x": 17,
+      "n": 3
+     },
+     {
+      "x": 48,
+      "n": 2
+     },
+     {
+      "x": 332,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 11,
+    "bodySize": 18,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.66,
+    0.78,
+    1,
+    0.8,
+    0.62,
+    1,
+    0.86,
+    0.92,
+    0.81,
+    1,
+    0.31,
+    0.41
+   ],
+   "motion": {
+    "elements": 210,
+    "css": 9,
+    "transitions": 199,
+    "scripted": 2,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 13137,
+     "screens": 15.6,
+     "words": 203,
+     "img": 30,
+     "video": 0,
+     "canvas": 0,
+     "svg": 19,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 13,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "pear-halo-3-09ct-18k-white-gold-v2-1-480.webp",
+      "ring-oval-pale-320.webp",
+      "studs-yg-480.webp",
+      "band-rg-steel-320.webp",
+      "bracelet-steel-480.webp",
+      "halo-rg-pale-320.webp",
+      "workshop-interior-v2-480.webp",
+      "factory-direct-v2-480.webp"
+     ],
+     "blendText": 0,
+     "sideScrollers": 2,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "培育鑽石 訂造攻略",
+     "words": 2,
+     "chars": 9,
+     "lines": 2,
+     "size": 40.3,
+     "vw": 10.3,
+     "font": "-apple-system",
+     "weight": 600,
+     "tracking": -0.015,
+     "leading": 1.12,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.41,
+     "top": 318,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "培育鑽石 訂造攻略",
+     "words": 2,
+     "lines": 2,
+     "size": 40.3,
+     "font": "-apple-system"
+    },
+    "headings": [
+     {
+      "text": "培育鑽石 訂造攻略",
+      "words": 2,
+      "chars": 9,
+      "lines": 2,
+      "size": 40.3,
+      "vw": 10.3,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.41,
+      "top": 318,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "工坊作品",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1336,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "›",
+      "words": 1,
+      "chars": 1,
+      "lines": 1,
+      "size": 22.4,
+      "vw": 5.7,
+      "font": "-apple-system",
+      "weight": 400,
+      "tracking": 0.008,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.11,
+      "top": 1742,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "由邊度開始睇？",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 2097,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "戴喺手上有幾大？",
+      "words": 1,
+      "chars": 8,
+      "lines": 2,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3184,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "九章，由入門到戴上手",
+      "words": 1,
+      "chars": 10,
+      "lines": 1,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 4217,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "點解揀鄒三山工坊",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5419,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "25 年東莞老廠，",
+      "words": 2,
+      "chars": 9,
+      "lines": 2,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 5615,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "資料好亂？",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 7620,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "常見問題",
+      "words": 1,
+      "chars": 4,
+      "lines": 1,
+      "size": 30.2,
+      "vw": 7.7,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 8559,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "睇完未決定？直接問師傅",
+      "words": 1,
+      "chars": 11,
+      "lines": 2,
+      "size": 40.3,
+      "vw": 10.3,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1.12,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.61,
+      "top": 11527,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "培育鑽石藍皮書",
+      "words": 1,
+      "chars": 7,
+      "lines": 1,
+      "size": 40.3,
+      "vw": 10.3,
+      "font": "-apple-system",
+      "weight": 600,
+      "tracking": -0.015,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 12385,
+      "tag": "p",
+      "kind": "statement"
+     }
+    ],
+    "headingSummary": {
+     "count": 12,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 2,
+     "centered": 9,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "-apple-system",
+       "share": 0.98,
+       "mono": false
+      },
+      {
+       "family": "Songti TC",
+       "share": 0.02,
+       "mono": false
+      }
+     ],
+     "familyCount": 2,
+     "sizes": [
+      14,
+      16,
+      17,
+      19,
+      22,
+      30,
+      40
+     ],
+     "sizeCount": 7,
+     "notLoaded": [],
+     "body": {
+      "font": "-apple-system",
+      "size": 17.1,
+      "leading": 1.75,
+      "weight": 400,
+      "tracking": 0.01,
+      "contrast": 7.8
+     },
+     "measureChars": 39,
+     "max": {
+      "size": 40.3,
+      "vw": 10.3,
+      "font": "-apple-system",
+      "text": "培育鑽石"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.12,
+     "centerShare": 0.14,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#fbf7f6",
+     "bodyBgHsl": {
+      "h": 12,
+      "s": 0.38,
+      "l": 0.97
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f0e9e7",
+       "top": 1272,
+       "hsl": {
+        "h": 13,
+        "s": 0.23,
+        "l": 0.92
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 1539,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      },
+      {
+       "color": "#f4e4de",
+       "top": 2033,
+       "hsl": {
+        "h": 16,
+        "s": 0.5,
+        "l": 0.91
+       }
+      },
+      {
+       "color": "#fbf7f6",
+       "top": 3120,
+       "hsl": {
+        "h": 12,
+        "s": 0.38,
+        "l": 0.97
+       }
+      },
+      {
+       "color": "#f3ede9",
+       "top": 3387,
+       "hsl": {
+        "h": 24,
+        "s": 0.29,
+        "l": 0.93
+       }
+      },
+      {
+       "color": "#fffcf6",
+       "top": 4335,
+       "hsl": {
+        "h": 40,
+        "s": 1,
+        "l": 0.98
+       }
+      },
+      {
+       "color": "#34508f",
+       "top": 5587,
+       "hsl": {
+        "h": 222,
+        "s": 0.47,
+        "l": 0.38
+       }
+      },
+      {
+       "color": "#ead3c9",
+       "top": 7065,
+       "hsl": {
+        "h": 18,
+        "s": 0.44,
+        "l": 0.85
+       }
+      },
+      {
+       "color": "#2a2326",
+       "top": 11406,
+       "hsl": {
+        "h": 334,
+        "s": 0.09,
+        "l": 0.15
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#2a2326",
+       "share": 0.53
+      },
+      {
+       "color": "#66595d",
+       "share": 0.27
+      },
+      {
+       "color": "#ffffff",
+       "share": 0.12
+      },
+      {
+       "color": "#34508f",
+       "share": 0.06
+      },
+      {
+       "color": "#fbf6f6",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#34508f",
+      "hsl": {
+       "h": 222,
+       "s": 0.47,
+       "l": 0.38
+      },
+      "fg": "#ffffff"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 7,
+     "inHero": 4,
+     "radius": "pill",
+     "height": 44,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "跳至主要內容",
+      "培育鑽石藍皮書",
+      "問師傅",
+      "WhatsApp 問師傅"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 12,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px",
+      "a.bb-shelf__card → rgba(42, 35, 38, 0.08) 2px 4px 12px 0px"
+     ],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 10,
+     "hairlineSamples": [
+      "li 322px",
+      "li 322px",
+      "li 322px",
+      "li 322px",
+      "li 322px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 9,
+     "blurred": 3,
+     "roundedBoxes": 26,
+     "boxRadius": 18,
+     "squareMedia": 0,
+     "roundedMedia": 16,
+     "mediaRadius": 18,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 4,
+     "fixed": true,
+     "height": 52,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": []
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 13137,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "div.bb-mosaic",
+      "tag": "div",
+      "top": 52,
+      "height": 210,
+      "words": 0,
+      "media": 0,
+      "middle": 130,
+      "heading": null,
+      "left": 0,
+      "right": 0,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-hero",
+      "tag": "section",
+      "top": 262,
+      "height": 1010,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "培育鑽石",
+       "size": 40,
+       "tag": "h1"
+      },
+      "left": 21,
+      "right": 21,
+      "textLeft": 21,
+      "textRight": 21,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#works.bb-works",
+      "tag": "section",
+      "top": 1272,
+      "height": 761,
+      "words": 59,
+      "media": 12,
+      "middle": 3452,
+      "heading": {
+       "text": "工坊作品",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 10,
+      "right": 0,
+      "textLeft": 32,
+      "textRight": -3577,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#routes.bb-routes",
+      "tag": "section",
+      "top": 2033,
+      "height": 1087,
+      "words": 33,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "由邊度開始睇？",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 44,
+      "right": 53,
+      "textLeft": 44,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-tool",
+      "tag": "section",
+      "top": 3120,
+      "height": 1033,
+      "words": 18,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "戴喺手上",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 21,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-contents",
+      "tag": "section",
+      "top": 4153,
+      "height": 1202,
+      "words": 57,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "九章，由入門到戴上手",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 34,
+      "right": 46,
+      "textLeft": 34,
+      "textRight": 46,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-why",
+      "tag": "section",
+      "top": 5355,
+      "height": 2200,
+      "words": 36,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "點解揀鄒三山工坊",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 30,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-how",
+      "tag": "section",
+      "top": 7556,
+      "height": 940,
+      "words": 13,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "資料好亂？",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 17,
+      "textLeft": 17,
+      "textRight": 17,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-faq",
+      "tag": "section",
+      "top": 8495,
+      "height": 2910,
+      "words": 50,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "常見問題",
+       "size": 30,
+       "tag": "h2"
+      },
+      "left": 16,
+      "right": 18,
+      "textLeft": 16,
+      "textRight": 18,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section.bb-close",
+      "tag": "section",
+      "top": 11406,
+      "height": 899,
+      "words": 2,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "睇完未決定？",
+       "size": 40,
+       "tag": "h2"
+      },
+      "left": 76,
+      "right": 76,
+      "textLeft": 76,
+      "textRight": 76,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bb-footer",
+      "tag": "footer",
+      "top": 12305,
+      "height": 832,
+      "words": 36,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "培育鑽石藍皮書",
+       "size": 40,
+       "tag": "p"
+      },
+      "left": 16,
+      "right": 65,
+      "textLeft": 16,
+      "textRight": 65,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "培育鑽石 訂造攻略",
+      "size": 40,
+      "top": 318,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 34,
+      "n": 8
+     },
+     {
+      "x": 16,
+      "n": 3
+     }
+    ],
+    "leftBlocks": 11,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "dashed",
+   "width": 1440,
+   "message": "9 dashed/dotted border(s).",
+   "fix": "Remove unless it is a real drop zone.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "palette-cream",
+   "width": 1440,
+   "message": "Yellow-cream background (section #f3ede9).",
+   "fix": "Use the drawn palette. If you want warmth, take a low-chroma stone or bone, not a yellow cream.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "side-scroll",
+   "width": 1440,
+   "message": "1 row(s) scroll sideways with content past their edge.",
+   "fix": "Jurors and most visitors read a row cut at the edge as clipped, not as scrollable. Wrap it onto more lines, or end it inside the grid.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-not-dealt",
+   "width": 1440,
+   "message": "The sheet dealt Young Serif and Source Serif 4, but the page renders -apple-system, Songti TC.",
+   "fix": "Load the dealt face (the link on the sheet) and put it first in font-family. A build that falls back to a default face lands on the default look."
+  },
+  {
+   "level": "WARN",
+   "id": "empty-middle",
+   "width": 1440,
+   "message": "1 section(s) have content at both edges and 3654px of nothing between: \"工坊作品\"",
+   "fix": "Bring the two parts together on the grid, or put the picture or figure of the section in the middle. An empty middle third reads as a hole, the same as an empty half.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "name-only-title",
+   "width": 1440,
+   "message": "The h1 is a bare name (\"培育鑽石 訂造攻略\") and nothing else on the first screen says what this is.",
+   "fix": "Keep the name if it leads, and give the line under it (18px or more) the plain words: what it is, for whom, where or when. In the study of 97 Sites of the Day, first screens that named nothing lost usability and content points.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/desktop-fold.jpg",
+   "pages": [
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/desktop-page-01.jpg",
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/desktop-page-02.jpg",
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/tablet-fold.jpg",
+   "pages": [
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/tablet-page-01.jpg",
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/mobile-fold.jpg",
+   "pages": [
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/mobile-page-01.jpg",
+    "/home/runner/work/labdiamondbluebook/labdiamondbluebook/.taste-skill/inspect/mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

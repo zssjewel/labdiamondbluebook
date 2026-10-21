@@ -1,0 +1,66 @@
+
+> nextjs-shadcn@0.1.0 build
+> next build && node scripts/defer-js.cjs out
+
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+   ▲ Next.js 15.5.23
+
+   Creating an optimized production build ...
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /home/runner/work/labdiamondbluebook/labdiamondbluebook/node_modules/next-intl/dist/esm/production/extractor/format/index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /home/runner/work/labdiamondbluebook/labdiamondbluebook/node_modules/next-intl/dist/esm/production/extractor/format/index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of /home/runner/work/labdiamondbluebook/labdiamondbluebook/node_modules/next-intl/dist/esm/production/extractor/format/index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled successfully in 6.8s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/64) ...
+   Generating static pages (16/64) 
+   Generating static pages (32/64) 
+   Generating static pages (48/64) 
+ ✓ Generating static pages (64/64)
+   Finalizing page optimization ...
+   Collecting build traces ...
+   Exporting (0/2) ...
+ ✓ Exporting (2/2)
+
+Route (app)                                                         Size  First Load JS
+┌ ○ /                                                              200 B         116 kB
+├ ○ /_not-found                                                    131 B         103 kB
+├ ● /[...slug]                                                     199 B         116 kB
+├   ├ /basics
+├   ├ /price
+├   ├ /certificate
+├   └ [+15 more paths]
+├ ○ /about                                                         170 B         107 kB
+├ ○ /cases                                                         128 B         112 kB
+├ ● /cases/[category]                                              128 B         112 kB
+├   ├ /cases/engagement-rings
+├   ├ /cases/earrings
+├   ├ /cases/eternity-rings
+├   └ [+4 more paths]
+├ ● /cases/[category]/[slug]                                     4.23 kB         113 kB
+├   ├ /cases/engagement-rings/pear-halo-3-09ct-18k-white-gold
+├   ├ /cases/pendants/three-flower-pear-necklace-18k-white-gold
+├   ├ /cases/engagement-rings/oval-solitaire
+├   └ [+26 more paths]
+├ ○ /privacy-policy                                                170 B         107 kB
+├ ○ /robots.txt                                                    131 B         103 kB
+├ ○ /sitemap.xml                                                   131 B         103 kB
+└ ○ /terms-of-service                                              170 B         107 kB
++ First Load JS shared by all                                     103 kB
+  ├ chunks/255-a70cfdedd3f61710.js                               46.5 kB
+  ├ chunks/4bd1b696-c023c6e3521b1417.js                          54.2 kB
+  └ other shared chunks (total)                                  2.42 kB
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+defer-js：60/60 個 HTML 改為頁面載完先載程式，內嵌樣式表 60 次，頁面資料搬出 60 個檔
