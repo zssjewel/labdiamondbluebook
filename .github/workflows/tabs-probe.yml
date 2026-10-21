@@ -26,7 +26,6 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://labdiamondbluebook.com
       - name: Serve
         run: |
-          cp -f out/index.html out/index.html 2>/dev/null || cp -f out/index.html out/index.html
           (cd out && python3 -m http.server 8080 >/dev/null 2>&1 &)
           sleep 2
       - name: Probe
