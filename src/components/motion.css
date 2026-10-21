@@ -39,9 +39,14 @@
      li 係左右滑嘅對齊點，佢一郁，手機瀏覽器會跟住成排捲 32px 再捲返，睇落就係抖 */
   .bb-shelf__track[data-picked] > li > .bb-shelf__card { animation: bb-shelfin 620ms var(--ease-apple) backwards; animation-delay: calc(var(--n, 0) * 45ms); }
   @media (hover: hover) {
-    .bb-answers a:hover, .bb-routes__card:hover, .bb-shelf__card:hover, .bb-prevnext a:hover {
+    .bb-answers a:hover, .bb-routes__card:hover, .bb-prevnext a:hover {
       transform: translate3d(0, -4px, 0);
       box-shadow: 0 22px 44px -24px rgba(42, 35, 38, 0.3);
+    }
+    /* 作品卡：同蘋果一樣，移上去輕輕放大、投影加深，唔向上飄 */
+    .bb-shelf__card:not(.bb-shelf__card--all):hover {
+      transform: scale(1.01);
+      box-shadow: 2px 4px 16px rgba(42, 35, 38, 0.16);
     }
     .bb-shelf__card:hover .bb-shelf__img img { transform: scale(1.05); }
   }

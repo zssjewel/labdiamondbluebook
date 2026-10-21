@@ -1593,7 +1593,9 @@
   display: flex;
   gap: 16px;
   margin: 0;
-  padding: 4px var(--pad) 28px;
+  /* 上下留位俾投影，唔好俾捲動區切走 */
+  padding: 16px var(--pad) 32px;
+  margin-top: -12px;
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -1604,7 +1606,7 @@
 .bb-shelf__track::-webkit-scrollbar { display: none; }
 .bb-shelf__track > li { flex: 0 0 var(--card-w); scroll-snap-align: start; }
 .bb-shelf__track > .bb-shelf__end { flex-basis: calc(var(--card-w) * 0.62); }
-.bb-shelf--inset .bb-shelf__track { padding: 4px 0 24px; scroll-padding-inline: 0; }
+.bb-shelf--inset .bb-shelf__track { padding: 16px 8px 28px; margin-inline: -8px; scroll-padding-inline: 8px; }
 
 .bb-shelf__card {
   display: flex;
@@ -1616,6 +1618,8 @@
   color: var(--ink);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
+  /* 學蘋果配件卡：白卡浮喺底色上面（淡淡投影），唔同背景溶埋一齊 */
+  box-shadow: 2px 4px 12px rgba(42, 35, 38, 0.08); /* taste-skill-ignore: 蘋果式浮卡投影 */
 }
 .bb-shelf__img { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
 /* 第二張相（戴喺手上）：疊喺封面上面，平時透明；只有滑鼠裝置先載入同顯示（手機 display:none，lazy 圖唔會下載） */
@@ -1641,6 +1645,7 @@
   text-align: center;
   box-shadow: inset 0 0 0 1px var(--hairline); /* taste-skill-ignore: 最尾「睇全部」卡細邊 */
 }
+.bb-casegrid .bb-shelf__card { height: 100%; }
 .bb-shelf__card--all strong { font-size: var(--step-small); font-weight: 600; line-height: 1.5; }
 .bb-shelf__card--all span {
   display: grid;
