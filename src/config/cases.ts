@@ -93,8 +93,8 @@ export type Case = {
   duration?: string;
   /** 客人嘅要求同師傅點做，兩三句 */
   story: string;
-  /** 第一張係封面；建議 3–5 張，最好有一張戴喺手上 */
-  images: { src: string; alt: string }[];
+  /** 第一張係封面；戴喺手上嗰張標 worn: true（首頁同列表滑鼠移上去會換成呢張） */
+  images: { src: string; alt: string; worn?: true }[];
   /** 完成日期 YYYY-MM */
   date: string;
   /** 客人已同意公開相片同資料 */
@@ -176,7 +176,7 @@ const REAL_CASES: Case[] = [
     images: [
       { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-1.webp", alt: "3.09 卡梨形培育鑽石求婚戒指正面，18K 白金碎鑽光環戒托" },
       { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-2.webp", alt: "梨形主石同一圈碎鑽光環特寫" },
-      { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-3.webp", alt: "3.09 卡梨形培育鑽石求婚戒指戴喺左手無名指" },
+      { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-3.webp", alt: "3.09 卡梨形培育鑽石求婚戒指戴喺左手無名指", worn: true },
       { src: "/images/cases/pear-halo-3-09ct-18k-white-gold-4.webp", alt: "戴黑手套嘅手指拎住梨形鑽石戒指，睇到戒托高度同戒臂微鑲" },
     ],
     date: "2026-09",

@@ -1617,7 +1617,13 @@
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
-.bb-shelf__img { display: block; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
+.bb-shelf__img { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--paper); }
+/* 第二張相（戴喺手上）：疊喺封面上面，平時透明；只有滑鼠裝置先載入同顯示（手機 display:none，lazy 圖唔會下載） */
+.bb-shelf__img .bb-shelf__alt { position: absolute; inset: 0; display: none; opacity: 0; }
+@media (hover: hover) {
+  .bb-shelf__img .bb-shelf__alt { display: block; }
+  .bb-shelf__card:hover .bb-shelf__alt, .bb-shelf__card:focus-visible .bb-shelf__alt { opacity: 1; }
+}
 .bb-shelf__img img { width: 100%; height: 100%; object-fit: cover; }
 /* 相片下面嘅字：三行分層，字細啲、行距穩定，唔再每張重複「睇主石…」 */
 .bb-shelf__body { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: 16px 20px 20px; }

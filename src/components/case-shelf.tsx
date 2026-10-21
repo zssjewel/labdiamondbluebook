@@ -18,6 +18,8 @@ export type ShelfItem = {
   a: string;
   /** 示例作品（卡片印「示例」） */
   d?: boolean;
+  /** 滑鼠移上去換成嘅相（戴喺手上），冇就唔換 */
+  s2?: string;
 };
 
 type Tab = { slug: string; name: string; count: number };
@@ -140,6 +142,7 @@ export function CaseShelf({
                   {ready && (
                     <img {...imgProps(item.s, inset ? "(max-width: 760px) 62vw, 260px" : "(max-width: 760px) 78vw, 400px")} alt={item.a} width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />
                   )}
+                  {ready && item.s2 && <img {...imgProps(item.s2, inset ? "260px" : "400px")} className="bb-shelf__alt" alt="" aria-hidden="true" width={1000} height={1000} loading="lazy" decoding="async" fetchPriority="low" />}
                 </span>
                 <CardText cat={catNames[item.c]} title={item.t} demo={item.d ?? demo} />
               </Link>

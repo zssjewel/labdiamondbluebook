@@ -9,7 +9,12 @@ import { CategoryTabs } from "@/components/category-tabs";
 export const catNames: Record<string, string> = Object.fromEntries(CASE_CATEGORIES.map((c) => [c.slug, c.name]));
 
 export function toShelf(list: Case[], locale: string): ShelfItem[] {
-  return list.map((c) => ({ h: localizeHref(caseHref(c), locale), t: c.title, c: c.category, s: c.images[0]?.src ?? "", a: c.images[0]?.alt ?? c.title, d: !!c.demo }));
+  return list.map((c) => ({ h: localizeHref(caseHref(c), locale), t: c.title, c: c.category, s: c.images[0]?.src ?? "", a: c.images[0]?.alt ?? c.title, d: !!c.demo, s2: wornOf(c) }));
+}
+
+/** 戴喺手上嗰張（唔係封面先用） */
+export function wornOf(c: Case) {
+  return c.images.slice(1).find((im) => im.worn)?.src;
 }
 
 /** 首頁：有分類嘅作品貨架 */
@@ -73,6 +78,7 @@ export function CaseGrid({ list, locale }: { list: Case[]; locale: string }) {
                 loading={i < 6 ? undefined : "lazy"}
                 decoding="async"
               />
+              {wornOf(c) && <img {...imgProps(wornOf(c)!, "360px")} className="bb-shelf__alt" alt="" aria-hidden="true" width={1000} height={1000} loading="lazy" decoding="async" />}
             </span>
             <CardText cat={categoryOf(c.category)?.name} title={c.title} demo={!!c.demo} />
           </Link>
