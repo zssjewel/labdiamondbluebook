@@ -90,7 +90,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
         brand: { "@type": "Brand", name: SITE.publisher },
         manufacturer: { "@type": "Organization", name: SITE.publisher },
         material: item.metal,
-        productionDate: item.date,
+        ...(item.date ? { productionDate: item.date } : {}),
         additionalProperty: (item.specs ?? [["主石", item.stone], ["金屬", item.metal]]).map(([name, value]) => ({ "@type": "PropertyValue", name, value })),
       };
   const videoLd = item.video
@@ -113,12 +113,12 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
         mainEntity: item.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
       }
     : null;
-  const specs: [string, string | undefined][] = item.specs ? [...item.specs, ["完成", item.date.replace("-", " 年 ") + " 月"]] : [
+  const specs: [string, string | undefined][] = item.specs ? [...item.specs, ["完成", item.date ? item.date.replace("-", " 年 ") + " 月" : undefined]] : [
     ["主石", item.stone],
     ["金屬", item.metal],
     ["價錢", item.priceRange],
     ["工期", item.duration],
-    ["完成", item.date.replace("-", " 年 ") + " 月"],
+    ["完成", item.date ? item.date.replace("-", " 年 ") + " 月" : undefined],
   ];
   return (
     <main id="main" tabIndex={-1} className="bb-case-page">
