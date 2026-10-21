@@ -251,6 +251,7 @@ const REAL_CASES: Case[] = [
       { q: "培育鑽石項鏈要唔要證書？", a: "可以揀。梨形鑽同馬眼鑽可以配 IGI 或 GIA 證書，唔要大證會平啲；碎鑽一般唔帶證書。出貨都附 GDTC 省檢證書，驗金屬同鑽石係培育定天然。", link: { label: "第三章 證書", href: "/certificate" } },
       { q: "可唔可以做一條差唔多嘅？", a: "可以做類似款。花朵數量、花瓣大細、鏈上配石同鏈長都可以按你預算同頸圍改，每條都係訂造，所以唔會完全一樣。" },
     ],
+    video: { youtubeId: "qPyPT-Usol8", poster: "/images/cases/three-flower-pear-necklace-18k-white-gold-video.webp", uploadDate: "2026-10-21", duration: "PT17S", seconds: 17 },
     guides: [
       { label: "第四章 4C 選石", href: "/4c" },
       { label: "第三章 證書", href: "/certificate" },
