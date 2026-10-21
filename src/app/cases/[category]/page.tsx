@@ -6,18 +6,18 @@ import { CaseGrid, CategoryNav } from "@/components/cases";
 import { Breadcrumbs, JsonLd } from "@/components/site";
 import { casesIn, categoryOf, isDemoCases, visibleCategories } from "@/config/cases";
 import { SITE, localizeHref } from "@/config/site";
-import { routing } from "@/i18n/routing";
 import { robotsFor } from "@/lib/indexing";
 import { shareImages } from "@/lib/share";
 
-type Params = { locale: string; category: string };
+type Params = { category: string };
 
 export function generateStaticParams() {
-  return routing.locales.flatMap((locale) => visibleCategories().map((c) => ({ locale, category: c.slug })));
+  return visibleCategories().map((c) => ({ category: c.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { locale, category } = await params;
+  const { category } = await params;
+  const locale = SITE.locale;
   const cat = categoryOf(category);
   if (!cat) return {};
   const url = localizeHref(`/cases/${category}`, locale);
@@ -34,7 +34,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default async function CategoryPage({ params }: { params: Promise<Params> }) {
-  const { locale, category } = await params;
+  const { category } = await params;
+  const locale = SITE.locale;
   setRequestLocale(locale);
   const cat = categoryOf(category);
   if (!cat) notFound();

@@ -30,11 +30,8 @@ jobs:
           NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID }}
           NEXT_PUBLIC_MICROSOFT_CLARITY_ID: ${{ secrets.NEXT_PUBLIC_MICROSOFT_CLARITY_ID }}
 
-      - name: Serve default locale at site root
-        run: |
-          if [ -f out/zh-hk/index.html ]; then cp -f out/zh-hk/index.html out/index.html
-          elif [ -f out/zh-hk.html ]; then cp -f out/zh-hk.html out/index.html
-          else echo "zh-hk homepage export not found"; find out -maxdepth 2 -name '*.html' | head -20; exit 1; fi
+      - name: Check homepage export
+        run: test -f out/index.html || { echo "homepage export not found"; find out -maxdepth 1 -name '*.html' | head -20; exit 1; }
 
       - name: Deploy to Cloudflare Workers
         run: npx wrangler@latest deploy

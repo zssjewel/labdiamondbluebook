@@ -47,7 +47,7 @@ async function glide(page, pxPerSec, stops = []) {
     const size = opts.viewport;
     const ctx = await browser.newContext({ ...opts, recordVideo: { dir: out, size } });
     const page = await ctx.newPage();
-    await page.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await page.goto(base + "/index.html", { waitUntil: "load" });
     await page.waitForTimeout(2200);
     // 作品貨架：揀分類、左右滑
     await page.evaluate(() => document.querySelector(".bb-works").scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -73,7 +73,7 @@ async function glide(page, pxPerSec, stops = []) {
       const fold = page.locator(".bb-tocfold summary");
       if (await fold.count()) { await fold.click(); await page.waitForTimeout(900); await fold.click(); await page.waitForTimeout(700); }
     }
-    await page.goto(base + "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
+    await page.goto(base + "/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
     await page.waitForTimeout(1500);
     await glide(page, speed * 0.6, []);
     await page.waitForTimeout(800);
@@ -89,7 +89,7 @@ async function glide(page, pxPerSec, stops = []) {
     const ctx = await browser.newContext(opts);
     const page = await ctx.newPage();
     const t0 = Date.now();
-    await page.goto(base + "/zh-hk.html", { waitUntil: "commit" });
+    await page.goto(base + "/index.html", { waitUntil: "commit" });
     for (const ms of [400, 900, 2000]) {
       await page.waitForTimeout(Math.max(0, ms - (Date.now() - t0)));
       await page.screenshot({ path: `${out}/${tag}-hero-${ms}.png` });
@@ -112,7 +112,7 @@ async function glide(page, pxPerSec, stops = []) {
     }
     // 目錄嗰本書：碌到之後自己打開——按時間截圖
     if (tag === "desktop") {
-      await page.goto(base + "/zh-hk.html", { waitUntil: "load" });
+      await page.goto(base + "/index.html", { waitUntil: "load" });
       await page.waitForTimeout(1800);
       for (let k = 0; k < 8; k++) {
         const moved = await page.evaluate(() => {

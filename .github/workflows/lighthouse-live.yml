@@ -21,21 +21,21 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p lh
-          curl -s -A "Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Mobile Safari/537.36" -H "Accept: text/html" https://labdiamondbluebook.com/zh-hk | grep -o "<script[^>]*cloudflareinsights[^>]*>" | sed 's/^/beacon: /' > lh/beacon.txt || true
+          curl -s -A "Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Mobile Safari/537.36" -H "Accept: text/html" https://labdiamondbluebook.com/ | grep -o "<script[^>]*cloudflareinsights[^>]*>" | sed 's/^/beacon: /' > lh/beacon.txt || true
           cat lh/beacon.txt
           CHROME=$(command -v google-chrome || command -v google-chrome-stable)
           for i in 1 2 3; do
-            npx -y lighthouse@13 "https://labdiamondbluebook.com/zh-hk" --only-categories=performance,accessibility,best-practices --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --blocked-url-patterns="*cloudflareinsights*" --blocked-url-patterns="*cdn-cgi/rum*" --output=json --output-path="lh/nobeacon-$i.json" --quiet || true
+            npx -y lighthouse@13 "https://labdiamondbluebook.com/" --only-categories=performance,accessibility,best-practices --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --blocked-url-patterns="*cloudflareinsights*" --blocked-url-patterns="*cdn-cgi/rum*" --output=json --output-path="lh/nobeacon-$i.json" --quiet || true
           done
           CHROME=$(command -v google-chrome || command -v google-chrome-stable)
-          for p in home:zh-hk root: chapter:zh-hk/price article:zh-hk/4c/carat-size-on-hand cases:zh-hk/cases about:zh-hk/about; do
+          for p in home: chapter:price article:4c/carat-size-on-hand cases:cases about:about; do
             name="${p%%:*}"; path="${p#*:}"
             for i in 1 2 3; do
               npx -y lighthouse@13 "https://labdiamondbluebook.com/$path" --only-categories=performance,accessibility,best-practices --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true
             done
           done
           node scripts/lh-summary.cjs lh/*.json | tee lh/summary.txt
-          for u in zh-hk ""; do
+          for u in ""; do
             curl -s "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=https://labdiamondbluebook.com/$u&strategy=mobile&category=performance" -o "lh/psi-${u:-root}.json" || true
             node -e "const r=require('./lh/psi-${u:-root}.json');const l=r.lighthouseResult;if(!l){console.log('PSI ${u:-root}:',JSON.stringify(r).slice(0,300));process.exit(0)}const a=l.audits;console.log('PSI ${u:-root}:',Math.round(l.categories.performance.score*100),'FCP',a['first-contentful-paint'].displayValue,'LCP',a['largest-contentful-paint'].displayValue,'TBT',a['total-blocking-time'].displayValue,'SI',a['speed-index'].displayValue,'final',l.finalDisplayedUrl,'redirects',(a.redirects&&a.redirects.displayValue)||'')" | tee -a lh/summary.txt
           done

@@ -73,7 +73,7 @@ function summary(rows, key) {
       const video = name === "現狀";
       const ctx = await browser.newContext({ ...dev, ...(video ? { recordVideo: { dir: out, size: dev.viewport } } : {}) });
       const page = await ctx.newPage();
-      await page.goto(base + "/zh-hk.html", { waitUntil: "load" });
+      await page.goto(base + "/index.html", { waitUntil: "load" });
       if (css) await page.addStyleTag({ content: css });
       await page.waitForTimeout(2500);
       await page.evaluate(() => {

@@ -3,7 +3,7 @@
 // 用法：node scripts/load.cjs http://localhost:8080 > load.txt
 const { chromium, devices } = require("playwright");
 const base = process.argv[2] || "http://localhost:8080";
-const pages = ["/zh-hk.html", "/zh-hk/4c/carat-size-on-hand.html", "/zh-hk/basics/vs-natural-moissanite.html"];
+const pages = ["/index.html", "/4c/carat-size-on-hand.html", "/basics/vs-natural-moissanite.html"];
 const setups = [
   ["手機 4G（慢 CPU）", { ...devices["Pixel 7"] }, { latency: 150, downloadThroughput: (1.6 * 1024 * 1024) / 8, uploadThroughput: (750 * 1024) / 8 }, 4],
   ["電腦寬頻", { viewport: { width: 1440, height: 900 } }, { latency: 20, downloadThroughput: (20 * 1024 * 1024) / 8, uploadThroughput: (5 * 1024 * 1024) / 8 }, 1],

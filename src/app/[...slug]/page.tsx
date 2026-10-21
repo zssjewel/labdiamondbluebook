@@ -17,7 +17,7 @@ import { shareImages } from "@/lib/share";
 import { casesForChapter } from "@/config/cases";
 import { ReadingTracker } from "@/components/reading";
 
-type Params = { locale: Locale; slug: string[] };
+type Params = { slug: string[] };
 
 function alternates(pathname: string, locale: string) {
   const url = localizeHref(pathname, locale);
@@ -31,7 +31,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { slug } = await params;
+  const locale = SITE.locale as Locale;
   const chapter = getChapter(slug[0]);
   if (!chapter) return { title: "找不到頁面" };
   if (slug.length === 1) {
@@ -71,7 +72,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default async function SlugPage({ params }: { params: Promise<Params> }) {
-  const { locale, slug } = await params;
+  const { slug } = await params;
+  const locale = SITE.locale as Locale;
   setRequestLocale(locale);
   if (!CONTENT_TYPES.includes(slug[0])) notFound();
   if (slug.length === 1) return <ChapterPage locale={locale} slug={slug[0]} />;

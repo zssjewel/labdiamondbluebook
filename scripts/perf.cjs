@@ -4,9 +4,9 @@ const { chromium, devices } = require("playwright");
 
 const base = process.argv[2] || "http://localhost:8080";
 const allPages = [
-  ["首頁", "/zh-hk.html"],
-  ["互動文章", "/zh-hk/4c/carat-size-on-hand.html"],
-  ["普通文章", "/zh-hk/basics/vs-natural-moissanite.html"],
+  ["首頁", "/index.html"],
+  ["互動文章", "/4c/carat-size-on-hand.html"],
+  ["普通文章", "/basics/vs-natural-moissanite.html"],
 ];
 const pages = process.env.PERF_PAGES ? allPages.filter(([n]) => process.env.PERF_PAGES.split(",").includes(n)) : allPages;
 const setups = [

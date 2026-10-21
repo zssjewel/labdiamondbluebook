@@ -8,8 +8,8 @@ import { SITE, localizeHref } from "@/config/site";
 import { robotsFor } from "@/lib/indexing";
 import { shareImages } from "@/lib/share";
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = SITE.locale;
   const url = localizeHref("/cases", locale);
   const title = `培育鑽石作品案例：求婚戒指、耳環、手鏈｜${SITE.name}`;
   const description = "鄒三山工坊訂造嘅培育鑽石首飾：求婚戒指、耳環、排鑽戒、吊墜、手鏈、對戒同舊金改造，每件寫明主石、金屬、價錢區間同工期。";
@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   };
 }
 
-export default async function CasesPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function CasesPage() {
+  const locale = SITE.locale;
   setRequestLocale(locale);
   const shown = new Set(visibleCategories().map((c) => c.slug));
   return (

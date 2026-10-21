@@ -29,9 +29,9 @@ export const SITE = {
 } as const;
 
 export function localizeHref(href: string, locale: string = SITE.locale) {
-  if (href === "/") return `/${locale}`;
-  if (href.startsWith("/#")) return `/${locale}${href.slice(1)}`;
-  return `/${locale}${href}`;
+  // 一個語言一個獨立站（香港站、台灣站分開做），網址唔帶語言前綴；保留 locale 參數方便日後抄去台灣站
+  void locale;
+  return href;
 }
 
 /** 已經有真實聯絡號碼先顯示「WhatsApp 問師傅」；未有就如實寫「聯絡方式籌備中」，唔放假按鈕。 */

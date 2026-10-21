@@ -8,16 +8,15 @@ import { Demo } from "@/components/demo";
 import { Breadcrumbs, JsonLd, SmartLink } from "@/components/site";
 import { CASES, casesIn, categoryOf, mixed, visibleCategories } from "@/config/cases";
 import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
-import { routing } from "@/i18n/routing";
 import { robotsFor } from "@/lib/indexing";
 import { PROMISE_SHORT } from "@/config/promises";
 import { shareImages } from "@/lib/share";
 
-type Params = { locale: string; category: string; slug: string };
+type Params = { category: string; slug: string };
 
 export function generateStaticParams() {
   const shown = new Set(visibleCategories().map((c) => c.slug));
-  return routing.locales.flatMap((locale) => CASES.filter((c) => shown.has(c.category)).map((c) => ({ locale, category: c.category, slug: c.slug })));
+  return CASES.filter((c) => shown.has(c.category)).map((c) => ({ category: c.category, slug: c.slug }));
 }
 
 function find(category: string, slug: string) {
@@ -25,7 +24,8 @@ function find(category: string, slug: string) {
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { locale, category, slug } = await params;
+  const { category, slug } = await params;
+  const locale = SITE.locale;
   const item = find(category, slug);
   if (!item) return {};
   const cat = categoryOf(category);
@@ -45,7 +45,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default async function CaseDetailPage({ params }: { params: Promise<Params> }) {
-  const { locale, category, slug } = await params;
+  const { category, slug } = await params;
+  const locale = SITE.locale;
   setRequestLocale(locale);
   const item = find(category, slug);
   const cat = categoryOf(category);

@@ -32,7 +32,7 @@ jobs:
           mkdir -p lh
           CHROME=$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser)
           echo "chrome: $CHROME"
-          for p in home:zh-hk.html chapter:zh-hk/price.html article:zh-hk/4c/carat-size-on-hand.html article2:zh-hk/basics/vs-natural-moissanite.html cases:zh-hk/cases.html case:zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html about:zh-hk/about.html; do
+          for p in home:index.html chapter:price.html article:4c/carat-size-on-hand.html article2:basics/vs-natural-moissanite.html cases:cases.html case:cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html about:about.html; do
             name="${p%%:*}"; path="${p#*:}"
             for i in 1 2 3; do
               npx -y lighthouse@13 "http://localhost:8090/$path" --only-categories=performance,accessibility,best-practices --chrome-path="$CHROME" --chrome-flags="--headless=new --no-sandbox" --output=json --output-path="lh/$name-$i.json" --quiet || true

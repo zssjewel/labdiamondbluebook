@@ -4,16 +4,16 @@ const { chromium } = require("playwright");
 
 const base = process.argv[2] || "http://localhost:8080";
 const pages = [
-  "/zh-hk.html",
-  "/zh-hk/price.html",
-  "/zh-hk/certificate.html",
-  "/zh-hk/custom.html",
-  "/zh-hk/about.html",
-  "/zh-hk/cases.html",
-  "/zh-hk/cases/engagement-rings.html",
-  "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html",
-  "/zh-hk/basics/vs-natural-moissanite.html",
-  "/zh-hk/4c/carat-size-on-hand.html",
+  "/index.html",
+  "/price.html",
+  "/certificate.html",
+  "/custom.html",
+  "/about.html",
+  "/cases.html",
+  "/cases/engagement-rings.html",
+  "/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html",
+  "/basics/vs-natural-moissanite.html",
+  "/4c/carat-size-on-hand.html",
 ];
 const widths = [320, 390, 768, 1440];
 
@@ -21,7 +21,7 @@ const widths = [320, 390, 768, 1440];
   const browser = await chromium.launch();
   console.log("== 每頁 SEO 狀態（本地構建）==");
   const sitemap = await (await fetch(base + "/sitemap.xml")).text();
-  const inMap = (p) => sitemap.includes(p.replace(/\.html$/, "").replace("/zh-hk.html", "/zh-hk"));
+  const inMap = (p) => sitemap.includes(p.replace(/\.html$/, "").replace(/^\/index$/, "/"));
   for (const p of pages) {
     const page = await browser.newPage();
     const res = await page.goto(base + p, { waitUntil: "load" });
@@ -41,8 +41,8 @@ const widths = [320, 390, 768, 1440];
     await page.close();
   }
   const nf = await browser.newPage();
-  const r404 = await nf.goto(base + "/zh-hk/__not_found_check", { waitUntil: "load" });
-  console.log(`/zh-hk/__not_found_check | HTTP ${r404.status()}（本地靜態伺服器；正式網站要另外喺 Cloudflare 複測）`);
+  const r404 = await nf.goto(base + "/__not_found_check", { waitUntil: "load" });
+  console.log(`/__not_found_check | HTTP ${r404.status()}（本地靜態伺服器；正式網站要另外喺 Cloudflare 複測）`);
   await nf.close();
   const rob = await (await fetch(base + "/robots.txt")).text();
   console.log("robots.txt:", rob.replace(/\n/g, " / "));
@@ -74,7 +74,7 @@ const widths = [320, 390, 768, 1440];
   console.log("\n== 手機文章：首屏順序、目錄摺疊 ==");
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
-  await page.goto(base + "/zh-hk/basics/vs-natural-moissanite.html", { waitUntil: "load" });
+  await page.goto(base + "/basics/vs-natural-moissanite.html", { waitUntil: "load" });
   const order = await page.evaluate(() => {
     const top = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return r.height ? Math.round(r.top + scrollY) : "隱藏"; };
     return { h1: top("h1"), lead: top(".bb-page__lead"), meta: top(".bb-metaline"), toc: top(".bb-tocfold"), prose: top(".bb-prose") };
@@ -92,7 +92,7 @@ const widths = [320, 390, 768, 1440];
 
   console.log("\n== 圓鑽文章分享圖 ==");
   {
-    const html = await (await fetch(base + "/zh-hk/4c/carat-size-on-hand.html")).text();
+    const html = await (await fetch(base + "/4c/carat-size-on-hand.html")).text();
     const metas = (re) => [...html.matchAll(re)].map((m) => m[1]);
     const og = metas(/<meta property="og:image" content="([^"]+)"/g);
     const ogw = metas(/<meta property="og:image:width" content="([^"]+)"/g);
@@ -105,7 +105,7 @@ const widths = [320, 390, 768, 1440];
     console.log(`twitter:image ×${tw.length}：${tw.join("、")}`);
     console.log(`Article.image：${art ? art.image : "冇"}；JSON-LD 解析失敗 ${ld.filter((x) => x === "解析失敗").length} 個`);
     console.log(`仲有冇用方鑽圖做封面：${/princess-macro-white/.test(html) ? "有（要查）" : "冇"}`);
-    const ch = await (await fetch(base + "/zh-hk/4c.html")).text();
+    const ch = await (await fetch(base + "/4c.html")).text();
     console.log(`第四章頁 og:image：${(ch.match(/<meta property="og:image" content="([^"]+)"/) || [])[1]}（應該仍然係方鑽圖）`);
     for (const f of ["carat-size-round-cover.webp", "carat-size-round-cover-800.webp", "carat-size-round-cover-480.webp"]) {
       const r = await fetch(base + "/images/renders/" + f);
@@ -120,7 +120,7 @@ const widths = [320, 390, 768, 1440];
   }
 
   console.log("\n== 第三章、第六章章節圖 ==");
-  for (const [path, want] of [["/zh-hk/certificate", "certificate-verification-ivory"], ["/zh-hk/custom", "custom-ring-wax-ivory"]]) {
+  for (const [path, want] of [["/certificate", "certificate-verification-ivory"], ["/custom", "custom-ring-wax-ivory"]]) {
     const html = await (await fetch(base + path + ".html")).text();
     const og = [...html.matchAll(/<meta property="og:image(?::(width|height|alt))?" content="([^"]+)"/g)].map((m) => `${m[1] || "url"}=${m[2].replace(/^https?:\/\/[^/]+/, "")}`);
     console.log(`${path} 分享圖：${og.join("，")}`);
@@ -156,8 +156,8 @@ const widths = [320, 390, 768, 1440];
   {
     const ctx2 = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const pg = await ctx2.newPage();
-    for (const [label, sel] of [["價錢", 'header a[href$="/zh-hk/price"]'], ["訂造流程", 'header a[href$="/zh-hk/custom"]']]) {
-      await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    for (const [label, sel] of [["價錢", 'header a[href$="/price"]'], ["訂造流程", 'header a[href$="/custom"]']]) {
+      await pg.goto(base + "/index.html", { waitUntil: "load" });
       await pg.waitForTimeout(500);
       await pg.click(sel);
       await pg.waitForLoadState("load");
@@ -175,7 +175,7 @@ const widths = [320, 390, 768, 1440];
       });
       console.log(`首頁 → ${label}（${at}）→ 返回：目錄標題透明度 ${vis.h}，目錄透明度 ${vis.list}`);
     }
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     const read = () => pg.evaluate(() => document.querySelector(".bb-tool .bb-hand__read")?.textContent?.replace(/\s+/g, " "));
     const setRange = (v) => pg.evaluate((v) => {
       const el = document.querySelector("#tool-ct");
@@ -199,7 +199,7 @@ const widths = [320, 390, 768, 1440];
   for (const [tag, opts] of [["電腦 1440", { viewport: { width: 1440, height: 900 } }], ["手機 390", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 }]]) {
     const ctx = await browser.newContext(opts);
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     const sup = await pg.evaluate(() => ({
       view: CSS.supports("animation-timeline: view()"),
       tl: [...document.querySelectorAll("*")].filter((e) => /view|scroll|--bb/.test(getComputedStyle(e).animationTimeline || "")).length,
@@ -273,7 +273,7 @@ const widths = [320, 390, 768, 1440];
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "reduce" });
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     const r = await pg.evaluate(() => {
       const all = [...document.querySelectorAll("[data-reveal], .bb-answers > li, .bb-mosaic img, .bb-how__svg .m, .bb-how__pic img")];
       return { n: all.length, hidden: all.filter((e) => { const cs = getComputedStyle(e); return Number(cs.opacity) < 0.99 || cs.animationName !== "none"; }).length };
@@ -299,7 +299,7 @@ const widths = [320, 390, 768, 1440];
   for (const w of [375, 430, 768, 1440]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: "reduce" });
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     await pg.evaluate(() => document.querySelector(".bb-how__stage").scrollIntoView({ block: "center", behavior: "instant" }));
     await pg.waitForFunction(() => [...document.querySelectorAll(".bb-how__pic img")].every((i) => i.complete && i.naturalWidth), null, { timeout: 8000 }).catch(() => {});
     const r = await pg.evaluate(() => {
@@ -329,7 +329,7 @@ const widths = [320, 390, 768, 1440];
   {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     await pg.evaluate(() => document.querySelector(".bb-how__stage").scrollIntoView({ block: "center", behavior: "instant" }));
     await pg.waitForTimeout(1500);
     const r = await pg.evaluate(() => [...document.querySelectorAll(".bb-how__pic img, .bb-how__steps li")].map((e) => Number(getComputedStyle(e).opacity).toFixed(2)).join("/"));
@@ -341,7 +341,7 @@ const widths = [320, 390, 768, 1440];
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const pg = await ctx.newPage();
     await pg.route("**/images/process/**", async (route) => { await new Promise((r) => setTimeout(r, 1800)); await route.continue(); });
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     await pg.waitForTimeout(1500);
     const state = () => pg.evaluate(() => ({
       op: [...document.querySelectorAll(".bb-how__pic img")].map((i) => Number(getComputedStyle(i).opacity).toFixed(2)).join("/"),
@@ -393,7 +393,7 @@ const widths = [320, 390, 768, 1440];
   for (const [w, extra] of [[375, {}], [430, {}], [768, {}], [1440, {}], [390, { javaScriptEnabled: false }], [390, { reducedMotion: "reduce" }]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, ...extra });
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     for (let k = 0; k < 6; k++) {
       await pg.evaluate(() => document.querySelector(".bb-why__grid").scrollIntoView({ block: "start", behavior: "instant" }));
       await pg.waitForTimeout(150);
@@ -432,7 +432,7 @@ const widths = [320, 390, 768, 1440];
   for (const w of [1440, 390]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, reducedMotion: "reduce" });
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     for (let y = 0; y < 14; y++) { await pg.evaluate((y) => window.scrollTo(0, y * 800), y); await pg.waitForTimeout(80); }
     const r = await pg.evaluate(() => {
       const secs = [...document.querySelectorAll("main > section, main > * > section")].filter((s) => s.getClientRects().length && s.closest("main"));
@@ -451,7 +451,7 @@ const widths = [320, 390, 768, 1440];
   for (const [tag, opts] of [["電腦 1440", { viewport: { width: 1440, height: 900 } }], ["手機 390", { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 }]]) {
     const ctx = await browser.newContext(opts);
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await pg.goto(base + "/index.html", { waitUntil: "load" });
     await pg.waitForTimeout(1500);
     const info = async () => pg.evaluate(() => {
       const sec = document.querySelector(".bb-works");
@@ -485,7 +485,7 @@ const widths = [320, 390, 768, 1440];
   }
   {
     const pg = await browser.newPage({ viewport: { width: 390, height: 844 } });
-    await pg.goto(base + "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
+    await pg.goto(base + "/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
     const d = await pg.evaluate(() => ({
       h1: document.querySelector("h1")?.textContent,
       slides: document.querySelectorAll(".bb-gallery__slide").length,
@@ -495,7 +495,7 @@ const widths = [320, 390, 768, 1440];
     }));
     {
       const dp = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-      await dp.goto(base + "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
+      await dp.goto(base + "/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", { waitUntil: "load" });
       await dp.waitForTimeout(800);
       await dp.hover(".bb-gallery__stage");
       await dp.waitForTimeout(400);
@@ -508,7 +508,7 @@ const widths = [320, 390, 768, 1440];
       await dp.close();
     }
     console.log(`作品頁：${d.h1}｜相 ${d.slides} 格｜${d.specs}｜相關：${d.related}｜robots ${d.robots}`);
-    for (const p of ["/zh-hk/price.html", "/zh-hk/4c/carat-size-on-hand.html"]) {
+    for (const p of ["/price.html", "/4c/carat-size-on-hand.html"]) {
       await pg.goto(base + p, { waitUntil: "load" });
       const r = await pg.evaluate(() => [...document.querySelectorAll(".bb-related")].map((s) => `${s.querySelector("h2").textContent}（${s.querySelectorAll(".bb-shelf__track > li").length - 1} 件）`).join("、"));
       console.log(`${p} 相關作品：${r || "冇"}`);
@@ -518,8 +518,8 @@ const widths = [320, 390, 768, 1440];
 
   console.log("\n== 分享圖（原始 HTML）==");
   const metaOf = (html, prop) => [...html.matchAll(new RegExp(`<meta (?:property|name)="${prop}" content="([^"]+)"`, "g"))].map((m) => m[1]);
-  for (const p of ["/zh-hk", "/zh-hk/cases", ...["engagement-rings", "earrings", "eternity-rings", "pendants", "bracelets", "wedding-bands", "remake"].map((c) => `/zh-hk/cases/${c}`), "/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold", "/zh-hk/certificate", "/zh-hk/custom", "/zh-hk/4c/carat-size-on-hand", "/zh-hk/about"]) {
-    const html = await (await fetch(base + p + ".html")).text();
+  for (const p of ["/", "/cases", ...["engagement-rings", "earrings", "eternity-rings", "pendants", "bracelets", "wedding-bands", "remake"].map((c) => `/cases/${c}`), "/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold", "/certificate", "/custom", "/4c/carat-size-on-hand", "/about"]) {
+    const html = await (await fetch(base + (p === "/" ? "/index" : p) + ".html")).text();
     const og = metaOf(html, "og:image"), tw = metaOf(html, "twitter:image");
     const ogw = metaOf(html, "og:image:width")[0], ogh = metaOf(html, "og:image:height")[0];
     const short = (u) => (u || "冇").replace(/^https?:\/\/[^/]+/, "");
@@ -535,7 +535,7 @@ const widths = [320, 390, 768, 1440];
   }
 
   console.log("\n== 推薦作品出口文案 ==");
-  for (const [p, sel] of [["/zh-hk.html", ".bb-works"], ["/zh-hk/price.html", ".bb-related"], ["/zh-hk/4c/carat-size-on-hand.html", ".bb-related"], ["/zh-hk/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", ".bb-related"]]) {
+  for (const [p, sel] of [["/index.html", ".bb-works"], ["/price.html", ".bb-related"], ["/4c/carat-size-on-hand.html", ".bb-related"], ["/cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html", ".bb-related"]]) {
     const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     await pg.goto(base + p, { waitUntil: "load" });
     const r = await pg.evaluate((sel) => [...document.querySelectorAll(sel)].map((s) => { const a = s.querySelector(".bb-shelf__card--all"); return `「${(s.querySelector("h2") || {}).textContent || ""}」→「${a.textContent.replace("›", "").trim()}」連去 ${a.getAttribute("href")}`; }), sel);
@@ -554,7 +554,7 @@ const widths = [320, 390, 768, 1440];
   for (const w of [375, 400, 430, 960, 1024, 1440]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, isMobile: w < 800, hasTouch: w < 800 });
     const pg = await ctx.newPage();
-    await pg.goto(base + "/zh-hk.html#contents", { waitUntil: "load" });
+    await pg.goto(base + "/index.html#contents", { waitUntil: "load" });
     await pg.waitForTimeout(800);
     await pg.evaluate(() => document.getElementById("contents").scrollIntoView({ block: "start", behavior: "instant" }));
     await pg.waitForTimeout(600);
@@ -575,7 +575,7 @@ const widths = [320, 390, 768, 1440];
     if (w >= 1024 || w === 375) { await pg.waitForTimeout(2600); await pg.screenshot({ path: `shots/contents-${w}.png` }).catch(() => {}); }
     await ctx.close();
   }
-  for (const from of ["/zh-hk/price.html", "/zh-hk/custom.html"]) {
+  for (const from of ["/price.html", "/custom.html"]) {
     const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
     await pg.goto(base + from, { waitUntil: "load" });
     await pg.waitForTimeout(1200);
@@ -599,7 +599,7 @@ const widths = [320, 390, 768, 1440];
   }
   {
     const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-    await pg.goto(base + "/zh-hk/price.html", { waitUntil: "load" });
+    await pg.goto(base + "/price.html", { waitUntil: "load" });
     await pg.keyboard.press("Tab");
     const skip = await pg.evaluate(() => ({ t: document.activeElement.textContent, top: Math.round(document.activeElement.getBoundingClientRect().top) }));
     await pg.keyboard.press("Enter");
@@ -612,7 +612,7 @@ const widths = [320, 390, 768, 1440];
   console.log("\n== 作品列表頁分類（同首頁一樣嘅分段選擇器）==");
   {
     const pg = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-    await pg.goto(base + "/zh-hk/cases.html", { waitUntil: "load" });
+    await pg.goto(base + "/cases.html", { waitUntil: "load" });
     await pg.waitForTimeout(1200);
     await pg.evaluate(() => window.scrollTo(0, 300));
     const ind = () => pg.evaluate(() => {

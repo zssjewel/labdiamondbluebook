@@ -17,7 +17,7 @@ const states = [
   for (const [vw, vh, dpr, tag] of [[1440, 900, 2, "desktop"], [390, 844, 3, "phone"]]) {
     const ctx = await browser.newContext({ viewport: { width: vw, height: vh }, deviceScaleFactor: dpr });
     const page = await ctx.newPage();
-    await page.goto(base + "/zh-hk.html", { waitUntil: "load" });
+    await page.goto(base + "/index.html", { waitUntil: "load" });
     const plate = page.locator(".bb-tool__plate");
     await plate.scrollIntoViewIfNeeded();
     for (const [name, ct, finger] of states) {
@@ -56,7 +56,7 @@ const states = [
   // 文章入面嘅同一個組件（手機）
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3 });
   const page = await ctx.newPage();
-  await page.goto(base + "/zh-hk/4c/carat-size-on-hand.html", { waitUntil: "load" });
+  await page.goto(base + "/4c/carat-size-on-hand.html", { waitUntil: "load" });
   await page.locator(".bb-story__sticky").screenshot({ path: `${out}/phone-article-story.png` });
   const ids = await page.evaluate(() => {
     const all = [...document.querySelectorAll("svg [id]")].map((e) => e.id);
@@ -64,7 +64,7 @@ const states = [
   });
   console.log(`文章頁 SVG id：${ids.n} 個，重複 ${ids.dup} 個`);
   const home = await browser.newPage();
-  await home.goto(base + "/zh-hk.html", { waitUntil: "load" });
+  await home.goto(base + "/index.html", { waitUntil: "load" });
   console.log(`首頁 SVG id 重複：${await home.evaluate(() => { const a = [...document.querySelectorAll("svg [id]")].map((e) => e.id); return a.length - new Set(a).size; })}`);
   await browser.close();
 })();
