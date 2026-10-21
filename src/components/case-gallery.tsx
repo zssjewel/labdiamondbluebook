@@ -60,6 +60,12 @@ export function CaseGallery({ images, placeholders = [], video }: { images: Img[
     };
   }, []);
 
+  // 滑到影片格就自動播（靜音，所有瀏覽器都肯自動播；YouTube 播放器入面可以開聲）；滑走就停
+  useEffect(() => {
+    if (videoAt < 0) return;
+    setPlaying(at === videoAt);
+  }, [at, videoAt]);
+
   const smooth = () => (window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth");
   const go = (i: number) => {
     const el = track.current;
@@ -178,7 +184,7 @@ function VideoSlide({ video, playing, onPlay }: { video: GalleryVideo; playing: 
     <figure className="bb-gallery__slide bb-gallery__slide--video">
       {playing ? (
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1`}
+          src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`}
           title={video.label}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
