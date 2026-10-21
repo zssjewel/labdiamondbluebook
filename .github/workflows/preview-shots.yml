@@ -40,7 +40,6 @@ jobs:
       - name: Serve
         if: steps.build.outcome == 'success'
         run: |
-          cp -f out/index.html out/index.html 2>/dev/null || cp -f out/index.html out/index.html
           head -c 4000 out/4c/carat-size-on-hand.html > shots/head.html || true
           ls -la out/_next/static/css > shots/css-sizes.txt; for f in out/_next/static/css/*.css; do echo "$f gzip $(gzip -c $f | wc -c)" >> shots/css-sizes.txt; done
           (cd out && python3 -m http.server 8080 >/dev/null 2>&1 &)
