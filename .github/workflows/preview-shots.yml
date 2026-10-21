@@ -50,7 +50,7 @@ jobs:
         run: |
           npx -y playwright@1.55.0 install --with-deps chromium firefox webkit >/dev/null
           mkdir -p shots
-          pages="home:index.html chapter:basics.html article:basics/vs-natural-moissanite.html about:about.html hand:4c/carat-size-on-hand.html price:price.html cases:cases.html certificate:certificate.html custom:custom.html igi:certificate/igi-or-gia.html process:custom/process.html casecat:cases/earrings.html casedetail:cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html"
+          pages="home:index.html chapter:basics.html article:basics/vs-natural-moissanite.html about:about.html hand:4c/carat-size-on-hand.html price:price.html cases:cases.html certificate:certificate.html custom:custom.html igi:certificate/igi-or-gia.html process:custom/process.html casecat:cases/earrings.html casedetail:cases/engagement-rings/pear-halo-3-09ct-18k-white-gold.html necklace:cases/pendants/three-flower-pear-necklace-18k-white-gold.html"
           npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
           # 整頁截圖用「減少動畫」模式，碌動進場效果唔會令畫面以下嘅內容變透明
           NODE_PATH=/tmp/pw/node_modules node scripts/shots.cjs http://localhost:8080 shots $pages || true
