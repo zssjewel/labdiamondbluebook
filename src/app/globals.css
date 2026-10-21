@@ -1152,6 +1152,9 @@
   line-height: 1.2;
 }
 .bb-page__lead { margin: 0 0 2em; max-width: 30em; font-size: var(--step-lead); line-height: 1.7; }
+/* 文章頁：標題係一句問題或者長句，唔使用章節頁咁大嘅展示字；電腦約 38px、手機約 26px，換行時兩行平均 */
+.bb-page__title--article { font-size: clamp(1.625rem, 1.25rem + 1.3vw, 2.375rem); line-height: 1.28; letter-spacing: 0; text-wrap: balance; }
+.bb-page__lead--article { font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.75; }
 .bb-meta { margin: 0 0 24px; }
 .bb-meta dt { font-weight: 600; color: var(--ink); }
 .bb-meta dd { margin: 0 0 12px; }

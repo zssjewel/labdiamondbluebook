@@ -266,8 +266,8 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             { label: "本文" },
           ]}
         />
-        <h1 className="bb-page__title bb-display">{item.metadata.title}</h1>
-        {item.metadata.summary && <p className="bb-page__lead">{item.metadata.summary}</p>}
+        <h1 className="bb-page__title bb-page__title--article bb-display">{item.metadata.title}</h1>
+        {item.metadata.summary && <p className="bb-page__lead bb-page__lead--article">{item.metadata.summary}</p>}
         <p className="bb-metaline">
           <span>{author}編著</span>
           <span>更新 {item.metadata.lastModified ?? item.metadata.date}</span>
