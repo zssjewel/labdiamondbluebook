@@ -1762,17 +1762,68 @@
   .bb-case-page__media { position: static; margin-inline: calc(-1 * var(--m)); }
   .bb-case-page__media .bb-gallery__track { border-radius: 0; }
 }
-/* 作品正文、常見問題（按上架標準寫嘅真作品先有） */
-.bb-case-body { max-width: 720px; margin: clamp(56px, 7vw, 96px) auto 0; }
-.bb-case-body__sec + .bb-case-body__sec { margin-top: clamp(40px, 5vw, 64px); }
-.bb-case-body h2 { margin: 0 0 16px; font-size: var(--step-lead); line-height: 1.35; }
+/* 作品正文、常見問題（按上架標準寫嘅真作品先有）：文字段 720 闊方便讀，小卡、流程、問答用返全闊 */
+.bb-case-body { max-width: 1120px; margin: clamp(56px, 7vw, 96px) auto 0; }
+.bb-case-body__sec { max-width: 720px; margin-inline: auto; }
+.bb-case-body__sec:has(.bb-case-cards), .bb-case-steps, .bb-case-faq { max-width: none; }
+.bb-case-body__sec + .bb-case-body__sec { margin-top: clamp(56px, 7vw, 88px); }
+.bb-case-body h2 { margin: 0 0 18px; font-size: clamp(1.375rem, 1.15rem + 0.7vw, 1.75rem); line-height: 1.3; }
 .bb-case-body p { margin: 0 0 14px; line-height: 1.85; }
-.bb-case-body__list { margin: 0; }
-.bb-case-body__list div { padding: 14px 0; box-shadow: inset 0 1px 0 var(--hairline); } /* taste-skill-ignore: 要點之間的細分隔 */
-.bb-case-body__list dt { margin: 0 0 4px; font-weight: 600; }
-.bb-case-body__list dd { margin: 0; line-height: 1.75; }
-.bb-case-faq__list { margin: 0; }
+
+/* 標題下面一排重點規格 */
+.bb-case-hl { display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 20px; padding: 0; list-style: none; }
+.bb-case-hl li { padding: 6px 14px; border-radius: 999px; background: #ffffff; font-size: var(--step-small); font-weight: 600; line-height: 1.4; }
+
+/* 揀呢款要諗嘅嘢：三張小卡 */
+.bb-case-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; margin: 8px 0 0; }
+.bb-case-cards div { padding: 24px; border-radius: var(--radius-panel); background: #ffffff; }
+.bb-case-cards dt { margin: 0 0 8px; font-size: var(--step-body); font-weight: 600; }
+.bb-case-cards dd { margin: 0; color: var(--ink-soft); line-height: 1.75; }
+
+/* 等比例尺寸圖 */
+.bb-size { margin: 24px 0 8px; padding: 24px 16px 20px; border-radius: var(--radius-panel); background: #ffffff; }
+.bb-size svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; font-family: inherit; }
+.bb-size__finger { fill: #f3e6df; }
+.bb-size__halo { fill: #ffffff; stroke: #b9aeb2; stroke-width: 3; stroke-dasharray: 2 5; stroke-linecap: round; }
+.bb-size__stone { fill: #eef1f6; stroke: var(--ink); stroke-width: 2; }
+.bb-size__dim line { stroke: var(--ink-soft); stroke-width: 1.5; }
+.bb-size__dim text, .bb-size__ruler text { fill: var(--ink); font-size: 15px; }
+.bb-size__ruler line { stroke: var(--ink-soft); stroke-width: 1.5; }
+.bb-size__ruler text { fill: var(--ink-soft); font-size: 13px; }
+.bb-size figcaption { max-width: 34em; margin: 16px auto 0; color: var(--ink-soft); font-size: var(--step-small); line-height: 1.7; text-align: center; }
+
+/* 由落單到交貨：五步，電腦橫排、手機直排 */
+.bb-case-steps ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin: 8px 0 20px; padding: 0; list-style: none; }
+.bb-case-steps li { display: flex; flex-direction: column; gap: 6px; padding: 22px 20px; border-radius: var(--radius-panel); background: #ffffff; }
+.bb-case-steps__n { display: grid; place-items: center; width: 28px; height: 28px; margin-bottom: 6px; border-radius: 50%; background: var(--blue); color: var(--blue-ink); font-size: var(--step-caption); font-weight: 600; }
+.bb-case-steps li strong { font-size: var(--step-body); line-height: 1.4; }
+.bb-case-steps li span:last-child { color: var(--ink-soft); font-size: var(--step-small); line-height: 1.6; }
+@media (max-width: 960px) {
+  .bb-case-steps ol { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .bb-case-steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; padding: 16px 18px; }
+  .bb-case-steps__n { grid-row: span 2; margin: 0; }
+}
+
+/* 常見問題：電腦兩欄 */
+.bb-case-faq__list { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(32px, 5vw, 64px); margin: 0; }
 .bb-case-faq__list .bb-faq__item dt { font-size: var(--step-body); }
+@media (max-width: 860px) { .bb-case-faq__list { grid-template-columns: 1fr; } }
+
+/* 手機：底部常駐「問類似款」（學蘋果產品頁），電腦唔顯示 */
+.bb-buybar { display: none; }
+@media (max-width: 860px) {
+  .bb-buybar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px var(--m) calc(10px + env(safe-area-inset-bottom));
+    background: rgba(251, 247, 246, 0.94);
+    -webkit-backdrop-filter: saturate(180%) blur(16px); backdrop-filter: saturate(180%) blur(16px);
+    box-shadow: inset 0 1px 0 var(--hairline); /* taste-skill-ignore: 底欄頂部細線 */
+  }
+  .bb-buybar__t { flex: 1; min-width: 0; overflow: hidden; font-size: var(--step-small); font-weight: 600; white-space: nowrap; text-overflow: ellipsis; }
+  .bb-buybar .bb-btn { flex: none; }
+  .bb-case-page { padding-bottom: calc(var(--gap-section) + 72px); }
+}
 
 /* 作品相：左右滑 */
 .bb-gallery__track {
@@ -1808,10 +1859,36 @@
 .bb-gallery__slide--ph > span { display: flex; align-items: center; }
 /* 作品相嘅箭咀：置中喺相嘅高度 */
 .bb-gallery__stage .bb-shelf__paddle { top: 50%; }
-.bb-gallery__dots { display: flex; justify-content: center; gap: 2px; margin-top: 8px; }
+.bb-gallery__dots { display: none; justify-content: center; gap: 2px; margin-top: 8px; }
 .bb-gallery__dots button { display: grid; place-items: center; width: 24px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .bb-gallery__dots button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 35, 38, 0.22); transition: background-color 240ms; }
 .bb-gallery__dots button[aria-current="true"]::before { background: var(--ink); }
+/* 縮圖列：取代頁碼點，撳邊格去邊格；放唔晒就左右滑 */
+.bb-gallery__thumbs { display: flex; gap: 8px; margin-top: 12px; padding: 2px; overflow-x: auto; scrollbar-width: none; }
+.bb-gallery__thumbs::-webkit-scrollbar { display: none; }
+.bb-gallery__thumb { position: relative; flex: 0 0 64px; width: 64px; height: 64px; padding: 0; overflow: hidden; border: 0; border-radius: 10px; background: var(--steel); cursor: pointer; opacity: 0.6; transition: opacity 200ms; }
+.bb-gallery__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.bb-gallery__thumb[aria-current="true"] { opacity: 1; outline: 2px solid var(--ink); outline-offset: 2px; }
+.bb-gallery__thumbplay { position: absolute; inset: 0; display: grid; place-items: center; color: #fbf7f6; background: rgba(20, 18, 20, 0.28); }
+.bb-gallery__thumbplay svg { width: 16px; height: 16px; fill: currentColor; }
+@media (hover: hover) { .bb-gallery__thumb:hover { opacity: 1; } }
+@media (max-width: 860px) { .bb-gallery__thumbs { padding-inline: var(--m); } }
+/* 主圖可以撳嚟放大 */
+.bb-gallery__zoom { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+
+/* 放大睇：全螢幕，左右滑或者撳箭咀 */
+.bb-lightbox { width: 100vw; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; background: #faf6f4; color: var(--ink); }
+.bb-lightbox::backdrop { background: rgba(20, 18, 20, 0.5); }
+.bb-lightbox__track { display: flex; width: 100%; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior: contain; }
+.bb-lightbox__track::-webkit-scrollbar { display: none; }
+.bb-lightbox__slide { display: grid; flex: 0 0 100%; place-items: center; margin: 0; scroll-snap-align: start; }
+.bb-lightbox__slide img { width: auto; max-width: 100%; height: auto; max-height: 100dvh; aspect-ratio: 1; object-fit: contain; }
+.bb-lightbox__count { position: absolute; left: 50%; bottom: 20px; margin: 0; padding: 6px 14px; border-radius: 999px; background: rgba(251, 247, 246, 0.9); font-size: var(--step-small); transform: translateX(-50%); }
+.bb-lightbox__close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: rgba(42, 35, 38, 0.08); color: var(--ink); cursor: pointer; }
+.bb-lightbox__close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.bb-lightbox .bb-lightbox__nav { top: 50%; }
+.bb-lightbox .bb-shelf__paddle--prev { left: 16px; }
+.bb-lightbox .bb-shelf__paddle--next { right: 16px; }
 
 /* 跳至主要內容：平時收埋，鍵盤聚焦先出現 */
 .bb-skip {

@@ -110,8 +110,12 @@ export type Case = {
   description?: string;
   /** 規格表，一行一項；有就取代 stone / metal 嗰幾行 */
   specs?: [string, string][];
-  /** 正文段落：每段一個小標題 */
-  sections?: { h: string; p?: string[]; list?: [string, string][] }[];
+  /** 標題下面一排重點規格（4–5 個，最重要嘅先） */
+  highlights?: string[];
+  /** 正文段落：每段一個小標題；list 會排成小卡；figure: "size" 喺段落後面加等比例尺寸圖 */
+  sections?: { h: string; p?: string[]; list?: [string, string][]; figure?: "size" }[];
+  /** 等比例尺寸圖（毫米，按一般比例估算） */
+  sizeGuide?: { shape: "pear" | "oval" | "round"; stone: [number, number]; halo?: [number, number]; finger?: number; caption: string };
   /** 常見問題：問題帶呢件嘅規格，答案第一句直接答 */
   faq?: { q: string; a: string; link?: { label: string; href: string } }[];
   /** 實拍影片（YouTube）：作品相第 2 格，撳先載入；poster 係影片截圖（正方形，放 public/images/cases/<slug>-video.webp） */
@@ -132,6 +136,14 @@ const REAL_CASES: Case[] = [
     metal: "18K 白金",
     duration: "約 10 日",
     story: "呢隻係 3.09 卡梨形培育鑽石求婚戒指：主石 E 色、VS1，拋光同對稱都係 Excellent，附 IGI 證書；外圍一圈碎鑽光環，戒臂再排一行微鑲，金屬用 18K 白金。由鄒三山工坊港工師傅喺東莞廠房訂造，由落單到完成約 10 日。",
+    highlights: ["3.09 卡", "E 色", "VS1", "IGI 證書", "18K 白金"],
+    sizeGuide: {
+      shape: "pear",
+      stone: [12, 8],
+      halo: [15, 11],
+      finger: 17,
+      caption: "按真實比例畫（尺上每格 1 毫米）：主石按一般比例估算約 12 × 8 毫米，加光環約 15 × 11 毫米；無名指以約 17 毫米闊計。實際尺寸以證書同你隻手為準。",
+    },
     specs: [
       ["主石", "培育鑽石，梨形，3.09 卡"],
       ["顏色淨度", "E 色，VS1"],
@@ -151,6 +163,7 @@ const REAL_CASES: Case[] = [
       },
       {
         h: "戴喺手上有幾大",
+        figure: "size",
         p: ["3 卡左右嘅梨形鑽石，按一般比例估算大約 12 × 8 毫米（實際以證書尺寸為準），戴喺無名指上差唔多遮住手指一半闊度，加埋光環會再大一圈。尖頭向指甲方向係最常見嘅戴法，手指會顯得長啲。"],
       },
       {

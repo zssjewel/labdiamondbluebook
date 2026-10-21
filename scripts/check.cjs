@@ -502,9 +502,20 @@ const widths = [320, 390, 768, 1440];
       const vis = await dp.evaluate(() => [...document.querySelectorAll(".bb-gallery__stage .bb-shelf__paddle")].map((b) => `${b.getAttribute("aria-label")} 透明度 ${getComputedStyle(b).opacity}${b.disabled ? "（停用）" : ""}`).join("、"));
       await dp.click(".bb-gallery__stage .bb-shelf__paddle--next");
       await dp.waitForTimeout(1000);
-      const g = await dp.evaluate(() => { const t = document.querySelector(".bb-gallery__track"); return { at: Math.round(t.scrollLeft / t.clientWidth) + 1, dot: [...document.querySelectorAll(".bb-gallery__dots button")].findIndex((b) => b.getAttribute("aria-current") === "true") + 1 }; });
-      console.log(`作品相（電腦）：滑鼠移入 → ${vis}；撳右箭咀後去到第 ${g.at} 張，頁碼點第 ${g.dot} 粒`);
+      const g = await dp.evaluate(() => { const t = document.querySelector(".bb-gallery__track"); return { at: Math.round(t.scrollLeft / t.clientWidth) + 1, dot: [...document.querySelectorAll(".bb-gallery__thumb")].findIndex((b) => b.getAttribute("aria-current") === "true") + 1, thumbs: document.querySelectorAll(".bb-gallery__thumb").length }; });
+      console.log(`作品相（電腦）：滑鼠移入 → ${vis}；撳右箭咀後去到第 ${g.at} 張，縮圖第 ${g.dot} 格亮（共 ${g.thumbs} 格縮圖）`);
       await dp.screenshot({ path: "shots/gallery-hover-1440.png", clip: { x: 0, y: 0, width: 1440, height: 900 } });
+      // 撳主圖放大睇
+      await dp.click(".bb-gallery__thumb >> nth=0");
+      await dp.waitForTimeout(800);
+      await dp.click(".bb-gallery__slide .bb-gallery__zoom >> nth=0");
+      await dp.waitForTimeout(800);
+      const lb = await dp.evaluate(() => { const d = document.querySelector(".bb-lightbox"); const im = d && d.querySelector(".bb-lightbox__slide img"); return { open: !!(d && d.open), w: im ? Math.round(im.getBoundingClientRect().width) : 0, loaded: im ? im.complete && im.naturalWidth > 0 : false, count: d ? d.querySelector(".bb-lightbox__count").textContent : "" }; });
+      await dp.screenshot({ path: "shots/gallery-lightbox-1440.png" });
+      await dp.keyboard.press("Escape");
+      await dp.waitForTimeout(300);
+      const closed = await dp.evaluate(() => !document.querySelector(".bb-lightbox").open);
+      console.log(`放大睇：打開 ${lb.open ? "係" : "唔係"}｜相闊 ${lb.w}px｜載入 ${lb.loaded ? "係" : "唔係"}｜${lb.count}｜Esc 關閉 ${closed ? "係" : "唔係"}`);
       await dp.close();
     }
     console.log(`作品頁：${d.h1}｜相 ${d.slides} 格｜${d.specs}｜相關：${d.related}｜robots ${d.robots}`);

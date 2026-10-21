@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { setRequestLocale } from "next-intl/server";
 import { CaseGallery } from "@/components/case-gallery";
+import { CaseSize } from "@/components/case-size";
 import { RelatedShelf } from "@/components/cases";
 import { Demo } from "@/components/demo";
 import { Breadcrumbs, JsonLd, SmartLink } from "@/components/site";
@@ -13,6 +14,15 @@ import { PROMISE_SHORT } from "@/config/promises";
 import { shareImages } from "@/lib/share";
 
 type Params = { category: string; slug: string };
+
+/** 訂造五步（同第六章〈訂造流程〉一致）；唔寫每步幾多日，總工期跟作品資料 */
+const CUSTOM_STEPS: [string, string][] = [
+  ["傾需求同預算", "WhatsApp 講款式、預算同手寸"],
+  ["揀石", "按預算揀主石，睇證書同影片"],
+  ["3D 設計同蠟版", "確認款式、比例先開工"],
+  ["鑄造、鑲石、執模", "港工師傅逐粒鑲、拋光"],
+  ["交貨同售後", "附省檢證書，送貨上門"],
+];
 
 export function generateStaticParams() {
   const shown = new Set(visibleCategories().map((c) => c.slug));
@@ -131,6 +141,13 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
             <Demo show={!!item.demo} />
           </p>
           <h1 className="bb-page__title bb-display">{item.h1 ?? item.title}</h1>
+          {item.highlights && (
+            <ul className="bb-case-hl" aria-label="重點規格">
+              {item.highlights.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          )}
           <dl className="bb-specs">
             {specs
               .filter(([, v]) => v)
@@ -187,8 +204,9 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
             <section key={sec.h} className="bb-case-body__sec">
               <h2>{sec.h}</h2>
               {sec.p?.map((t) => <p key={t}>{t}</p>)}
+              {sec.figure === "size" && item.sizeGuide && <CaseSize size={item.sizeGuide} caption={item.sizeGuide.caption} />}
               {sec.list && (
-                <dl className="bb-case-body__list">
+                <dl className="bb-case-cards">
                   {sec.list.map(([k, v]) => (
                     <div key={k}>
                       <dt>{k}</dt>
@@ -199,6 +217,27 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
               )}
             </section>
           ))}
+          {!item.demo && (
+            <section className="bb-case-body__sec bb-case-steps">
+              <h2>由落單到交貨{item.duration ? `（${item.duration}）` : ""}</h2>
+              <ol>
+                {CUSTOM_STEPS.map(([k, v], i) => (
+                  <li key={k}>
+                    <span className="bb-case-steps__n" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <strong>{k}</strong>
+                    <span>{v}</span>
+                  </li>
+                ))}
+              </ol>
+              <p>
+                <Link className="bb-link" href={localizeHref("/custom/process", locale)}>
+                  睇訂造流程詳細講解
+                </Link>
+              </p>
+            </section>
+          )}
           {item.faq && (
             <section className="bb-case-body__sec bb-case-faq">
               <h2>常見問題</h2>
@@ -224,6 +263,14 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
               </dl>
             </section>
           )}
+        </div>
+      )}
+      {hasContact && (
+        <div className="bb-buybar">
+          <span className="bb-buybar__t">{item.title}</span>
+          <SmartLink href={ask} className="bb-btn bb-btn--accent">
+            問類似款
+          </SmartLink>
         </div>
       )}
       <RelatedShelf locale={locale} list={same} title={`其他${cat.name}`} moreHref={localizeHref(`/cases/${category}`, locale)} moreLabel={`睇全部${cat.name}`} />
