@@ -29,10 +29,10 @@ export function CaseSize({ size, caption }: { size: Size; caption: string }) {
   const span = 30; // 毫米尺長度
   const w = span * U + 220; // 兩邊留位寫字
   const cx = w / 2;
-  const top = 20;
-  const cy = top + hl / 2 + 20;
-  const fingerBottom = cy + hl / 2 + 30;
-  const rulerY = fingerBottom + 34;
+  // 手指由上面指尖（圓頭）一直伸落嚟，戒指戴喺中段
+  const cy = finger / 2 + 36 + hl / 2;
+  const fingerBottom = cy + hl / 2 + 56;
+  const rulerY = fingerBottom + 70;
   const h = rulerY + 44;
   const x0 = cx - (span * U) / 2;
   const label = (n: number) => `${Number.isInteger(n) ? n : n.toFixed(1)} 毫米`;
@@ -40,7 +40,7 @@ export function CaseSize({ size, caption }: { size: Size; caption: string }) {
     <figure className="bb-size">
       <svg viewBox={`0 0 ${w} ${h}`} role="img" aria-label={caption}>
         {/* 無名指 */}
-        <rect className="bb-size__finger" x={cx - finger / 2} y={0} width={finger} height={fingerBottom} rx={finger / 2} />
+        <path className="bb-size__finger" d={`M ${cx - finger / 2} ${fingerBottom} V ${finger / 2} A ${finger / 2} ${finger / 2} 0 0 1 ${cx + finger / 2} ${finger / 2} V ${fingerBottom}`} />
         {/* 光環 */}
         {size.halo && <path className="bb-size__halo" d={outline(size.shape, cx, cy, hl, hw)} />}
         {/* 主石 */}
@@ -65,7 +65,9 @@ export function CaseSize({ size, caption }: { size: Size; caption: string }) {
               連光環約 {size.halo[0]} × {size.halo[1]}
             </text>
           )}
-          <text x={cx} y={fingerBottom + 30} textAnchor="middle">
+          <line x1={cx - finger / 2} y1={fingerBottom + 6} x2={cx - finger / 2} y2={fingerBottom + 18} />
+          <line x1={cx + finger / 2} y1={fingerBottom + 6} x2={cx + finger / 2} y2={fingerBottom + 18} />
+          <text x={cx} y={fingerBottom + 42} textAnchor="middle">
             無名指約 {label((size.finger ?? 17))} 闊
           </text>
         </g>

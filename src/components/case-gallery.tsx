@@ -126,10 +126,10 @@ export function CaseGallery({ images, placeholders = [], video }: { images: Img[
         <div className="bb-gallery__thumbs" role="group" aria-label="揀相">
           {slides.map((s, i) => (
             <button key={i} type="button" className="bb-gallery__thumb" aria-current={at === i ? "true" : undefined} onClick={() => go(i)} aria-label={s.kind === "img" ? `第 ${i + 1} 格：${s.img.alt}` : s.kind === "video" ? `第 ${i + 1} 格：${video?.label}` : `第 ${i + 1} 格`}>
-              {s.kind === "img" && <img {...imgProps(s.img.src, "72px")} alt="" width={72} height={72} loading="lazy" decoding="async" />}
+              {s.kind === "img" && <img {...imgProps(s.img.src, "72px")} alt="" width={72} height={72} decoding="async" fetchPriority="low" />}
               {s.kind === "video" && video && (
                 <>
-                  <img {...imgProps(video.poster, "72px")} alt="" width={72} height={72} loading="lazy" decoding="async" />
+                  <img {...imgProps(video.poster, "72px")} alt="" width={72} height={72} decoding="async" fetchPriority="low" />
                   <span className="bb-gallery__thumbplay">{PLAY}</span>
                 </>
               )}
