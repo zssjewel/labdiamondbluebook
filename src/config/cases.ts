@@ -169,6 +169,7 @@ const REAL_CASES: Case[] = [
       { q: "3 卡梨形培育鑽石戒指大概幾錢？", a: "主要睇主石顏色、淨度、證書，同戒托用金量、碎鑽數量。呢件價錢唔公開；同規格最新報價可以 WhatsApp 問師傅。", link: { label: "第二章 價錢", href: "/price" } },
       { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。每隻都係按客人預算、手寸同喜好訂造，所以唔會完全一樣；卡數、顏色、金屬同光環款式都可以改。" },
     ],
+    video: { youtubeId: "UNbgBSoXnAY", poster: "/images/cases/pear-halo-3-09ct-18k-white-gold-video.webp", uploadDate: "2026-10-21", duration: "PT21S", seconds: 21 },
     guides: [
       { label: "第四章 4C 選石", href: "/4c" },
       { label: "1 卡戴喺手上有幾大", href: "/4c/carat-size-on-hand" },
