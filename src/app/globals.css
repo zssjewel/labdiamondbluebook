@@ -2083,3 +2083,21 @@ main:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   .bb-mosaic img.is-late { transition: none; }
 }
+
+/* ---------- 文章：內嵌真實作品卡、文末常見問題 ---------- */
+.bb-works-inline { margin: 2em 0; padding: 18px 20px; background: var(--steel); border-radius: 14px; }
+.bb-works-inline__label { margin: 0 0 12px !important; font-size: var(--step-caption); color: var(--ink-soft); }
+.bb-works-inline ul { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; gap: 12px; }
+.bb-works-inline li::marker { content: none; }
+.bb-works-inline a { display: flex; gap: 14px; align-items: center; color: var(--ink); text-decoration: none; }
+.bb-works-inline img { flex: 0 0 auto; width: 76px; height: 76px; border-radius: 10px; object-fit: cover; background: var(--paper); }
+.bb-works-inline span { display: flex; flex-direction: column; gap: 2px; line-height: 1.45; min-width: 0; }
+.bb-works-inline small { font-size: 0.8125rem; color: var(--ink-soft); }
+.bb-works-inline strong { font-weight: 600; font-size: var(--step-caption); }
+.bb-works-inline em { font-style: normal; font-size: 0.8125rem; color: var(--ink-soft); }
+.bb-works-inline a:hover strong { color: var(--blue); }
+.bb-artfaq dl { margin: 0; }
+.bb-artfaq dl > div { padding: 16px 0; border-top: 1px solid var(--hairline); }
+.bb-artfaq dl > div:last-child { border-bottom: 1px solid var(--hairline); }
+.bb-artfaq dt { font-weight: 600; margin-bottom: 6px; }
+.bb-artfaq dd { margin: 0; color: var(--ink-soft); }

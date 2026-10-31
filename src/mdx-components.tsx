@@ -2,6 +2,8 @@ import Link from "@/components/link";
 import type { MDXComponents } from "mdx/types";
 import { headingId } from "@/lib/heading";
 import { CaratStory } from "@/components/carat-on-hand";
+import { CASES, categoryOf } from "@/config/cases";
+import { imgProps } from "@/lib/images";
 
 /** 從 React children 抽出純文字，用來生成標題錨點 */
 function textOf(node: React.ReactNode): string {
@@ -18,6 +20,31 @@ export function MasterNote({ children }: { children: React.ReactNode }) {
     <aside className="bb-note">
       <span className="bb-note__label">師傅提醒：</span>
       {children}
+    </aside>
+  );
+}
+
+/** 文章內嵌工坊真實作品卡：<Works slugs={["作品slug"]} note="點解睇呢件" /> */
+export function Works({ slugs, note }: { slugs: string[]; note?: string }) {
+  const items = slugs.map((s) => CASES.find((c) => c.slug === s)).filter((c) => c && !c.demo);
+  if (!items.length) return null;
+  return (
+    <aside className="bb-works-inline" aria-label="工坊真實作品">
+      <p className="bb-works-inline__label">工坊真實作品{note ? `：${note}` : ""}</p>
+      <ul>
+        {items.map((c) => (
+          <li key={c!.slug}>
+            <Link href={`/cases/${c!.category}/${c!.slug}`}>
+              <img {...imgProps(c!.images[0].src, "160px")} alt={c!.images[0].alt} width={1000} height={1000} loading="lazy" decoding="async" />
+              <span>
+                <small>{categoryOf(c!.category)?.name}</small>
+                <strong>{c!.title}</strong>
+                <em>{c!.stone}</em>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </aside>
   );
 }
@@ -40,6 +67,7 @@ const components: MDXComponents = {
   ),
   MasterNote,
   CaratStory,
+  Works,
 };
 
 export function useMDXComponents(overrides: MDXComponents): MDXComponents {

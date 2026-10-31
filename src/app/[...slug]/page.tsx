@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const item = await getContent(slug[0], slug.slice(1), locale);
   if (!item) return { title: "找不到頁面" };
   const pathname = `/${slug.join("/")}`;
-  const title = `${item.metadata.title}｜${SITE.name}`;
+  const title = `${item.metadata.seoTitle ?? item.metadata.title}｜${SITE.name}`;
   const shareImage = {
     url: item.metadata.image ?? chapter.image,
     width: item.metadata.imageWidth ?? 1000,
@@ -228,6 +228,15 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
     publisher: { "@type": "Organization", name: SITE.publisher },
     image: `${SITE.url}${item.metadata.image ?? chapter.image}`,
   };
+  const faqData = item.metadata.faq?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: item.metadata.faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+      }
+    : null;
+  // 文末常見問題都入目錄
+  const headings = item.metadata.faq?.length ? [...item.headings, { id: "faq", text: "常見問題", level: 2 }] : item.headings;
   const crumbData = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -242,12 +251,13 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
     <main id="main" tabIndex={-1} className="bb-page">
       <JsonLd data={articleData} />
       <JsonLd data={crumbData} />
+      {faqData && <JsonLd data={faqData} />}
       <aside className="bb-page__side bb-only-wide" aria-label="文章導覽">
-        {item.headings.length > 1 && (
+        {headings.length > 1 && (
           <nav className="bb-side-toc" aria-label="本文目錄">
             <p>本文目錄</p>
             <ol>
-              {item.headings.map((h) => (
+              {headings.map((h) => (
                 <li key={h.id} className={h.level === 3 ? "lvl3" : undefined}>
                   <a href={`#${h.id}`}>{h.text}</a>
                 </li>
@@ -287,11 +297,11 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
             </p>
           )
         )}
-        {item.headings.length > 1 && (
+        {headings.length > 1 && (
           <details className="bb-tocfold">
-            <summary>本文目錄（{item.headings.filter((h) => h.level === 2).length} 節）</summary>
+            <summary>本文目錄（{headings.filter((h) => h.level === 2).length} 節）</summary>
             <ol>
-              {item.headings.map((h) => (
+              {headings.map((h) => (
                 <li key={h.id} className={h.level === 3 ? "lvl3" : undefined}>
                   <a href={`#${h.id}`}>{h.text}</a>
                 </li>
@@ -319,6 +329,19 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
           })()}
         <div className="bb-prose">
           <item.MDXContent />
+          {item.metadata.faq?.length ? (
+            <section className="bb-artfaq" aria-labelledby="faq">
+              <h2 id="faq">常見問題</h2>
+              <dl>
+                {item.metadata.faq.map((f) => (
+                  <div key={f.q}>
+                    <dt>{f.q}</dt>
+                    <dd>{f.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ) : null}
         </div>
 
         <div className="bb-author">

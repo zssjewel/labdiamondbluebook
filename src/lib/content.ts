@@ -58,6 +58,10 @@ export interface ContentMetadata {
   /** 師傅核對人和日期；未填即「待核對」 */
   verifiedBy?: string;
   verifiedDate?: string;
+  /** 搜尋結果標題（<title>）；冇填就用 title。H1 仍然用 title */
+  seoTitle?: string;
+  /** 文末常見問題：顯示喺正文後面，同時輸出 FAQPage 結構化資料 */
+  faq?: { q: string; a: string }[];
 }
 
 export interface Heading {
