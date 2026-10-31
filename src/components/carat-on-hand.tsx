@@ -255,9 +255,12 @@ function Readout({ ct, finger }: { ct: number; finger: number }) {
   const mm = diameterOf(ct);
   return (
     <p className="bb-hand__read" aria-live="polite">
-      <strong>{fmtCt(ct)} 卡</strong>
-      <span>直徑約 {mm} 毫米</span>
-      <span>佔手指闊度約 {pctOf(mm, finger)}%</span>
+      {/* key：數值一變就重新建立裡面嘅文字。瀏覽器「翻譯網頁」會換走原本嘅文字節點，令 React 更新唔到畫面；重建嘅節點會再被翻譯 */}
+      <span key={`${ct}-${finger}`} style={{ display: "contents" }}>
+        <strong>{fmtCt(ct)} 卡</strong>
+        <span>直徑約 {mm} 毫米</span>
+        <span>佔手指闊度約 {pctOf(mm, finger)}%</span>
+      </span>
     </p>
   );
 }
@@ -333,7 +336,7 @@ export function CaratTool({ locale, worksHref }: { locale: string; worksHref?: s
             </Link>
           )}
           {hasContact && (
-            <a href={ask} {...askProps} className="bb-link">
+            <a key={ct} href={ask} {...askProps} className="bb-link">
               問 {fmtCt(ct)} 卡價錢
             </a>
           )}
