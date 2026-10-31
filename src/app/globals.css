@@ -1467,6 +1467,9 @@
 }
 @media (max-width: 380px) {
   .bb-header__mark { padding: 0 6px 0 12px; }
+}
+/* 極窄手機（≤340px）放唔落完整標誌，淨係顯示圖形 */
+@media (max-width: 340px) {
   .bb-header__logo { display: none; }
   .bb-header__logo-mark { display: block; }
   .bb-header__menu { padding: 0 8px; }

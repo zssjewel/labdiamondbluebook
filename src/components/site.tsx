@@ -27,7 +27,7 @@ export function SiteHeader({ locale }: { locale: string }) {
   return (
     <header className="bb-header">
       <Link href={localizeHref("/", locale)} className="bb-header__mark" aria-label={`${SITE.name}首頁`}>
-        {/* 標誌：SVG 向量檔，任何大小都清楚；極窄手機淨係顯示圖形 */}
+        {/* 標誌：SVG 向量檔，任何大小都清楚；極窄手機（≤340px）淨係顯示圖形 */}
         <img className="bb-header__logo" src="/images/brand/logo-horizontal.svg" alt={SITE.name} width={226} height={32} fetchPriority="high" />
         <img className="bb-header__logo-mark" src="/images/brand/logo-mark.svg" alt="" width={36} height={27} aria-hidden="true" />
       </Link>
