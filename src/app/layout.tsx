@@ -23,7 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
     // 預設分享封面（舊 /og.png 檔案保留，唔再引用）
     openGraph: { type: "website", locale: "zh_HK", siteName: SITE.name, images: shareImages().ogImages },
     twitter: shareImages().twitter,
-    icons: { icon: [{ url: "/favicon.ico" }, { url: "/favicon-32x32.png", sizes: "32x32" }], apple: "/apple-touch-icon.png" },
+    icons: {
+      icon: [{ url: "/favicon.ico?v=2", sizes: "48x48" }, { url: "/favicon.svg?v=2", type: "image/svg+xml" }, { url: "/favicon-32x32.png?v=2", sizes: "32x32", type: "image/png" }],
+      apple: "/apple-touch-icon.png?v=2",
+    },
     manifest: "/manifest.json",
     // 正式上線前不讓搜尋引擎收錄
     robots: SITE.launched ? { index: true, follow: true } : { index: false, follow: false },

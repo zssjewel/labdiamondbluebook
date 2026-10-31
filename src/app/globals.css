@@ -216,16 +216,11 @@
 .bb-header__mark {
   display: flex;
   align-items: center;
-  padding: 0 18px;
-  background: var(--blue);
-  color: var(--blue-ink);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.0625rem;
-  letter-spacing: 0.02em;
+  padding: 0 8px 0 0;
   text-decoration: none;
-  white-space: nowrap;
 }
+.bb-header__logo { display: block; width: auto; height: 32px; }
+.bb-header__logo-mark { display: none; width: auto; height: 27px; }
 .bb-header__tab {
   display: flex;
   align-items: center;
@@ -275,8 +270,12 @@
     padding: 0 14px;
     margin-right: 10px;
   }
-  .bb-header__mark { padding: 0 16px; }
+  .bb-header__mark { padding: 0 8px 0 16px; }
+  .bb-header__logo { height: 24px; }
   .bb-header__menu { padding: 0 12px; }
+}
+@media (max-width: 420px) {
+  .bb-header__logo { height: 21px; }
 }
 
 /* ---------- 首頁：刊頭拼貼 ---------- */
@@ -1467,7 +1466,9 @@
   .bb-hide-xs { display: none; }
 }
 @media (max-width: 380px) {
-  .bb-header__mark { padding: 0 10px; font-size: 1rem; }
+  .bb-header__mark { padding: 0 6px 0 12px; }
+  .bb-header__logo { display: none; }
+  .bb-header__logo-mark { display: block; }
   .bb-header__menu { padding: 0 8px; }
   .bb-header__action { padding: 0 12px; margin-right: 8px; }
 }
