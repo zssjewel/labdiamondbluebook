@@ -2,11 +2,14 @@
  * 作品頁「戴喺手上有幾大」：按真實毫米比例畫主石、光環同無名指闊度，底下有毫米尺。
  * 純 SVG、伺服器出 HTML，唔使 JS；數字全部由作品資料嚟（按一般比例估算，圖下寫明）。
  */
-type Size = { shape: "pear" | "oval" | "round"; stone: [number, number]; halo?: [number, number]; finger?: number };
+type Size = { shape: "pear" | "oval" | "round" | "marquise"; stone: [number, number]; halo?: [number, number]; finger?: number; eastWest?: boolean };
 
 const U = 10; // 1 毫米 = 10 個 SVG 單位
 
 function outline(shape: Size["shape"], cx: number, cy: number, L: number, W: number) {
+  if (shape === "marquise") {
+    return `M ${cx} ${cy - L / 2} Q ${cx + W} ${cy} ${cx} ${cy + L / 2} Q ${cx - W} ${cy} ${cx} ${cy - L / 2} Z`;
+  }
   if (shape === "round" || shape === "oval") {
     return `M ${cx} ${cy - L / 2} A ${W / 2} ${L / 2} 0 1 1 ${cx} ${cy + L / 2} A ${W / 2} ${L / 2} 0 1 1 ${cx} ${cy - L / 2} Z`;
   }
@@ -24,6 +27,8 @@ function outline(shape: Size["shape"], cx: number, cy: number, L: number, W: num
 
 export function CaseSize({ size, caption }: { size: Size; caption: string }) {
   const finger = (size.finger ?? 17) * U;
+  const ew = !!size.eastWest;
+  const vext = (ew ? size.stone[1] : size.stone[0]) * U; // 豎向量度嘅長度
   const [sl, sw] = size.stone.map((n) => n * U);
   const [hl, hw] = (size.halo ?? size.stone).map((n) => n * U);
   const span = 30; // 毫米尺長度
@@ -42,23 +47,23 @@ export function CaseSize({ size, caption }: { size: Size; caption: string }) {
         {/* 無名指 */}
         <path className="bb-size__finger" d={`M ${cx - finger / 2} ${fingerBottom} V ${finger / 2} A ${finger / 2} ${finger / 2} 0 0 1 ${cx + finger / 2} ${finger / 2} V ${fingerBottom}`} />
         {/* 光環 */}
-        {size.halo && <path className="bb-size__halo" d={outline(size.shape, cx, cy, hl, hw)} />}
-        {/* 主石 */}
-        <path className="bb-size__stone" d={outline(size.shape, cx, cy + (hl - sl) * 0.06, sl, sw)} />
+        {size.halo && <path className="bb-size__halo" d={outline(size.shape, cx, cy, hl, hw)} transform={ew ? `rotate(90 ${cx} ${cy})` : undefined} />}
+        {/* 主石（橫鑲就轉 90 度，長邊打橫） */}
+        <path className="bb-size__stone" d={outline(size.shape, cx, ew ? cy : cy + (hl - sl) * 0.06, sl, sw)} transform={ew ? `rotate(90 ${cx} ${cy})` : undefined} />
         {/* 主石長度 */}
         <g className="bb-size__dim">
-          <line x1={cx + finger / 2 + 14} y1={cy - sl / 2} x2={cx + finger / 2 + 14} y2={cy + sl / 2} />
-          <line x1={cx + finger / 2 + 8} y1={cy - sl / 2} x2={cx + finger / 2 + 20} y2={cy - sl / 2} />
-          <line x1={cx + finger / 2 + 8} y1={cy + sl / 2} x2={cx + finger / 2 + 20} y2={cy + sl / 2} />
+          <line x1={cx + finger / 2 + 14} y1={cy - vext / 2} x2={cx + finger / 2 + 14} y2={cy + vext / 2} />
+          <line x1={cx + finger / 2 + 8} y1={cy - vext / 2} x2={cx + finger / 2 + 20} y2={cy - vext / 2} />
+          <line x1={cx + finger / 2 + 8} y1={cy + vext / 2} x2={cx + finger / 2 + 20} y2={cy + vext / 2} />
           <text x={cx + finger / 2 + 28} y={cy + 6}>
-            主石長 {label(size.stone[0])}
+            {ew ? `主石闊 ${label(size.stone[1])}` : `主石長 ${label(size.stone[0])}`}
           </text>
         </g>
         {/* 無名指闊度 */}
         <g className="bb-size__dim">
           <line x1={cx - finger / 2} y1={fingerBottom + 12} x2={cx + finger / 2} y2={fingerBottom + 12} />
           <text x={cx - finger / 2 - 12} y={cy + 6} textAnchor="end">
-            主石闊 {label(size.stone[1])}
+            {ew ? `主石長 ${label(size.stone[0])}（打橫）` : `主石闊 ${label(size.stone[1])}`}
           </text>
           {size.halo && (
             <text x={cx - finger / 2 - 12} y={cy + 32} textAnchor="end">

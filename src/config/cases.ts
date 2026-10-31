@@ -115,7 +115,7 @@ export type Case = {
   /** 正文段落：每段一個小標題；list 會排成小卡；figure: "size" 喺段落後面加等比例尺寸圖 */
   sections?: { h: string; p?: string[]; list?: [string, string][]; figure?: "size" }[];
   /** 等比例尺寸圖（毫米，按一般比例估算） */
-  sizeGuide?: { shape: "pear" | "oval" | "round"; stone: [number, number]; halo?: [number, number]; finger?: number; caption: string };
+  sizeGuide?: { shape: "pear" | "oval" | "round" | "marquise"; stone: [number, number]; halo?: [number, number]; finger?: number; eastWest?: boolean; caption: string };
   /** 常見問題：問題帶呢件嘅規格，答案第一句直接答 */
   faq?: { q: string; a: string; link?: { label: string; href: string } }[];
   /** 實拍影片（YouTube）：作品相第 2 格，撳先載入；poster 係影片截圖（正方形，放 public/images/cases/<slug>-video.webp） */
@@ -265,6 +265,80 @@ const REAL_CASES: Case[] = [
       { src: "/images/cases/three-flower-pear-necklace-18k-white-gold-4.webp", alt: "三朵花培育鑽石項鏈斜角，睇到花瓣爪鑲同立體感" },
       { src: "/images/cases/three-flower-pear-necklace-18k-white-gold-5.webp", alt: "項鏈鏈身特寫：四鑽幸運草、馬眼鑽同小圓鑽" },
       { src: "/images/cases/three-flower-pear-necklace-18k-white-gold-6.webp", alt: "手指提起三朵花培育鑽石項鏈，睇到大細比例" },
+    ],
+    consent: true,
+  },
+  {
+    slug: "marquise-east-west-1-33ct-platinum",
+    category: "engagement-rings",
+    title: "1.33 卡馬眼橫鑲求婚戒指・鉑金",
+    h1: "1.33 卡馬眼形培育鑽石求婚戒指・打橫鑲",
+    seoTitle: "1.33卡馬眼形培育鑽石戒指｜橫鑲・E VS1・鉑金",
+    description: "1.33 卡馬眼形培育鑽石戒指：E 色 VS1、2EX，IGI 證書，馬眼鑽打橫鑲，兩頭半包鑲護住尖位，光面鉑金戒臂。鄒三山工坊東莞訂造，可 WhatsApp 問類似款報價。",
+    stone: "1.33 卡 馬眼 E VS1，IGI 證書",
+    metal: "鉑金",
+    duration: "同類款式一般約 7–10 日",
+    story: "呢隻係 1.33 卡馬眼形培育鑽石求婚戒指：主石 E 色、VS1，拋光同對稱都係 Excellent，附 IGI 證書。馬眼鑽唔係順住手指擺，而係打橫鑲，兩頭尖位用金屬半包鑲保護，底下一個 V 形承托，戒臂係光面鉑金，冇碎鑽。由鄒三山工坊港工師傅喺東莞廠房訂造。",
+    highlights: ["1.33 卡", "E 色", "VS1", "IGI 證書", "鉑金"],
+    sizeGuide: {
+      shape: "marquise",
+      stone: [11, 5.5],
+      finger: 17,
+      eastWest: true,
+      caption: "按真實比例畫（尺上每格 1 毫米）：1.33 卡馬眼鑽按一般比例估算約 11 × 5.5 毫米，打橫戴，長邊橫跨無名指約三分之二闊；無名指以約 17 毫米闊計。實際尺寸以證書同你隻手為準。",
+    },
+    specs: [
+      ["主石", "培育鑽石，馬眼形，1.33 卡"],
+      ["顏色淨度", "E 色，VS1"],
+      ["拋光對稱", "Excellent，Excellent（2EX）"],
+      ["證書", "IGI"],
+      ["鑲法", "打橫鑲，兩頭半包鑲，底下 V 形承托"],
+      ["金屬", "鉑金，光面戒臂"],
+      ["工期", "同類款式一般約 7–10 日"],
+    ],
+    sections: [
+      {
+        h: "呢件作品點做",
+        p: [
+          "馬眼鑽一般順住手指直擺，呢隻就反過嚟打橫鑲：長邊橫跨手指，戴落去更貼手、少啲勾衫，睇落亦比直擺嘅款式現代同低調。",
+          "馬眼最驚撞嘅係兩頭尖位，所以兩頭用金屬半包鑲包住，長邊就完全開放，光可以由兩側入石，火彩唔會被爪擋住。底下一個 V 形承托由戒臂升上嚟托住鑽石，戒頭好低，戴手套、做嘢都唔易撞。戒臂刻意做光面鉑金冇碎鑽，成隻戒焦點全部喺粒馬眼鑽度。",
+        ],
+      },
+      {
+        h: "戴喺手上有幾大",
+        figure: "size",
+        p: ["1.33 卡嘅馬眼鑽，按一般比例估算大約 11 × 5.5 毫米（實際以證書尺寸為準）。打橫戴嘅時候，11 毫米嗰邊橫跨無名指，差唔多遮住手指三分之二闊度；馬眼形面積睇落比同卡數圓鑽大，所以 1 卡幾已經好有存在感。"],
+      },
+      {
+        h: "揀呢款要諗嘅嘢",
+        list: [
+          ["打橫定直擺", "打橫鑲貼手、低調，啱日日戴；想手指睇落長啲，可以改返直擺。"],
+          ["尖位保護", "馬眼兩頭最易崩，半包鑲或者 V 爪一定要包住尖位，訂之前可以叫師傅俾相睇清楚。"],
+          ["鉑金定 18K 金", "鉑金密度高、唔使電金、白色唔會褪；18K 白金輕啲、平啲，但幾年後要重新電金。"],
+        ],
+      },
+    ],
+    faq: [
+      { q: "1.33 卡馬眼形培育鑽石戴喺手上有幾大？", a: "大約 11 × 5.5 毫米。打橫戴差唔多遮住無名指三分之二闊；馬眼形面積睇落比同卡數圓鑽大，所以 1 卡幾已經好明顯。", link: { label: "1 卡戴喺手上有幾大", href: "/4c/carat-size-on-hand" } },
+      { q: "馬眼鑽打橫鑲有咩好處？", a: "打橫鑲貼手、戒頭低，日常少啲撞同勾衫，造型亦比傳統直擺現代。如果想手指顯長，就揀直擺。" },
+      { q: "馬眼鑽嘅尖位會唔會易崩？點保護？", a: "尖位係馬眼最脆弱嘅位置，所以要用半包鑲或者 V 爪包住兩頭。呢隻用金屬半包鑲，兩頭完全包住，長邊開放俾光入石。" },
+      { q: "E 色 VS1 嘅馬眼形培育鑽石值唔值得揀？", a: "值得。E 色屬於無色級，VS1 肉眼睇唔到內含物；馬眼形兩頭比較易睇到底色，顏色揀高啲成粒會更白。預算有限可以考慮 F 至 G 色。", link: { label: "第四章 4C 選石", href: "/4c" } },
+      { q: "求婚戒指揀鉑金定 18K 白金好？", a: "鉑金天然係白色、密度高、唔使電金，耐戴但貴啲重啲；18K 白金輕啲平啲，不過幾年後要俾師傅重新電金先保持白亮。" },
+      { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。卡數、顏色、金屬，甚至改成直擺都得；每隻都係按客人預算同手寸訂造，所以唔會完全一樣。" },
+    ],
+    guides: [
+      { label: "第四章 4C 選石", href: "/4c" },
+      { label: "第五章 形狀款式", href: "/styles" },
+      { label: "1 卡戴喺手上有幾大", href: "/4c/carat-size-on-hand" },
+      { label: "第三章 證書", href: "/certificate" },
+    ],
+    images: [
+      { src: "/images/cases/marquise-east-west-1-33ct-platinum-1.webp", alt: "1.33 卡馬眼形培育鑽石求婚戒指，打橫鑲，兩頭半包鑲，光面鉑金戒臂" },
+      { src: "/images/cases/marquise-east-west-1-33ct-platinum-2.webp", alt: "1.33 卡馬眼形培育鑽石戒指打橫戴喺左手無名指", worn: true },
+      { src: "/images/cases/marquise-east-west-1-33ct-platinum-3.webp", alt: "由上面睇馬眼鑽打橫鑲，兩頭金屬半包鑲" },
+      { src: "/images/cases/marquise-east-west-1-33ct-platinum-4.webp", alt: "馬眼鑽戒指側面，戒頭好低、光面戒臂" },
+      { src: "/images/cases/marquise-east-west-1-33ct-platinum-5.webp", alt: "由一端睇戒指，見到 V 形承托托住馬眼鑽" },
+      { src: "/images/cases/marquise-east-west-1-33ct-platinum-6.webp", alt: "馬眼形培育鑽石同半包鑲近鏡特寫" },
     ],
     consent: true,
   },
