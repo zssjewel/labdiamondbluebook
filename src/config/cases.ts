@@ -326,6 +326,7 @@ const REAL_CASES: Case[] = [
       { q: "求婚戒指揀鉑金定 18K 白金好？", a: "鉑金天然係白色、密度高、唔使電金，耐戴但貴啲重啲；18K 白金輕啲平啲，不過幾年後要俾師傅重新電金先保持白亮。" },
       { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。卡數、顏色、金屬，甚至改成直擺都得；每隻都係按客人預算同手寸訂造，所以唔會完全一樣。" },
     ],
+    video: { youtubeId: "a7SCx3V3T14", poster: "/images/cases/marquise-east-west-1-33ct-platinum-video.webp", uploadDate: "2026-10-31", duration: "PT19S", seconds: 19 },
     guides: [
       { label: "第四章 4C 選石", href: "/4c" },
       { label: "第五章 形狀款式", href: "/styles" },
