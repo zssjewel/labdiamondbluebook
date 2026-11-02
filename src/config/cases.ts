@@ -536,6 +536,7 @@ const REAL_CASES: Case[] = [
       { q: "主石要唔要證書？", a: "3 卡以上主石建議要證書，方便核對顏色、淨度同尺寸。可以揀 IGI 或 GIA，亦可以唔要大證平啲。", link: { label: "IGI 定 GIA", href: "/certificate/igi-or-gia" } },
       { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。主石卡數、副石形狀同大細、雙爪定單爪、18K 白金、黃金或鉑金都可以揀，按你預算同手寸訂造。" },
     ],
+    video: { youtubeId: "2TzN6WqBElU", poster: "/images/cases/oval-three-stone-3-49ct-18k-white-gold-video.webp", uploadDate: "2026-11-02", duration: "PT22S", seconds: 22 },
     guides: [
       { label: "第五章 形狀款式", href: "/styles" },
       { label: "IGI 定 GIA", href: "/certificate/igi-or-gia" },
@@ -600,6 +601,7 @@ const REAL_CASES: Case[] = [
       { q: "碎鑽有冇證書？", a: "每粒 0.25 卡嘅配石一般唔逐粒出證書，由師傅揀石時配對顏色淨度。工坊出貨附省檢證書，驗金屬材質同鑽石係培育。" },
       { q: "可唔可以做一條差唔多嘅？", a: "可以做類似款。長度、每粒大細、圓形定橢圓、18K 白金、黃金或玫瑰金都可以揀，按你手腕同預算訂造。" },
     ],
+    video: { youtubeId: "ePGUPbbjCA0", poster: "/images/cases/oval-tennis-bracelet-18k-white-gold-video.webp", uploadDate: "2026-11-02", duration: "PT18S", seconds: 18 },
     guides: [
       { label: "第五章 形狀款式", href: "/styles" },
       { label: "第九章 保養", href: "/care" },
