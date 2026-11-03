@@ -2101,3 +2101,16 @@ main:focus { outline: none; }
 .bb-artfaq dl > div:last-child { border-bottom: 1px solid var(--hairline); }
 .bb-artfaq dt { font-weight: 600; margin-bottom: 6px; }
 .bb-artfaq dd { margin: 0; color: var(--ink-soft); }
+
+/* ---------- 文章：形狀總覽輪廓圖 ---------- */
+.bb-shapes { margin: 2em 0; max-width: none !important; }
+.bb-shapes ul { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px 8px; }
+.bb-shapes li { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.bb-shapes li::marker { content: none; }
+.bb-shapes svg { width: 100%; max-width: 104px; aspect-ratio: 1; background: var(--steel); border-radius: 12px; }
+.bb-shapes__stone { fill: #ffffff; stroke: var(--blue); stroke-width: 1.4; }
+.bb-shapes__facet { fill: none; stroke: var(--blue); stroke-width: 0.8; opacity: 0.45; }
+.bb-shapes strong { font-size: var(--step-caption); font-weight: 600; margin-top: 4px; }
+.bb-shapes span { font-size: 0.75rem; color: var(--ink-soft); }
+.bb-shapes figcaption { margin-top: 12px; font-size: var(--step-caption); color: var(--ink-soft); }
+@media (max-width: 560px) { .bb-shapes ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

@@ -2,6 +2,7 @@ import Link from "@/components/link";
 import type { MDXComponents } from "mdx/types";
 import { headingId } from "@/lib/heading";
 import { CaratStory } from "@/components/carat-on-hand";
+import { ShapeGrid } from "@/components/shape-grid";
 import { CASES, categoryOf } from "@/config/cases";
 import { imgProps } from "@/lib/images";
 
@@ -68,6 +69,7 @@ const components: MDXComponents = {
   MasterNote,
   CaratStory,
   Works,
+  ShapeGrid,
 };
 
 export function useMDXComponents(overrides: MDXComponents): MDXComponents {
