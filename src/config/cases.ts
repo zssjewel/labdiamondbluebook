@@ -745,6 +745,7 @@ const REAL_CASES: Case[] = [
       { q: "公主方同墊形有咩分別？", a: "公主方係尖角正方形，線條利落、現代；墊形係圓角，柔和復古、火彩大。兩款都係方形明亮式切工。", link: { label: "培育鑽石形狀總覽", href: "/styles/shapes-overview" } },
       { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。主石卡數、四正定菱形、副石形狀、黃金白金或鉑金都可以揀，按你預算同手寸訂造。" },
     ],
+    video: { youtubeId: "znlK2n_FubI", poster: "/images/cases/princess-4-88ct-18k-yellow-gold-video.webp", uploadDate: "2026-11-03", duration: "PT19S", seconds: 19 },
     guides: [
       { label: "培育鑽石形狀總覽", href: "/styles/shapes-overview" },
       { label: "1 卡戴喺手上有幾大", href: "/4c/carat-size-on-hand" },
@@ -810,6 +811,7 @@ const REAL_CASES: Case[] = [
       { q: "祖母綠形同阿斯切有咩分別？", a: "兩款都係切角嘅階梯切工；祖母綠係長方形，阿斯切係正方形、帶 Art Deco 復古感。", link: { label: "培育鑽石形狀總覽", href: "/styles/shapes-overview" } },
       { q: "可唔可以做一隻差唔多嘅？", a: "可以做類似款。主石卡數、長闊比、副石粒數同大細、白金黃金或鉑金都可以揀，按你預算同手寸訂造。" },
     ],
+    video: { youtubeId: "coxv1uThO84", poster: "/images/cases/emerald-cut-5-16ct-18k-white-gold-video.webp", uploadDate: "2026-11-03", duration: "PT22S", seconds: 22 },
     guides: [
       { label: "培育鑽石形狀總覽", href: "/styles/shapes-overview" },
       { label: "第四章 4C 選石", href: "/4c" },
