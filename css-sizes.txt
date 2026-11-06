@@ -1,0 +1,7 @@
+total 88
+drwxr-xr-x 2 runner runner  4096 Nov  6 04:02 .
+drwxr-xr-x 6 runner runner  4096 Nov  6 04:02 ..
+-rw-r--r-- 1 runner runner  4764 Nov  6 04:02 0999cbee65dbc8a9.css
+-rw-r--r-- 1 runner runner 69825 Nov  6 04:02 4729530e61fcd3f8.css
+out/_next/static/css/0999cbee65dbc8a9.css gzip 1371
+out/_next/static/css/4729530e61fcd3f8.css gzip 14423
