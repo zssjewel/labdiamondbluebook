@@ -1184,6 +1184,7 @@ const REAL_CASES: Case[] = [
       { q: "雷地恩同祖母綠形有咩分別？", a: "兩款都係切角長方形。雷地恩係明亮式刻面，好閃；祖母綠係階梯切工，光暗分明、低調。彩鑽多數揀雷地恩，顏色睇落濃啲。", link: { label: "培育鑽石形狀總覽", href: "/styles/shapes-overview" } },
       { q: "可唔可以做白鑽或者其他顏色？", a: "可以。主石可以換白色培育鑽石、黃鑽或者藍鑽，小花副石同枝蔓戒臂可以保留，亦可以改成 18K 黃金或玫瑰金，按你預算同手寸訂造。" },
     ],
+    video: { youtubeId: "I-V1eViAiaU", poster: "/images/cases/radiant-pink-4-55ct-18k-white-gold-video.webp", uploadDate: "2026-11-06", duration: "PT18S", seconds: 18 },
     guides: [
       { label: "GIA 培育鑽石新制：Premium／Standard 點睇", href: "/certificate/gia-premium-standard" },
       { label: "培育鑽石形狀總覽", href: "/styles/shapes-overview" },
