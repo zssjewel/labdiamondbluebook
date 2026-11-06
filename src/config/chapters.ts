@@ -61,7 +61,7 @@ export const CHAPTERS: Chapter[] = [
     answers: "IGI 定 GIA、證書點睇",
     intro: "GIA 由 2025 年 10 月起改咗培育鑽石嘅評級方法，好多人仲未知。呢章講兩間化驗所點揀、證書點睇、刻字點核對。",
     topics: [
-      "GIA 培育鑽石新制：Premium / Standard 點睇",
+      "GIA 培育鑽石新制：Premium／Standard 點睇",
       "IGI 定 GIA？培育鑽石證書點揀",
       "點睇培育鑽石證書",
       "激光刻字點核對",
