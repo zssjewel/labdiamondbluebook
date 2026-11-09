@@ -1371,6 +1371,7 @@ const REAL_CASES: Case[] = [
       { q: "可唔可以改做白鑽或者細啲？", a: "可以。肉墊可以換白鑽、黃鑽或者藍鑽，卡數亦可以細啲，金屬可以揀白金或黃金，按你預算訂造。" },
       { q: "送禮適唔適合？", a: "適合，猫爪造型可愛，啱鍾意貓嘅朋友或者自己戴。包鑲唔勾衫，日常戴都得。" },
     ],
+    video: { youtubeId: "PZqL876z33E", poster: "/images/cases/paw-pink-heart-pendant-18k-rose-gold-video.webp", uploadDate: "2026-11-09", duration: "PT19S", seconds: 19 },
     guides: [
       { label: "CVD 同 HPHT 有咩分別", href: "/basics/cvd-vs-hpht" },
       { label: "GIA 培育鑽石新制：Premium／Standard 點睇", href: "/certificate/gia-premium-standard" },
