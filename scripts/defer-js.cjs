@@ -22,7 +22,9 @@ const PRELOAD = /<link rel="preload" as="script"[^>]*href="\/_next\/static\/[^"]
 const CSSLINK = /<link rel="stylesheet" href="(\/_next\/static\/css\/[^"]+\.css)"[^>]*\/?>/g;
 // Cloudflare Web Analytics 嘅站點 token（公開資料，本身就會出現喺每版 HTML）
 // 2026-11-12：Cloudflare 後台 Web Analytics 改咗做「啟用 JS 代碼片段安裝」（手動安裝，唔再自動插入）。
-// 手動模式下，本站自己嘅 /cdn-cgi/rum 唔再收數（回 404），所以唔好再指定 send.to，等統計程式用預設嘅 cloudflareinsights.com 收數地址。
+// 手動模式下，本站自己嘅 /cdn-cgi/rum 唔再收數（回 404），要用 cloudflareinsights.com 嗰個預設收數地址。
+// 設定只可以寫 token（同 Cloudflare 後台俾嘅手動代碼片段一樣）：實測只要帶住 version 呢欄，統計程式就會照舊送去本站 /cdn-cgi/rum（404）；
+// 淨係寫 token 先會送去 cloudflareinsights.com（204）。唔好加返 version／send.to。
 const CF_BEACON = "1b5b0a9fcddc49449b8e7bac497f6207";
 let changed = 0;
 let inlined = 0;
@@ -65,7 +67,7 @@ for (const f of files) {
   });
   const loader =
     `<script data-defer-js>(function(){var f=${JSON.stringify(flightSrc)},s=${JSON.stringify(list)};function all(){s.forEach(function(x){var e=document.createElement("script");e.src=x[0];e.async=true;if(x[1])e.noModule=true;if(x[2])e.id=x[2];document.body.appendChild(e)})}` +
-    `function cf(){if(document.querySelector('script[src*="cloudflareinsights"]'))return;var e=document.createElement("script");e.defer=true;e.src="https://static.cloudflareinsights.com/beacon.min.js";e.setAttribute("data-cf-beacon",JSON.stringify({version:"2024.11.0",token:"${CF_BEACON}",r:1,spa:2}));document.body.appendChild(e)}` +
+    `function cf(){if(document.querySelector('script[src*="cloudflareinsights"]'))return;var e=document.createElement("script");e.defer=true;e.src="https://static.cloudflareinsights.com/beacon.min.js";e.setAttribute("data-cf-beacon",JSON.stringify({token:"${CF_BEACON}"}));document.body.appendChild(e)}` +
     `function go(){setTimeout(cf,1500);if(!f)return all();var e=document.createElement("script");e.src=f;e.onload=all;e.onerror=all;document.body.appendChild(e)}` +
     `function later(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(go,300)})})}if(document.readyState==="complete")later();else addEventListener("load",later,{once:true})})()</script>`;
   html = html.replace("</body>", loader + "</body>");
