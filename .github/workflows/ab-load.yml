@@ -16,7 +16,9 @@ permissions:
 
 jobs:
   ab:
-    runs-on: ubuntu-latest
+    # 鎖定系統版本：2026-11-01 GitHub 將 ubuntu-latest 換成 Ubuntu 26.04，當時用嘅 Playwright 1.55 唔支援，
+    # 截圖流程由嗰日起次次失敗。而家系統同 Playwright 版本都寫死，要升級就兩樣一齊改、一齊試。
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v5
         with:
@@ -52,8 +54,8 @@ jobs:
           (node scripts/serve-gz.cjs /tmp/out-a 8090 >/dev/null 2>&1 &)
           (node scripts/serve-gz.cjs /tmp/out-b 8091 >/dev/null 2>&1 &)
           sleep 2
-          npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
-          npx -y playwright@1.55.0 install chromium >/dev/null
+          npm i --no-save --prefix /tmp/pw playwright@1.65.0 >/dev/null 2>&1
+          npx -y playwright@1.65.0 install chromium >/dev/null
           mkdir -p ab
           for round in 1 2; do
             echo "== 第 $round 輪 A ($REF_A) ==" | tee -a ab/ab.txt
