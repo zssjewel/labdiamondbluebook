@@ -19,12 +19,9 @@ export function wornOf(c: Case) {
 
 /** 首頁：有分類嘅作品貨架 */
 export function HomeShelf({ locale, featured }: { locale: string; featured: Case[] }) {
+  // 分類掣只出件數夠嘅分類；件數未夠嘅分類，作品仍然喺「所有產品」入面
   const tabs = visibleCategories().map((c) => ({ slug: c.slug, name: c.name, count: c.count }));
-  const shownSlugs = new Set(tabs.map((t) => t.slug));
-  const items = toShelf(
-    CASES.filter((c) => shownSlugs.has(c.category)),
-    locale,
-  );
+  const items = toShelf(CASES, locale);
   return (
     <CaseShelf
       items={items}

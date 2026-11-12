@@ -104,30 +104,32 @@ export default function AboutPage() {
         <p>師傅介紹整理中。</p>
       )}
 
-      <h2 id="studio">工坊資料</h2>
-      <dl className="bb-studio">
-        <div>
-          <dt>地址</dt>
-          <dd>
-            {orDemo(SITE.studio.address, "香港（詳細地址待填）")}
-            <Demo show={!SITE.studio.address} />
-          </dd>
-        </div>
-        <div>
-          <dt>營業時間</dt>
-          <dd>
-            {orDemo(SITE.studio.hours, "營業時間待填")}
-            <Demo show={!SITE.studio.hours} />
-          </dd>
-        </div>
-        <div>
-          <dt>睇貨／度戒圈</dt>
-          <dd>
-            {orDemo(SITE.studio.booking, "預約方式待填（例如：WhatsApp 預約，約時間上工坊）")}
-            <Demo show={!SITE.studio.booking} />
-          </dd>
-        </div>
-      </dl>
+      {/* 未填嘅項目唔顯示；三項都未填（而且唔係示例模式）就成段唔出，唔會得返個空標題 */}
+      {(() => {
+        const rows: [string, string, string][] = [
+          ["地址", SITE.studio.address, "香港（詳細地址待填）"],
+          ["營業時間", SITE.studio.hours, "營業時間待填"],
+          ["睇貨／度戒圈", SITE.studio.booking, "預約方式待填（例如：WhatsApp 預約，約時間上工坊）"],
+        ];
+        const shown = rows.filter(([, value]) => value || SITE.demo);
+        if (shown.length === 0) return null;
+        return (
+          <>
+            <h2 id="studio">工坊資料</h2>
+            <dl className="bb-studio">
+              {shown.map(([label, value, sample]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>
+                    {orDemo(value, sample)}
+                    <Demo show={!value} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </>
+        );
+      })()}
 
       <h2 id="contact">聯絡</h2>
       <p>想問款式、預算、手寸，或者發現書中有錯，歡迎直接聯絡師傅。</p>

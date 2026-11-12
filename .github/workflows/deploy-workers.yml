@@ -5,6 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# 部署只需要讀取程式碼
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -34,7 +38,7 @@ jobs:
         run: test -f out/index.html || { echo "homepage export not found"; find out -maxdepth 1 -name '*.html' | head -20; exit 1; }
 
       - name: Deploy to Cloudflare Workers
-        run: npx wrangler@latest deploy
+        run: npx wrangler@4.160.1 deploy  # 鎖定版本，升級時人手改
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

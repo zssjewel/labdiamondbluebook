@@ -22,11 +22,20 @@ export const SITE = {
   /** 工坊資料 */
   studio: { address: "", hours: "", booking: "" },
   /** 社交平台連結（完整網址） */
-  social: { instagram: "", facebook: "", xiaohongshu: "" },
+  social: { instagram: "", facebook: "", xiaohongshu: "", youtube: "" },
   homeTitle: "培育鑽石訂造攻略｜價錢、證書、4C、款式一本睇清 - 培育鑽石藍皮書",
   description:
     "培育鑽石同天然有咩分別？1 卡要幾錢？IGI 定 GIA 證書？由 4C、形狀、款式到訂造流程，鄒三山工坊老師傅將行內做法同報價水份一次講清。",
 } as const;
+
+/**
+ * 搜尋結果標題：短標題後面加站名；本身已經長嘅標題唔再加（加咗會過長，搜尋結果會截走尾段）。
+ */
+export const TITLE_MAX = 40;
+export function pageTitle(title: string) {
+  const full = `${title}｜${SITE.name}`;
+  return full.length <= TITLE_MAX ? full : title;
+}
 
 export function localizeHref(href: string, locale: string = SITE.locale) {
   // 一個語言一個獨立站（香港站、台灣站分開做），網址唔帶語言前綴；保留 locale 參數方便日後抄去台灣站

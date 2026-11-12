@@ -89,6 +89,8 @@ export type Case = {
   metal: string;
   /** 價錢區間，例如「HK$1.2–1.5 萬」；唔想公開就留空 */
   priceRange?: string;
+  /** 價錢區間嘅數字版（港元，[最低, 最高]），俾搜尋器睇；同 priceRange 一齊填。填咗先會輸出 Product + 價錢嘅結構化資料 */
+  priceHKD?: [number, number];
   /** 由落單到交貨，例如「約 3 星期」 */
   duration?: string;
   /** 客人嘅要求同師傅點做，兩三句 */
@@ -1670,6 +1672,15 @@ export function categoryOf(slug: string) {
 /** 有足夠作品、可以顯示嘅分類（按市場數據次序） */
 export function visibleCategories() {
   return CASE_CATEGORIES.map((c) => ({ ...c, count: CASES.filter((x) => x.category === c.slug).length })).filter((c) => c.count >= MIN_CATEGORY);
+}
+
+/**
+ * 呢個分類有冇自己嘅分類頁（件數夠 MIN_CATEGORY 先有）。
+ * 件數未夠嘅分類：唔出分類頁、唔出分類掣，但作品本身照樣有作品頁、照樣喺「所有產品」同相關作品出現，
+ * 所以連去分類頁之前要用呢個判斷，唔好連去一個冇生成嘅頁。
+ */
+export function hasCategoryPage(slug: string) {
+  return visibleCategories().some((c) => c.slug === slug);
 }
 
 export function casesIn(category: string) {

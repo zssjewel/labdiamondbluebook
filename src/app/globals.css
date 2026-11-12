@@ -192,6 +192,8 @@
 }
 .bb-link:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
 .bb-link:hover::after { transform: translateX(3px); }
+/* 獨立一行嘅文字連結：撳得到嘅範圍上下加闊到約 44px（手指易撳），用負 margin 抵銷，版面位置唔變 */
+.bb-link { padding-block: 12px; margin-block: -12px; }
 .bb-sr {
   position: absolute;
   width: 1px;
@@ -1029,6 +1031,41 @@
 @media (max-width: 860px) {
   .bb-faq__list { grid-template-columns: 1fr; }
 }
+/* 首頁問答：每條可以開合（頭幾條預設打開）。問題一行就係掣，成行都撳得 */
+.bb-faq__list--fold { align-items: start; }
+.bb-faq__fold { padding: 0; }
+.bb-faq__fold summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  padding: 20px 0;
+  font-size: var(--step-lead);
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.bb-faq__fold summary::-webkit-details-marker { display: none; }
+.bb-faq__fold summary::after {
+  content: "›";
+  flex: none;
+  color: var(--ink-soft);
+  font-size: 1.25em;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 200ms var(--ease-out);
+}
+.bb-faq__fold[open] summary::after { transform: rotate(90deg); }
+.bb-faq__fold summary:hover { color: var(--blue); }
+.bb-faq__fold summary:focus-visible { outline-offset: 4px; border-radius: 4px; }
+.bb-faq__ans { padding: 0 0 26px; }
+.bb-faq__ans .bb-faq__more { display: inline-block; padding-block: 12px; margin-block: -12px; }
+@media (prefers-reduced-motion: reduce) {
+  .bb-faq__fold summary::after { transition: none; }
+}
 
 /* ---------- 結尾反白 ---------- */
 .bb-close {
@@ -1102,7 +1139,7 @@
   font-size: var(--step-small);
 }
 .bb-footer__legal p { margin: 0; max-width: 36em; }
-.bb-footer__legal a { color: var(--blue-ink); }
+.bb-footer__legal a { color: var(--blue-ink); display: inline-flex; align-items: center; min-height: 44px; align-self: flex-end; }
 @media (max-width: 760px) {
   .bb-footer__row { grid-template-columns: 1fr; row-gap: 40px; margin-top: 40px; }
   .bb-footer__places, .bb-footer__cols { grid-column: 1; }
@@ -1229,6 +1266,21 @@
 .bb-prose strong { font-weight: 600; }
 .bb-prose a { color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
 .bb-prose .bb-table { margin: 1.6em 0; overflow-x: auto; }
+.bb-prose .bb-table:focus-visible { outline-offset: 4px; }
+/* 窄螢幕：表格一定闊過螢幕（最少 600px），喺表格上面寫明可以左右掃，唔好等人以為右邊嗰欄冇嘢 */
+@media (max-width: 620px) {
+  .bb-prose .bb-table::before {
+    content: "表格較闊，可以左右掃";
+    display: block;
+    position: sticky;
+    left: 0;
+    width: max-content;
+    margin-bottom: 8px;
+    color: var(--ink-soft);
+    font-size: var(--step-caption);
+    line-height: 1.4;
+  }
+}
 .bb-prose table { width: 100%; border-collapse: collapse; font-size: var(--step-small); line-height: 1.6; }
 .bb-prose th { text-align: left; font-weight: 600; padding: 10px 12px; background: var(--pale); white-space: nowrap; }
 .bb-prose td { padding: 10px 12px; vertical-align: top; border-bottom: 1px solid var(--line); }
