@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   probe:
-    runs-on: ubuntu-latest
+    # 鎖定系統版本：2026-11-01 GitHub 將 ubuntu-latest 換成 Ubuntu 26.04，當時用嘅 Playwright 1.55 唔支援，
+    # 截圖流程由嗰日起次次失敗。而家系統同 Playwright 版本都寫死，要升級就兩樣一齊改、一齊試。
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v5
         with:
@@ -33,8 +35,8 @@ jobs:
       - name: Probe
         continue-on-error: true
         run: |
-          npm i --no-save --prefix /tmp/pw playwright@1.55.0 >/dev/null 2>&1
-          npx -y playwright@1.55.0 install --with-deps chromium webkit >/dev/null
+          npm i --no-save --prefix /tmp/pw playwright@1.65.0 >/dev/null 2>&1
+          npx -y playwright@1.65.0 install --with-deps chromium webkit >/dev/null
           mkdir -p probe
           NODE_PATH=/tmp/pw/node_modules node scripts/tabs-probe.cjs http://localhost:8080 probe | tee probe/probe.txt
           command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null)
