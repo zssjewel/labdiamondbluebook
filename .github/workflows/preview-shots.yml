@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v5
         with:
@@ -96,7 +98,9 @@ jobs:
         if: steps.build.outcome == 'success'
         continue-on-error: true
         run: |
-          git clone -q --depth=1 https://github.com/Leonxlnx/taste-skill /tmp/taste
+          # 第三方檢查工具：鎖定已睇過嘅 commit，唔好直接行人哋最新嘅程式（呢個 job 有寫入權限）
+          git clone -q https://github.com/Leonxlnx/taste-skill /tmp/taste
+          git -C /tmp/taste checkout -q f6b76575f949707b4e3c37cd86cb44b0b98643e8
           node /tmp/taste/skills/taste-skill/scripts/inspect.mjs http://localhost:8080/index.html --allow glass,button-fx,hairline,outlined-box,numbering,all-centred,size-count,shadow,edge-text > shots/inspect.txt 2>&1 || true
           cp -r .taste-skill/inspect shots/inspect 2>/dev/null || true
           tail -60 shots/inspect.txt

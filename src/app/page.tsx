@@ -99,6 +99,15 @@ const FAQ = [
   },
 ];
 
+/** 問答下面條連結寫明去邊度（唔再全部都叫「延伸閱讀」）：章節用章名，「關於本書」嘅段落用段名 */
+const ABOUT_LABELS: Record<string, string> = { "/about#story": "睇工坊故事", "/about#promise": "睇四項承諾條款", "/about#disclosure": "睇編著聲明" };
+function moreLabel(href: string) {
+  const chapter = CHAPTERS.find((c) => `/${c.slug}` === href);
+  return chapter ? `睇${chapter.number} ${chapter.title}` : (ABOUT_LABELS[href] ?? "延伸閱讀");
+}
+/** 頭幾條問答預設打開，其餘收埋（手機首頁短好多；內容仍然全部喺 HTML 入面） */
+const FAQ_OPEN = 4;
+
 /** 按讀者情況的閱讀路線（借鑑同類藍皮書的「按目標進入」） */
 const ROUTES = [
   {
@@ -463,7 +472,7 @@ export default async function HomePage() {
           九章，由入門到戴上手
         </h2>
         <p className="bb-secsub" data-reveal style={{ "--i": 1 } as React.CSSProperties}>
-          已出 {articles.length} 篇 · 撰寫中 {pendingCount} 篇
+          已出 {articles.length} 篇{pendingCount > 0 ? " · 持續更新" : ""}
         </p>
         {/* 一本用代碼畫嘅書：碌到呢度自己慢慢揭開封面，右頁係九章目錄，左頁（封面內頁）係書名同最新文章。
             冇 JS、減少動畫、手機：直接係打開咗嘅狀態，連結即刻用得 */}
@@ -656,19 +665,19 @@ export default async function HomePage() {
         <h2 id="faq-title" className="bb-sechead bb-display" data-reveal>
           常見問題
         </h2>
-        <dl className="bb-faq__list">
+        <div className="bb-faq__list bb-faq__list--fold">
           {FAQ.map((f, i) => (
-            <div key={f.q} className="bb-faq__item" data-reveal style={{ "--i": i % 2 } as React.CSSProperties}>
-              <dt>{f.q}</dt>
-              <dd>
+            <details key={f.q} className="bb-faq__item bb-faq__fold" open={i < FAQ_OPEN} data-reveal style={{ "--i": i % 2 } as React.CSSProperties}>
+              <summary>{f.q}</summary>
+              <div className="bb-faq__ans">
                 <p>{f.a}</p>
                 <Link className="bb-faq__more" href={localizeHref(f.more, locale)}>
-                  延伸閱讀
+                  {moreLabel(f.more)}
                 </Link>
-              </dd>
-            </div>
+              </div>
+            </details>
           ))}
-        </dl>
+        </div>
       </section>
 
       {/* 結尾 */}

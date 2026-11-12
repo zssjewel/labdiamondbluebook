@@ -5,7 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { AskMaster, Breadcrumbs, JsonLd } from "@/components/site";
 import { CHAPTERS, getChapter } from "@/config/chapters";
 import { CONTENT_TYPES } from "@/config/navigation";
-import { SITE, localizeHref, orDemo } from "@/config/site";
+import { SITE, localizeHref, orDemo, pageTitle } from "@/config/site";
 import { Demo } from "@/components/demo";
 import { routing, type Locale } from "@/i18n/routing";
 import { getAllArticles, getAllContent, getAllContentPaths, getBookOrder, getContent } from "@/lib/content";
@@ -36,7 +36,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const chapter = getChapter(slug[0]);
   if (!chapter) return { title: "找不到頁面" };
   if (slug.length === 1) {
-    const title = `${chapter.number}：培育鑽石${chapter.title}｜${SITE.name}`;
+    // 搜尋結果標題：關鍵詞行先（「培育鑽石價錢：1 卡幾錢、會唔會跌…」），唔再用「第二章：」開頭
+    const title = pageTitle(`培育鑽石${/^[A-Za-z0-9]/.test(chapter.title) ? " " : ""}${chapter.title}：${chapter.answers}`);
     const items = await getAllContent(chapter.slug, locale);
     return {
       title,
@@ -52,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const item = await getContent(slug[0], slug.slice(1), locale);
   if (!item) return { title: "找不到頁面" };
   const pathname = `/${slug.join("/")}`;
-  const title = `${item.metadata.seoTitle ?? item.metadata.title}｜${SITE.name}`;
+  const title = pageTitle(item.metadata.seoTitle ?? item.metadata.title);
   const shareImage = {
     url: item.metadata.image ?? chapter.image,
     width: item.metadata.imageWidth ?? 1000,
@@ -131,7 +132,7 @@ async function ChapterPage({ locale, slug }: { locale: Locale; slug: string }) {
         <p className="bb-page__lead">{chapter.intro}</p>
         <p className="bb-metaline">
           <span>本章答你：{chapter.answers}</span>
-          <span>{items.length > 0 ? `已出 ${items.length} 篇，撰寫中 ${pending.length} 篇` : `全章撰寫中，共 ${pending.length} 篇`}</span>
+          <span>{items.length > 0 ? `已出 ${items.length} 篇${pending.length > 0 ? "，持續更新" : ""}` : "全章撰寫中"}</span>
         </p>
 
         {items.length > 0 && (
@@ -224,8 +225,8 @@ async function ArticlePage({ locale, contentType, rest }: { locale: Locale; cont
     datePublished: item.metadata.date,
     dateModified: item.metadata.lastModified ?? item.metadata.date,
     mainEntityOfPage: pageUrl,
-    author: item.metadata.author ? { "@type": "Person", name: item.metadata.author } : { "@type": "Organization", name: SITE.publisher },
-    publisher: { "@type": "Organization", name: SITE.publisher },
+    author: item.metadata.author ? { "@type": "Person", name: item.metadata.author } : { "@type": "Organization", name: SITE.publisher, url: `${SITE.url}${localizeHref("/about", locale)}` },
+    publisher: { "@type": "Organization", name: SITE.publisher, url: SITE.url, logo: { "@type": "ImageObject", url: `${SITE.url}/android-chrome-512x512.png`, width: 512, height: 512 } },
     image: `${SITE.url}${item.metadata.image ?? chapter.image}`,
   };
   const faqData = item.metadata.faq?.length

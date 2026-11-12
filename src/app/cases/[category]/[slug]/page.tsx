@@ -7,8 +7,8 @@ import { CaseSize } from "@/components/case-size";
 import { RelatedShelf } from "@/components/cases";
 import { Demo } from "@/components/demo";
 import { Breadcrumbs, JsonLd, SmartLink } from "@/components/site";
-import { CASES, casesIn, categoryOf, mixed, visibleCategories } from "@/config/cases";
-import { SITE, hasContact, localizeHref, waHref } from "@/config/site";
+import { CASES, casesIn, categoryOf, hasCategoryPage, mixed } from "@/config/cases";
+import { SITE, hasContact, localizeHref, pageTitle, waHref } from "@/config/site";
 import { robotsFor } from "@/lib/indexing";
 import { PROMISE_SHORT } from "@/config/promises";
 import { shareImages } from "@/lib/share";
@@ -24,9 +24,9 @@ const CUSTOM_STEPS: [string, string][] = [
   ["交貨同售後", "附省檢證書，送貨上門"],
 ];
 
+// 每件作品都有自己嘅作品頁，同佢個分類夠唔夠件數開分類頁無關（否則相關作品會連去唔存在嘅頁）
 export function generateStaticParams() {
-  const shown = new Set(visibleCategories().map((c) => c.slug));
-  return CASES.filter((c) => shown.has(c.category)).map((c) => ({ category: c.category, slug: c.slug }));
+  return CASES.map((c) => ({ category: c.category, slug: c.slug }));
 }
 
 function find(category: string, slug: string) {
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!item) return {};
   const cat = categoryOf(category);
   const url = localizeHref(`/cases/${category}/${slug}`, locale);
-  const title = item.seoTitle ? `${item.seoTitle}｜${SITE.name}` : `${item.title}｜培育鑽石${cat?.name ?? ""}作品｜${SITE.name}`;
+  const title = item.seoTitle ? pageTitle(item.seoTitle) : `${item.title}｜培育鑽石${cat?.name ?? ""}作品｜${SITE.name}`;
   const description = item.description ?? `${item.title}：主石 ${item.stone}；金屬 ${item.metal}。${item.story}`.slice(0, 150);
   const image = item.images[0];
   const share = shareImages(image ? { url: image.src, width: 1000, height: 1000, alt: image.alt } : undefined);
@@ -62,12 +62,15 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
   const cat = categoryOf(category);
   if (!item || !cat) notFound();
   const same = casesIn(category).filter((c) => c.slug !== slug);
+  // 分類件數未夠就冇分類頁：返回、「睇其他」都改去作品總表
+  const catPage = hasCategoryPage(category);
+  const listHref = localizeHref(catPage ? `/cases/${category}` : "/cases", locale);
   const other = mixed(undefined, 8, slug).filter((c) => c.category !== category);
   const placeholders = item.demo && item.images.length < 3 ? ["戴喺手上嘅相（待補）", "細節或者證書相（待補）"].slice(0, 3 - item.images.length) : [];
   const crumbs = [
     { label: "首頁", href: localizeHref("/", locale) },
     { label: "作品案例", href: localizeHref("/cases", locale) },
-    { label: cat.name, href: localizeHref(`/cases/${category}`, locale) },
+    catPage ? { label: cat.name, href: listHref } : { label: cat.name },
     { label: item.title },
   ];
   const breadcrumbLd = {
@@ -77,22 +80,49 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
   };
   const ask = waHref(`你好，我睇咗作品「${item.title}」，想做類似嘅，想問：`);
   const guides = item.guides ?? cat.guides;
+  // 作品係做過嘅訂造款，唔係有標價嘅現貨。Google 嘅商品摘要要有 offers（價錢）、review 或 aggregateRating 其中一樣，
+  // 冇價錢就唔好標做 Product（Search Console 會逐頁報錯）。所以：填咗 priceHKD 先出 Product + 價錢區間；未填就標做 CreativeWork（一件作品）。
+  const workUrl = `${SITE.url}${localizeHref(`/cases/${category}/${slug}`, locale)}`;
+  const workProps = (item.specs ?? [["主石", item.stone], ["金屬", item.metal]]).map(([name, value]) => ({ "@type": "PropertyValue", name, value }));
   const productLd = item.demo
     ? null
-    : {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        name: item.h1 ?? item.title,
-        description: item.description ?? item.story,
-        image: item.images.map((im) => `${SITE.url}${im.src}`),
-        url: `${SITE.url}${localizeHref(`/cases/${category}/${slug}`, locale)}`,
-        category: cat.name,
-        brand: { "@type": "Brand", name: SITE.publisher },
-        manufacturer: { "@type": "Organization", name: SITE.publisher },
-        material: item.metal,
-        ...(item.date ? { productionDate: item.date } : {}),
-        additionalProperty: (item.specs ?? [["主石", item.stone], ["金屬", item.metal]]).map(([name, value]) => ({ "@type": "PropertyValue", name, value })),
-      };
+    : item.priceHKD
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: item.h1 ?? item.title,
+          description: item.description ?? item.story,
+          image: item.images.map((im) => `${SITE.url}${im.src}`),
+          url: workUrl,
+          category: cat.name,
+          brand: { "@type": "Brand", name: SITE.publisher },
+          manufacturer: { "@type": "Organization", name: SITE.publisher },
+          material: item.metal,
+          ...(item.date ? { productionDate: item.date } : {}),
+          additionalProperty: workProps,
+          offers: {
+            "@type": "AggregateOffer",
+            priceCurrency: "HKD",
+            lowPrice: item.priceHKD[0],
+            highPrice: item.priceHKD[1],
+            availability: "https://schema.org/MadeToOrder",
+            url: workUrl,
+          },
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: item.h1 ?? item.title,
+          description: item.description ?? item.story,
+          image: item.images.map((im) => `${SITE.url}${im.src}`),
+          url: workUrl,
+          genre: cat.name,
+          inLanguage: SITE.htmlLang,
+          creator: { "@type": "Organization", name: SITE.publisher, url: SITE.url },
+          material: item.metal,
+          ...(item.date ? { dateCreated: item.date } : {}),
+          additionalProperty: workProps,
+        };
   const videoLd = item.video
     ? {
         "@context": "https://schema.org",
@@ -100,7 +130,8 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
         name: `${item.h1 ?? item.title}｜實拍影片`,
         description: item.description ?? item.story,
         thumbnailUrl: `${SITE.url}${item.video.poster}`,
-        uploadDate: item.video.uploadDate,
+        // Google 要求帶時區嘅完整時間；資料只填日期，補上香港時間
+        uploadDate: /T/.test(item.video.uploadDate) ? item.video.uploadDate : `${item.video.uploadDate}T00:00:00+08:00`,
         duration: item.video.duration,
         embedUrl: `https://www.youtube.com/embed/${item.video.youtubeId}`,
         contentUrl: `https://www.youtube.com/watch?v=${item.video.youtubeId}`,
@@ -137,7 +168,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
         </div>
         <div className="bb-case-page__info">
           <p className="bb-case-page__cat">
-            <Link href={localizeHref(`/cases/${category}`, locale)}>{cat.name}</Link>
+            {catPage ? <Link href={listHref}>{cat.name}</Link> : cat.name}
             <Demo show={!!item.demo} />
           </p>
           <h1 className="bb-page__title bb-display">{item.h1 ?? item.title}</h1>
@@ -165,8 +196,8 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
                 想做類似嘅，問師傅
               </SmartLink>
             )}
-            <Link href={localizeHref(`/cases/${category}`, locale)} className="bb-btn bb-btn--ghost">
-              睇其他{cat.name}
+            <Link href={listHref} className="bb-btn bb-btn--ghost">
+              {catPage ? `睇其他${cat.name}` : "睇其他作品"}
             </Link>
           </div>
           <ul className="bb-trust bb-trust--list" aria-label="工坊承諾">
@@ -273,7 +304,7 @@ export default async function CaseDetailPage({ params }: { params: Promise<Param
           </SmartLink>
         </div>
       )}
-      <RelatedShelf locale={locale} list={same} title={`其他${cat.name}`} moreHref={localizeHref(`/cases/${category}`, locale)} moreLabel={`睇全部${cat.name}`} />
+      <RelatedShelf locale={locale} list={same} title={`其他${cat.name}`} moreHref={listHref} moreLabel={catPage ? `睇全部${cat.name}` : undefined} />
       <RelatedShelf locale={locale} list={other} title="其他類別" />
     </main>
   );

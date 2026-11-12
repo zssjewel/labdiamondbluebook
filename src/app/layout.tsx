@@ -47,7 +47,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     "@type": "Organization",
     name: SITE.publisher,
     url: SITE.url,
+    logo: `${SITE.url}/android-chrome-512x512.png`,
     areaServed: "HK",
+    // 社交平台連結填咗（site.ts）先會輸出，幫搜尋器認得係同一個品牌
+    ...(Object.values(SITE.social).some(Boolean) ? { sameAs: Object.values(SITE.social).filter(Boolean) } : {}),
   };
 
   return (

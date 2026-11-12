@@ -109,12 +109,13 @@ export function SiteFooter({ locale }: { locale: string }) {
         <ul className="bb-footer__places">
           <li>{hasContact ? <SmartLink href={waHref()}>WhatsApp 問師傅</SmartLink> : "聯絡方式籌備中"}</li>
           <li>東莞廠房直出 · 全港送貨上門</li>
-          {(SITE.demo || SITE.social.instagram || SITE.social.facebook || SITE.social.xiaohongshu) && (
+          {(SITE.demo || Object.values(SITE.social).some(Boolean)) && (
             <li className="bb-footer__social">
               {[
                 ["Instagram", SITE.social.instagram],
                 ["Facebook", SITE.social.facebook],
                 ["小紅書", SITE.social.xiaohongshu],
+                ["YouTube", SITE.social.youtube],
               ]
                 .filter(([, url]) => url || SITE.demo)
                 .map(([label, url]) =>
@@ -126,7 +127,7 @@ export function SiteFooter({ locale }: { locale: string }) {
                     <span key={label}>{label}</span>
                   ),
                 )}
-              <Demo show={!SITE.social.instagram && !SITE.social.facebook && !SITE.social.xiaohongshu} />
+              <Demo show={!Object.values(SITE.social).some(Boolean)} />
             </li>
           )}
         </ul>
@@ -166,7 +167,7 @@ export function SiteFooter({ locale }: { locale: string }) {
       </div>
       <div className="bb-footer__legal">
         <p>
-          © {new Date().getFullYear()} {SITE.publisher}。本書由鄒三山工坊編著，比較及推薦內容包括工坊自己。網站上的首飾圖片均為示意圖（AI 生成或 3D 渲染），並非工坊實物或庫存相片。
+          © {new Date().getFullYear()} {SITE.publisher}。本書由鄒三山工坊編著，比較及推薦內容包括工坊自己。除「作品案例」外，網站上的首飾及場景圖片均為示意圖（AI 生成或 3D 渲染），並非工坊實物或庫存相片；作品案例為工坊訂造過的款式，相片只供參考。
         </p>
         <a href="#top">返回頂部</a>
       </div>
@@ -175,5 +176,6 @@ export function SiteFooter({ locale }: { locale: string }) {
 }
 
 export function JsonLd({ data }: { data: unknown }) {
-  return <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+  // 「<」轉成 \u003c：文案入面就算出現 </script> 都唔會提早結束呢段資料
+  return <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

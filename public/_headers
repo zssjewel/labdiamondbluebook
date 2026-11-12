@@ -8,7 +8,12 @@
 /*.ico
   Cache-Control: public, max-age=604800
 
-# 網頁：叫 Cloudflare 唔好自動喺 HTML 插入 Web Analytics 程式（佢會喺首屏之前下載，拖慢手機分數）；
-# 改由網頁喺載完之後自己載入（scripts/defer-js.cjs），統計照常
+# 全站安全標頭。
+# 2026-11-12：拎走咗以前嘅「Cache-Control: no-transform」。嗰句原本用嚟阻止 Cloudflare 自動插入 Web Analytics 程式，
+# 但同時令 Cloudflare 唔壓縮（gzip／brotli）任何回應：首頁 HTML 129 KB 原樣傳送（壓縮後約 29 KB），程式檔亦一樣。
+# 自動插入改喺 Cloudflare 後台 Web Analytics 設定度關（統計照舊由 scripts/defer-js.cjs 喺頁面載完之後載入）。唔好加返 no-transform。
 /*
-  Cache-Control: no-transform
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Strict-Transport-Security: max-age=2592000

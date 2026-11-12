@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { setRequestLocale } from "next-intl/server";
 import { CaseGrid, CategoryNav } from "@/components/cases";
 import { Breadcrumbs } from "@/components/site";
-import { CASES, isDemoCases, visibleCategories } from "@/config/cases";
+import { CASES, isDemoCases } from "@/config/cases";
 import { SITE, localizeHref } from "@/config/site";
 import { robotsFor } from "@/lib/indexing";
 import { shareImages } from "@/lib/share";
@@ -27,7 +27,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CasesPage() {
   const locale = SITE.locale;
   setRequestLocale(locale);
-  const shown = new Set(visibleCategories().map((c) => c.slug));
   return (
     <main id="main" tabIndex={-1} className="bb-cases-page">
       <Breadcrumbs items={[{ label: "首頁", href: localizeHref("/", locale) }, { label: "作品案例" }]} />
@@ -37,7 +36,8 @@ export default async function CasesPage() {
           <p className="bb-page__lead">工坊訂造過嘅首飾，按類別揀。每件寫明主石、金屬、價錢區間同工期，相片同資料經客人同意公開。</p>
           {isDemoCases && <p className="bb-draft">標住<strong>示例</strong>嘅係示意作品：相片係 AI 或 3D 示意圖，規格待填，正式上線前會換走。</p>}
           <CategoryNav locale={locale} />
-          <CaseGrid list={CASES.filter((c) => shown.has(c.category))} locale={locale} />
+          {/* 全部作品都列出嚟；件數未夠開分類頁嘅分類，作品一樣喺呢度搵到 */}
+          <CaseGrid list={CASES} locale={locale} />
         </>
       ) : (
         <div className="bb-cases-empty">

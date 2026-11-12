@@ -62,7 +62,8 @@ const components: MDXComponents = {
       <Link href={href}>{children}</Link>
     ),
   table: ({ children }) => (
-    <div className="bb-table">
+    // 手機上表格闊過螢幕，可以左右掃；加 tabIndex 等鍵盤用家都掃得到
+    <div className="bb-table" tabIndex={0} role="region" aria-label="表格（可以左右掃）">
       <table>{children}</table>
     </div>
   ),

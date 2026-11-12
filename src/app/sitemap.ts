@@ -32,7 +32,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       add("/cases", undefined, 0.7);
       const shown = new Set(visibleCategories().map((c) => c.slug));
       for (const slug of shown) add(`/cases/${slug}`, undefined, 0.7);
-      for (const c of CASES.filter((x) => shown.has(x.category))) add(caseHref(c), undefined, 0.6);
+      // 作品頁全部都列（包括件數未夠開分類頁嘅分類）
+      for (const c of CASES) add(caseHref(c), undefined, 0.6);
     }
     add("/about", undefined, 0.4);
     add("/privacy-policy", undefined, 0.2);
