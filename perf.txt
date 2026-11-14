@@ -1,0 +1,6 @@
+電腦 1440 · 首頁：4.0 秒 | 出畫 228 格，掉格 14 | 重畫 Paint 195 次/14ms | 光柵化 Raster 343 次/107ms | GPU 0 | 排版 Layout 30 次/5ms | 樣式 280 次/47ms
+電腦 1440 · 互動文章：3.9 秒 | 出畫 210 格，掉格 1 | 重畫 Paint 80 次/10ms | 光柵化 Raster 324 次/75ms | GPU 0 | 排版 Layout 112 次/19ms | 樣式 205 次/15ms
+電腦 1440 · 普通文章：3.3 秒 | 出畫 102 格，掉格 0 | 重畫 Paint 95 次/9ms | 光柵化 Raster 347 次/62ms | GPU 0 | 排版 Layout 40 次/20ms | 樣式 39 次/5ms
+手機 Pixel 7（CPU 慢 4 倍） · 首頁：4.1 秒 | 出畫 218 格，掉格 0 | 重畫 Paint 149 次/50ms | 光柵化 Raster 71 次/47ms | GPU 0 | 排版 Layout 23 次/21ms | 樣式 271 次/134ms
+手機 Pixel 7（CPU 慢 4 倍） · 互動文章：3.8 秒 | 出畫 185 格，掉格 1 | 重畫 Paint 63 次/34ms | 光柵化 Raster 76 次/42ms | GPU 0 | 排版 Layout 98 次/72ms | 樣式 182 次/55ms
+手機 Pixel 7（CPU 慢 4 倍） · 普通文章：3.5 秒 | 出畫 99 格，掉格 0 | 重畫 Paint 53 次/21ms | 光柵化 Raster 84 次/37ms | GPU 0 | 排版 Layout 39 次/68ms | 樣式 37 次/13ms
