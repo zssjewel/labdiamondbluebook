@@ -1,0 +1,100 @@
+手機 4G（慢 CPU） · /index（3 次中位數）：FCP 0.73s，LCP 0.77s，CLS 0.000，載完 1.0s，請求 18 個，共 370KB（HTML 128KB，未壓縮）
+   時間線：
+     /images/brand/logo-horizontal.svg 186→610 20KB
+     /images/brand/logo-mark.svg 187→567 15KB
+     /images/renders/ring-oval-pale-480.webp 1105→1432 10KB
+     /images/renders/bracelet-steel-480.webp 1106→1469 11KB
+     /images/renders/halo-rg-pale-480.webp 1107→1511 14KB
+     /images/renders/macro-ink-480.webp 1107→1655 26KB
+     /_next/static/flight/565ca600ae6a5427.js 1293→1990 85KB
+   HTML 首字節 151ms／收完 960ms，CSS ，DOM 可互動 970ms
+   最大嘅檔案：/index.html 129KB，/_next/static/flight/565ca600ae6a5427.js 85KB，/images/renders/macro-ink-480.webp 27KB，/images/brand/logo-horizontal.svg 20KB，/images/brand/logo-mark.svg 15KB，/images/renders/halo-rg-pale-480.webp 14KB
+手機 4G（慢 CPU） · /4c/carat-size-on-hand（3 次中位數）：FCP 0.76s，LCP 0.76s，CLS 0.000，載完 1.0s，請求 16 個，共 623KB（HTML 109KB，未壓縮）
+   時間線：
+     /images/brand/logo-horizontal.svg 183→610 20KB
+     /images/brand/logo-mark.svg 184→567 15KB
+     /images/hand/stone-top.webp 184→1025 32KB
+     /_next/static/flight/b672ace4dc27db37.js 1353→1747 48KB
+   HTML 首字節 153ms／收完 1011ms，CSS ，DOM 可互動 1018ms
+手機 4G（慢 CPU） · /basics/vs-natural-moissanite（3 次中位數）：FCP 0.92s，LCP 1.08s，CLS 0.000，載完 1.1s，請求 16 個，共 645KB（HTML 102KB，未壓縮）
+   時間線：
+     /images/brand/logo-horizontal.svg 186→704 20KB
+     /images/brand/logo-mark.svg 186→646 15KB
+     /images/renders/macro-ink-wide-1000.webp 187→1040 53KB
+     /_next/static/flight/2b3d6de6e8ded91e.js 1425→1855 56KB
+   HTML 首字節 152ms／收完 1097ms，CSS ，DOM 可互動 1104ms
+電腦寬頻 · /index（3 次中位數）：FCP 0.08s，LCP 0.16s，CLS 0.000，載完 0.1s，請求 40 個，共 923KB（HTML 128KB，未壓縮）
+   時間線：
+     /images/brand/logo-horizontal.svg 27→71 20KB
+     /images/brand/logo-mark.svg 27→67 15KB
+     /images/renders/ring-oval-pale-320.webp 70→100 5KB
+     /images/renders/bracelet-steel-800.webp 70→115 25KB
+     /images/renders/halo-rg-pale-320.webp 70→104 6KB
+     /images/renders/macro-ink-320.webp 70→109 13KB
+     images/renders/pendant-yg-white-320.webp 91→118 6KB
+     ages/renders/solitaire-yg-steel-320.webp 92→120 6KB
+     /images/renders/band-rg-steel-320.webp 92→124 5KB
+     mages/renders/princess-wg-white-320.webp 92→129 5KB
+     /_next/static/flight/565ca600ae6a5427.js 457→516 85KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 518→697 169KB
+     xt/static/chunks/255-15b9cc804e0d9c7d.js 518→699 170KB
+     atic/chunks/main-app-df9632a01b438074.js 518→547 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 518→559 8KB
+     ext/static/chunks/93-15be6cb589abeead.js 518→562 9KB
+     xt/static/chunks/562-c2aa1a5e8119c606.js 518→569 13KB
+     p/%5B...slug%5D/page-447216dc8a3d11d3.js 518→569 0KB
+     ic/chunks/app/layout-20a14445b9853e00.js 518→595 11KB
+     tatic/chunks/webpack-a12630c62d923b4e.js 519→592 5KB
+     /_next/static/css/f6d0df2569d1824c.css 735→786 69KB
+     ext/static/chunks/45.9abb9313efcf3559.js 809→834 6KB
+     /_next/static/css/0999cbee65dbc8a9.css 812→836 5KB
+     halo-3-09ct-18k-white-gold-v2-1-480.webp 873→916 12KB
+     halo-3-09ct-18k-white-gold-v2-2-480.webp 873→925 15KB
+     ise-east-west-1-33ct-platinum-1-480.webp 873→916 8KB
+     earrings-1-5ct-18k-white-gold-1-480.webp 873→917 8KB
+     ise-east-west-1-33ct-platinum-2-480.webp 873→924 14KB
+     earrings-1-5ct-18k-white-gold-2-480.webp 873→927 17KB
+     ity-band-round-18k-white-gold-1-480.webp 873→954 11KB
+     -pear-necklace-18k-white-gold-1-480.webp 873→952 10KB
+     ity-band-round-18k-white-gold-2-480.webp 873→953 11KB
+     -pear-necklace-18k-white-gold-2-480.webp 873→957 13KB
+   HTML 首字節 21ms／收完 90ms，CSS 735→786ms、812→836ms，DOM 可互動 98ms
+   最大嘅檔案：/_next/static/chunks/255-15b9cc804e0d9c7d.js 170KB，/_next/static/chunks/4bd1b696-c023c6e3521b1417.js 169KB，/index.html 129KB，/_next/static/flight/565ca600ae6a5427.js 85KB，/_next/static/css/f6d0df2569d1824c.css 70KB，/images/renders/bracelet-steel-800.webp 25KB
+電腦寬頻 · /4c/carat-size-on-hand（3 次中位數）：FCP 0.08s，LCP 0.12s，CLS 0.000，載完 0.1s，請求 19 個，共 703KB（HTML 109KB，未壓縮）
+   時間線：
+     /images/brand/logo-horizontal.svg 28→73 20KB
+     /images/brand/logo-mark.svg 28→68 15KB
+     /images/hand/stone-top.webp 28→94 32KB
+     /_next/static/flight/b672ace4dc27db37.js 428→474 48KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 475→652 169KB
+     xt/static/chunks/255-15b9cc804e0d9c7d.js 475→654 170KB
+     atic/chunks/main-app-df9632a01b438074.js 476→503 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 476→517 8KB
+     ext/static/chunks/93-15be6cb589abeead.js 476→520 9KB
+     xt/static/chunks/562-c2aa1a5e8119c606.js 476→525 13KB
+     p/%5B...slug%5D/page-447216dc8a3d11d3.js 476→526 0KB
+     ic/chunks/app/layout-20a14445b9853e00.js 476→554 11KB
+     tatic/chunks/webpack-a12630c62d923b4e.js 476→550 5KB
+     /_next/static/css/f6d0df2569d1824c.css 687→736 69KB
+     ext/static/chunks/45.9abb9313efcf3559.js 758→782 6KB
+     /_next/static/css/0999cbee65dbc8a9.css 761→784 5KB
+   HTML 首字節 22ms／收完 83ms，CSS 687→736ms、761→784ms，DOM 可互動 100ms
+電腦寬頻 · /basics/vs-natural-moissanite（3 次中位數）：FCP 0.08s，LCP 0.14s，CLS 0.000，載完 0.1s，請求 19 個，共 703KB（HTML 102KB，未壓縮）
+   時間線：
+     /images/brand/logo-horizontal.svg 27→79 20KB
+     /images/brand/logo-mark.svg 28→75 15KB
+     /images/renders/macro-ink-wide-640.webp 28→88 30KB
+     /_next/static/flight/2b3d6de6e8ded91e.js 435→483 56KB
+     atic/chunks/4bd1b696-c023c6e3521b1417.js 484→660 169KB
+     xt/static/chunks/255-15b9cc804e0d9c7d.js 484→661 170KB
+     atic/chunks/main-app-df9632a01b438074.js 485→509 1KB
+     xt/static/chunks/619-ba102abea3e3d0e4.js 485→524 8KB
+     ext/static/chunks/93-15be6cb589abeead.js 485→528 9KB
+     xt/static/chunks/562-c2aa1a5e8119c606.js 485→533 13KB
+     p/%5B...slug%5D/page-447216dc8a3d11d3.js 485→531 0KB
+     ic/chunks/app/layout-20a14445b9853e00.js 485→560 11KB
+     tatic/chunks/webpack-a12630c62d923b4e.js 485→557 5KB
+     /_next/static/css/f6d0df2569d1824c.css 694→745 69KB
+     ext/static/chunks/45.9abb9313efcf3559.js 762→787 6KB
+     /_next/static/css/0999cbee65dbc8a9.css 765→789 5KB
+   HTML 首字節 22ms／收完 91ms，CSS 694→745ms、765→789ms，DOM 可互動 109ms
